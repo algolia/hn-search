@@ -36,7 +36,7 @@ class HackerNewsCrawler
       tr = title_td.parent
       rank = tr.css('td.title')[0].text.to_i
       tr2_text = tr.next_sibling.css("td.subtext").text
-      subtext = tr2_text.scan(/(\d+) points? by (\w+) (\d+ \w+) ago .* (\d+) comments?/).first || []
+      subtext = tr2_text.scan(/(\d+) points? by (\w+) (\d+ \w+) ago .* (discuss|\d+ comments?)/).first || []
       next if subtext.length != 4
       points = subtext[0].to_i
       author = subtext[1]
@@ -66,7 +66,7 @@ class HackerNewsCrawler
             doc = Nokogiri::HTML(open(url))
           rescue Exception => e
             puts e
-            break
+            return posts
           end
         end
       end
