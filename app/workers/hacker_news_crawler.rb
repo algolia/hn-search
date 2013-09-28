@@ -5,8 +5,8 @@ class HackerNewsCrawler
 
   def perform
     %w{https://news.ycombinator.com/news https://news.ycombinator.com/newest}.each do |url|
-      scrap(url).each do |post|
-        p = Post.find_or_initialize_by_url(post[:href])
+      scrap(url, true).each do |post|
+        p = Post.Post.find_or_initialize_by(url: post[:href])
         p.title = post[:title]
         p.source = post[:source]
         p.best_rank = post[:rank] if p.best_rank.to_i < post[:rank]
@@ -21,10 +21,10 @@ class HackerNewsCrawler
 
   private
 
-  def scrap(url)
+  def scrap(url, deep)
     doc = Nokogiri::HTML(open(url))
     
-    doc.css("table table tr td.title a").map do |link|
+    posts = doc.css("table table tr td.title a").map do |link|
       title = link.text
       href = link.attribute('href').text
       title_td = link.parent
@@ -51,5 +51,19 @@ class HackerNewsCrawler
         comments: comments
       }
     end.compact
+
+    if deep
+      10.times do
+        doc.css('a[rel="nofollow"]').each do |link|
+          next if link.text != "More"
+          next_page = link.attribute('href')
+          url = "https://news.ycombinator.com#{next_page}"
+          posts += scrap(url, false)
+          doc = Nokogiri::HTML(open(url))
+        end
+      end
+    end
+
+    posts
   end
 end
