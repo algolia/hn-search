@@ -15,7 +15,7 @@ class HackerNewsCrawler
         p.author = post[:author]
         p.ago = post[:ago]
         p.comments = post[:comments]
-        #p.save!
+        p.save!
       end
     end
   end
