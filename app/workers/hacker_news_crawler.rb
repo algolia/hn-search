@@ -56,7 +56,7 @@ class HackerNewsCrawler
     end.compact
 
     if deep
-      20.times do
+      5.times do
         doc.css('a').each do |link|
           next if link.text != "More"
           next_page = link.attribute('href').to_s
