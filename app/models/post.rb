@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
 
   algoliasearch do
     attributesToIndex = ["title", "url", "author"]
-    customRanking = ["desc(points),desc(best_rank)"]
+    customRanking = ["desc(points)", "desc(best_rank)"]
   end
 
 end
