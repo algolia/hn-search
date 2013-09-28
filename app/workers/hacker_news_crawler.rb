@@ -7,6 +7,7 @@ class HackerNewsCrawler
     %w{https://news.ycombinator.com/news https://news.ycombinator.com/newest}.each do |url|
       scrap(url, true).each do |post|
         p = Post.find_or_initialize_by(url: post[:href])
+        puts post[:title] #if p.new_record?
         p.title = post[:title]
         p.source = post[:source]
         p.best_rank = post[:rank] if p.best_rank.to_i < post[:rank]
@@ -14,7 +15,7 @@ class HackerNewsCrawler
         p.author = post[:author]
         p.ago = post[:ago]
         p.comments = post[:comments]
-        p.save!
+        #p.save!
       end
     end
   end
@@ -22,6 +23,8 @@ class HackerNewsCrawler
   private
 
   def scrap(url, deep)
+    puts "======================= #{url}"
+
     doc = Nokogiri::HTML(open(url))
     
     posts = doc.css("table table tr td.title a").map do |link|
@@ -54,14 +57,15 @@ class HackerNewsCrawler
 
     if deep
       10.times do
-        doc.css('a[rel="nofollow"]').each do |link|
+        doc.css('a').each do |link|
           next if link.text != "More"
-          next_page = link.attribute('href')
-          url = "https://news.ycombinator.com#{next_page}"
-          posts += scrap(url, false)
+          next_page = link.attribute('href').to_s
+          url = "https://news.ycombinator.com#{'/' unless next_page.starts_with?('/')}#{next_page}"
           begin
+            posts += scrap(url, false)
             doc = Nokogiri::HTML(open(url))
-          rescue
+          rescue Exception => e
+            puts e
             break
           end
         end
