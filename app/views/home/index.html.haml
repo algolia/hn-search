@@ -2,7 +2,7 @@
   %h1.text-center
     HN Search
     %small powered by
-    = image_tag "http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png"
+    = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png"), "http://www.algolia.com"
 
   .search_box-wrapper
     .search_box
@@ -11,6 +11,13 @@
         .searchbutton
           %i.icon-search.icon-large
   .hits{"style" => "display:none;"}
+  %footer
+    %h4.text-center
+      Because a hackathon should be all about hack and fun!
+    .text-center
+      = link_to image_tag("fhacktory.png"), "http://www.fhacktory.com"
+      %br
+      %small SEP. 28-29 2013, Lyon (FRANCE)
 
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');

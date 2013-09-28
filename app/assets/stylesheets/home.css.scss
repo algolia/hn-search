@@ -118,12 +118,16 @@ h1, h2, h3, h4 {
     }
   }
 
+  footer {
+    margin-top: 50px;
+  }
+
   .hits {
     font-size: 1em;
     border: 1px solid #dddddd;
     width: 700px;
     margin: 0px auto;
-  
+
     .hit {
       background-color: #ffffff;
       background-color: rgb(255, 255, 255);
