@@ -54,6 +54,6 @@
         }
         idx.search(query, searchCallback, { "hitsPerPage" : 10 });
       });
-      idx.search("", searchCallback, { "hitsPerPage" : 10 });
+      idx.search("", searchCallback, { "hitsPerPage" : 10, "getRankingInfo": 1 });
       inputfield.focus();
     });
