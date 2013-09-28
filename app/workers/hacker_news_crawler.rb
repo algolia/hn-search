@@ -59,7 +59,11 @@ class HackerNewsCrawler
           next_page = link.attribute('href')
           url = "https://news.ycombinator.com#{next_page}"
           posts += scrap(url, false)
-          doc = Nokogiri::HTML(open(url))
+          begin
+            doc = Nokogiri::HTML(open(url))
+          rescue
+            break
+          end
         end
       end
     end
