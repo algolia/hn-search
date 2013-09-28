@@ -11,7 +11,7 @@ gem 'figaro'
 gem 'haml-rails'
 gem 'unicorn'
 gem 'nokogiri'
-gem 'algoliasearch-rails'
+gem 'algoliasearch-rails', '>= 1.1.4'
 gem 'sidekiq'
 gem 'bourbon'
 group :development do
