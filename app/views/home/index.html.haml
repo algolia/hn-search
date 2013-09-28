@@ -7,7 +7,7 @@
   .search_box-wrapper
     .search_box
       %form#search-form{method: "get"}
-        %input.autocomplete#inputfield{autocomplete: 'off', name: 'address', placeholder: 'HN News title, URL, Author name ...', type: 'text', spellcheck: 'false'}
+        %input.autocomplete#inputfield{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
         .searchbutton
           %i.icon-search.icon-large
   .hits{"style" => "display:none;"}
@@ -65,6 +65,8 @@
         }
         idx.search(query, searchCallback, { "hitsPerPage" : 10 });
       });
-      idx.search("", searchCallback, { "hitsPerPage" : 10, "getRankingInfo": 1 });
       inputfield.focus();
+
+      // resolve DNS
+      idx.search("", function(success, content) { }, { "hitsPerPage" : 10, "getRankingInfo": 1 });
     });
