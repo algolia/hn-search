@@ -1,0 +1,59 @@
+#search-panel
+  %h1.text-center
+    HN Search
+    %small powered by
+    = image_tag "http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png"
+
+  .search_box-wrapper
+    .search_box
+      %form#search-form{method: "get"}
+        %input.autocomplete#inputfield{autocomplete: 'off', name: 'address', placeholder: 'HN News title, URL, Author name ...', type: 'text', spellcheck: 'false'}
+        .searchbutton
+          %i.icon-search.icon-large
+  .hits{"style" => "display:none;"}
+
+  :javascript
+    var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
+    var idx = apiClient.initIndex('Post');
+
+    function searchCallback(success, content) {
+        if (content.query != $("#inputfield").val()) {
+          return;
+        }
+        if (content.hits.length == 0) {
+          $('.hits').hide();
+          return;
+        }
+        res = '';
+        for (var i = 0; i < content.hits.length; ++i) {
+          clazz = 'hit';
+          if ((i % 2) == 1)
+            clazz += ' bg';
+          res += '<div class="' + clazz + '">';
+          res += '  <div class="author pull-right">' + content.hits[i]._highlightResult.author.value + '</div>';
+          res += '  <div class="title pull-left">' + content.hits[i]._highlightResult.title.value + '</div>';
+          res += '  <div class="clearfix"></div>';
+          res += '  <div class="url"><a href="' + content.hits[i].url + '">' + content.hits[i]._highlightResult.url.value + '</a></div>';
+          res += '  <div class="comments pull-right">' + content.hits[i].comments + ' comments</div>';
+          res += '  <div class="points pull-left"><b>' + content.hits[i].points + '</b> points,&nbsp;</div>';
+          res += '  <div class="best_rank pull-left">best HN rank <b>#' + content.hits[i].best_rank + '</b></div>';
+          res += '  <div class="clearfix"></div>';
+          res += '</div>';
+        }
+        $('.hits').html(res);
+        $('.hits').show();
+    }
+
+    $(document).ready(function() {
+      var inputfield = $('#inputfield');
+      inputfield.keyup(function() {
+        var query = inputfield.val();
+        if (query.length == 0) {
+          $('.hits').hide();
+          return;
+        }
+        idx.search(query, searchCallback, { "hitsPerPage" : 10 });
+      });
+      idx.search("", searchCallback, { "hitsPerPage" : 10 });
+      inputfield.focus();
+    });

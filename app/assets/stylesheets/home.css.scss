@@ -1,0 +1,163 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Place all the styles related to the live_demo controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bourbon";
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu'), url(https://themes.googleusercontent.com/static/fonts/ubuntu/v4/vRvZYZlUaogOuHbBTT1SNevvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  font-weight: 300;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#search-panel {
+  padding-top: 50px;
+
+  .search-form {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    display: block;
+    line-height: normal;
+    color: #333;
+  }
+
+  .search_box-wrapper {
+    padding: 10px 15px;
+    font-size: 1em;
+    background-color: #FF6600;
+    border-bottom: 1px solid #dddddd;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    width: 700px;
+    margin: 0px auto;
+  }
+
+  .search_box {
+    margin: 0px 0 0 0;
+    padding: 0 0 0 0;
+    position: relative;
+    height: 45px;
+  }
+
+  #inputfield {
+    width: 613px;
+    height: 45px;
+    display: block;
+    border: 1px solid #cfcfcf;
+    color: #000;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -webkit-appearance: none;
+    padding: 10px 13px 10px 13px;
+    line-height: 23px;
+    float: left;
+    font-size: 1em;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    cursor: auto;
+    margin: 0em;
+    border-radius: 4px 0px 0px 4px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+  }
+  .search_box #inputfield:focus {
+    outline-width: 0px;
+    border: 1px solid #999;
+  }
+  .search_box #inputfield:hover {
+    border: 1px solid #999;
+  }
+  .search_box_shadow {
+    -webkit-box-shadow: 0px 0px 2px 0px #2E61E4;
+      -moz-box-shadow: 0px 0px 2px 0px #2E61E4;
+      box-shadow: 0px 0px 2px 0px #2E61E4;
+  }
+  .search_box .searchbutton {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0px;
+    width: 56px;
+    height: 45px;
+    margin: 0px 0 0 -1px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #FFFFFF;
+    border: 1px solid #999;
+    text-align: center;
+    color: #FF6600;
+  }
+
+  .searchbutton {
+    [class^="icon-"], [class*=" icon-"] {
+      display:inline-block;
+      margin-top: 10px;
+      vertical-align: middle;
+    }
+  }
+
+  .hits {
+    font-size: 1em;
+    border: 1px solid #dddddd;
+    width: 700px;
+    margin: 0px auto;
+  
+    .hit {
+      background-color: #ffffff;
+      background-color: rgb(255, 255, 255);
+      font-size: 14px;
+      padding: 5px 10px;
+
+      em {
+        font-weight: bold;
+        font-style: normal;
+      }
+
+      .title {
+        width: 400px;
+      }
+
+      .author {
+        font-size: 0.8em;
+        color: #CCC;
+      }
+
+      .comments {
+        font-size: 0.8em;
+      }
+    }
+
+    .hit:hover {
+      background-color: #e9f0ff;
+      background-color: rgb(233, 240, 255);
+    }
+
+    .bg {
+      background-color: #fafafa;
+      background-color: rgb(250, 250, 250);
+    }
+
+  }
+}
