@@ -7,7 +7,7 @@ class HackerNewsCrawler
     %w{https://news.ycombinator.com/news https://news.ycombinator.com/newest}.each do |url|
       scrap(url, true).each do |post|
         p = Post.find_or_initialize_by(url: post[:href])
-        puts post[:title] #if p.new_record?
+        puts post[:title] if p.new_record?
         p.title = post[:title]
         p.source = post[:source]
         p.best_rank = post[:rank] if p.best_rank.to_i < post[:rank]
@@ -56,7 +56,7 @@ class HackerNewsCrawler
     end.compact
 
     if deep
-      10.times do
+      20.times do
         doc.css('a').each do |link|
           next if link.text != "More"
           next_page = link.attribute('href').to_s
