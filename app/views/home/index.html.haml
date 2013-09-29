@@ -2,7 +2,8 @@
   %h1.text-center
     HN Search
     %small powered by
-    = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png"), "http://www.algolia.com"
+    = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png"), "http://www.algolia.com",
+      onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;"
 
   .search_box-wrapper
     .search_box
