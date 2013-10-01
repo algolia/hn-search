@@ -7,7 +7,7 @@
 
   .search_box-wrapper
     .search_box
-      %form#search-form{method: "get"}
+      %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
         %input.autocomplete#inputfield{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
         .searchbutton
           %i.icon-search.icon-large
