@@ -12,6 +12,8 @@
         .searchbutton
           %i.icon-search.icon-large
   .hits{"style" => "display:none;"}
+  .text-center
+    %small Crawling started <em>#{distance_of_time_in_words_to_now DateTime.new(2013, 9, 28, 14, 00, 00)} ago</em>, <strong>#{number_with_delimiter Post.count}</strong> news crawled
   %footer
     %h4.text-center
       Because a hackathon should be all about hack and fun!
