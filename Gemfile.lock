@@ -105,6 +105,7 @@ GEM
     minitest-wscolor (0.0.3)
       minitest (>= 2.3.1)
     multi_json (1.8.0)
+    newrelic_rpm (3.6.7.159)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     pg (0.14.1)
@@ -196,6 +197,7 @@ DEPENDENCIES
   jquery-rails
   minitest-spec-rails
   minitest-wscolor
+  newrelic_rpm
   nokogiri
   pg
   quiet_assets

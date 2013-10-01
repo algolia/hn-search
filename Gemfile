@@ -14,6 +14,7 @@ gem 'nokogiri'
 gem 'algoliasearch-rails', '>= 1.1.4'
 gem 'sidekiq'
 gem 'bourbon'
+gem 'newrelic_rpm'
 group :development do
   gem 'sqlite3'
   gem 'better_errors'
