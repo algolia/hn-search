@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   if ENV['ALGOLIASEARCH_APPLICATION_ID']
     include AlgoliaSearch
 
-    algoliasearch synchronous: false do
+    algoliasearch do
       attributesToIndex ["title", "source", "author"]
       customRanking ["desc(points)", "asc(best_rank)"]
     end
