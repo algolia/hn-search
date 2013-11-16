@@ -4,7 +4,7 @@ class HackerNewsCrawler
   include Sidekiq::Worker
 
   def self.refresh_last
-    Post.where('created_at >= ? AND hn_id IS NOT NULL', 2.hour.ago).find_each do |p|
+    Post.where('created_at >= ? AND hn_id IS NOT NULL', 24.hour.ago).find_each do |p|
       doc = Nokogiri::HTML(open("https://news.ycombinator.com/item?id=#{p.hn_id}")) rescue nil
       next if doc.nil?
       text = doc.css('table tr td.subtext').text
