@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131101164013) do
-
-  create_table "my_models", force: true do |t|
-    t.string "name"
-  end
+ActiveRecord::Schema.define(version: 20130928125919) do
 
   create_table "posts", force: true do |t|
     t.string   "url",        null: false
