@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130928125919) do
+ActiveRecord::Schema.define(version: 20131116143848) do
+
+  create_table "my_models", force: true do |t|
+    t.string "name"
+  end
 
   create_table "posts", force: true do |t|
     t.string   "url",        null: false
@@ -20,10 +24,10 @@ ActiveRecord::Schema.define(version: 20130928125919) do
     t.integer  "best_rank"
     t.integer  "points"
     t.string   "author"
-    t.string   "ago"
     t.integer  "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hn_id"
   end
 
 end
