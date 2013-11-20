@@ -36,8 +36,8 @@ class HackerNewsCrawler
           Post.from_json!(r)
         end
       end
-      Post.where('id > ?', last ? last.id : 0).reindex!
     end
+    Post.where('id > ?', last ? last.id : 0).reindex!
   end
 
   def self.export(from, &block)
