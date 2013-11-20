@@ -41,7 +41,7 @@ class HackerNewsCrawler
   end
 
   def self.export(from, &block)
-    now = DateTime.now
+    now = DateTime.now.utc
     while from < now
       puts "From #{from}"
       limit = 100
@@ -58,7 +58,7 @@ class HackerNewsCrawler
         json['results'].each do |r|
           last_create_ts = DateTime.parse r['item']['create_ts']
           break if last_create_ts < from
-          yield r
+          yield r['item']
           i += 1
         end
         break if json['results'].length < limit || start + limit >= HNSEARCH_HARD_LIMIT
