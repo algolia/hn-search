@@ -41,10 +41,10 @@
         '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
         '  </div>' +
         '  <div class="clearfix"></div>' +
-        '  <div class="comments pull-right"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' +
+        '  <div class="source pull-right">' + hit._highlightResult.source.value + '</div>' +
         '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
-        '  <div class="source pull-left">' + hit._highlightResult.source.value + '</div>' +
         '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>' +
+        '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' +
         '  <div class="clearfix"></div>' +
         '</div>';
       }

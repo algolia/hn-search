@@ -164,8 +164,9 @@ h1, h2, h3, h4 {
         text-overflow: ellipsis;
       }
 
-      .points {
+      .points, .source {
         font-size: 0.8em;
+        margin-right: 10px;
       }
 
       .author {
