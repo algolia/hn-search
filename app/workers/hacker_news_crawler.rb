@@ -56,14 +56,16 @@ class HackerNewsCrawler
           break
         end
         json['results'].each do |r|
-          yield r
           last_create_ts = DateTime.parse r['item']['create_ts']
+          break if last_create_ts < from
+          yield r
           i += 1
         end
         break if json['results'].length < limit || start + limit >= HNSEARCH_HARD_LIMIT
         start += limit
       end
       puts "  #{i} posts"
+      break if last_create_ts < from
       from = last_create_ts
     end
   end

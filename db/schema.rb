@@ -11,10 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131116143848) do
+ActiveRecord::Schema.define(version: 20131120170500) do
+
+  create_table "my_models", force: true do |t|
+    t.string "name"
+  end
 
   create_table "posts", force: true do |t|
-    t.string   "url",        null: false
+    t.string   "url",        limit: 1024, null: false
     t.string   "title"
     t.string   "source"
     t.integer  "best_rank"
