@@ -10,12 +10,12 @@ class Post < ActiveRecord::Base
   def self.from_json!(e, force = false)
     return false if e['url'].blank?
     p = force ? Post.new(hn_id: e['id']) : Post.find_or_initialize_by_hn_id(e['id'])
-    p.url = e['url']
-    p.title = e['title']
-    p.source = e['domain']
-    p.points = e['points']
-    p.author = e['username']
-    p.comments = e['num_comments']
+    p.url = e['url'][0..1023]
+    p.title = e['title'].try(:[], 0..254)
+    p.source = e['domain'].try(:[], 0..254)
+    p.points = e['points'].to_i
+    p.author = e['username'].try(:[], 0..254)
+    p.comments = e['num_comments'].to_i
     p.created_at = DateTime.parse(e['create_ts'])
     p.save!
     return true
