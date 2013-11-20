@@ -50,7 +50,7 @@ h1, h2, h3, h4 {
     border-bottom: 1px solid #dddddd;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
-    width: 700px;
+    max-width: 700px;
     margin: 0px auto;
   }
 
@@ -62,7 +62,11 @@ h1, h2, h3, h4 {
   }
 
   #inputfield {
-    width: 613px;
+    margin-right: 56px;
+  }
+
+  #inputfield input {
+    width: 100%;
     height: 45px;
     display: block;
     border: 1px solid #cfcfcf;
@@ -83,11 +87,11 @@ h1, h2, h3, h4 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
   }
-  .search_box #inputfield:focus {
+  .search_box #inputfield input:focus {
     outline-width: 0px;
     border: 1px solid #999;
   }
-  .search_box #inputfield:hover {
+  .search_box #inputfield input:hover {
     border: 1px solid #999;
   }
   .search_box_shadow {
@@ -125,8 +129,8 @@ h1, h2, h3, h4 {
   #hits {
     font-size: 1em;
     border: 1px solid #dddddd;
-    width: 700px;
-    margin: 0px auto;
+    margin-right: 56px;
+    margin-top: 10px;
 
     .hit {
       background-color: #ffffff;
@@ -140,7 +144,6 @@ h1, h2, h3, h4 {
       }
 
       .thumb {
-        margin-right: 10px;
         margin-bottom: 10px;
         width: 80px;
         height: 50px;
@@ -148,20 +151,26 @@ h1, h2, h3, h4 {
         background: #efefef url(asset_path('loading.gif', image)) center center no-repeat;
       }
 
+      .title_url {
+        margin-left: 100px;
+      }
+
       .title {
-        width: 400px;
       }
 
       .url {
-        width: 500px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
+      .points {
+        font-size: 0.8em;
+      }
+
       .author {
         font-size: 0.8em;
-        color: #CCC;
+        color: #999;
       }
 
       .comments, .created_at {

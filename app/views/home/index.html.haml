@@ -5,12 +5,13 @@
   .search_box-wrapper
     .search_box
       %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
-        %input.autocomplete#inputfield{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
+        #inputfield
+          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
         .searchbutton
           %i.icon-search.icon-large
-  #hits
+        #hits
   .text-center
-    %small Crawling started <em>#{distance_of_time_in_words_to_now DateTime.new(2013, 9, 28, 14, 00, 00)} ago</em>, <strong>#{number_with_delimiter Post.count}</strong> news crawled
+    %small <strong>#{number_with_delimiter Post.count}</strong> news crawled
   %footer
     .text-center
       %small Made with <i class="icon-heart text-danger"></i> in Paris,
@@ -20,7 +21,7 @@
 
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
-    var idx = apiClient.initIndex('Post');
+    var idx = apiClient.initIndex('#{Post.index_name}');
     var $hits = $('#hits');
     var page = 0;
 
@@ -28,25 +29,22 @@
       var res = '';
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
-        clazz = 'hit';
-        if ((i % 2) == 1)
+        var clazz = 'hit';
+        if ((i % 2) == 1) {
           clazz += ' bg';
+        }
         res +=  '<div class="' + clazz + '">' +
-        '  <div class="author pull-right">' + hit._highlightResult.author.value + '</div>' +
+        '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
         '  <img class="thumb pull-left" src="//api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=' + hit.url + '" />' +
-        '  <div class="pull-left">' +
+        '  <div class="title_url">' +
         '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
         '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
         '  </div>' +
         '  <div class="clearfix"></div>' +
-        (
-          hit.hn_id ?
-            '  <div class="comments pull-right"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' :
-            '  <div class="comments pull-right">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</div>'
-        ) +
+        '  <div class="comments pull-right"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' +
         '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
-        '  <div class="points pull-left"><b>' + hit.points + '</b> points,&nbsp;</div>' +
-        '  <div class="best_rank pull-left">best HN rank <b>#' + hit.best_rank + '</b></div>' +
+        '  <div class="source pull-left">' + hit._highlightResult.source.value + '</div>' +
+        '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>' +
         '  <div class="clearfix"></div>' +
         '</div>';
       }
@@ -55,7 +53,7 @@
     }
 
     function search(initial) {
-      var query = $('#inputfield').val().trim();
+      var query = $('#inputfield input').val().trim();
       page = initial ? 0 : page + 1;
       if (query.length == 0) {
         $hits.empty();
@@ -74,7 +72,7 @@
         }
       });
 
-      $('#inputfield').keyup(function() {
+      $('#inputfield input').keyup(function() {
         search(true);
       }).focus();
 

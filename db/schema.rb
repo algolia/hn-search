@@ -13,10 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20131116143848) do
 
-  create_table "my_models", force: true do |t|
-    t.string "name"
-  end
-
   create_table "posts", force: true do |t|
     t.string   "url",        null: false
     t.string   "title"

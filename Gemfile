@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '1.9.3'
 gem 'rails', '4.0.0'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
@@ -15,7 +15,8 @@ gem 'algoliasearch-rails'
 gem 'sidekiq'
 gem 'bourbon'
 gem 'newrelic_rpm'
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
+gem 'bzip2-ruby'
 
 group :development do
   gem 'sqlite3'

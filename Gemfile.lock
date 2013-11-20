@@ -41,6 +41,7 @@ GEM
       sass (>= 3.2.0)
       thor
     builder (3.1.4)
+    bzip2-ruby (0.2.7)
     capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -189,6 +190,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bourbon
+  bzip2-ruby
   capybara
   coffee-rails (~> 4.0.0)
   factory_girl_rails
