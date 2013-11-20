@@ -1,9 +1,6 @@
 #search-panel
   %h1.text-center
     HN Search
-    %small powered by
-    = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png"), "http://www.algolia.com",
-      onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;"
 
   .search_box-wrapper
     .search_box
@@ -11,65 +8,77 @@
         %input.autocomplete#inputfield{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
         .searchbutton
           %i.icon-search.icon-large
-  .hits{"style" => "display:none;"}
+  #hits
   .text-center
     %small Crawling started <em>#{distance_of_time_in_words_to_now DateTime.new(2013, 9, 28, 14, 00, 00)} ago</em>, <strong>#{number_with_delimiter Post.count}</strong> news crawled
   %footer
-    %h4.text-center
-      Because a hackathon should be all about hack and fun!
-    %br
-    %h3.text-center
-      %em 100% HACK, 0% BULLSHIT
-    %br
     .text-center
-      = link_to image_tag("fhacktory.png"), "http://www.fhacktory.com"
-    .text-center
-      %small SEP. 28-29 2013, Lyon (FRANCE)
+      %small Made with <i class="icon-heart text-danger"></i> in Paris,
+      %small powered by
+      = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;"
+
 
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
     var idx = apiClient.initIndex('Post');
+    var $hits = $('#hits');
+    var page = 0;
 
     function searchCallback(success, content) {
-        if (content.query != $("#inputfield").val()) {
-          return;
-        }
-        if (content.hits.length == 0) {
-          $('.hits').hide();
-          return;
-        }
-        res = '';
-        for (var i = 0; i < content.hits.length; ++i) {
-          clazz = 'hit';
-          if ((i % 2) == 1)
-            clazz += ' bg';
-          res += '<div class="' + clazz + '">';
-          res += '  <div class="author pull-right">' + content.hits[i]._highlightResult.author.value + '</div>';
-          res += '  <div class="title pull-left">' + content.hits[i]._highlightResult.title.value + '</div>';
-          res += '  <div class="clearfix"></div>';
-          res += '  <div class="url"><a href="' + content.hits[i].url + '">' + content.hits[i].url + '</a></div>';
-          res += '  <div class="comments pull-right">' + content.hits[i].comments + ' comments</div>';
-          res += '  <div class="points pull-left"><b>' + content.hits[i].points + '</b> points,&nbsp;</div>';
-          res += '  <div class="best_rank pull-left">best HN rank <b>#' + content.hits[i].best_rank + '</b></div>';
-          res += '  <div class="clearfix"></div>';
-          res += '</div>';
-        }
-        $('.hits').html(res);
-        $('.hits').show();
+      var res = '';
+      for (var i = 0; i < content.hits.length; ++i) {
+        var hit = content.hits[i];
+        console.log(hit);
+        clazz = 'hit';
+        if ((i % 2) == 1)
+          clazz += ' bg';
+        res +=  '<div class="' + clazz + '">' +
+        '  <div class="author pull-right">' + hit._highlightResult.author.value + '</div>' +
+        '  <img class="thumb pull-left" src="//api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=' + hit.url + '" />' +
+        '  <div class="pull-left">' +
+        '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
+        '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
+        '  </div>' +
+        '  <div class="clearfix"></div>' +
+        (
+          hit.hn_id ?
+            '  <div class="comments pull-right"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' :
+            '  <div class="comments pull-right">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</div>'
+        ) +
+        '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
+        '  <div class="points pull-left"><b>' + hit.points + '</b> points,&nbsp;</div>' +
+        '  <div class="best_rank pull-left">best HN rank <b>#' + hit.best_rank + '</b></div>' +
+        '  <div class="clearfix"></div>' +
+        '</div>';
+      }
+      $hits.append(res);
+      $('#hits .timeago').timeago();
+    }
+
+    function search(initial) {
+      var query = $('#inputfield').val().trim();
+      page = initial ? 0 : page + 1;
+      if (query.length == 0) {
+        $hits.empty();
+        return;
+      }
+      if (initial) {
+        $hits.empty();
+      }
+      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : page });
     }
 
     $(document).ready(function() {
-      var inputfield = $('#inputfield');
-      inputfield.keyup(function() {
-        var query = inputfield.val();
-        if (query.length == 0) {
-          $('.hits').hide();
-          return;
+      $(window).scroll(function () {
+        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+          search(false);
         }
-        idx.search(query, searchCallback, { "hitsPerPage" : 10 });
       });
-      inputfield.focus();
+
+      $('#inputfield').keyup(function() {
+        search(true);
+      }).focus();
 
       // resolve DNS
-      idx.search("", function(success, content) { }, { "hitsPerPage" : 10, "getRankingInfo": 1 });
+      idx.search("", function(success, content) { });
     });

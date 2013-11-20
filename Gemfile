@@ -15,6 +15,8 @@ gem 'algoliasearch-rails'
 gem 'sidekiq'
 gem 'bourbon'
 gem 'newrelic_rpm'
+gem "font-awesome-rails"
+
 group :development do
   gem 'sqlite3'
   gem 'better_errors'

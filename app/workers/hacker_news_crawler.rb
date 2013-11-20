@@ -12,6 +12,7 @@ class HackerNewsCrawler
       next if subtext.length != 4
       p.points = subtext[0].to_i
       p.comments = subtext[3].to_i
+      puts "Updated #{p.title}"
       p.save!
     end
   end
@@ -20,7 +21,7 @@ class HackerNewsCrawler
     %w{https://news.ycombinator.com/news https://news.ycombinator.com/newest}.each do |url|
       scrap(url, true).each do |post|
         p = Post.find_or_initialize_by(url: post[:href])
-        puts post[:title] if p.new_record?
+        puts "Create #{post[:title]}" if p.new_record?
         p.title = post[:title]
         p.source = post[:source]
         p.best_rank = post[:rank] if p.best_rank.to_i < post[:rank]
@@ -79,7 +80,6 @@ class HackerNewsCrawler
             posts += scrap(url, false)
             doc = Nokogiri::HTML(open(url))
           rescue Exception => e
-            puts e
             return posts
           end
         end
