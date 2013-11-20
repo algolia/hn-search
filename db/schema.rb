@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120170500) do
+ActiveRecord::Schema.define(version: 20131120194655) do
 
   create_table "my_models", force: true do |t|
     t.string "name"
@@ -29,5 +29,7 @@ ActiveRecord::Schema.define(version: 20131120170500) do
     t.datetime "updated_at"
     t.string   "hn_id"
   end
+
+  add_index "posts", ["hn_id"], name: "index_posts_on_hn_id"
 
 end
