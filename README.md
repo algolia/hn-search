@@ -20,7 +20,8 @@ class Post < ActiveRecord::Base
     attributesToIndex ['unordered(title)', 'source', 'url', 'author']
 
     # controls the way results are sorted sorting on the following 4 criteria (one after another)
-    ranking ['typo', 'proximity', 'attribute', 'exact', 'custom']
+    # I removed the 'exact' match critera (improve <3-words query relevance)
+    ranking ['typo', 'proximity', 'attribute', custom']
 
     # use associated number of HN points to sort results (last sort criteria)
     customRanking ['desc(points)']
