@@ -63,7 +63,7 @@ class HackerNewsCrawler
         json['results'].each do |r|
           last_create_ts = DateTime.parse r['item']['create_ts']
           break if last_create_ts < from
-          puts "\t\t#{r['item']['title']}"
+          puts "\t\t#{last_create_ts}: #{r['item']['title']}"
           yield r['item']
           i += 1
         end
