@@ -39,7 +39,7 @@
         if ((i % 2) == 1) {
           classes.push('odd');
         }
-        var nbWords = content.query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]/g).length;
+        var nbWords = content.query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]+/g).length;
         if (hit._rankingInfo.nbTypos === 0 && (nbWords === 1 || hit._rankingInfo.nbExactWords >= nbWords)) {
           classes.push('notypo');
         }
