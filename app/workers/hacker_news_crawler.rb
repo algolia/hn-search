@@ -1,8 +1,6 @@
 require 'open-uri'
 
 class HackerNewsCrawler
-  include Sidekiq::Worker
-
   HNSEARCH_HARD_LIMIT = 1000
 
   def self.export_hnsearch_dot_com(dest)
