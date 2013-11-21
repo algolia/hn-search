@@ -9,6 +9,9 @@
         = csrf_meta_tags
         = yield(:head)
   %body{:class => "#{controller_name} #{action_name}"}
+    %span#forkongithub.hidden-xs
+      = link_to 'Fork me on GitHub', 'https://github.com/algolia/hn-search', target: '_blank'
+
     #main{:role => "main"}
       .container
         .content

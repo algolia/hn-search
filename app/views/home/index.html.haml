@@ -21,7 +21,6 @@
         thumbnails by
         = link_to image_tag("http://snapito.com/images/logo-72x72.png", style: 'height: 1em;', alt: 'Snapito'), "http://snapito.com", title: 'Full length website screenshots'
 
-
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
     var idx = apiClient.initIndex('#{Post.index_name}');

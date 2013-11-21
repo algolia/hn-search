@@ -1,8 +1,7 @@
 require 'open-uri'
 
 class HackerNewsCrawler
-  HNSEARCH_HARD_LIMIT = 1000
-
+  # export all available submissions to file `dest` (JSON format)
   def self.export_hnsearch_dot_com(dest)
     File.open(dest, 'w') do |f|
       f << "[\n"
@@ -17,12 +16,14 @@ class HackerNewsCrawler
     end
   end
 
+  # retrieve news created last hour (run every 10min on Heroku)
   def self.cron_10min
     cron(1.hour)
   end
 
+  # retrieve news created last 48 hours (run every 1h on Heroku)
   def self.cron_1h
-    cron(24.hour)
+    cron(48.hour)
   end
 
   protected
@@ -38,6 +39,10 @@ class HackerNewsCrawler
     Post.where('id > ?', last ? last.id : 0).reindex!
   end
 
+  HNSEARCH_HARD_LIMIT = 1000
+
+  # work-around ThriftDB rate limit sorting on field `create_ts` and using Solr's map function (http://wiki.apache.org/solr/FunctionQuery#map)
+  # original idea from `srw` (https://gist.github.com/srw/1360455)
   def self.export(from, &block)
     now = DateTime.now.utc
     while from < now
