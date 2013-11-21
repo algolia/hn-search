@@ -28,6 +28,9 @@
     var page = 0;
 
     function searchCallback(success, content) {
+      if (content.query.trim() != $('#inputfield input').val().trim()) {
+        return;
+      }
       if (page != 0 && page >= content.page) {
         return;
       }
