@@ -43,6 +43,15 @@
         if (hit._rankingInfo.nbTypos === 0 && (nbWords === 1 || hit._rankingInfo.nbExactWords >= nbWords)) {
           classes.push('notypo');
         }
+        if (hit.points > 1000) {
+          classes.push('p1000');
+        } else if (hit.points > 500) {
+          classes.push('p500');
+        } else if (hit.points > 250) {
+          classes.push('p250');
+        } else if (hit.points > 100) {
+          classes.push('p100');
+        }
         res +=  '<div class="' + classes.join(' ') + '">' +
         '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
         '  <img class="thumb pull-left" src="//api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=' + hit.url + '" />' +

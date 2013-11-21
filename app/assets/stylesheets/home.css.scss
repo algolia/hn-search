@@ -133,12 +133,14 @@ h1, h2, h3, h4 {
     margin-right: 56px;
     margin-top: 10px;
     z-index: 2;
+    background: white;
 
     .hit {
       background-color: #ffffff;
       background-color: rgb(255, 255, 255);
       font-size: 14px;
       padding: 5px 10px;
+      margin-bottom: 5px;
 
       em {
         font-weight: bold;
@@ -187,6 +189,11 @@ h1, h2, h3, h4 {
         }
       }
     }
+
+    .hit.p1000 { border-left: 2px solid #ff0000; }
+    .hit.p500 { border-left: 2px solid #ff6600; }
+    .hit.p250 { border-left: 2px solid #ff6600; }
+    .hit.p100 { border-left: 2px solid #ff838d; }
 
     .hit.odd {
       background-color: #fafafa;
