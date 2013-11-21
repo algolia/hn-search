@@ -10,12 +10,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'figaro'
 gem 'haml-rails'
-gem 'unicorn'
-gem 'nokogiri'
 gem 'algoliasearch-rails'
 gem 'bourbon'
 gem 'newrelic_rpm'
-gem 'font-awesome-rails'
 gem 'bzip2-ruby'
 
 group :development do
