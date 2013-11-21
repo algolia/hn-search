@@ -26,6 +26,10 @@
     var page = 0;
 
     function searchCallback(success, content) {
+      if (page != 0 && page >= content.page) {
+        return;
+      }
+      page = content.page;
       var res = '';
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
@@ -52,28 +56,31 @@
       $('#hits .timeago').timeago();
     }
 
-    function search(initial) {
+    function search(p) {
+      if ((page > 0 && p <= page) || page > 50) {
+        return;
+      }
       var query = $('#inputfield input').val().trim();
-      page = initial ? 0 : page + 1;
       if (query.length == 0) {
         $hits.empty();
         return;
       }
-      if (initial) {
+      if (p == 0) {
         $hits.empty();
       }
-      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : page });
+      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : p });
     }
 
     $(document).ready(function() {
       $(window).scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-          search(false);
+          search(page + 1);
         }
       });
 
       $('#inputfield input').keyup(function() {
-        search(true);
+        page = 0;
+        search(0);
       }).focus();
 
       // resolve DNS
