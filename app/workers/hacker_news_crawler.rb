@@ -28,7 +28,7 @@ class HackerNewsCrawler
 
   protected
   def self.cron(delta)
-    last = Post.order('id DESC').first
+    last = Post.order('created_at DESC').first
     ActiveRecord::Base.transaction do
       Post.without_auto_index do
         export((last ? last.created_at : DateTime.now) - delta) do |r|
