@@ -35,11 +35,15 @@
       var res = '';
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
-        var clazz = 'hit';
+        var classes = ['hit'];
         if ((i % 2) == 1) {
-          clazz += ' bg';
+          classes.push('odd');
         }
-        res +=  '<div class="' + clazz + '">' +
+        var nbWords = content.query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]/g).length;
+        if (hit._rankingInfo.nbTypos === 0 && (nbWords === 1 || hit._rankingInfo.nbExactWords >= nbWords)) {
+          classes.push('notypo');
+        }
+        res +=  '<div class="' + classes.join(' ') + '">' +
         '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
         '  <img class="thumb pull-left" src="//api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=' + hit.url + '" />' +
         '  <div class="title_url">' +
@@ -70,7 +74,7 @@
       if (p == 0) {
         $hits.empty();
       }
-      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : p });
+      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : p, getRankingInfo: 1 });
     }
 
     $(document).ready(function() {

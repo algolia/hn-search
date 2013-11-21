@@ -124,6 +124,7 @@ h1, h2, h3, h4 {
 
   footer {
     margin-top: 50px;
+    z-index: 1;
   }
 
   #hits {
@@ -131,6 +132,7 @@ h1, h2, h3, h4 {
     border: 1px solid #dddddd;
     margin-right: 56px;
     margin-top: 10px;
+    z-index: 2;
 
     .hit {
       background-color: #ffffff;
@@ -152,16 +154,19 @@ h1, h2, h3, h4 {
       }
 
       .title_url {
-        margin-left: 100px;
+        margin-left: 84px;
       }
 
       .title {
+        padding-left: 16px;
       }
 
       .url {
+        padding-left: 16px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 50%;
       }
 
       .points, .source {
@@ -183,14 +188,18 @@ h1, h2, h3, h4 {
       }
     }
 
+    .hit.odd {
+      background-color: #fafafa;
+      background-color: rgb(250, 250, 250);
+    }
+
     .hit:hover {
       background-color: #e9f0ff;
       background-color: rgb(233, 240, 255);
     }
 
-    .bg {
-      background-color: #fafafa;
-      background-color: rgb(250, 250, 250);
+    .hit.notypo .title {
+      background: url(asset_path('star.png', image)) top left no-repeat;
     }
 
   }
