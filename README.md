@@ -48,7 +48,7 @@ gem 'algoliasearch-rails'
 Installation
 --------------
 
-* ```git clone https://github.com/algolia/hnsearch.git```
+* ```git clone https://github.com/algolia/hn-search.git```
 *  ```bundle install```
 *  ```bundle exec rake db:migrate```
 *  Create your ```config/application.yml``` based on ```config/application.example.yml``` with your [Algolia](http://www.algolia.com) credentials
