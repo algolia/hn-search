@@ -21,7 +21,7 @@ class Post < ActiveRecord::Base
 
     # controls the way results are sorted sorting on the following 4 criteria (one after another)
     # I removed the 'exact' match critera (improve <3-words query relevance)
-    ranking ['typo', 'proximity', 'attribute', custom']
+    ranking ['typo', 'proximity', 'attribute', 'custom']
 
     # use associated number of HN points to sort results (last sort criteria)
     customRanking ['desc(points)']
