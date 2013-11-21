@@ -70,7 +70,11 @@
         '  <div class="clearfix"></div>' +
         '</div>';
       }
-      $hits.append(res);
+      if (content.page === 0) {
+        $hits.html(res);
+      } else {
+        $hits.append(res);
+      }
       $('#hits .timeago').timeago();
     }
 
@@ -82,9 +86,6 @@
       if (query.length == 0) {
         $hits.empty();
         return;
-      }
-      if (p == 0) {
-        $hits.empty();
       }
       idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : p, getRankingInfo: 1 });
     }
