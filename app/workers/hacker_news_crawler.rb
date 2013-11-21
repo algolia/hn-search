@@ -29,14 +29,15 @@ class HackerNewsCrawler
   protected
   def self.cron(delta)
     last = Post.order('created_at DESC').first
+    from = (last ? last.created_at : DateTime.now) - delta
     ActiveRecord::Base.transaction do
       Post.without_auto_index do
-        export((last ? last.created_at : DateTime.now) - delta) do |r|
+        export(from) do |r|
           Post.from_json!(r)
         end
       end
     end
-    Post.where('id > ?', last ? last.id : 0).reindex!
+    Post.where('created_at > ?', from).reindex!
   end
 
   HNSEARCH_HARD_LIMIT = 1000
