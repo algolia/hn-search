@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
   algoliasearch per_environment: true do
     attributesToIndex ['unordered(title)', 'source', 'url', 'author']
     customRanking ['desc(points)']
-    ranking ['typo', 'attribute', 'exact', 'custom']
+    ranking ['typo', 'proximity', 'attribute', 'exact', 'custom']
     queryType 'prefixAll'
     separatorsToIndex '+#$'
     optionalWords %w{a about above after again against all am an and any are aren as at be because
