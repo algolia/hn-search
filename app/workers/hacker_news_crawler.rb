@@ -53,6 +53,7 @@ class HackerNewsCrawler
       i = 0
       loop do
         url = "http://api.thriftdb.com/api.hnsearch.com/items/_search?filter[fields][type]=submission&start=#{start}&limit=#{limit}&sortby=map(ms(create_ts),0,#{from.to_i}000,#{now.to_i}000)%20asc"
+        puts "\t#{url}"
         json = JSON.parse(open(url).read) rescue nil
         if json.nil?
           last_create_ts ||= from + 1.hour
@@ -61,6 +62,7 @@ class HackerNewsCrawler
         json['results'].each do |r|
           last_create_ts = DateTime.parse r['item']['create_ts']
           break if last_create_ts < from
+          puts "\t\t#{r['item']['title']}"
           yield r['item']
           i += 1
         end
