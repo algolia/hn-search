@@ -18,8 +18,6 @@
         Made with <i class="text-danger">&hearts;</i> in Paris,
         powered by
         = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;', alt: 'Algolia'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
-        thumbnails by
-        = link_to image_tag("http://snapito.com/images/logo-72x72.png", style: 'height: 1em;', alt: 'Snapito'), "http://snapito.com", title: 'Full length website screenshots'
 
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
@@ -57,7 +55,7 @@
         }
         res +=  '<div class="' + classes.join(' ') + '">' +
         '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
-        '  <img class="thumb pull-left" src="//api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=' + hit.url + '" />' +
+        '  <img class="thumb pull-left" src="//d1dhyviwkor0hc.cloudfront.net/' + hit.objectID + '.png" />' +
         '  <div class="title_url">' +
         '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
         '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +

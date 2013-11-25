@@ -32,6 +32,10 @@ GEM
       json (>= 1.5.1)
     arel (4.0.1)
     atomic (1.1.14)
+    aws-s3 (0.6.3)
+      builder
+      mime-types
+      xml-simple
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -102,9 +106,9 @@ GEM
     minitest-wscolor (0.0.3)
       minitest (>= 2.3.1)
     multi_json (1.8.2)
-    newrelic_rpm (3.6.9.171)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    open_uri_redirections (0.1.4)
     pg (0.17.0)
     polyglot (0.3.3)
     quiet_assets (1.0.2)
@@ -158,6 +162,7 @@ GEM
     uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    xml-simple (1.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -166,6 +171,7 @@ PLATFORMS
 
 DEPENDENCIES
   algoliasearch-rails
+  aws-s3
   better_errors
   binding_of_caller
   bourbon
@@ -179,7 +185,7 @@ DEPENDENCIES
   jquery-rails
   minitest-spec-rails
   minitest-wscolor
-  newrelic_rpm
+  open_uri_redirections
   pg
   quiet_assets
   rails (= 4.0.0)

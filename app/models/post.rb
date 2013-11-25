@@ -1,8 +1,12 @@
+require 'aws/s3'
+
 class Post < ActiveRecord::Base
   include AlgoliaSearch
 
+  after_save :crawl_thumbnail!
+
   algoliasearch per_environment: true do
-    attributesToIndex ['unordered(title)', 'source', 'url', 'author']
+    attributesToIndex ['unordered(title)', 'source', 'unordered(url)', 'author']
     customRanking ['desc(points)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     queryType 'prefixAll'
@@ -30,6 +34,18 @@ class Post < ActiveRecord::Base
     p.created_at = DateTime.parse(e['create_ts'])
     p.save!
     return true
+  end
+
+  def crawl_thumbnail!
+    return true if AWS::S3::S3Object.exists?("#{id}.png", 'hnsearch_thumbnails')
+    puts "Downloading thumbnail #{id}: #{url}"
+    begin
+      AWS::S3::S3Object.store("#{id}.png", open("http://api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=#{URI.escape url}"), 'hnsearch_thumbnails', access: :public_read)
+      return true
+    rescue Exception => e
+      puts e
+      return false
+    end
   end
 
 end
