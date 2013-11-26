@@ -59,5 +59,6 @@ Installation
 Credits
 --------
     
-* [Snapito](http://snapito.com) for thumbnails generation
-* [srw](https://gist.github.com/srw/1360455) for original idea on how to export HN
+* [srw](https://gist.github.com/srw/1360455) for the original idea on how to export HN
+* [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to back the crawl of the initial batch of +900M thumbnails
+* [Snapito](http://snapito.com) for the daily thumbnails crawl
