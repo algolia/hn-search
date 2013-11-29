@@ -72,7 +72,7 @@ class Item < ActiveRecord::Base
             json = JSON.parse(data.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '')) rescue nil
             next if json.nil?
             item = Item.find_or_initialize_by(id: json['id'])
-            item.deleted = json['deleted']
+            item.deleted ||= json['deleted']
             item.item_type = json['type'] || 'unknown'
             item.author = json['by']
             item.created_at = json['time'] && Time.at(json['time'])
