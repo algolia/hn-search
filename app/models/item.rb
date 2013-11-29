@@ -48,7 +48,7 @@ class Item < ActiveRecord::Base
         item = Item.find_or_initialize_by(id: id)
         item.item_type = m[1]
         item.author = m[2]
-        item.created_at = Time.at(m[3].to_i)
+        item.created_at = m[3] && Time.at(m[3].to_i)
         item.url = m[4]
         item.title = m[5]
         item.text = m[6]
@@ -75,7 +75,7 @@ class Item < ActiveRecord::Base
             item.deleted = json['deleted']
             item.item_type = json['type']
             item.author = json['by']
-            item.created_at = Time.at(json['time'])
+            item.created_at = json['time'] && Time.at(json['time'])
             item.url = json['url']
             item.title = json['title']
             item.text = json['text']
