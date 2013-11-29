@@ -11,7 +11,7 @@
           %i.icon-search.icon-large
         #hits
   .text-center
-    %small <strong>#{number_with_delimiter Post.count}</strong> news crawled
+    %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> news and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments crawled
   %footer
     .text-center
       %small
@@ -21,7 +21,7 @@
 
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
-    var idx = apiClient.initIndex('#{Post.index_name}');
+    var idx = apiClient.initIndex('#{Item.index_name}');
     var $hits = $('#hits');
     var page = 0;
 
@@ -55,7 +55,7 @@
         }
         res +=  '<div class="' + classes.join(' ') + '">' +
         '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
-        '  <img class="thumb pull-left" src="//d1dhyviwkor0hc.cloudfront.net/' + hit.objectID + '.png" />' +
+        '  <img class="thumb pull-left" src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" />' +
         '  <div class="title_url">' +
         '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
         '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +

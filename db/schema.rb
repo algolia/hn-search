@@ -11,25 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120195227) do
+ActiveRecord::Schema.define(version: 20131128104140) do
 
-  create_table "my_models", force: true do |t|
-    t.string "name"
-  end
-
-  create_table "posts", force: true do |t|
-    t.string   "url",        limit: 1024, null: false
+  create_table "items", force: true do |t|
+    t.integer  "item_type_cd",                 null: false
+    t.string   "author",                       null: false
+    t.datetime "created_at",                   null: false
+    t.boolean  "deleted",      default: false, null: false
+    t.boolean  "dead",         default: false, null: false
     t.string   "title"
-    t.string   "source"
-    t.integer  "best_rank"
+    t.text     "url"
+    t.text     "text"
     t.integer  "points"
-    t.string   "author"
-    t.integer  "comments"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "hn_id",      limit: 255
+    t.integer  "parent_id"
+    t.integer  "story_id"
   end
 
-  add_index "posts", ["hn_id"], name: "index_posts_on_hn_id"
+  add_index "items", ["dead"], name: "index_items_on_dead"
+  add_index "items", ["deleted"], name: "index_items_on_deleted"
+  add_index "items", ["item_type_cd"], name: "index_items_on_item_type_cd"
+  add_index "items", ["story_id"], name: "index_items_on_story_id"
 
 end
