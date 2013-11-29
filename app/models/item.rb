@@ -2,7 +2,7 @@ require "archive"
 
 class Item < ActiveRecord::Base
 
-  as_enum :item_type, %w{story comment poll pollopt}
+  as_enum :item_type, %w{story comment poll pollopt unknown}
 
   after_save :crawl_thumbnail!
 
@@ -46,7 +46,7 @@ class Item < ActiveRecord::Base
         raise ArgumentError.new(line) unless m
         id = m[0].to_i
         item = Item.find_or_initialize_by(id: id)
-        item.item_type = m[1]
+        item.item_type = m[1] ||'unknown'
         item.author = m[2]
         item.created_at = m[3] && Time.at(m[3].to_i)
         item.url = m[4]
@@ -73,7 +73,7 @@ class Item < ActiveRecord::Base
             next if json.nil?
             item = Item.find_or_initialize_by(id: json['id'])
             item.deleted = json['deleted']
-            item.item_type = json['type']
+            item.item_type = json['type'] || 'unknown'
             item.author = json['by']
             item.created_at = json['time'] && Time.at(json['time'])
             item.url = json['url']
