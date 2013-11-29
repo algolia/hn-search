@@ -17,7 +17,7 @@
       %small
         Made with <i class="text-danger">&hearts;</i> in Paris,
         powered by
-        = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;', alt: 'Algolia'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
+        = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;', alt: 'Algolia'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
 
   :javascript
     var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
