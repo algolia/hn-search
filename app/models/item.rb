@@ -4,6 +4,10 @@ class Item < ActiveRecord::Base
 
   as_enum :item_type, %w{story comment poll pollopt unknown}
 
+  validates_length_of :url, within: 0..32768, allow_nil: true, allow_blank: true
+  validates_length_of :text, within: 0..32768, allow_nil: true, allow_blank: true
+  validates_length_of :author, within: 0..255, allow_nil: true, allow_blank: true
+
   after_save :crawl_thumbnail!
 
   include AlgoliaSearch
