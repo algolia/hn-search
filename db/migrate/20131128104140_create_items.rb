@@ -2,10 +2,10 @@ class CreateItems < ActiveRecord::Migration
   def change
     create_table :items do |t|
       t.integer :item_type_cd, null: false
-      t.string :author, null: false
       t.datetime :created_at, null: false
       t.boolean :deleted, null: false, default: false
       t.boolean :dead, null: false, default: false
+      t.string :author
       t.string :title
       t.text :url
       t.text :text

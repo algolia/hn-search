@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 20131128104140) do
 
   create_table "items", force: true do |t|
     t.integer  "item_type_cd",                 null: false
-    t.string   "author",                       null: false
     t.datetime "created_at",                   null: false
     t.boolean  "deleted",      default: false, null: false
     t.boolean  "dead",         default: false, null: false
+    t.string   "author"
     t.string   "title"
     t.text     "url"
     t.text     "text"
