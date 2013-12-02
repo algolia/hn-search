@@ -99,14 +99,23 @@
 
     function search(p) {
       if ((page > 0 && p <= page) || page > 50) {
+        // hard limit
         return;
       }
+
       var query = $('#inputfield input').val().trim();
       if (query.length == 0) {
         $hits.empty();
         return;
       }
-      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : p, getRankingInfo: 1 });
+
+      var tagFilters = "story";
+      if (query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]+/g).length > 1) {
+        // if at least 2 words, include comments
+        tagFilters = "(story,comment)";
+      }
+
+      idx.search(query, searchCallback, { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: tagFilters });
     }
 
     $(document).ready(function() {
