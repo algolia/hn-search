@@ -42,7 +42,13 @@ class Item < ActiveRecord::Base
   def crawl_thumbnail!
     return true if url.blank? || AWS::S3::S3Object.exists?("#{id}.png", 'hnsearch')
     begin
-      AWS::S3::S3Object.store("#{id}.png", open("http://api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=#{URI.escape url}"), 'hnsearch', access: :public_read)
+      temp_file = "/tmp/#{id}.png"
+      `#{Rails.root}/crawl_thumbnail.sh "#{url}" "#{temp_file}" >/dev/null 2>&1`
+      begin
+        AWS::S3::S3Object.store("#{id}.png", open(tmp_file), 'hnsearch', access: :public_read)
+      ensure
+        FileUtils.rm_f temp_file
+      end
       return true
     rescue Exception => e
       return false

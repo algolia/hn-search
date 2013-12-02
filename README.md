@@ -48,4 +48,3 @@ Credits
     
 * [HackerNews](https://news.ycombinator.com) for the real-time export API
 * [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to back the thumbnails' crawl
-* [Snapito](http://snapito.com) for the original thumbnails crawl
