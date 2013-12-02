@@ -73,7 +73,7 @@ class Item < ActiveRecord::Base
         ids << id
       end
     end
-    Item.includes(:comments).where(id: ids).reindex!
+    Item.includes(:story_comments).where(id: ids).reindex!
   end
 
   def self.import_from_dump!(path)
@@ -108,7 +108,7 @@ class Item < ActiveRecord::Base
     ensure
       Item.set_callback(:save, :after, :crawl_thumbnail!)
     end
-    Item.includes(:comments).reindex!
+    Item.includes(:story_comments).reindex!
   end
 
   def self.resolve_parents!
