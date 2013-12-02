@@ -36,10 +36,17 @@
       var res = '';
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
+        var type = hit._tags[0]; // first tag stores the item type
+
+        // look & feel
         var classes = ['hit'];
+        /// cosmetics
         if ((i % 2) == 1) {
           classes.push('odd');
         }
+        /// type
+        classes.push(type);
+        /// relevancy
         var nbWords = content.query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]+/g).length;
         if (hit._rankingInfo.nbTypos === 0 && (nbWords === 1 || hit._rankingInfo.nbExactWords >= nbWords)) {
           classes.push('notypo');
@@ -53,19 +60,28 @@
         } else if (hit.points > 100) {
           classes.push('p100');
         }
+
+        // content
         res +=  '<div class="' + classes.join(' ') + '">' +
-        '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
-        '  <img class="thumb pull-left" src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" />' +
-        '  <div class="title_url">' +
-        '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
-        '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
-        '  </div>' +
-        '  <div class="clearfix"></div>' +
-        '  <div class="source pull-right">' + hit._highlightResult.source.value + '</div>' +
-        '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
-        '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>' +
-        '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' +
-        '  <div class="clearfix"></div>' +
+        '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>';
+        if (type === 'story') {
+          var a = $('<a>', { href: hit.url } )[0];
+          res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
+          '  <div class="title_url">' +
+          '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
+          '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
+          '  </div>' +
+          '  <div class="clearfix"></div>' +
+          '  <div class="source pull-right">' + a.hostname + '</div>';
+        } else if (type === 'comment') {
+          res += '  <div class="text">' + hit._highlightResult.comment_text.value + '</div>';
+        }
+        res += '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
+        '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';
+        if (type === 'story') {
+          res += '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.num_comments + ' comment' + (hit.num_comments > 1 ? 's' : '') + '</a></div>';
+        }
+        res += '  <div class="clearfix"></div>' +
         '</div>';
       }
       if (content.page === 0) {

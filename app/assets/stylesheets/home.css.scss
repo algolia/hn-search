@@ -152,7 +152,11 @@ h1, h2, h3, h4 {
         width: 80px;
         height: 50px;
         overflow: hidden;
-        // background: #efefef url(asset_path('loading.gif', image)) center center no-repeat;
+        position: relative;
+
+        img {
+          width: 100%;
+        }
       }
 
       .title_url {
@@ -169,6 +173,11 @@ h1, h2, h3, h4 {
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 50%;
+      }
+
+      .text {
+        text-align: justify;
+        font-size: 0.9em;
       }
 
       .points, .source {
