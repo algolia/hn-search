@@ -36,7 +36,7 @@ class Item < ActiveRecord::Base
   end
 
   def num_comments
-    item_type == 'story' ? story_comments.count : nil
+    item_type == 'story' ? story_comments.size : nil
   end
 
   def _tags
