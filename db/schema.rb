@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131128104140) do
+ActiveRecord::Schema.define(version: 20131202133413) do
 
   create_table "items", force: true do |t|
     t.integer  "item_type_cd",                 null: false
@@ -31,5 +31,14 @@ ActiveRecord::Schema.define(version: 20131128104140) do
   add_index "items", ["deleted"], name: "index_items_on_deleted"
   add_index "items", ["item_type_cd"], name: "index_items_on_item_type_cd"
   add_index "items", ["story_id"], name: "index_items_on_story_id"
+
+  create_table "users", force: true do |t|
+    t.string   "username",   null: false
+    t.text     "about"
+    t.integer  "karma"
+    t.datetime "created_at", null: false
+  end
+
+  add_index "users", ["username"], name: "index_users_on_username"
 
 end
