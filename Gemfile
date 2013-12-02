@@ -19,6 +19,8 @@ gem 'open_uri_redirections'
 gem 'simple_enum'
 gem 'whenever'
 gem 'thin'
+gem 'rails-api'
+gem 'active_model_serializers', github: "rails-api/active_model_serializers"
 
 group :development do
   gem 'sqlite3'

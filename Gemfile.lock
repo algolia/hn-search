@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rails-api/active_model_serializers.git
+  revision: 39b2a2bdf4b6253508aa27d71531a92b2f1b58d1
+  specs:
+    active_model_serializers (0.9.0.pre)
+      activemodel (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -127,6 +134,10 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.0)
       sprockets-rails (~> 2.0.0)
+    rails-api (0.1.0)
+      actionpack (>= 3.2.11)
+      railties (>= 3.2.11)
+      tzinfo (~> 0.3.31)
     rails_layout (0.5.3)
     railties (4.0.0)
       actionpack (= 4.0.0)
@@ -186,6 +197,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers!
   algoliasearch-rails
   aws-s3
   better_errors
@@ -204,6 +216,7 @@ DEPENDENCIES
   open_uri_redirections
   quiet_assets
   rails (= 4.0.0)
+  rails-api
   rails_layout
   sass-rails (~> 4.0.0)
   simple_enum
