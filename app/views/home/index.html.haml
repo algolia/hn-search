@@ -26,6 +26,11 @@
     var page = 0;
 
     function searchCallback(success, content) {
+      if (!success) {
+        console.log(content);
+        return;
+      }
+
       if (content.query.trim() != $('#inputfield input').val().trim()) {
         return;
       }
