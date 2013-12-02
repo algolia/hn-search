@@ -11,10 +11,13 @@ class Item < ActiveRecord::Base
 
   after_save :crawl_thumbnail!
 
-  include AlgoliaSearch
+  belongs_to :parent, class_name: "Item", foreign_key: "parent_id"
+  belongs_to :story, class_name: "Item", foreign_key: "story_id"
+  has_many :comments, class_name: "Item", foreign_key: "story_id"
 
+  include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :title, :source, :url, :author, :points, :text, :author, :_tags
+    attribute :title, :source, :url, :author, :points, :text, :author, :_tags, :num_comments
     attributesToIndex ['unordered(title)', 'text', 'unordered(source)', 'unordered(url)', 'author']
     customRanking ['desc(points)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
@@ -28,6 +31,10 @@ class Item < ActiveRecord::Base
 
   def _tags
     [item_type]
+  end
+
+  def num_comments
+    comments.size
   end
 
   def crawl_thumbnail!
@@ -64,7 +71,7 @@ class Item < ActiveRecord::Base
         ids << id
       end
     end
-    Item.where(id: ids).reindex!
+    Item.includes(:comments).where(id: ids).reindex!
   end
 
   def self.import_from_dump!(path)
@@ -99,7 +106,17 @@ class Item < ActiveRecord::Base
     ensure
       Item.set_callback(:save, :after, :crawl_thumbnail!)
     end
-    Item.reindex!
+    Item.includes(:comments).reindex!
+  end
+
+  def self.resolve_parents!
+    Item.where(item_type_cd: Item.comment).where(story_id: nil).find_each do |i|
+      p = i.parent
+      while p and p.parent
+        p = p.parent
+      end
+      i.update_attribute :story_id, p.id if p && p.item_type_cd == Item.story
+    end
   end
 
 end
