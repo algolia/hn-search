@@ -17,7 +17,6 @@ gem 'algoliasearch-rails'
 gem 'aws-s3'
 gem 'open_uri_redirections'
 gem 'simple_enum'
-gem 'libarchive-ruby'
 gem 'whenever'
 gem 'thin'
 

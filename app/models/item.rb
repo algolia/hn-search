@@ -1,4 +1,5 @@
-require "archive" 
+require 'rubygems/package'
+require 'zlib'
 
 class Item < ActiveRecord::Base
 
@@ -71,22 +72,27 @@ class Item < ActiveRecord::Base
     begin
       ActiveRecord::Base.transaction do
         Item.without_auto_index do
-          Archive.new(path).each do |entry, data|
-            next if !entry.path.starts_with?("story")
-            json = JSON.parse(data.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '')) rescue nil
-            next if json.nil?
-            item = Item.find_or_initialize_by(id: json['id'])
-            item.deleted ||= json['deleted']
-            item.item_type = json['type'] || 'unknown'
-            item.author = json['by']
-            item.created_at = json['time'] && Time.at(json['time'])
-            item.url = json['url']
-            item.title = json['title']
-            item.text = json['text']
-            item.points = json['score'] && json['score'].to_i
-            #item.children = json['kids']
-            item.parent_id = json['parent_id'] && json['parent_id'].to_i
-            item.save
+          Zlib::GzipReader.open(path) do |gz|
+            Gem::Package::TarReader.new(gz).each do |entry|
+              path = entry.full_name
+              puts path
+              next if !path.starts_with?('story/') || !path.ends_with?('.json')
+              data = entry.read
+              json = JSON.parse(data.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '')) rescue nil
+              next if json.nil?
+              item = Item.find_or_initialize_by(id: json['id'])
+              item.deleted ||= json['deleted']
+              item.item_type = json['type'] || 'unknown'
+              item.author = json['by']
+              item.created_at = json['time'] && Time.at(json['time'])
+              item.url = json['url']
+              item.title = json['title']
+              item.text = json['text']
+              item.points = json['score'] && json['score'].to_i
+              #item.children = json['kids']
+              item.parent_id = json['parent_id'] && json['parent_id'].to_i
+              item.save
+            end
           end
         end
       end
