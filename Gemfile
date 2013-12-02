@@ -13,7 +13,7 @@ gem 'haml-rails'
 gem 'algoliasearch-rails'
 gem 'bourbon'
 gem 'bzip2-ruby'
-gem 'aws-s3'
+gem 'aws-sdk'
 gem 'open_uri_redirections'
 
 group :development do

@@ -28,10 +28,12 @@ class Post < ActiveRecord::Base
   end
 
   def crawl_thumbnail!
-    return true if AWS::S3::S3Object.exists?("#{id}.png", 'hnsearch_thumbnails') || Rails.env.development?
+    bucket = AWS::S3.new(access_key_id: ENV['AMAZON_ACCESS_KEY_ID'], secret_access_key: ENV['AMAZON_SECRET_ACCESS_KEY']).buckets['hnsearch_thumbnails']
+    o = bucket.objects["#{id}.png"]
+    return true if o.exists? || Rails.env.development?
     puts "Downloading thumbnail #{id}: #{url}"
     begin
-      AWS::S3::S3Object.store("#{id}.png", open("http://api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=#{URI.escape url}"), 'hnsearch_thumbnails', access: :public_read)
+      o.write(open("http://api.snapito.com/web/f33c486abee039b021dd86b4338310f3b61342d6/tc?fast=yes&freshness=86400&url=#{URI.escape url}").read, acl: :public_read)
       return true
     rescue Exception => e
       puts e
