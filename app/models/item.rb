@@ -19,24 +19,28 @@ class Item < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :title, :source, :url, :author, :points, :text, :author, :_tags, :num_comments
-    attributesToIndex ['unordered(title)', 'text', 'unordered(source)', 'unordered(url)', 'author']
-    customRanking ['desc(points)']
+    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments
+    attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
+    customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     queryType 'prefixAll'
     separatorsToIndex '+#$'
   end
 
-  def source
-    url && URI(url).host
+  def story_text
+    item_type != 'comment' ? text : nil
+  end
+
+  def comment_text
+    item_type == 'comment' ? text : nil
+  end
+
+  def num_comments
+    item_type == 'story' ? story_comments.count : nil
   end
 
   def _tags
     [item_type]
-  end
-
-  def num_comments
-    item_type == 'story' ? story_comments.count : 0
   end
 
   def crawl_thumbnail!
