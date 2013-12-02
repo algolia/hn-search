@@ -12,8 +12,10 @@ class Item < ActiveRecord::Base
   after_save :crawl_thumbnail!
 
   belongs_to :parent, class_name: "Item", foreign_key: "parent_id"
+  has_many :children, class_name: "Item", foreign_key: "parent_id"
+
   belongs_to :story, class_name: "Item", foreign_key: "story_id"
-  has_many :comments, class_name: "Item", foreign_key: "story_id"
+  has_many :story_comments, class_name: "Item", foreign_key: "story_id"
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
@@ -34,7 +36,7 @@ class Item < ActiveRecord::Base
   end
 
   def num_comments
-    comments.size
+    item_type == 'story' ? story_comments.count : 0
   end
 
   def crawl_thumbnail!
