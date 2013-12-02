@@ -8,6 +8,7 @@ Hnsearch::Application.routes.draw do
     end
   end
 
+  get "feed", controller: 'home', action: 'feed'
   root 'home#index'
 
 end
