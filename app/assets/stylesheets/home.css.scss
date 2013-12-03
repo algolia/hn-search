@@ -19,6 +19,11 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-rendering: optimizeLegibility;
   font-weight: 300;
+  background: #f6f6ef;
+}
+
+a, a:visited {
+  color: black;
 }
 
 h1, h2, h3, h4 {
@@ -122,11 +127,6 @@ h1, h2, h3, h4 {
     }
   }
 
-  footer {
-    margin-top: 50px;
-    z-index: 1;
-  }
-
   #hits {
     font-size: 1em;
     border: 1px solid #dddddd;
@@ -218,6 +218,18 @@ h1, h2, h3, h4 {
       background: url(asset_path('star.png', image)) top left no-repeat;
     }
 
+  }
+}
+
+footer {
+  margin-top: 50px;
+  z-index: 1;
+  font-size: 12px;
+
+  hr {
+    border: none;
+    border-top: 1px solid #ff6600;
+    margin: 5px;
   }
 }
 

@@ -6,20 +6,14 @@
     .search_box
       %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
         #inputfield
-          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
+          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false'}
         .searchbutton
           %i.icon-search.icon-large
         #hits
   .text-center
-    %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> news and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments crawled
-  %footer
-    .text-center
-      %small
-        Made with <i class="text-danger">&hearts;</i> in Paris,
-        powered by
-        = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;', alt: 'Algolia'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
+    %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed
 
-  :javascript
-    $(document).ready(function() {
-      new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
-    });
+:javascript
+  $(document).ready(function() {
+    new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
+  });
