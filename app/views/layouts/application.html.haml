@@ -18,7 +18,7 @@
         .content
           .row
             .span12
-              = yield
+              = content_for?(:content) ? yield(:content) : yield
 
     %footer.text-center
       %hr
