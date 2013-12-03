@@ -49,6 +49,11 @@
         self.page = 0;
         self.currentHit = null;
         self.search(0);
+      }).blur(function() {
+        $('#inputfield input').val('');
+        self.page = 0;
+        self.currentHit = null;
+        self.search(0);
       }).focus();
 
       // resolve DNS
