@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   include AlgoliaSearch
-  algoliasearch per_environment: true do
+  algoliasearch per_environment: true, id: :username do
     attributesToIndex ['username', 'about', 'karma']
     customRanking ['desc(karma)']
   end
