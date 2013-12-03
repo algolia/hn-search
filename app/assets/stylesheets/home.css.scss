@@ -209,7 +209,7 @@ h1, h2, h3, h4 {
       background-color: rgb(250, 250, 250);
     }
 
-    .hit:hover {
+    .hit:hover, .hit.active {
       background-color: #e9f0ff;
       background-color: rgb(233, 240, 255);
     }
