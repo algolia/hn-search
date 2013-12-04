@@ -12,18 +12,18 @@ class Item < ActiveRecord::Base
 
   algoliasearch per_environment: true do
     # the list of attributes to send to Algolia's API
-    attribute :title, :source, :url, :author, :points, :text, :author, :_tags
+    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
 
     # `title` is more important than `source`, `source` more than `url`, `url` more than `author`
     # btw, do not take into account positions on `title` and `url` matches
-    attributesToIndex ['unordered(title)', 'text', 'unordered(source)', 'unordered(url)', 'author']
-
-    # controls the way results are sorted sorting on the following 4 criteria (one after another)
-    # I removed the 'exact' match critera (improve {1,2,3}-words query relevance, doesn't fit HNSearch needs)
-    ranking ['typo', 'proximity', 'attribute', 'custom']
+    attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
 
     # use associated number of HN points to sort results (last sort criteria)
-    customRanking ['desc(points)']
+    customRanking ['desc(points)', 'desc(num_comments)']
+
+    # controls the way results are sorted sorting on the following 4 criteria (one after another)
+    # I removed the 'exact' match critera (improve 1-words query relevance, doesn't fit HNSearch needs)
+    ranking ['typo', 'proximity', 'attribute', 'custom']
 
     # perform prefix matching on all words
     queryType 'prefixAll'
@@ -32,14 +32,29 @@ class Item < ActiveRecord::Base
     separatorsToIndex '+#$'
   end
 
-  def source
-    url && URI(url).host
+  def story_text
+    item_type != 'comment' ? text : nil
+  end
+
+  def story_title
+    item_type == 'comment' && story ? story.title : nil
+  end
+
+  def story_url
+    item_type == 'comment' && story ? story.url : nil
+  end
+
+  def comment_text
+    item_type == 'comment' ? text : nil
+  end
+
+  def num_comments
+    item_type == 'story' ? story_comments.size : nil
   end
 
   def _tags
     [item_type]
   end
-
 end
 ```
 
