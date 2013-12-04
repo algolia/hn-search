@@ -10,6 +10,7 @@ class Item < ActiveRecord::Base
   validates_length_of :author, within: 0..255, allow_nil: true, allow_blank: true
 
   after_save :crawl_thumbnail!
+  before_create :resolve_parent!
 
   belongs_to :parent, class_name: "Item", foreign_key: "parent_id"
   has_many :children, class_name: "Item", foreign_key: "parent_id"
@@ -121,14 +122,12 @@ class Item < ActiveRecord::Base
     Item.includes(:story_comments).reindex!
   end
 
-  def self.resolve_parents!
-    Item.where(item_type_cd: Item.comment).where(story_id: nil).find_each do |i|
-      p = i.parent
-      while p and p.parent
-        p = p.parent
-      end
-      i.update_attribute :story_id, p.id if p && p.item_type_cd == Item.story
+  def resolve_parent!
+    p = self.parent
+    while p and p.parent
+      p = p.parent
     end
+    self.story_id = p.id if p
   end
 
 end
