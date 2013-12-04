@@ -27,7 +27,7 @@ class HackerNewsRealtimeCrawler
 
       items.each { |item| item.index! } # index ASAP
 
-      sleep 9
+      sleep 10
     end
 
     # the following code can be slow
