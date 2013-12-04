@@ -30,18 +30,6 @@
       color: gray;
     }
 
-    .collapser:after {
-      content: "-";
-    }
-
-    .collapsed > .collapser:after {
-      content: "+";
-    }
-
-    .ellipsis:after {
-      content: " … ";
-    }
-
     .collapsible {
       margin-left: 10px;
     }
@@ -71,7 +59,7 @@
 
 %h3 Items
 
-%h5 Query
+%h5 Request
 %p
   %span.label.label-info GET
   <code>#{api_v1_items_url(':id')}</code>
@@ -82,7 +70,7 @@
 
 %h3 Users
 
-%h5 Query
+%h5 Request
 %p
   %span.label.label-info GET
   <code>#{api_v1_users_url(':username')}</code>
@@ -93,12 +81,12 @@
 
 %h3 Search
 
-%h5 Query
+%h5 Request
 %p
   %span.label.label-info GET
   <code>#{api_v1_search_url('p1' => 'v1', 'p2' => 'v2...')}</code>
 
-%p Check our <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a> to list available parameters.
+%p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
 %h5 Answer
 %pre
