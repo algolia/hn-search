@@ -33,6 +33,7 @@ class HackerNewsRealtimeCrawler
     # the following code can be slow
     all_items.each do |item|
       item.crawl_thumbnail! rescue "not fatal"
+      item.reload
       item.resolve_parent!
       item.save
     end

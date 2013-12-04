@@ -130,6 +130,7 @@ class Item < ActiveRecord::Base
   end
 
   def resolve_parent!
+    return if self.story_id
     p = self.parent
     while p and p.parent and p.story_id.nil?
       p = p.parent
