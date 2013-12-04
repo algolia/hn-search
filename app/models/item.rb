@@ -20,7 +20,7 @@ class Item < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments
+    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
     attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
@@ -30,6 +30,14 @@ class Item < ActiveRecord::Base
 
   def story_text
     item_type != 'comment' ? text : nil
+  end
+
+  def story_title
+    item_type == 'comment' && story ? story.title : nil
+  end
+
+  def story_url
+    item_type == 'comment' && story ? story.url : nil
   end
 
   def comment_text
