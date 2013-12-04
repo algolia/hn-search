@@ -23,9 +23,9 @@ class HackerNewsRealtimeCrawler
       end
 
       items = Item.refresh_since!(last_id)
-      all_items += items
+      Item.where(id: items.map { |i| i.id }.reindex!
 
-      items.each { |item| item.index! } # index ASAP
+      all_items += items
 
       sleep 10
     end
