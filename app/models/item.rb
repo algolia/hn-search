@@ -59,6 +59,7 @@ class Item < ActiveRecord::Base
       ensure
         FileUtils.rm_f temp_file
       end
+      puts "Crawled #{url} (#{id}.png)"
       return true
     rescue Exception => e
       return false
