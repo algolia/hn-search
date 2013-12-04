@@ -5,7 +5,7 @@ class HackerNewsRealtimeCrawler
   LIMIT = 1000
 
   def self.cron
-    threads = []
+    all_items = []
 
     6.times do
       last_id = Item.order('id DESC').first.try(:id) || 1
@@ -22,12 +22,20 @@ class HackerNewsRealtimeCrawler
         n * LIMIT
       end
 
-      threads << Thread.new { Item.refresh_since!(last_id) }
+      items = Item.refresh_since!(last_id)
+      all_items += items
 
-      sleep 10
+      items.each { |item| item.index! } # index ASAP
+
+      sleep 9
     end
 
-    threads.each { |t| t.join }
+    # the following code can be slow
+    all_items.each do |item|
+      item.crawl_thumbnail! rescue "not fatal"
+      item.resolve_parent!
+      item.save
+    end
   end
 
 end

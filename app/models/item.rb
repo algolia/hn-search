@@ -9,9 +9,6 @@ class Item < ActiveRecord::Base
   validates_length_of :text, within: 0..32768, allow_nil: true, allow_blank: true
   validates_length_of :author, within: 0..255, allow_nil: true, allow_blank: true
 
-  after_save :crawl_thumbnail!
-  before_create :resolve_parent!
-
   belongs_to :parent, class_name: "Item", foreign_key: "parent_id"
   has_many :children, class_name: "Item", foreign_key: "parent_id"
 
@@ -73,7 +70,7 @@ class Item < ActiveRecord::Base
   def self.refresh_since!(id)
     id = 1 if id < 1
     export = open("#{ENV['HN_SECRET_REALTIME_EXPORT_URL']}#{id}").read
-    ids = []
+    items = []
     Item.without_auto_index do
       export.split("\n").each do |line|
         m = line.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '').scan(EXPORT_REGEXP).first
@@ -90,10 +87,10 @@ class Item < ActiveRecord::Base
         #item.children: m[8] && m[8].split(' ').map { |s| s.to_i }
         item.parent_id = m[9] && m[9].to_i
         item.save
-        ids << id
+        items << item
       end
     end
-    Item.where(id: ids).reindex!
+    items
   end
 
   def self.import_from_dump!(path)
