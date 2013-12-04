@@ -33,7 +33,7 @@ class HackerNewsRealtimeCrawler
     # resolve parents and crawl thumbnails
     Item.without_auto_index do
       all_items.each do |item|
-        item.delay.crawl_thumbnails! # can be slow
+        item.delay.crawl_thumbnail! # can be slow
         item.resolve_parent!
         item.save
       end
