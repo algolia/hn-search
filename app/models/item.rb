@@ -19,7 +19,7 @@ class Item < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
+    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
     attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
