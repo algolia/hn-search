@@ -55,7 +55,7 @@ class Item < ActiveRecord::Base
       temp_file = "/tmp/#{id}.png"
       `#{Rails.root}/crawl_thumbnail.sh "#{url}" "#{temp_file}" >/dev/null 2>&1`
       begin
-        AWS::S3::S3Object.store("#{id}.png", open(tmp_file), 'hnsearch', access: :public_read)
+        AWS::S3::S3Object.store("#{id}.png", open(temp_file), 'hnsearch', access: :public_read)
       ensure
         FileUtils.rm_f temp_file
       end
