@@ -86,6 +86,7 @@ class Item < ActiveRecord::Base
         item.points = m[7] && m[7].to_i
         #item.children: m[8] && m[8].split(' ').map { |s| s.to_i }
         item.parent_id = m[9] && m[9].to_i
+        puts "#{item.created_at}: #{item.title}" if item.new_record?
         item.save
         items << item
       end
