@@ -87,7 +87,7 @@ class Item < ActiveRecord::Base
         #item.children: m[8] && m[8].split(' ').map { |s| s.to_i }
         item.parent_id = m[9] && m[9].to_i
         puts "#{item.created_at}: #{item.title}" if item.new_record? and item.item_type == 'story'
-        item.save
+        item.save rescue "not fatal"
         items << item
       end
     end
