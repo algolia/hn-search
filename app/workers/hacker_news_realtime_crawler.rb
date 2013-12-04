@@ -23,7 +23,7 @@ class HackerNewsRealtimeCrawler
       end
 
       items = Item.refresh_since!(last_id)
-      Item.where(id: items.map { |i| i.id }.reindex!
+      Item.where(id: items.map { |i| i.id }).reindex!
 
       all_items += items
 
