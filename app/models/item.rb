@@ -69,7 +69,9 @@ class Item < ActiveRecord::Base
 
   def self.refresh_since!(id)
     id = 1 if id < 1
-    export = open("#{ENV['HN_SECRET_REALTIME_EXPORT_URL']}#{id}").read
+    url = "#{ENV['HN_SECRET_REALTIME_EXPORT_URL']}#{id}"
+    puts "====================== #{url}"
+    export = open(url).read
     items = []
     Item.without_auto_index do
       export.split("\n").each do |line|
