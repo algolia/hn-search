@@ -49,11 +49,6 @@
         self.page = 0;
         self.currentHit = null;
         self.search(0);
-      }).blur(function() {
-        $('#inputfield input').val('');
-        self.page = 0;
-        self.currentHit = null;
-        self.search(0);
       }).focus();
 
       // resolve DNS
@@ -72,14 +67,8 @@
         return;
       }
 
-      var tagFilters = "story";
-      if (query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]+/g).length > 1) {
-        // if at least 2 words, include comments
-        tagFilters = "(story,comment)";
-      }
-
       var self = this;
-      this.idx.search(query, function(success, content) { self.searchCallback(success, content); }, { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: tagFilters });
+      this.idx.search(query, function(success, content) { self.searchCallback(success, content); }, { hitsPerPage: 25, page: p, getRankingInfo: 1 });
     },
 
     goLeft: function() {
@@ -177,7 +166,25 @@
             '  <div class="clearfix"></div>' +
             '  <div class="source pull-right">' + a.hostname + '</div>';
         } else if (type === 'comment') {
-          res += '  <div class="text">' + hit._highlightResult.comment_text.value + '</div>';
+          if (hit.story_id) {
+            res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.story_id + '.png" /></div>';
+            res += '  <div class="title_url">';
+          }
+          if (hit.story_title) {
+            res += '  <div class="title">' + hit.story_title + '</div>';
+          }
+          res += '  <div class="url">';
+          var item_url = 'https://news.ycombinator.com?item=' + (hit.story_id ? hit.story_id : hit.objectID);
+          res += '    <a href="' + item_url + '" target="_blank">' + item_url + '</a>';
+          if (hit.story_url) {
+            res += '(<a href="' + hit.story_url + '" target="_blank">' + hit.story_url + '</a>)';
+          }
+          res += '  </div>';
+          res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value + '</div>';
+          if (hit.story_id) {
+            res += '  </div>';
+          }
+          res += '  <div class="clearfix"></div>';
         }
         res += '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
           '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';

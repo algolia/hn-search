@@ -183,9 +183,15 @@ h1, h2, h3, h4 {
         max-width: 50%;
       }
 
-      .text {
+      .text, .comment_text {
         text-align: justify;
         font-size: 0.9em;
+      }
+
+      .comment_text {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-style: italic;
       }
 
       .points, .source {
