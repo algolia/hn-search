@@ -9,6 +9,8 @@ class Item < ActiveRecord::Base
   validates_length_of :text, within: 0..32768, allow_nil: true, allow_blank: true
   validates_length_of :author, within: 0..255, allow_nil: true, allow_blank: true
 
+  after_create :after_create_tasks
+
   belongs_to :parent, class_name: "Item", foreign_key: "parent_id"
   has_many :children, class_name: "Item", foreign_key: "parent_id"
 
@@ -135,6 +137,13 @@ class Item < ActiveRecord::Base
       p = p.parent
     end
     self.story_id = p.story_id || p.id if p
+    self.save
+  end
+
+  private
+  def after_create_tasks
+    self.delay(priority: 0).resolve_parent!  # 0 = top priority
+    self.delay(priority: 1).crawl_thumbnail!
   end
 
 end

@@ -5,8 +5,6 @@ class HackerNewsRealtimeCrawler
   LIMIT = 1000
 
   def self.cron
-    all_items = []
-
     6.times do
       last_id = Item.order('id DESC').first.try(:id) || 1
 
@@ -25,20 +23,8 @@ class HackerNewsRealtimeCrawler
       items = Item.refresh_since!(last_id)
       Item.where(id: items.map { |i| i.id }).reindex!
 
-      all_items += items
-
       sleep 10
     end
-
-    # resolve parents and crawl thumbnails
-    Item.without_auto_index do
-      all_items.each do |item|
-        item.delay.crawl_thumbnail! # can be slow
-        item.resolve_parent!
-        item.save
-      end
-    end
-    Item.where(id: all_items.map { |i| i.id }).reindex!
   end
 
 end
