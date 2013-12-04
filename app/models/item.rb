@@ -133,10 +133,10 @@ class Item < ActiveRecord::Base
 
   def resolve_parent!
     p = self.parent
-    while p and p.parent
+    while p and p.parent and p.story_id.nil?
       p = p.parent
     end
-    self.story_id = p.id if p
+    self.story_id = p.story_id || p.id if p
   end
 
 end
