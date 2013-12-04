@@ -30,13 +30,15 @@ class HackerNewsRealtimeCrawler
       sleep 10
     end
 
-    # the following code can be slow
-    all_items.each do |item|
-      item.crawl_thumbnail! rescue "not fatal"
-      item.reload
-      item.resolve_parent!
-      item.save
+    # resolve parents and crawl thumbnails
+    Item.without_auto_index do
+      all_items.each do |item|
+        item.delay.crawl_thumbnails! # can be slow
+        item.resolve_parent!
+        item.save
+      end
     end
+    Item.where(id: all_items.map { |i| i.id }).reindex!
   end
 
 end

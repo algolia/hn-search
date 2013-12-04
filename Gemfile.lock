@@ -70,6 +70,11 @@ GEM
     curb (0.8.5)
     daemons (1.1.9)
     debug_inspector (0.0.2)
+    delayed_job (4.0.0)
+      activesupport (>= 3.0, < 4.1)
+    delayed_job_active_record (4.0.0)
+      activerecord (>= 3.0, < 4.1)
+      delayed_job (>= 3.0, < 4.1)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -204,6 +209,7 @@ DEPENDENCIES
   binding_of_caller
   bourbon
   capybara
+  delayed_job_active_record
   factory_girl_rails
   figaro
   haml-rails

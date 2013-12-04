@@ -21,6 +21,7 @@ gem 'whenever'
 gem 'thin'
 gem 'rails-api'
 gem 'active_model_serializers', github: "rails-api/active_model_serializers"
+gem 'delayed_job_active_record'
 
 group :development do
   gem 'sqlite3'
