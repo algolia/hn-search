@@ -54,3 +54,13 @@ set :rvm_ruby_string, 'ruby-2.0.0-p247'
 set :whenever_command, "bundle exec whenever"
 set :whenever_roles, [:cron]
 require "whenever/capistrano"
+
+# delayed job
+require "delayed/recipes"
+set :rails_env, "production"
+set :delayed_job_server_role, :cron
+set :delayed_job_command, 'bin/delayed_job'
+set :delayed_job_args, "-n 8"
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
