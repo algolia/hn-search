@@ -160,14 +160,19 @@
         if (type === 'story') {
           res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
             '  <div class="title_url">' +
-            '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
-            '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
-            '  </div>' +
-            '  <div class="clearfix"></div>';
+            '    <div class="title">' + hit._highlightResult.title.value + '</div>';
           if (hit.url) {
-            var a = $('<a>', { href: hit.url } )[0];
-            res += '  <div class="source pull-right">' + a.hostname + '</div>';
+            res += '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>';
+          } else {
+            res += '    <div class="url"><a href="' + item_url + '" target="_blank">' + item_url + '</a></div>';
           }
+          if (hit.story_text) {
+            res += '    <div class="comment_text">' + hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
+          }
+          res += '  </div>' +
+            '  <div class="clearfix"></div>';
+          var a = $('<a>', { href: (hit.url || item_url) } )[0];
+          res += '  <div class="source pull-right">' + a.hostname + '</div>';
         } else if (type === 'comment') {
           if (hit.story_id) {
             res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.story_id + '.png" /></div>';
@@ -182,7 +187,7 @@
             res += '(<a href="' + hit.story_url + '" target="_blank">' + hit.story_url + '</a>)';
           }
           res += '  </div>';
-          res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value + '</div>';
+          res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
           if (hit.story_id) {
             res += '  </div>';
           }
