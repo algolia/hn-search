@@ -155,7 +155,7 @@
 
         // content
         res +=  '<div class="' + classes.join(' ') + '" data-id="' + hit.objectID + '">' +
-          '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>';
+          '  <div class="author text-right"><a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></div>';
         if (type === 'story') {
           var a = $('<a>', { href: hit.url } )[0];
           res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
