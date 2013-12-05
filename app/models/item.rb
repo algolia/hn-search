@@ -120,7 +120,8 @@ class Item < ActiveRecord::Base
             item.text = json['text']
             item.points = json['score'] && json['score'].to_i
             #item.children = json['kids']
-            item.parent_id = json['parent_id'] && json['parent_id'].to_i
+            item.parent_id = json['parent'] && json['parent'].to_i
+            item.parent_id = nil if item.parent_id == 0
             item.save
           end
         end
