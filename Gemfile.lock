@@ -34,7 +34,7 @@ GEM
       tzinfo (~> 0.3.37)
     algoliasearch (1.1.11)
       curb
-    algoliasearch-rails (1.5.1)
+    algoliasearch-rails (1.5.2)
       algoliasearch (>= 1.1.7)
       json (>= 1.5.1)
     arel (4.0.1)

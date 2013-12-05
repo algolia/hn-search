@@ -44,7 +44,7 @@ class Item < ActiveRecord::Base
   end
 
   def num_comments
-    Item.unscoped { item_type == 'story' ? story_comments.count : nil }
+    item_type == 'story' ? story_comments.count : nil
   end
 
   def _tags
