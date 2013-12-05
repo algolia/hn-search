@@ -131,7 +131,6 @@ class Item < ActiveRecord::Base
 
   def resolve_parent!
     return if self.story_id
-    reload
     p = self.parent
     while p and p.parent and p.story_id.nil?
       p = p.parent
