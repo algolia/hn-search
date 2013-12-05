@@ -6,13 +6,11 @@ class HackerNewsRealtimeCrawler
   CURSOR_FILE = '/tmp/hnsearch_cursor'
 
   def self.cron
-    6.times do
+    6.times do |t|
       last_id = Item.order('id DESC').first.try(:id) || 1
 
-      now = DateTime.now
-      sec = now.second / MIN_REFRESH_DELAY * MIN_REFRESH_DELAY
-      last_id -= case sec
-      when 0, 20, 40
+      last_id -= case t
+      when 0, 2, 4
         # refresh news from last_id
         0
       else
