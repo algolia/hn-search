@@ -3,6 +3,7 @@ class HackerNewsRealtimeCrawler
   MIN_REFRESH_DELAY = 10
   REFRESH_CYCLE = 48
   LIMIT = 1000
+  CURSOR_FILE = '/tmp/hnsearch_cursor'
 
   def self.cron
     6.times do
@@ -16,7 +17,9 @@ class HackerNewsRealtimeCrawler
         0
       else
         # refresh news from last_id-n*LIMIT -> (last_id-n*LIMIT)+LIMIT
-        n = (now.minute * 6 + sec / 10) / 2 % REFRESH_CYCLE
+        n = File.read(CURSOR_FILE).to_i rescue 0
+        n = 0 if n >= REFRESH_CYCLE
+        File.open(CURSOR_FILE, 'w') { |f| f << (n + 1).to_s }
         n * LIMIT
       end
 
