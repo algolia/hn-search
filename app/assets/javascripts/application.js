@@ -129,6 +129,7 @@
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
         var type = hit._tags[0]; // first tag stores the item type
+        var item_url = 'https://news.ycombinator.com/item?id=' + (hit.story_id ? hit.story_id : hit.objectID);
 
         // look & feel
         var classes = ['hit'];
@@ -176,7 +177,6 @@
             res += '  <div class="title">' + hit.story_title + '</div>';
           }
           res += '  <div class="url">';
-          var item_url = 'https://news.ycombinator.com?item=' + (hit.story_id ? hit.story_id : hit.objectID);
           res += '    <a href="' + item_url + '" target="_blank">' + item_url + '</a>';
           if (hit.story_url) {
             res += '(<a href="' + hit.story_url + '" target="_blank">' + hit.story_url + '</a>)';
