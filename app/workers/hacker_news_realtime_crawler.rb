@@ -23,8 +23,12 @@ class HackerNewsRealtimeCrawler
         n * LIMIT
       end
 
-      items = Item.refresh_since!(last_id)
-      Item.where(id: items.map { |i| i.id }).reindex!
+      begin
+        items = Item.refresh_since!(last_id)
+        Item.where(id: items.map { |i| i.id }).reindex!
+      rescue Exception => e
+        puts "Failed to refresh #{last_id}: #{e}"
+      end
 
       sleep 10
     end
