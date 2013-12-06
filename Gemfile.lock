@@ -68,13 +68,6 @@ GEM
       xpath (~> 2.0)
     chronic (0.10.2)
     coderay (1.1.0)
-    coffee-rails (4.0.1)
-      coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.0)
-    coffee-script (2.2.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.6.3)
     curb (0.8.5)
     daemons (1.1.9)
     debug_inspector (0.0.2)
@@ -193,8 +186,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (1.3.1)
-      coffee-rails
     tzinfo (0.3.38)
     uglifier (2.3.1)
       execjs (>= 0.3.0)
@@ -238,6 +229,5 @@ DEPENDENCIES
   sqlite3
   therubyracer
   thin
-  turbolinks
   uglifier (>= 1.3.0)
   whenever
