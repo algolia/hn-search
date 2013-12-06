@@ -73,12 +73,12 @@
       series : [
         {
           name : '# Stories',
-          data : #{@stories.map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
+          data : #{Item.stories_per_hour_since(1.month.ago).map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
           type : 'line'
         },
         {
           name : '# Comments',
-          data : #{@comments.map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
+          data : #{Item.comments_per_hour_since(1.month.ago).map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
           type : 'line',
           yAxis: 1
         }
