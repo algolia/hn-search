@@ -140,10 +140,22 @@ class Item < ActiveRecord::Base
     self.save
   end
 
+  def self.stories_per_hour_since(ago)
+    per_hour_since(Item.story, ago)
+  end
+
+  def self.comments_per_hour_since(ago)
+    per_hour_since(Item.comment, ago)
+  end
+
   private
   def after_create_tasks
     self.delay(priority: 0).resolve_parent!  # 0 = top priority
     self.delay(priority: 1).crawl_thumbnail!
+  end
+
+  def self.per_hour_since(item_type, ago)
+    Item.where(item_type_cd: item_type).where('created_at > ?', ago).group_by_hour(:created_at).count.map { |k,v| [k.is_a?(String) ? DateTime.parse(k) : k, v] }
   end
 
 end

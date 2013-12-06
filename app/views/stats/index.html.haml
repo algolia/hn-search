@@ -1,0 +1,86 @@
+- content_for :head do
+  = javascript_include_tag "highstock"
+
+%h1
+  Stats
+  %span.text-mini.label.label-warning BETA
+
+%p WIP
+
+%h3 Activity per hour
+%div{id: 'stories_per_hour'}
+:javascript
+  $('#stories_per_hour').highcharts('StockChart', {
+    legend: {
+      enabled: true
+    },
+
+    credits : {
+      enabled : false
+    },
+
+    exporting : {
+      enabled : false
+    },
+
+    rangeSelector : {
+      enabled : false,
+    },
+
+    scrollbar : {
+      enabled : false
+    },
+
+    navigator : {
+      enabled : true,
+    },
+
+    xAxis: {
+      gridLineColor : '#eee',
+      labels: {
+        style : {
+          color: '#AAAAAC'
+        }
+      },
+      lineColor: '#E0E0E0',
+    },
+
+    yAxis: [
+      {
+        gridLineColor : '#eee',
+        labels: {
+          style : {
+            color: '#AAAAAC'
+          },
+          enabled : true
+        },
+        min: 0.0,
+      },
+      {
+        gridLineColor : '#eee',
+        labels: {
+          style : {
+            color: '#AAAAAC'
+          },
+          enabled : true
+        },
+        min: 0.0,
+        opposite: true
+      },
+    ],
+    
+    series : [
+      {
+        name : '# Stories',
+        data : #{@stories.map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
+        type : 'line'
+      },
+      {
+        name : '# Comments',
+        data : #{@comments.map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
+        type : 'line',
+        yAxis: 1
+      }
+    ],
+  });
+

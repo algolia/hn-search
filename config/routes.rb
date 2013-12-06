@@ -13,6 +13,7 @@ Hnsearch::Application.routes.draw do
   get 'about' => 'pages#about'
   get 'api' => 'pages#api'
   get 'cool_apps' => 'pages#cool_apps'
+  get 'stats' => 'stats#index'
 
   root 'home#index'
 

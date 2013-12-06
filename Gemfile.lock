@@ -5,6 +5,14 @@ GIT
     active_model_serializers (0.9.0.pre)
       activemodel (>= 3.2)
 
+GIT
+  remote: https://github.com/mieko/groupdate.git
+  revision: f75a3d47a27a7351998555a5bfe532a7be9248ed
+  branch: sqlite3
+  specs:
+    groupdate (0.1.6)
+      activerecord (>= 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -212,6 +220,7 @@ DEPENDENCIES
   delayed_job_active_record
   factory_girl_rails
   figaro
+  groupdate!
   haml-rails
   html2haml
   jbuilder (~> 1.2)
