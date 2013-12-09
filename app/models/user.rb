@@ -1,3 +1,6 @@
+require 'rubygems/package'
+require 'zlib'
+
 class User < ActiveRecord::Base
 
   include AlgoliaSearch
@@ -12,10 +15,16 @@ class User < ActiveRecord::Base
         Zlib::GzipReader.open(path) do |gz|
           Gem::Package::TarReader.new(gz).each do |entry|
             path = entry.full_name
+            p path
             next if !path.starts_with?('profile/') || !path.ends_with?('.json')
             data = entry.read
             json = JSON.parse(data.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '')) rescue nil
-            # FIXME
+            next if json.nil?
+            user = User.find_or_initialize_by(username: json['id'])
+            user.karma = json['karma'].to_i
+            user.about = json['about']
+            user.created_at = json['created'] && Time.at(json['created'])
+            user.save
           end
         end
       end
