@@ -3,6 +3,9 @@ require 'zlib'
 
 class User < ActiveRecord::Base
 
+  validates_length_of :username, within: 1..255, allow_nil: false, allow_blank: false
+  validates_length_of :about, within: 0..65535, allow_nil: true, allow_blank: true
+
   include AlgoliaSearch
   algoliasearch per_environment: true, id: :username do
     attributesToIndex ['username', 'about', 'karma']
