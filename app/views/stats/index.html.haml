@@ -6,7 +6,7 @@
 
 %h3 Activity per hour
 - cache 'activity_per_hour', expires_in: 1.hour do
-  %div{id: 'stories_per_hour'}
+  %div#stories_per_hour
   :javascript
     $('#stories_per_hour').highcharts('StockChart', {
       legend: {
@@ -78,6 +78,65 @@
           data : #{Item.comments_per_hour_since(1.month.ago).map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
           type : 'line',
           yAxis: 1
+        }
+      ],
+    });
+
+%h3 Users
+- cache 'cumulated_users', expires_in: 1.hour do
+  %div#users
+  :javascript
+    $('#users').highcharts('StockChart', {
+      legend: {
+        enabled: false
+      },
+
+      credits : {
+        enabled : false
+      },
+
+      exporting : {
+        enabled : false
+      },
+
+      rangeSelector : {
+        enabled : false,
+      },
+
+      scrollbar : {
+        enabled : false
+      },
+
+      navigator : {
+        enabled : true,
+      },
+
+      xAxis: {
+        gridLineColor : '#eee',
+        labels: {
+          style : {
+            color: '#AAAAAC'
+          }
+        },
+        lineColor: '#E0E0E0',
+      },
+
+      yAxis: {
+        gridLineColor : '#eee',
+        labels: {
+          style : {
+            color: '#AAAAAC'
+          },
+          enabled : true
+        },
+        min: 0.0,
+      },
+      
+      series : [
+        {
+          name : '# Users',
+          data : #{User.cumulated_per_month.map { |v| [v[0].to_time.to_i * 1000, v[1]] }.inspect},
+          type : 'line'
         }
       ],
     });

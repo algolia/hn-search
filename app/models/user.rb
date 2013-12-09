@@ -12,6 +12,14 @@ class User < ActiveRecord::Base
     customRanking ['desc(karma)']
   end
 
+  def self.cumulated_per_month
+    sum = 0
+    User.group_by_month(:created_at).count.map do |k,v|
+      sum += v
+      [k.is_a?(String) ? DateTime.parse(k) : k, sum]
+    end
+  end
+
   def self.import_from_dump!(path)
     ActiveRecord::Base.transaction do
       User.without_auto_index do
