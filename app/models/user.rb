@@ -12,6 +12,23 @@ class User < ActiveRecord::Base
     customRanking ['desc(karma)']
   end
 
+  EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (\d+) (?:nil|(\d+)/?(\d*)) "(.*)"\)$}
+
+  def self.crawl!(id)
+    return if User.find_by_username(id)
+    url = "#{ENV['HN_SECRET_REALTIME_EXPORT_USER_URL']}#{id}"
+    line = open(url).read
+    m = line.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '').scan(EXPORT_REGEXP).first
+    raise ArgumentError.new(line) unless m
+    u = User.new
+    u.username = m[0]
+    u.created_at = m[2] && Time.at(m[2].to_i)
+    u.karma = m[3]
+    u.avg = m[4].to_i > 0 && m[5].to_i > 0 ? m[4].to_i / m[5].to_f : 0
+    u.about = m[6]
+    u.save
+  end
+
   def self.cumulated_per_month
     sum = 0
     User.group_by_month(:created_at).count.map do |k,v|
@@ -43,6 +60,5 @@ class User < ActiveRecord::Base
     end
     User.reindex!
   end
-
 
 end

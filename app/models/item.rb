@@ -72,7 +72,7 @@ class Item < ActiveRecord::Base
 
   def self.refresh_since!(id)
     id = 1 if id < 1
-    url = "#{ENV['HN_SECRET_REALTIME_EXPORT_URL']}#{id}"
+    url = "#{ENV['HN_SECRET_REALTIME_EXPORT_ITEM_URL']}#{id}"
     puts "====================== #{url}"
     export = open(url).read
     items = []
@@ -140,6 +140,10 @@ class Item < ActiveRecord::Base
     self.save
   end
 
+  def crawl_author!
+    User.crawl!(author)
+  end
+
   def self.stories_per_hour_since(ago)
     per_hour_since(Item.story, ago)
   end
@@ -151,6 +155,7 @@ class Item < ActiveRecord::Base
   private
   def after_create_tasks
     self.delay(priority: 0).resolve_parent!  # 0 = top priority
+    self.delay(priority: 0).crawl_author!
     self.delay(priority: 1).crawl_thumbnail!
   end
 

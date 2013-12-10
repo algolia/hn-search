@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131209212251) do
+ActiveRecord::Schema.define(version: 20131210171223) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20131209212251) do
     t.text     "about"
     t.integer  "karma"
     t.datetime "created_at", null: false
-    t.integer  "avg"
+    t.float    "avg"
   end
 
   add_index "users", ["username"], name: "index_users_on_username"
