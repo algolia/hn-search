@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
             next if json.nil?
             user = User.find_or_initialize_by(username: json['id'])
             user.karma = json['karma'].to_i
+            user.avg = json['avg'].to_f
             user.about = json['about']
             user.created_at = json['created'] && Time.at(json['created'])
             user.save
