@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require algolia/algoliasearch.min
 //= require_tree .
 
 (function($) {
