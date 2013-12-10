@@ -6,100 +6,15 @@
     .search_box
       %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
         #inputfield
-          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN News title, Source, Author name ...', type: 'text', spellcheck: 'false'}
+          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false'}
         .searchbutton
           %i.icon-search.icon-large
         #hits
   .text-center
-    %small <strong>#{number_with_delimiter Post.count}</strong> news crawled
-  %footer
-    .text-center
-      %small
-        Made with <i class="text-danger">&hearts;</i> in Paris,
-        powered by
-        = link_to image_tag("http://d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;', alt: 'Algolia'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
+    - cache 'items_indexed', expires_in: 1.minute do
+      %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed
 
-  :javascript
-    var apiClient = new AlgoliaSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', 'https:' == document.location.protocol ? 'https' : 'http');
-    var idx = apiClient.initIndex('#{Post.index_name}');
-    var $hits = $('#hits');
-    var page = 0;
-
-    function searchCallback(success, content) {
-      if (content.query.trim() != $('#inputfield input').val().trim()) {
-        return;
-      }
-      if (page != 0 && page >= content.page) {
-        return;
-      }
-      page = content.page;
-      var res = '';
-      for (var i = 0; i < content.hits.length; ++i) {
-        var hit = content.hits[i];
-        var classes = ['hit'];
-        if ((i % 2) == 1) {
-          classes.push('odd');
-        }
-        var nbWords = content.query.split(/[\s\.,-\/#!$%\^&\*;:{}=\-_`~()]+/g).length;
-        if (hit._rankingInfo.nbTypos === 0 && (nbWords === 1 || hit._rankingInfo.nbExactWords >= nbWords)) {
-          classes.push('notypo');
-        }
-        if (hit.points > 1000) {
-          classes.push('p1000');
-        } else if (hit.points > 500) {
-          classes.push('p500');
-        } else if (hit.points > 250) {
-          classes.push('p250');
-        } else if (hit.points > 100) {
-          classes.push('p100');
-        }
-        res +=  '<div class="' + classes.join(' ') + '">' +
-        '  <div class="author text-right">' + hit._highlightResult.author.value + '</div>' +
-        '  <img class="thumb pull-left" src="//d1dhyviwkor0hc.cloudfront.net/' + hit.objectID + '.png" />' +
-        '  <div class="title_url">' +
-        '    <div class="title">' + hit._highlightResult.title.value + '</div>' +
-        '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>' +
-        '  </div>' +
-        '  <div class="clearfix"></div>' +
-        '  <div class="source pull-right">' + hit._highlightResult.source.value + '</div>' +
-        '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
-        '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>' +
-        '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.comments + ' comment' + (hit.comments > 1 ? 's' : '') + '</a></div>' +
-        '  <div class="clearfix"></div>' +
-        '</div>';
-      }
-      if (content.page === 0) {
-        $hits.html(res);
-      } else {
-        $hits.append(res);
-      }
-      $('#hits .timeago').timeago();
-    }
-
-    function search(p) {
-      if ((page > 0 && p <= page) || page > 50) {
-        return;
-      }
-      var query = $('#inputfield input').val().trim();
-      if (query.length == 0) {
-        $hits.empty();
-        return;
-      }
-      idx.search(query, searchCallback, { "hitsPerPage" : 25, "page" : p, getRankingInfo: 1 });
-    }
-
-    $(document).ready(function() {
-      $(window).scroll(function () {
-        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-          search(page + 1);
-        }
-      });
-
-      $('#inputfield input').keyup(function() {
-        page = 0;
-        search(0);
-      }).focus();
-
-      // resolve DNS
-      idx.search("", function(success, content) { });
-    });
+:javascript
+  $(document).ready(function() {
+    new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
+  });

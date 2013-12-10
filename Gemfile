@@ -1,20 +1,27 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 
 gem 'rails', '4.0.0'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
-gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'figaro'
 gem 'haml-rails'
-gem 'algoliasearch-rails'
 gem 'bourbon'
-gem 'bzip2-ruby'
-gem 'aws-sdk'
+gem 'therubyracer'
+
+gem 'algoliasearch-rails'
+gem 'aws-s3'
 gem 'open_uri_redirections'
+gem 'simple_enum'
+gem 'whenever'
+gem 'thin'
+gem 'rails-api'
+gem 'active_model_serializers', github: "rails-api/active_model_serializers"
+gem 'delayed_job_active_record'
+gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'
 
 group :development do
   gem 'sqlite3'
@@ -25,7 +32,7 @@ group :development do
   gem 'rails_layout'
 end
 group :production do
-  gem 'pg'
+  gem 'mysql2'
 end
 group :development, :test do
   gem 'factory_girl_rails'

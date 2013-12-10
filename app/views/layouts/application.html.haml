@@ -2,12 +2,13 @@
 %html
   %head
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-      %title= content_for?(:title) ? yield(:title) : "HN Search powered by Algolia"
-      %meta{:content => content_for?(:description) ? yield(:description) : "Hnsearch", :name => "description"}
-        = stylesheet_link_tag "application", :media => "all"
-        = javascript_include_tag "application"
-        = csrf_meta_tags
-        = yield(:head)
+    %title= content_for?(:title) ? yield(:title) : "HN Search powered by Algolia"
+    %meta{:content => content_for?(:description) ? yield(:description) : "Hnsearch", :name => "description"}
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = auto_discovery_link_tag(:rss, {controller: "home", action: "feed", format: 'rss'}, { title: 'HN Search'})
+    = yield(:head)
   %body{:class => "#{controller_name} #{action_name}"}
     %span#forkongithub.hidden-xs
       = link_to 'Fork me on GitHub', 'https://github.com/algolia/hn-search', target: '_blank'
@@ -17,14 +18,27 @@
         .content
           .row
             .span12
-              = yield
+              = content_for?(:content) ? yield(:content) : yield
+
+    %footer.text-center
+      %hr
+      %ul.list-inline
+        %li= link_to 'About', about_path
+        %li= link_to 'Search', root_path
+        %li= link_to 'Stats', stats_path
+        %li= link_to 'API', api_path
+        %li= link_to 'Cool Apps', cool_apps_path
+        %li
+          Made with <i class="text-danger">&hearts;</i> in Paris,
+          powered by
+          = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia128x40.png", style: 'height: 1em;', alt: 'Algolia'), "http://www.algolia.com", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
 
     :javascript
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-32446386-1']);
-      _gaq.push(['_setDomainName', 'hn-search.herokuapp.com']);
+      _gaq.push(['_setDomainName', 'hnsearch.algolia.com']);
       _gaq.push(['_setAllowLinker', true]);
-      _gaq.push(['_trackPageview', '/hn-search']);
+      _gaq.push(['_trackPageview', '/hnsearch']);
 
 
       (function() {
