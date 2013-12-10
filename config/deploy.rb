@@ -7,8 +7,9 @@ set :default_environment, {
 default_run_options[:pty] = true 
 
 # servers
-server 'www1.algolia.com', :app, :web, :db, :cron, primary: true
-server 'www2.algolia.com', :app, :web, :db
+server 'c2-use-1.algolia.io', :app, :web, :db, :cron, primary: true
+server 'c2-use-2.algolia.io', :app, :web
+server 'c2-use-3.algolia.io', :app, :web
 
 # application
 set :application, "HNSearch"
@@ -48,7 +49,7 @@ before "deploy:assets:precompile", "bundle:install"
 
 # rvm
 require "rvm/capistrano"
-set :rvm_ruby_string, 'ruby-2.0.0-p247'
+set :rvm_ruby_string, 'ruby-2.0.0-p353'
 
 # cron
 set :whenever_command, "bundle exec whenever"
