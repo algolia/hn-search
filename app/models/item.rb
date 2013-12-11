@@ -132,12 +132,14 @@ class Item < ActiveRecord::Base
 
   def resolve_parent!
     return if self.story_id
-    p = self.parent
-    while p and p.parent and p.story_id.nil?
-      p = p.parent
+    Item.without_auto_index do
+      p = self.parent
+      while p and p.parent and p.story_id.nil?
+        p = p.parent
+      end
+      self.story_id = p.story_id || p.id if p
+      self.save
     end
-    self.story_id = p.story_id || p.id if p
-    self.save
   end
 
   def crawl_author!
