@@ -21,4 +21,5 @@ case `uname -a` in
 esac
 ROOT=`dirname "$0"`
 
-$TIMEOUT 30 $RUN "$ROOT/$BIN" --height 768 $OPTIONS --javascript-delay 10000 "$1" "$2" && convert "$2" -resize '100!x100' "$2"
+CMD="$TIMEOUT 30 $RUN \"$ROOT/$BIN\" --height 768 $OPTIONS --javascript-delay 10000 \"$1\" \"$2\" && convert \"$2\" -resize '100!x100' \"$2\""
+eval $CMD
