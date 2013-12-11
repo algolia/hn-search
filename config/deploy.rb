@@ -61,7 +61,7 @@ require "delayed/recipes"
 set :rails_env, "production"
 set :delayed_job_server_role, :cron
 set :delayed_job_command, 'bin/delayed_job'
-set :delayed_job_args, "-n 8"
+set :delayed_job_args, "-n 16"
 after "deploy:stop",    "delayed_job:stop"
 after "deploy:start",   "delayed_job:start"
 after "deploy:restart", "delayed_job:restart"
