@@ -6,7 +6,7 @@
 
 %h3 How it works
 
-%p Every 20 seconds, last 1000 HN items (stories, comments, polls) are sent to Algolia's indexing API. Items from the the last 48 hours are refreshed every 8 minutes.
+%p Every 2 minutes, last 1000 HN items (stories, comments, polls) are sent to Algolia's indexing API. Items from the the last 48 hours are refreshed every hour.
 %p Data are indexed on 3 different servers for high availability, hosted in St-Louis/USA.
 
 %h3 Credits
@@ -14,7 +14,7 @@
 %p Special thanks to the <a href="http://octopart.com/">Octopart</a> and <a href="https://news.ycombinator.com">YC</a> teams for providing us the data.
 
 %ul
-  %li= link_to "Hacker News", "http://news.ycombinator.com"
+  %li= link_to "Hacker News", "https://news.ycombinator.com"
   %li= link_to "Algolia", "http://www.algolia.com"
   %li= link_to "Octopart", "http://octopart.com"
   %li= link_to "REST API", "http://www.algolia.com/doc/rest_api"

@@ -7,7 +7,7 @@ class HackerNewsRealtimeCrawler
   def self.cron
     last_id = Item.order('id DESC').first.try(:id) || 1
 
-    last_id -= if DateTime.now.minute % 4 == 0
+    last_id -= if DateTime.now.minute % 2 == 0
       # refresh news from last_id-(LIMIT / 2)
       LIMIT / 2
     else
