@@ -157,8 +157,8 @@ class Item < ActiveRecord::Base
   private
   def after_create_tasks
     self.delay(priority: 0).resolve_parent!  # 0 = top priority
-    self.delay(priority: 0).crawl_author!
     self.delay(priority: 1).crawl_thumbnail!
+    self.delay(priority: 2).crawl_author!
   end
 
   def self.per_hour_since(item_type, ago)
