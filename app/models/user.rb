@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     customRanking ['desc(karma)']
   end
 
-  EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (\d+) (?:nil|(\d+)/?(\d*)) (?:nil|"(.*)")\)$}
+  EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (-?\d+) (?:nil|(-?\d+)/?(-?\d*)) (?:nil|"(.*)")\)$}
 
   def self.crawl!(id)
     return if User.find_by_username(id)
