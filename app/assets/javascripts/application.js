@@ -196,7 +196,7 @@
         res += '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
           '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';
         if (type === 'story') {
-          res += '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.hn_id + '" target="_blank">' + hit.num_comments + ' comment' + (hit.num_comments > 1 ? 's' : '') + '</a></div>';
+          res += '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.objectID + '" target="_blank">' + hit.num_comments + ' comment' + (hit.num_comments > 1 ? 's' : '') + '</a></div>';
         }
         res += '  <div class="clearfix"></div>' +
           '</div>';
