@@ -144,6 +144,7 @@ h1, h2, h3, h4 {
     background: white;
 
     .hit {
+      color: #333;
       background-color: #ffffff;
       background-color: rgb(255, 255, 255);
       font-size: 14px;
@@ -157,6 +158,7 @@ h1, h2, h3, h4 {
 
       .thumb {
         margin-bottom: 10px;
+        margin-right: 10px;
         width: 80px;
         height: 50px;
         overflow: hidden;
@@ -172,11 +174,9 @@ h1, h2, h3, h4 {
       }
 
       .title {
-        padding-left: 16px;
       }
 
       .url {
-        padding-left: 16px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -229,7 +229,6 @@ h1, h2, h3, h4 {
     }
 
     .hit.notypo .title {
-      background: url(asset_path('star.png', image)) top left no-repeat;
     }
 
   }
