@@ -3,6 +3,7 @@ class HackerNewsRealtimeCrawler
   REFRESH_CYCLE = 48
   LIMIT = 1000
   CURSOR_FILE = '/tmp/hnsearch_cursor'
+  REINDEX_LAST_STORIES = 5000
 
   def self.cron
     last_id = Item.order('id DESC').first.try(:id) || 1
@@ -24,6 +25,10 @@ class HackerNewsRealtimeCrawler
     rescue Exception => e
       puts "Failed to refresh #{last_id}: #{e}"
     end
+
+    # reindex last 5000 items
+    first = Item.where(item_type_cd: Item.story).order('id DESC').limit(REINDEX_LAST_STORIES).select('id').last
+    Item.where(item_type_cd: Item.story).where('id > ?', first.id).reindex!
   end
 
   # def self.cron
