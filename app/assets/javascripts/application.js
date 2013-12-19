@@ -164,7 +164,7 @@
           if (hit.url) {
             res += '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>';
           } else {
-            res += '    <div class="url"><a href="' + item_url + '#up_' + hit.objectID + '" target="_blank">' + item_url + '</a></div>';
+            res += '    <div class="url"><a href="' + item_url + '" target="_blank">' + item_url + '</a></div>';
           }
           if (hit.story_text) {
             res += '    <div class="comment_text">' + hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
@@ -182,7 +182,7 @@
             res += '  <div class="title">' + hit.story_title + '</div>';
           }
           res += '  <div class="url">';
-          res += '    <a href="' + item_url + '#up_' + hit.objectID + '" target="_blank">' + item_url + '</a>';
+          res += '    <a href="' + item_url + (hit.story_id ?  '#up_' + hit.objectID : '') + '" target="_blank">' + item_url + '</a>';
           if (hit.story_url) {
             res += ' (<a href="' + hit.story_url + '" target="_blank">' + hit.story_url + '</a>)';
           }
