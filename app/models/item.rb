@@ -130,8 +130,8 @@ class Item < ActiveRecord::Base
     Item.reindex!
   end
 
-  def resolve_parent!
-    return if self.story_id || self.item_type != 'comment'
+  def resolve_parent!(force = false)
+    return if !force && (self.story_id || self.item_type != 'comment')
     Item.without_auto_index do
       p = self
       while p.parent and p.parent.story_id.nil?
