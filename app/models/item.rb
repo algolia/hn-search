@@ -131,13 +131,13 @@ class Item < ActiveRecord::Base
   end
 
   def resolve_parent!
-    return if self.story_id
+    return if self.story_id || self.item_type != 'comment'
     Item.without_auto_index do
-      p = self.parent
-      while p and p.parent and p.story_id.nil?
+      p = self
+      while p.parent and p.parent.story_id.nil?
         p = p.parent
       end
-      self.story_id = p.story_id || p.id if p
+      self.story_id = p.parent ? p.parent.story_id : (p.story_id || p.id)
       self.save
     end
   end
