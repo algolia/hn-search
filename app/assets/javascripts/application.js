@@ -25,7 +25,7 @@
     init: function(applicationID, apiKey, indexName) {
       var self = this;
 
-      this.idx = new AlgoliaSearch(applicationID, apiKey).initIndex(indexName);
+      this.idx = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']).initIndex(indexName);
       this.$hits = $('#hits');
       this.page = 0;
       this.currentHit = null;
