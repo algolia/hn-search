@@ -6,7 +6,7 @@
     .search_box
       %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
         #inputfield
-          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false'}
+          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
         .searchbutton
           %i.icon-search.icon-large
         #hits

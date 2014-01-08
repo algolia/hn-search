@@ -51,8 +51,12 @@
         self.search(0);
       }).focus();
 
-      // resolve DNS
-      this.idx.search('', function(success, content) { });
+      if ($('#inputfield input').val() !== '') {
+        this.search(0);
+      } else {
+        // resolve DNS
+        this.idx.search('', function(success, content) { });
+      }
     },
 
     search: function(p) {
@@ -91,7 +95,10 @@
     },
 
     goCurrent: function() {
-      if (!this.currentHit) return;
+      if (!this.currentHit) {
+        window.location.href = '/?q=' + encodeURI($('#inputfield input').val());
+        return;
+      }
       window.location.href = 'http://news.ycombinator.com/item?id=' + this.currentHit.data('id');
     },
 
