@@ -14,19 +14,19 @@ module Api
 
       protected
       def client
-        Thread.current[:algolia_client] ||= Client.new(ENV['ALGOLIASEARCH_APPLICATION_ID'], ENV['ALGOLIASEARCH_API_KEY'])
+        Thread.current[:algolia_client] ||= Client.new(ENV['ALGOLIASEARCH_APPLICATION_ID'], ENV['ALGOLIASEARCH_API_KEY'], ENV['ALGOLIASEARCH_API_KEY_RO'])
       end
 
     end
 
     class Client
 
-      def initialize(application_id, api_key, is_admin = false)
+      def initialize(application_id, api_key, forwarded_api_key)
         @cluster = 2.upto(3).map { |i| "#{application_id}-#{i}" } # application_id-1 is dedicated to build
         @client = Curl::Easy.new do |s|
           s.headers[Algolia::Protocol::HEADER_API_KEY]           = api_key
           s.headers[Algolia::Protocol::HEADER_APP_ID]            = application_id
-          s.headers[Algolia::Protocol::HEADER_FORWARDED_API_KEY] = ENV['ALGOLIASEARCH_API_KEY_RO']
+          s.headers[Algolia::Protocol::HEADER_FORWARDED_API_KEY] = forwarded_api_key
           s.headers["Content-Type"]                              = "application/json; charset=utf-8"
           s.headers["User-Agent"]                                = "Algolia for Ruby (hnsearch)"
         end
