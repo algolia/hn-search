@@ -13,6 +13,7 @@ gem 'bourbon'
 gem 'therubyracer'
 
 gem 'algoliasearch-rails'
+gem 'curb'
 gem 'aws-s3'
 gem 'open_uri_redirections'
 gem 'simple_enum'

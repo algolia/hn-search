@@ -6,12 +6,13 @@ module Api
         params.delete :action
         params.delete :controller
         params.delete :format
-        render json: client.get("/1/indexes/#{Item.index_name}", params.to_param), root: false
+        forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
+        render json: client.get("/1/indexes/#{Item.index_name}", params.to_param, forwarded_ip), root: false
       end
 
       protected
       def client
-        @client ||= Client.new(ENV['ALGOLIASEARCH_APPLICATION_ID'], ENV['ALGOLIASEARCH_API_KEY_RO'])
+        Thread.current[:algolia_client] ||= Client.new(ENV['ALGOLIASEARCH_APPLICATION_ID'], ENV['ALGOLIASEARCH_API_KEY'])
       end
 
     end
@@ -19,29 +20,30 @@ module Api
     class Client
 
       def initialize(application_id, api_key, is_admin = false)
-        @cluster = 1.upto(3).map { |i| "#{application_id}-#{i}" }
+        @cluster = 2.upto(3).map { |i| "#{application_id}-#{i}" } # application_id-1 is dedicated to build
         @client = Curl::Easy.new do |s|
-          s.headers[Algolia::Protocol::HEADER_API_KEY]  = api_key
-          s.headers[Algolia::Protocol::HEADER_APP_ID]   = application_id
-          s.headers["Content-Type"]                     = "application/json; charset=utf-8"
-          s.headers["User-Agent"]                       = "Algolia for Ruby (hnsearch)"
+          s.headers[Algolia::Protocol::HEADER_API_KEY]           = api_key
+          s.headers[Algolia::Protocol::HEADER_APP_ID]            = application_id
+          s.headers[Algolia::Protocol::HEADER_FORWARDED_API_KEY] = ENV['ALGOLIASEARCH_API_KEY_RO']
+          s.headers["Content-Type"]                              = "application/json; charset=utf-8"
+          s.headers["User-Agent"]                                = "Algolia for Ruby (hnsearch)"
         end
       end
 
-      def get(action, params = '')
-        request :GET, "#{action}#{'?' if !params.blank?}#{params}"
+      def get(action, params, forwarded_ip)
+        request :GET, "#{action}#{'?' if !params.blank?}#{params}", forwarded_ip
       end
 
-      def post(action, params)
-        request :POST, action, params.to_json
+      def post(action, params, forwarded_ip)
+        request :POST, action, forwarded_ip, params.to_json
       end
 
-      def put(action, params)
-        request :PUT, action, params.to_json
+      def put(action, params, forwarded_ip)
+        request :PUT, action, forwarded_ip, params.to_json
       end
 
-      def delete(action)
-        request :DELETE, action
+      def delete(action, forwarded_ip)
+        request :DELETE, action, forwarded_ip
       end
 
       private
@@ -50,7 +52,8 @@ module Api
       # with common basic response handling. Will raise a
       # Algolia::AlgoliaProtocolError if the response has an error status code,
       # and will return the parsed JSON body on success, if there is one.
-      def request(method, uri, data = nil)
+      def request(method, uri, forwarded_ip, data = nil)
+        @client.headers[Algolia::Protocol::HEADER_FORWARDED_IP] = forwarded_ip
         @cluster.each do |c|
           begin
             @client.url = "https://#{c}.algolia.io" + uri
