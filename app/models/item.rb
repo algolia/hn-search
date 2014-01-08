@@ -86,8 +86,8 @@ class Item < ActiveRecord::Base
         item.author = m[2]
         item.created_at = m[3] && Time.at(m[3].to_i)
         item.url = m[4]
-        item.title = m[5]
-        item.text = m[6]
+        item.title = m[5] && m[5].gsub(/(^|[^\\])\\"/, '"')
+        item.text = m[6] && m[6].gsub(/(^|[^\\])\\"/, '"')
         item.points = m[7] && m[7].to_i
         #item.children: m[8] && m[8].split(' ').map { |s| s.to_i }
         item.parent_id = m[9] && m[9].to_i
