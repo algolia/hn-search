@@ -8,6 +8,8 @@ module Api
         params.delete :format
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
         render json: client.get("/1/indexes/#{Item.index_name}", params.to_param, forwarded_ip), root: false
+      rescue Algolia::AlgoliaProtocolError => e
+        render json: JSON.parse(client.body), status: e.code
       end
 
       protected
@@ -44,6 +46,10 @@ module Api
 
       def delete(action, forwarded_ip)
         request :DELETE, action, forwarded_ip
+      end
+
+      def body
+        @client.body_str
       end
 
       private
