@@ -49,11 +49,13 @@
         self.page = 0;
         self.currentHit = null;
         self.search(0);
-      }).focus();
+      });
 
       if ($('#inputfield input').val() !== '') {
         this.search(0);
       } else {
+        $('#inputfield input').focus();
+
         // resolve DNS
         this.idx.search('', function(success, content) { });
       }
