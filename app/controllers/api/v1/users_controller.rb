@@ -1,10 +1,9 @@
 module Api
   module V1
-    class UsersController < ActionController::API
+    class UsersController < BaseController
 
       def show
-        user = User.find_by_username!(params[:username])
-        render json: user, root: false
+        json_request(:get, "/1/indexes/#{User.index_name}/#{params.delete :username}", params)
       end
 
     end

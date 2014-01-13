@@ -1,10 +1,9 @@
 module Api
   module V1
-    class ItemsController < ActionController::API
+    class ItemsController < BaseController
 
       def show
-        item = Item.find(params[:id])
-        render json: item, root: false
+        json_request(:get, "/1/indexes/#{Item.index_name}/#{params.delete :id}", params)
       end
 
     end
