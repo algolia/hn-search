@@ -32,9 +32,6 @@ class HackerNewsRealtimeCrawler
     # reindex last 5000 items
     first = Item.where(item_type_cd: Item.story).order('id DESC').limit(REINDEX_LAST_STORIES).select('id').last
     Item.where(item_type_cd: Item.story).where(deleted: false).where('id > ?', first.id).reindex!
-    Item.where(item_type_cd: Item.story).where(deleted: true).find_each do |item|
-      item.remove_from_index!
-    end
   end
 
 
