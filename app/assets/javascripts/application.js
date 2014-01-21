@@ -51,6 +51,15 @@
         self.search(0);
       });
 
+      // backward compatibility
+      if (window.location.hash) {
+        // #request/all&q=foobar
+        var hash = window.location.hash.substring(1);
+        if (hash.indexOf('q=') > -1) {
+          $('#inputfield input').val(hash.substring(hash.indexOf('q=') + 2));
+        }
+      }
+
       if ($('#inputfield input').val() !== '') {
         this.search(0);
       } else {
