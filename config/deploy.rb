@@ -7,9 +7,9 @@ set :default_environment, {
 default_run_options[:pty] = true 
 
 # servers
-server 'c2-use-1.algolia.io', :app, :web, :db, :cron, primary: true
-server 'c2-use-2.algolia.io', :app, :web
-server 'c2-use-3.algolia.io', :app, :web
+server 'c3-use-1.algolia.io', :app, :web, :db, :cron, primary: true
+server 'c3-use-2.algolia.io', :app, :web
+server 'c3-use-3.algolia.io', :app, :web
 
 # application
 set :application, "HNSearch"
