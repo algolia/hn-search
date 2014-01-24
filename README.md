@@ -1,7 +1,7 @@
 HN Search powered by Algolia
 ==================
 
-This is the Rails 4 application providing [HN Search](hnsearch.algolia.com). It's based on [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl thumbnails.
+This is the Rails 4 application providing [HN Search](http://hn.algolia.com). It's based on [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl thumbnails.
 
 Configuration
 --------------
