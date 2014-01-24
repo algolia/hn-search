@@ -3,11 +3,9 @@ module Api
     class ItemsController < BaseController
 
       def show
-        id = params.delete :id
-        json_request(:get, "/1/indexes/#{Item.index_name}/#{id}", params) # rate-limits check
-        render json: Item.where(deleted: false).find(id), root: false
-      rescue Algolia::AlgoliaProtocolError => e
-        render json: JSON.parse(client.body), status: e.code
+        render_json_request(:get, "/1/indexes/#{Item.index_name}/#{params.delete :id}", params) do |id|
+          Item.where(deleted: false).find(id)
+        end
       end
 
     end
