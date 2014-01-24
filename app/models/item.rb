@@ -91,7 +91,15 @@ class Item < ActiveRecord::Base
         item.points = m[7] && m[7].to_i
         #item.children: m[8] && m[8].split(' ').map { |s| s.to_i }
         item.parent_id = m[9] && m[9].to_i
+        item.deleted = false
         puts "#{item.created_at}: #{item.title}" if item.new_record? and item.item_type == 'story'
+        item.save rescue "not fatal"
+        items << item
+      end
+      ((items.first.id..items.last.id).to_a - items.map { |item| item.id }).each do |deleted_id|
+        item = Item.find_or_initialize_by(id: deleted_id)
+        item.item_type ||= 'unknown'
+        item.deleted = true
         item.save rescue "not fatal"
         items << item
       end
