@@ -34,6 +34,8 @@ desc "Copy in server specific configuration files"
 task :copy_shared do
   run "cp #{deploy_to}/shared/config/database.yml #{release_path}/config/"
   run "cp #{deploy_to}/shared/config/application.yml #{release_path}/config/"
+  run "paxctl -C #{release_path}/wkhtmltoimage-amd64"
+  run "paxctl -prmsx #{release_path}/wkhtmltoimage-amd64"
 end
 before "bundle:install", "copy_shared"
 
