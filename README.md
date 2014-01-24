@@ -15,7 +15,7 @@ class Item < ActiveRecord::Base
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
 
     # `title` is more important than `source`, `source` more than `url`, `url` more than `author`
-    # btw, do not take into account positions on `title` and `url` matches
+    # btw, do not take into account position of first matched word on `title` and `url` matches
     attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
 
     # use associated number of HN points to sort results (last sort criteria)
