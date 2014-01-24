@@ -8,12 +8,16 @@ module Api
         params.delete :controller
         params.delete :format
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
-        render json: client.send(method, action, params.to_param, forwarded_ip), root: false
+        client.send(method, action, params.to_param, forwarded_ip)
+      end
+
+      def render_json_request(method, action, params)
+        json = json_request(method, action, params)
+        render json: json, root: false
       rescue Algolia::AlgoliaProtocolError => e
         render json: JSON.parse(client.body), status: e.code
       end
 
-      private
       def client
         Thread.current[:algolia_client] ||= Client.new(ENV['ALGOLIASEARCH_APPLICATION_ID'], ENV['ALGOLIASEARCH_API_KEY'], ENV['ALGOLIASEARCH_API_KEY_RO'])
       end

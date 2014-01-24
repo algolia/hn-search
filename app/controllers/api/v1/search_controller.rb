@@ -3,7 +3,7 @@ module Api
     class SearchController < BaseController
 
       def perform
-        json_request(:get, "/1/indexes/#{Item.index_name}", params)
+        render_json_request(:get, "/1/indexes/#{Item.index_name}", params)
       end
 
     end
