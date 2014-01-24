@@ -29,10 +29,14 @@
       this.$hits = $('#hits');
       this.page = 0;
       this.currentHit = null;
+      this.lastPageAt = new Date().getTime();
 
       $(window).scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-          self.search(self.page + 1);
+          if (new Date().getTime() - self.lastPageAt > 1000) {
+            self.search(self.page + 1);
+            self.lastPageAt = new Date().getTime();
+          }
         }
       });
 
