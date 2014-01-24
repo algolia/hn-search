@@ -78,3 +78,5 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
+hn-search.sublime-project
+hn-search.sublime-workspace
