@@ -114,7 +114,7 @@
         window.location.href = '/?q=' + encodeURI($('#inputfield input').val());
         return;
       }
-      window.location.href = 'http://news.ycombinator.com/item?id=' + this.currentHit.data('id');
+      window.location.href = 'https://news.ycombinator.com/item?id=' + this.currentHit.data('id');
     },
 
     go: function(selectFunction) {
