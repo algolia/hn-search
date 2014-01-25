@@ -119,11 +119,10 @@ Number.prototype.number_with_delimiter = function(delimiter) {
 
       var stats = '';
       if (content.nbHits > 0) {
-        stats += 'Page ' + (content.page + 1) + ' of ' + content.nbPages + ', ';
-        if (content.nbHits > 1000) {
-          stats += 'about ';
-        }
-        stats += content.nbHits.number_with_delimiter() + ' result' + (content.nbHits > 1 ? 's' : '');
+        stats += 'Page <b>' + (content.page + 1) + ' of ' + content.nbPages + '</b>, ';
+        stats += content.nbHits > 1000 ? 'about' : 'got';
+        stats += ' <b>' + content.nbHits.number_with_delimiter() + ' result' + (content.nbHits > 1 ? 's' : '') + '</b>';
+        stats += ' in <b>' + content.processingTimeMS + ' ms</b>';
       }
       this.$stats.html(stats);
       
