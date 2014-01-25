@@ -19,11 +19,11 @@ class Item < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url
-    attribute :created_at do
+    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url
+    attribute :created_at_i do
       created_at.to_i
     end
-    attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at']
+    attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
     tags do
       [item_type, "author_#{author}", "story_#{story_id}"]
     end

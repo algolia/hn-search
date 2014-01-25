@@ -1,0 +1,39 @@
+- content_for :head do
+  = stylesheet_link_tag "home.beta"
+  = javascript_include_tag "hnsearch.beta"
+
+#search-panel
+  %h1.text-center
+    Search Hacker News
+
+  %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
+    .pull-right.hidden-xs#advanced-search
+      Use <code>author:USERNAME</code> to restrict to a user
+    %ul.list-unstyled.list-inline#item_type.hidden-xs
+      - %w{all story comment poll}.each do |type|
+        %li
+          %input{type: 'radio', name: 'item_type', value: type, id: "item_type_#{type}", checked: (type == 'all')}
+          %label{for: "item_type_#{type}"}= type.capitalize.gsub('_', ' ')
+    .search_box-wrapper
+      .search_box
+        #inputfield
+          %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
+        .searchbutton
+          %i.icon-search.icon-large
+    .text-right.hidden-xs
+      %ul.list-unstyled.list-inline#created_at
+        %li Items from:
+        - %w{today last_week last_month forever}.each do |period|
+          %li
+            %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'forever')}
+            %label{for: "created_at_#{period}"}= period.capitalize.gsub('_', ' ')
+
+  #hits
+
+  .text-center
+    - cache 'items_indexed', expires_in: 15.minute do
+      %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed
+:javascript
+  $(document).ready(function() {
+    new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
+  });

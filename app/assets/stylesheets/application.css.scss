@@ -8,7 +8,50 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require bootstrap_and_overrides
- *= require home
+ *= require_self
 */
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu'), url(https://themes.googleusercontent.com/static/fonts/ubuntu/v4/vRvZYZlUaogOuHbBTT1SNevvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  font-weight: 300;
+  background: #f6f6ef;
+}
+
+a, a:visited {
+  color: black;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.text-mini {
+  font-size: 0.4em;
+}
+
+#page {
+  width: 600px;
+}
+
+footer {
+  margin-top: 50px;
+  z-index: 1;
+  font-size: 12px;
+
+  hr {
+    border: none;
+    border-top: 1px solid #ff6600;
+    margin: 5px;
+  }
+}

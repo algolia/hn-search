@@ -93,18 +93,19 @@
     }
   }
 
+  #created_at, #item_type, #advanced-search {
+    font-size: 0.8em;
+    margin: 0px;
+  }
+
   #hits {
+    margin-top: 20px;
     font-size: 1em;
-    border: 1px solid #dddddd;
-    margin-right: 56px;
-    margin-top: 10px;
     z-index: 2;
-    background: white;
+    background-color: #ffffff;
 
     .hit {
       color: #333;
-      background-color: #ffffff;
-      background-color: rgb(255, 255, 255);
       font-size: 14px;
       padding: 5px 10px;
       margin-bottom: 5px;
