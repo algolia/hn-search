@@ -12,6 +12,7 @@
       this.page = 0;
       this.currentHit = null;
       this.lastPageAt = new Date().getTime();
+      this.lastQuery = null;
 
       $(window).scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
@@ -33,8 +34,9 @@
           case 40: return self.goDown();
           default: break;
         }
-        self.page = 0;
-        self.currentHit = null;
+        self.search(0);
+      });
+      $('input[type="radio"]').change(function(e) {
         self.search(0);
       });
 
@@ -58,6 +60,11 @@
     },
 
     search: function(p) {
+      if (p === 0) {
+        this.page = 0;
+        this.currentHit = null;
+      }
+
       if ((this.page > 0 && p <= this.page) || this.page > 50) {
         // hard limit
         return;
@@ -68,9 +75,53 @@
         this.$hits.empty();
         return;
       }
+      this.lastQuery = query;
+
+      var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
+      var now = new Date(); 
+      var today_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0).getTime() / 1000;
+
+      var created_at = $('#created_at input[name="created_at"]:checked').val();
+      switch (created_at) {
+        case 'today':
+          searchParams.numericFilters.push('created_at_i>=' + today_utc);
+          break;
+        case 'last_week':
+          searchParams.numericFilters.push('created_at_i>=' + (today_utc - 7*24*60*60));
+          break;
+        case 'last_month':
+          searchParams.numericFilters.push('created_at_i>=' + (today_utc - 30*24*60*60));
+          break;
+      }
+
+      var item_type = $('#item_type input[name="item_type"]:checked').val();
+      if (item_type && item_type !== 'all') {
+        searchParams.tagFilters.push(item_type);
+      }
+
+      var authors = [];
+      while (true) {
+        var matches = query.match('author:([^ ]+)');
+        if (!matches) {
+          break;
+        }
+        if (matches.length > 0) {
+          authors.push(matches[1]);
+          query = query.replace('author:' + matches[1], '');
+        }
+      }
+      if (authors.length > 0) {
+        var tags = [];
+        for (var i = 0; i < authors.length; ++i) {
+          tags.push('author_' + authors[i]);
+        }
+        searchParams.tagFilters.push(tags);
+      }
 
       var self = this;
-      this.idx.search(query, function(success, content) { self.searchCallback(success, content); }, { hitsPerPage: 25, page: p, getRankingInfo: 1 });
+      this.idx.search(query, function(success, content) {
+        self.searchCallback(success, content);
+      }, searchParams);
     },
 
     goLeft: function() {
@@ -97,7 +148,7 @@
         if (!$('#inputfield input').is(':focus')) {
           return;
         }
-        window.location.href = '/?q=' + encodeURI($('#inputfield input').val());
+        window.location.href = '/beta?q=' + encodeURI($('#inputfield input').val());
         return;
       }
       window.location.href = 'https://news.ycombinator.com/item?id=' + this.currentHit.data('id');
@@ -125,8 +176,7 @@
         console.log(content);
         return;
       }
-
-      if (content.query.trim() != $('#inputfield input').val().trim()) {
+      if (this.lastQuery != $('#inputfield input').val().trim()) {
         return;
       }
       if (this.page != 0 && this.page >= content.page) {
@@ -201,7 +251,7 @@
           }
           res += '  <div class="clearfix"></div>';
         }
-        res += '  <div class="created_at pull-right"><abbr class="timeago" title=' + hit.created_at + '></abbr></div>' +
+        res += '  <div class="created_at pull-right"><abbr class="timeago" title=' + new Date(hit.created_at_i * 1000).toISOString() + '></abbr></div>' +
           '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';
         if (type === 'story') {
           res += '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.objectID + '" target="_blank">' + hit.num_comments + ' comment' + (hit.num_comments > 1 ? 's' : '') + '</a></div>';
@@ -219,4 +269,3 @@
 
   }
 })(jQuery);
-
