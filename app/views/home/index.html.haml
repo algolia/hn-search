@@ -24,12 +24,11 @@
             %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'forever')}
             %label{for: "created_at_#{period}"}= period.capitalize.gsub('_', ' ')
 
+  #hits
+
   .text-center
     - cache 'items_indexed', expires_in: 15.minute do
       %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed
-
-  #hits
-
 :javascript
   $(document).ready(function() {
     new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
