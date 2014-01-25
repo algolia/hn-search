@@ -12,7 +12,7 @@
     %ul.list-unstyled.list-inline#item_type.hidden-xs
       - %w{all story comment poll}.each do |type|
         %li
-          %input{type: 'radio', name: 'item_type', value: type, id: "item_type_#{type}", checked: (type == 'all')}
+          %input{type: 'radio', name: 'item_type', value: type, id: "item_type_#{type}", checked: (type == 'story')}
           %label{for: "item_type_#{type}"}= type.capitalize.gsub('_', ' ')
     .search_box-wrapper
       .search_box
