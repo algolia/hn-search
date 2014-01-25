@@ -215,7 +215,7 @@
         // content
         res +=  '<div class="' + classes.join(' ') + '" data-id="' + hit.objectID + '">' +
           '  <div class="author text-right"><a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></div>';
-        if (type === 'story' || type === 'poll') {
+        if (type === 'story' || type === 'poll' || type === 'pollopt') {
           res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
             '  <div class="title_url">' +
             '    <div class="title">' + hit._highlightResult.title.value + '</div>';
