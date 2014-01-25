@@ -135,8 +135,9 @@ h1, h2, h3, h4 {
     }
   }
 
-  #created_at {
+  #created_at, #item_type, #advanced-search {
     font-size: 0.8em;
+    margin: 0px;
   }
 
   #hits {

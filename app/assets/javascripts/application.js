@@ -111,6 +111,11 @@
           break;
       }
 
+      var item_type = $('#item_type input[name="item_type"]:checked').val();
+      if (item_type && item_type !== 'all') {
+        searchParams.tagFilters.push(item_type);
+      }
+
       var authors = [];
       while (true) {
         var matches = query.match('author:([^ ]+)');
