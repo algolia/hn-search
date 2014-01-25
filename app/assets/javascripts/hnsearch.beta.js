@@ -1,3 +1,13 @@
+Number.prototype.number_with_delimiter = function(delimiter) {
+    var number = this + '', delimiter = delimiter || ',';
+    var split = number.split('.');
+    split[0] = split[0].replace(
+        /(\d)(?=(\d\d\d)+(?!\d))/g,
+        '$1' + delimiter
+    );
+    return split.join('.');
+};
+
 (function($) {
   window.HNSearch = function(applicationID, apiKey, indexName) {
     this.init(applicationID, apiKey, indexName);
@@ -9,45 +19,16 @@
 
       this.idx = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']).initIndex(indexName);
       this.$hits = $('#hits');
+      this.$pagination = $('#pagination');
+      this.$stats = $('#stats');
       this.page = 0;
-      this.currentHit = null;
-      this.lastPageAt = new Date().getTime();
-      this.lastQuery = null;
-
-      $(window).scroll(function () {
-        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-          if (new Date().getTime() - self.lastPageAt > 1000) {
-            self.search(self.page + 1);
-            self.lastPageAt = new Date().getTime();
-          }
-        }
-      });
 
       $('#inputfield input').keyup(function(e) {
-        e.preventDefault();
-        switch (e.keyCode) {
-          case 13: return self.goCurrent();
-          case 27: $('#inputfield input').val(''); break;
-          case 37: return self.goLeft();
-          case 38: return self.goUp();
-          case 39: return self.goRight();
-          case 40: return self.goDown();
-          default: break;
-        }
         self.search(0);
       });
       $('input[type="radio"]').change(function(e) {
         self.search(0);
       });
-
-      // backward compatibility
-      if (window.location.hash) {
-        // #request/all&q=foobar
-        var hash = window.location.hash.substring(1);
-        if (hash.indexOf('q=') > -1) {
-          $('#inputfield input').val(hash.substring(hash.indexOf('q=') + 2));
-        }
-      }
 
       if ($('#inputfield input').val() !== '') {
         this.search(0);
@@ -60,23 +41,21 @@
     },
 
     search: function(p) {
-      if (p === 0) {
-        this.page = 0;
-        this.currentHit = null;
-      }
-
-      if ((this.page > 0 && p <= this.page) || this.page > 50) {
+      if (this.page < 0 || this.page > 40) {
         // hard limit
         return;
       }
+      this.page = p;
 
       var query = $('#inputfield input').val().trim();
       if (query.length == 0) {
         this.$hits.empty();
+        this.$pagination.empty();
+        this.$stats.empty();
         return;
       }
-      this.lastQuery = query;
 
+      var originalQuery = query;
       var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
       var now = new Date(); 
       var today_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0).getTime() / 1000;
@@ -86,16 +65,19 @@
         case 'today':
           searchParams.numericFilters.push('created_at_i>=' + today_utc);
           break;
-        case 'last_week':
+        case 'past_week':
           searchParams.numericFilters.push('created_at_i>=' + (today_utc - 7*24*60*60));
           break;
-        case 'last_month':
+        case 'past_month':
           searchParams.numericFilters.push('created_at_i>=' + (today_utc - 30*24*60*60));
           break;
       }
 
       var item_type = $('#item_type input[name="item_type"]:checked').val();
       if (item_type && item_type !== 'all') {
+        if (item_type === 'poll') {
+          item_type = ['poll', 'pollopt'];
+        }
         searchParams.tagFilters.push(item_type);
       }
 
@@ -120,55 +102,10 @@
 
       var self = this;
       this.idx.search(query, function(success, content) {
-        self.searchCallback(success, content);
-      }, searchParams);
-    },
-
-    goLeft: function() {
-    },
-
-    goRight: function() {
-    },
-
-    goDown: function() {
-      if (!this.go('next')) {
-        this.search(this.page + 1);
-      }
-    },
-
-    goUp: function() {
-      if (!this.go('prev')) {
-        this.currentHit.removeClass('active');
-        this.currentHit = null;
-      }
-    },
-
-    goCurrent: function() {
-      if (!this.currentHit) {
-        if (!$('#inputfield input').is(':focus')) {
-          return;
+        if (originalQuery == $('#inputfield input').val().trim()) {
+          self.searchCallback(success, content);
         }
-        window.location.href = '/beta?q=' + encodeURI($('#inputfield input').val());
-        return;
-      }
-      window.location.href = 'https://news.ycombinator.com/item?id=' + this.currentHit.data('id');
-    },
-
-    go: function(selectFunction) {
-      if (!this.currentHit) {
-        this.currentHit = $(this.$hits.children('.hit:first-child')[0]);
-      } else {
-        var next = this.currentHit[selectFunction]();
-        if (next.length == 0) {
-          return false;
-        }  
-        this.currentHit.removeClass('active');
-        this.currentHit = next;
-      }      
-      this.currentHit.addClass('active');
-      var target = this.currentHit.offset().top - this.$hits.offset().top;
-      $('html, body').scrollTop(target);
-      return true;
+      }, searchParams);
     },
 
     searchCallback: function(success, content) {
@@ -176,13 +113,20 @@
         console.log(content);
         return;
       }
-      if (this.lastQuery != $('#inputfield input').val().trim()) {
+      if (this.page != content.page) {
         return;
       }
-      if (this.page != 0 && this.page >= content.page) {
-        return;
+
+      var stats = '';
+      if (content.nbHits > 0) {
+        stats += 'Page ' + (content.page + 1) + ' of ' + content.nbPages + ', ';
+        if (content.nbHits > 1000) {
+          stats += 'about ';
+        }
+        stats += content.nbHits.number_with_delimiter() + ' result' + (content.nbHits > 1 ? 's' : '');
       }
-      this.page = content.page;
+      this.$stats.html(stats);
+      
       var res = '';
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
@@ -202,20 +146,11 @@
         if (hit._rankingInfo.nbTypos === 0 && (nbWords === 1 || hit._rankingInfo.nbExactWords >= nbWords)) {
           classes.push('notypo');
         }
-        if (hit.points > 1000) {
-          classes.push('p1000');
-        } else if (hit.points > 500) {
-          classes.push('p500');
-        } else if (hit.points > 250) {
-          classes.push('p250');
-        } else if (hit.points > 100) {
-          classes.push('p100');
-        }
 
         // content
         res +=  '<div class="' + classes.join(' ') + '" data-id="' + hit.objectID + '">' +
           '  <div class="author text-right"><a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></div>';
-        if (type === 'story' || type === 'poll') {
+        if (type === 'story' || type === 'poll' || type === 'pollopt') {
           res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
             '  <div class="title_url">' +
             '    <div class="title">' + hit._highlightResult.title.value + '</div>';
@@ -237,12 +172,12 @@
             res += '  <div class="title_url">';
           }
           if (hit.story_title) {
-            res += '  <div class="title">' + hit.story_title + '</div>';
+            res += '  <div class="title">' + hit._highlightResult.story_title.value + '</div>';
           }
           res += '  <div class="url">';
           res += '    <a href="' + item_url + (hit.story_id ?  '#up_' + hit.objectID : '') + '" target="_blank">' + item_url + '</a>';
           if (hit.story_url) {
-            res += ' (<a href="' + hit.story_url + '" target="_blank">' + hit.story_url + '</a>)';
+            res += ' (<a href="' + hit.story_url + '" target="_blank">' + hit._highlightResult.story_url.value + '</a>)';
           }
           res += '  </div>';
           res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
@@ -259,12 +194,48 @@
         res += '  <div class="clearfix"></div>' +
           '</div>';
       }
-      if (content.page === 0) {
-        this.$hits.html(res);
-      } else {
-        this.$hits.append(res);
-      }
+      this.$hits.html(res);
       $('#hits .timeago').timeago();
+
+      // pagination
+      var pagination = '<ul class="pagination">';
+      pagination += '<li class="' + (content.page == 0 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.previousPage()">«</a></li>';
+      var ellipsis1 = -1;
+      var ellipsis2 = -1;
+      var n = 0;
+      for (var i = 0; i < content.nbPages; ++i) {
+        if (content.nbPages > 10 && i > 2 && i < (content.nbPages - 2) && (i < (content.page - 2) || i > (content.page + 2))) {
+          if (ellipsis1 == -1 && i > 2) {
+            pagination += '<li class="disabled"><a href="#">&hellip;</a></li>';
+            ellipsis1 = n;
+          }
+          if (ellipsis2 == -1 && i > content.page && i < (content.nbPages - 2)) {
+            if (ellipsis1 != n) {
+              pagination += '<li class="disabled"><a href="#">&hellip;</a></li>';
+            }
+            ellipsis2 = n;
+          }
+          continue;
+        }
+        pagination += '<li class="' + (i == content.page ? 'active' : '') + '"><a href="javascript:window.hnsearch.gotoPage(' + i + ')">' + (i + 1) + '</a></li>';
+        ++n;
+      }
+      pagination += '<li class="' + (content.page >= content.nbPages - 1 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.nextPage()">»</a></li>';
+      pagination += '</ul>';
+      this.$pagination.html(pagination);
+    },
+
+    previousPage: function() {
+      this.gotoPage(this.page - 1);
+    },
+
+    nextPage: function() {
+      this.gotoPage(this.page + 1);
+    },
+
+    gotoPage: function(page) {
+      $('html, body').scrollTop(0);
+      this.search(page);
     }
 
   }
