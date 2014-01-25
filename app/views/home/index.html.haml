@@ -25,7 +25,7 @@
         %li Items from:
         - %w{today last_week last_month forever}.each do |period|
           %li
-            %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'forever')}
+            %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'last_week')}
             %label{for: "created_at_#{period}"}= period.capitalize.gsub('_', ' ')
 
   #hits
