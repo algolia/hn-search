@@ -50,8 +50,9 @@
           case 40: return self.goDown();
           default: break;
         }
-        self.page = 0;
-        self.currentHit = null;
+        self.search(0);
+      });
+      $('input[type="radio"]').change(function(e) {
         self.search(0);
       });
 
@@ -75,6 +76,11 @@
     },
 
     search: function(p) {
+      if (p === 0) {
+        this.page = 0;
+        this.currentHit = null;
+      }
+
       if ((this.page > 0 && p <= this.page) || this.page > 50) {
         // hard limit
         return;
@@ -86,8 +92,28 @@
         return;
       }
 
+      var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
+      var now = new Date(); 
+      var today_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0).getTime() / 1000;
+
+      var created_at = $('#created_at input[name="created_at"]:checked').val();
+      switch (created_at) {
+        case 'today':
+          searchParams.numericFilters.push('created_at>=' + today_utc);
+          break;
+        case 'last_week':
+          searchParams.numericFilters.push('created_at>=' + (today_utc - 7*24*60*60));
+          break;
+        case 'last_month':
+          searchParams.numericFilters.push('created_at>=' + (today_utc - 30*24*60*60));
+          break;
+      }
+
+
       var self = this;
-      this.idx.search(query, function(success, content) { self.searchCallback(success, content); }, { hitsPerPage: 25, page: p, getRankingInfo: 1 });
+      this.idx.search(query, function(success, content) {
+        self.searchCallback(success, content);
+      }, searchParams);
     },
 
     goLeft: function() {

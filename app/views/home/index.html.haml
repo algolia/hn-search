@@ -2,14 +2,21 @@
   %h1.text-center
     Search Hacker News
 
-  .search_box-wrapper
-    .search_box
-      %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
+  %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
+    .search_box-wrapper
+      .search_box
         #inputfield
           %input.autocomplete{autocomplete: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
         .searchbutton
           %i.icon-search.icon-large
         #hits
+    .text-right
+      %ul.list-unstyled.list-inline#created_at
+        - %w{today last_week last_month forever}.each do |period|
+          %li
+            %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}"}
+            %label{for: "created_at_#{period}"}= period.capitalize.gsub('_', ' ')
+
   .text-center
     - cache 'items_indexed', expires_in: 15.minute do
       %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed

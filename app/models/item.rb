@@ -19,8 +19,11 @@ class Item < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
-    attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
+    attribute :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url
+    attribute :created_at do
+      created_at.to_i
+    end
+    attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at']
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     queryType 'prefixAll'
@@ -28,27 +31,27 @@ class Item < ActiveRecord::Base
   end
 
   def story_text
-    item_type != 'comment' ? text : nil
+    item_type_cd != Item.comment ? text : nil
   end
 
   def story_title
-    item_type == 'comment' && story ? story.title : nil
+    comment? && story ? story.title : nil
   end
 
   def story_url
-    item_type == 'comment' && story ? story.url : nil
+    comment? && story ? story.url : nil
   end
 
   def comment_text
-    item_type == 'comment' ? text : nil
+    comment? ? text : nil
+  end
+
+  def comment?
+    item_type_cd == Item.comment
   end
 
   def num_comments
-    item_type == 'story' ? story_comments.count : nil
-  end
-
-  def _tags
-    [item_type]
+    item_type_cd == Item.story ? story_comments.count : nil
   end
 
   def crawl_thumbnail!
