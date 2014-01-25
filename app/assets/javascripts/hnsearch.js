@@ -23,6 +23,7 @@
       });
 
       $('#inputfield input').keyup(function(e) {
+        e.preventDefault();
         switch (e.keyCode) {
           case 13: return self.goCurrent();
           case 27: $('#inputfield input').val(''); break;
