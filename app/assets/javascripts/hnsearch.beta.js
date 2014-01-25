@@ -60,18 +60,18 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       var originalQuery = query;
       var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
       var now = new Date(); 
-      var today_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0).getTime() / 1000;
+      var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()).getTime() / 1000;
 
       var created_at = $('#created_at input[name="created_at"]:checked').val();
       switch (created_at) {
-        case 'today':
-          searchParams.numericFilters.push('created_at_i>=' + today_utc);
+        case 'last_24h':
+          searchParams.numericFilters.push('created_at_i>=' + (now_utc - 24*60*60));
           break;
         case 'past_week':
-          searchParams.numericFilters.push('created_at_i>=' + (today_utc - 7*24*60*60));
+          searchParams.numericFilters.push('created_at_i>=' + (now_utc - 7*24*60*60));
           break;
         case 'past_month':
-          searchParams.numericFilters.push('created_at_i>=' + (today_utc - 30*24*60*60));
+          searchParams.numericFilters.push('created_at_i>=' + (now_utc - 30*24*60*60));
           break;
       }
 
