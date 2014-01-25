@@ -24,6 +24,9 @@ class Item < ActiveRecord::Base
       created_at.to_i
     end
     attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at']
+    tags do
+      [item_type, "author_#{author}", "story_#{story_id}"]
+    end
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     queryType 'prefixAll'

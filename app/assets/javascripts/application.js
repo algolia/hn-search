@@ -30,6 +30,7 @@
       this.page = 0;
       this.currentHit = null;
       this.lastPageAt = new Date().getTime();
+      this.lastQuery = null;
 
       $(window).scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
@@ -91,6 +92,7 @@
         this.$hits.empty();
         return;
       }
+      this.lastQuery = query;
 
       var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
       var now = new Date(); 
@@ -109,6 +111,24 @@
           break;
       }
 
+      var authors = [];
+      while (true) {
+        var matches = query.match('author:([^ ]+)');
+        if (!matches) {
+          break;
+        }
+        if (matches.length > 0) {
+          authors.push(matches[1]);
+          query = query.replace('author:' + matches[1], '');
+        }
+      }
+      if (authors.length > 0) {
+        var tags = [];
+        for (var i = 0; i < authors.length; ++i) {
+          tags.push('author_' + authors[i]);
+        }
+        searchParams.tagFilters.push(tags);
+      }
 
       var self = this;
       this.idx.search(query, function(success, content) {
@@ -165,8 +185,7 @@
         console.log(content);
         return;
       }
-
-      if (content.query.trim() != $('#inputfield input').val().trim()) {
+      if (this.lastQuery != $('#inputfield input').val().trim()) {
         return;
       }
       if (this.page != 0 && this.page >= content.page) {
