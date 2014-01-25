@@ -96,6 +96,9 @@
 
       var item_type = $('#item_type input[name="item_type"]:checked').val();
       if (item_type && item_type !== 'all') {
+        if (item_type === 'poll') {
+          item_type = ['poll', 'pollopt'];
+        }
         searchParams.tagFilters.push(item_type);
       }
 
