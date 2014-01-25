@@ -12,7 +12,6 @@
       this.page = 0;
       this.currentHit = null;
       this.lastPageAt = new Date().getTime();
-      this.lastQuery = null;
 
       $(window).scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
@@ -75,8 +74,8 @@
         this.$hits.empty();
         return;
       }
-      this.lastQuery = query;
 
+      var originalQuery = query;
       var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
       var now = new Date(); 
       var today_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0).getTime() / 1000;
@@ -123,7 +122,9 @@
 
       var self = this;
       this.idx.search(query, function(success, content) {
-        self.searchCallback(success, content);
+        if (originalQuery == $('#inputfield input').val().trim()) {
+          self.searchCallback(success, content);
+        }
       }, searchParams);
     },
 
@@ -177,9 +178,6 @@
     searchCallback: function(success, content) {
       if (!success) {
         console.log(content);
-        return;
-      }
-      if (this.lastQuery != $('#inputfield input').val().trim()) {
         return;
       }
       if (this.page != 0 && this.page >= content.page) {
