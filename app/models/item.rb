@@ -24,6 +24,7 @@ class Item < ActiveRecord::Base
       created_at.to_i
     end
     attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
+    attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
     tags do
       [item_type, "author_#{author}", "story_#{story_id}"]
     end
