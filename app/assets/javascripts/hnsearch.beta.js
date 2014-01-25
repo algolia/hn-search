@@ -21,6 +21,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.$hits = $('#hits');
       this.$pagination = $('#pagination');
       this.$stats = $('#stats');
+      this.$noresults = $('#noresults');
       this.page = 0;
 
       $('#inputfield input').keyup(function(e) {
@@ -52,6 +53,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         this.$hits.empty();
         this.$pagination.empty();
         this.$stats.empty();
+        this.$noresults.hide();
         return;
       }
 
@@ -102,17 +104,23 @@ Number.prototype.number_with_delimiter = function(delimiter) {
 
       var self = this;
       this.idx.search(query, function(success, content) {
+        if (!success) {
+          console.log(content);
+          return;
+        }
         if (originalQuery == $('#inputfield input').val().trim()) {
-          self.searchCallback(success, content);
+          if (content.nbHits == 0) {
+            self.$noresults.html('<p>No results matching your query:<code>' + originalQuery + '<code><p>');
+            self.$noresults.show();
+          } else {
+            self.$noresults.hide();
+          }
+          self.searchCallback(content);
         }
       }, searchParams);
     },
 
-    searchCallback: function(success, content) {
-      if (!success) {
-        console.log(content);
-        return;
-      }
+    searchCallback: function(content) {
       if (this.page != content.page) {
         return;
       }
@@ -197,30 +205,33 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       $('#hits .timeago').timeago();
 
       // pagination
-      var pagination = '<ul class="pagination">';
-      pagination += '<li class="' + (content.page == 0 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.previousPage()">«</a></li>';
-      var ellipsis1 = -1;
-      var ellipsis2 = -1;
-      var n = 0;
-      for (var i = 0; i < content.nbPages; ++i) {
-        if (content.nbPages > 10 && i > 2 && i < (content.nbPages - 2) && (i < (content.page - 2) || i > (content.page + 2))) {
-          if (ellipsis1 == -1 && i > 2) {
-            pagination += '<li class="disabled"><a href="#">&hellip;</a></li>';
-            ellipsis1 = n;
-          }
-          if (ellipsis2 == -1 && i > content.page && i < (content.nbPages - 2)) {
-            if (ellipsis1 != n) {
+      var pagination = '';
+      if (content.nbHits > 0) {
+        pagination += '<ul class="pagination">';
+        pagination += '<li class="' + (content.page == 0 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.previousPage()">«</a></li>';
+        var ellipsis1 = -1;
+        var ellipsis2 = -1;
+        var n = 0;
+        for (var i = 0; i < content.nbPages; ++i) {
+          if (content.nbPages > 10 && i > 2 && i < (content.nbPages - 2) && (i < (content.page - 2) || i > (content.page + 2))) {
+            if (ellipsis1 == -1 && i > 2) {
               pagination += '<li class="disabled"><a href="#">&hellip;</a></li>';
+              ellipsis1 = n;
             }
-            ellipsis2 = n;
+            if (ellipsis2 == -1 && i > content.page && i < (content.nbPages - 2)) {
+              if (ellipsis1 != n) {
+                pagination += '<li class="disabled"><a href="#">&hellip;</a></li>';
+              }
+              ellipsis2 = n;
+            }
+            continue;
           }
-          continue;
+          pagination += '<li class="' + (i == content.page ? 'active' : '') + '"><a href="javascript:window.hnsearch.gotoPage(' + i + ')">' + (i + 1) + '</a></li>';
+          ++n;
         }
-        pagination += '<li class="' + (i == content.page ? 'active' : '') + '"><a href="javascript:window.hnsearch.gotoPage(' + i + ')">' + (i + 1) + '</a></li>';
-        ++n;
+        pagination += '<li class="' + (content.page >= content.nbPages - 1 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.nextPage()">»</a></li>';
+        pagination += '</ul>';
       }
-      pagination += '<li class="' + (content.page >= content.nbPages - 1 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.nextPage()">»</a></li>';
-      pagination += '</ul>';
       this.$pagination.html(pagination);
     },
 

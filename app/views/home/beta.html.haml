@@ -30,9 +30,9 @@
 
   #stats
   #hits
+  #noresults.text-center
   #pagination.text-center
-
-  .text-center
+  #history.text-center
     - cache 'items_indexed', expires_in: 15.minute do
       %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed
 :javascript
