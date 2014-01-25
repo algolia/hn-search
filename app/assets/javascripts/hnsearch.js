@@ -85,10 +85,10 @@
         case 'today':
           searchParams.numericFilters.push('created_at_i>=' + today_utc);
           break;
-        case 'last_week':
+        case 'past_week':
           searchParams.numericFilters.push('created_at_i>=' + (today_utc - 7*24*60*60));
           break;
-        case 'last_month':
+        case 'past_month':
           searchParams.numericFilters.push('created_at_i>=' + (today_utc - 30*24*60*60));
           break;
       }

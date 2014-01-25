@@ -23,9 +23,9 @@
     .text-right.hidden-xs
       %ul.list-unstyled.list-inline#created_at
         %li Items from:
-        - %w{today last_week last_month forever}.each do |period|
+        - %w{today past_week past_month forever}.each do |period|
           %li
-            %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'last_week')}
+            %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'past_week')}
             %label{for: "created_at_#{period}"}= period.capitalize.gsub('_', ' ')
 
   #hits
