@@ -94,6 +94,9 @@
 
     goCurrent: function() {
       if (!this.currentHit) {
+        if (!$('#inputfield input').is(':focus')) {
+          return;
+        }
         window.location.href = '/?q=' + encodeURI($('#inputfield input').val());
         return;
       }

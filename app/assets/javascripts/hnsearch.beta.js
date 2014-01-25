@@ -145,7 +145,10 @@
 
     goCurrent: function() {
       if (!this.currentHit) {
-        window.location.href = '/?q=' + encodeURI($('#inputfield input').val());
+        if (!$('#inputfield input').is(':focus')) {
+          return;
+        }
+        window.location.href = '/beta?q=' + encodeURI($('#inputfield input').val());
         return;
       }
       window.location.href = 'https://news.ycombinator.com/item?id=' + this.currentHit.data('id');
