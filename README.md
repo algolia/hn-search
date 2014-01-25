@@ -11,12 +11,23 @@ class Item < ActiveRecord::Base
   include AlgoliaSearch
 
   algoliasearch per_environment: true do
-    # the list of attributes to send to Algolia's API
-    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :_tags, :num_comments, :story_id, :story_title, :story_url
+    # the list of attributes sent to Algolia's API
+    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :
+    attribute :created_at_i do
+      created_at.to_i
+    end
 
-    # `title` is more important than `source`, `source` more than `url`, `url` more than `author`
-    # btw, do not take into account position of first matched word on `title` and `url` matches
-    attributesToIndex ['unordered(title)', 'story_text', 'comment_text', 'unordered(url)', 'author']
+    # `title` is more important than `{story,comment}_text`, `{story,comment}_text` more than `url`, `url` more than `author`
+    # btw, do not take into account position in most fields to avoid first word match boost
+    attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
+
+    # list of attributes to highlight
+    attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
+
+    # tags used for filtering
+    tags do
+      [item_type, "author_#{author}", "story_#{story_id}"]
+    end
 
     # use associated number of HN points to sort results (last sort criteria)
     customRanking ['desc(points)', 'desc(num_comments)']
@@ -33,27 +44,23 @@ class Item < ActiveRecord::Base
   end
 
   def story_text
-    item_type != 'comment' ? text : nil
+    item_type_cd != Item.comment ? text : nil
   end
 
   def story_title
-    item_type == 'comment' && story ? story.title : nil
+    comment? && story ? story.title : nil
   end
 
   def story_url
-    item_type == 'comment' && story ? story.url : nil
+    comment? && story ? story.url : nil
   end
 
   def comment_text
-    item_type == 'comment' ? text : nil
+    comment? ? text : nil
   end
 
-  def num_comments
-    item_type == 'story' ? story_comments.size : nil
-  end
-
-  def _tags
-    [item_type]
+  def comment?
+    item_type_cd == Item.comment
   end
 end
 ```
