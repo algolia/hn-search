@@ -107,7 +107,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         }
       }
 
-      location.hash = '!/' + (item_type || '') + '/' + (created_at || '') + '/' + this.page + '/' + originalQuery;
+      location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + this.page + '/' + originalQuery);
 
       var authors = [];
       while (true) {
