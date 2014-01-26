@@ -30,7 +30,6 @@ class Item < ActiveRecord::Base
     end
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
-    queryType 'prefixAll'
     separatorsToIndex '+#$'
   end
 

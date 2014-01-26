@@ -36,9 +36,6 @@ class Item < ActiveRecord::Base
     # I removed the 'exact' match critera (improve 1-words query relevance, doesn't fit HNSearch needs)
     ranking ['typo', 'proximity', 'attribute', 'custom']
 
-    # perform prefix matching on all words
-    queryType 'prefixAll'
-
     # google+, $1.5M raises, C#: we love you
     separatorsToIndex '+#$'
   end
