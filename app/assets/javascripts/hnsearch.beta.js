@@ -159,7 +159,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         if (type === 'story' || type === 'poll' || type === 'pollopt') {
           res += '  <div class="thumb pull-left hidden-xs"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
             '  <div class="title_url">' +
-            '    <div class="title"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.title.value + '</a></div>';
+            '    <div class="title"><a href="' + (hit.url || item_url) + '" target="_blank">' + hit._highlightResult.title.value + '</a></div>';
           res += '    <div class="url"><a href="' + item_url + '" target="_blank">' + item_url + '</a> ' +
           '<span class="author">by <a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></span></div>';
           if (hit.story_text) {
