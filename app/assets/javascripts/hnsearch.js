@@ -31,6 +31,14 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         self.search(0);
       });
 
+      if (location.hash && location.hash.indexOf('#!/') === 0) {
+        var parts = location.hash.substring(3).split('/');
+        $('input[name="item_type"][value="' + parts.shift() + '"]').prop('checked', true);
+        $('input[name="created_at"][value="' + parts.shift() + '"]').prop('checked', true);
+        this.page = parseInt(parts.shift());
+        $('#inputfield input').val(parts.join('/'));
+      }
+
       if ($('#inputfield input').val() !== '') {
         this.search(0);
       } else {
@@ -86,10 +94,13 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       var item_type = $('#item_type input[name="item_type"]:checked').val();
       if (item_type && item_type !== 'all') {
         if (item_type === 'poll') {
-          item_type = ['poll', 'pollopt'];
+          searchParams.tagFilters.push(['poll', 'pollopt']);
+        } else {
+          searchParams.tagFilters.push(item_type);
         }
-        searchParams.tagFilters.push(item_type);
       }
+
+      location.hash = '!/' + (item_type || '') + '/' + (created_at || '') + '/' + this.page + '/' + originalQuery;
 
       var authors = [];
       while (true) {
