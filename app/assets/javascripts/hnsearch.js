@@ -17,7 +17,9 @@ Number.prototype.number_with_delimiter = function(delimiter) {
     init: function(applicationID, apiKey, indexName) {
       var self = this;
 
-      this.idx = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']).initIndex(indexName);
+      var client = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']);
+      this.idx = client.initIndex(indexName);
+      this.idx_by_date = client.initIndex(indexName + '_sort_date');
       this.$hits = $('#hits');
       this.$pagination = $('#pagination');
       this.$stats = $('#stats');
@@ -75,6 +77,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         tagFilters: [],
         numericFilters: []
       };
+      var idx = this.idx;
       var now = new Date(); 
       var now_utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()) / 1000;
 
@@ -88,6 +91,10 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           break;
         case 'past_month':
           searchParams.numericFilters.push('created_at_i>=' + (now_utc - 30*24*60*60));
+          break;
+        case 'sort_by_date':
+          idx = this.idx_by_date;
+          searchParams.minWordSizefor1Typo = searchParams.minWordSizefor2Typos = 1000;
           break;
       }
 
@@ -141,7 +148,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       }
 
       var self = this;
-      this.idx.search(query, function(success, content) {
+      idx.search(query, function(success, content) {
         if (!success) {
           console.log(content);
           return;
