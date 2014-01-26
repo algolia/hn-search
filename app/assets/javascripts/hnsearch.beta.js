@@ -155,37 +155,33 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         }
 
         // content
-        res +=  '<div class="' + classes.join(' ') + '" data-id="' + hit.objectID + '">' +
-          '  <div class="author text-right"><a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></div>';
+        res +=  '<div class="' + classes.join(' ') + '" data-id="' + hit.objectID + '">';
         if (type === 'story' || type === 'poll' || type === 'pollopt') {
-          res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
+          res += '  <div class="thumb pull-left hidden-xs"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
             '  <div class="title_url">' +
-            '    <div class="title">' + hit._highlightResult.title.value + '</div>';
-          if (hit.url) {
-            res += '    <div class="url"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.url.value + '</a></div>';
-          } else {
-            res += '    <div class="url"><a href="' + item_url + '" target="_blank">' + item_url + '</a></div>';
-          }
+            '    <div class="title"><a href="' + hit.url + '" target="_blank">' + hit._highlightResult.title.value + '</a></div>';
+          res += '    <div class="url"><a href="' + item_url + '" target="_blank">' + item_url + '</a> ' +
+          '<span class="author">by <a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></span></div>';
           if (hit.story_text) {
-            res += '    <div class="comment_text">' + hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
+            res += '    <div class="story_text">' + hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
           }
           res += '  </div>' +
             '  <div class="clearfix"></div>';
-          var a = $('<a>', { href: (hit.url || item_url) } )[0];
-          res += '  <div class="source pull-right">' + a.hostname + '</div>';
         } else if (type === 'comment') {
           if (hit.story_id) {
-            res += '  <div class="thumb pull-left"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.story_id + '.png" /></div>';
+            res += '  <div class="thumb pull-left hidden-xs"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.story_id + '.png" /></div>';
             res += '  <div class="title_url">';
           }
           if (hit.story_title) {
-            res += '  <div class="title">' + hit._highlightResult.story_title.value + '</div>';
+            if (hit.story_url) {
+              res += ' <div class="title"><a href="' + hit.story_url + '" target="_blank">' + hit._highlightResult.story_title.value + '</a></div>';
+            } else {
+              res += ' <div class="title">' + hit._highlightResult.story_title.value + '</div>';
+            }
           }
           res += '  <div class="url">';
           res += '    <a href="' + item_url + (hit.story_id ?  '#up_' + hit.objectID : '') + '" target="_blank">' + item_url + '</a>';
-          if (hit.story_url) {
-            res += ' (<a href="' + hit.story_url + '" target="_blank">' + hit._highlightResult.story_url.value + '</a>)';
-          }
+          res += '    <span class="author">by <a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></span>';
           res += '  </div>';
           res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />') + '</div>';
           if (hit.story_id) {
@@ -193,11 +189,11 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           }
           res += '  <div class="clearfix"></div>';
         }
-        res += '  <div class="created_at pull-right"><abbr class="timeago" title=' + new Date(hit.created_at_i * 1000).toISOString() + '></abbr></div>' +
-          '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';
+        res += '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';
         if (type === 'story') {
           res += '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.objectID + '" target="_blank">' + hit.num_comments + ' comment' + (hit.num_comments > 1 ? 's' : '') + '</a></div>';
         }
+        res += '  <div class="created_at pull-left"><abbr class="timeago" title=' + new Date(hit.created_at_i * 1000).toISOString() + '></abbr></div>';
         res += '  <div class="clearfix"></div>' +
           '</div>';
       }
