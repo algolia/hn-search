@@ -203,7 +203,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           res += '    <a href="' + item_url + (hit.story_id ?  '#up_' + hit.objectID : '') + '" target="_blank">' + item_url + '</a>';
           res += '    <span class="author">by <a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></span>';
           res += '  </div>';
-          res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1') + '</div>';
+          res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|p|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1') + '</div>';
           if (hit.story_id) {
             res += '  </div>';
           }
