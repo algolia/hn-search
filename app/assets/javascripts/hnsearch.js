@@ -121,6 +121,25 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         searchParams.tagFilters.push(tags);
       }
 
+      var stories = [];
+      while (true) {
+        var matches = query.match('story:([0-9]+)');
+        if (!matches) {
+          break;
+        }
+        if (matches.length > 0) {
+          stories.push(matches[1]);
+          query = query.replace('story:' + matches[1], '');
+        }
+      }
+      if (stories.length > 0) {
+        var tags = [];
+        for (var i = 0; i < stories.length; ++i) {
+          tags.push('story_' + stories[i]);
+        }
+        searchParams.tagFilters.push(tags);
+      }
+
       var self = this;
       this.idx.search(query, function(success, content) {
         if (!success) {

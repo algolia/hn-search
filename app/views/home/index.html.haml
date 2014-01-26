@@ -8,7 +8,7 @@
 
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
     .pull-right.hidden-xs#advanced-search
-      Use <code>author:USERNAME</code> to restrict to a user
+      Use <code>author:USERNAME</code> to restrict to a user, <code>story:ID</code> to restrict to a story.
     %ul.list-unstyled.list-inline#item_type.hidden-xs
       - %w{all story comment poll}.each do |type|
         %li
