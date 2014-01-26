@@ -292,7 +292,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
     },
 
     gotoPage: function(page) {
-      $('html, body').scrollTop(0);
+      window.scrollTo(0, 0);
       this.search(page);
     }
 
