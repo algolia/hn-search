@@ -25,6 +25,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.$stats = $('#stats');
       this.$noresults = $('#noresults');
       this.page = 0;
+      this.firstQuery = true;
 
       $('#inputfield input').keyup(function(e) {
         self.search(0);
@@ -275,6 +276,11 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         pagination += '</ul>';
       }
       this.$pagination.html(pagination);
+
+      if (this.firstQuery) {
+        window.scrollTo(0, 1); // work-around chrome scrolling bug
+        this.firstQuery = false;
+      }
     },
 
     previousPage: function() {
