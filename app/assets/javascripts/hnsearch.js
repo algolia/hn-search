@@ -76,7 +76,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         numericFilters: []
       };
       var now = new Date(); 
-      var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()).getTime() / 1000;
+      var now_utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()) / 1000;
 
       var created_at = $('#created_at input[name="created_at"]:checked').val();
       switch (created_at) {
