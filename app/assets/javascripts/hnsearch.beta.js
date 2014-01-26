@@ -58,7 +58,15 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       }
 
       var originalQuery = query;
-      var searchParams = { hitsPerPage: 25, page: p, getRankingInfo: 1, tagFilters: [], numericFilters: [] };
+      var searchParams = {
+        hitsPerPage: 25,
+        page: p,
+        getRankingInfo: 1,
+        minWordSizefor1Typo: 5,
+        minWordSizefor2Typos: 9,
+        tagFilters: [],
+        numericFilters: []
+      };
       var now = new Date(); 
       var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()).getTime() / 1000;
 
