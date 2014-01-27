@@ -15,3 +15,4 @@
 //= require bootstrap
 //= require algolia/algoliasearch.min
 //= require jquery.timeago
+//= require hogan

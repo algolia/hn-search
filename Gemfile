@@ -11,6 +11,7 @@ gem 'figaro'
 gem 'haml-rails'
 gem 'bourbon'
 gem 'therubyracer'
+gem 'hogan_assets'
 
 gem 'algoliasearch-rails'
 gem 'curb'

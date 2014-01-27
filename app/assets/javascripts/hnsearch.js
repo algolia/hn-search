@@ -26,6 +26,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.$noresults = $('#noresults');
       this.page = 0;
       this.firstQuery = true;
+      this.hitTemplate = Hogan.compile($('#hitTemplate').text());
 
       $('#inputfield input').keyup(function(e) {
         self.search(0);
@@ -200,49 +201,50 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           classes.push('notypo');
         }
 
-        // content
-        res +=  '<div class="' + classes.join(' ') + '" data-id="' + hit.objectID + '">';
+        // prepare template parameters
+        var v = {
+          classes: classes.join(' '),
+          item_id: hit.objectID,
+          created_at: new Date(hit.created_at_i * 1000).toISOString(),
+          points: hit.points,
+          points_plural: (hit.points > 1),
+          author: hit.author,
+          highlighted_author: hit._highlightResult.author.value
+        };
         if (type === 'story' || type === 'poll' || type === 'pollopt') {
-          res += '  <div class="thumb pull-left hidden-xs"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.objectID + '.png" /></div>' +
-            '  <div class="title_url">' +
-            '    <div class="title"><a href="' + (hit.url || item_url) + '" target="_blank">' + hit._highlightResult.title.value + '</a>' +
-            (hit.url ? (' (' + hit._highlightResult.url.value + ')') : '') + '</div>';
-          res += '    <div class="url"><a href="' + item_url + '" target="_blank">' + item_url + '</a> ' +
-          '<span class="author">by <a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></span></div>';
+          v.item_url = item_url;
+          v.highlighted_title = hit._highlightResult.title.value;
+          if (hit.url) {
+            v.highlighted_url = hit._highlightResult.url.value;
+          }
+          v.thumb_item_id = hit.objectID;
+          v.url = (hit.url || item_url);
+          v.comments = hit.num_comments;
+          v.comments_plural = hit.num_comments > 1;
           if (hit.story_text) {
-            res += '    <div class="story_text">' + hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1') + '</div>';
+            v.story_text = hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
           }
-          res += '  </div>' +
-            '  <div class="clearfix"></div>';
+          v.has_comments = true;
         } else if (type === 'comment') {
-          if (hit.story_id) {
-            res += '  <div class="thumb pull-left hidden-xs"><img src="//drcs9k8uelb9s.cloudfront.net/' + hit.story_id + '.png" /></div>';
-            res += '  <div class="title_url">';
-          }
+          v.thumb_item_id = hit.story_id;
           if (hit.story_title) {
+            v.highlighted_story_title = hit._highlightResult.story_title.value;
             if (hit.story_url) {
-              res += ' <div class="title"><a href="' + hit.story_url + '" target="_blank">' + hit._highlightResult.story_title.value + '</a> (' + hit._highlightResult.story_url.value + ')</div>';
-            } else {
-              res += ' <div class="title">' + hit._highlightResult.story_title.value + '</div>';
+              v.highlighted_story_url = hit._highlightResult.story_url.value;
+              v.story_url = hit.story_url;
             }
           }
-          res += '  <div class="url">';
-          res += '    <a href="' + item_url + (hit.story_id ?  '#up_' + hit.objectID : '') + '" target="_blank">' + item_url + '</a>';
-          res += '    <span class="author">by <a href="https://news.ycombinator.com/user?id=' + hit.author + '" target="_blank">' + hit._highlightResult.author.value + '</a></span>';
-          res += '  </div>';
-          res += '  <div class="comment_text">' + hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|p|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1') + '</div>';
           if (hit.story_id) {
-            res += '  </div>';
+            v.item_url = 'https://news.ycombinator.com/item?id=' + hit.story_id;
+            v.item_url_anchor = '#up_' + hit.objectID;
+          } else {
+            v.item_url = item_url;
           }
-          res += '  <div class="clearfix"></div>';
+          if (hit.comment_text) {
+            v.comment_text = hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|p|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
+          }
         }
-        res += '  <div class="points pull-left"><b>' + hit.points + '</b> point' + (hit.points > 1 ? 's' : '') + '</div>';
-        if (type === 'story') {
-          res += '  <div class="comments pull-left"><a href="https://news.ycombinator.com/item?id=' + hit.objectID + '" target="_blank">' + hit.num_comments + ' comment' + (hit.num_comments > 1 ? 's' : '') + '</a></div>';
-        }
-        res += '  <div class="created_at pull-left"><abbr class="timeago" title=' + new Date(hit.created_at_i * 1000).toISOString() + '></abbr></div>';
-        res += '  <div class="clearfix"></div>' +
-          '</div>';
+        res += this.hitTemplate.render(v);
       }
       this.$hits.html(res);
       $('#hits .timeago').timeago();

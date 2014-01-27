@@ -39,3 +39,5 @@
   $(document).ready(function() {
     window.hnsearch = new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
   });
+
+= render partial: 'hit_template'
