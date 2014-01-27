@@ -157,7 +157,15 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         }
         if (originalQuery == $('#inputfield input').val().trim()) {
           if (content.nbHits == 0) {
-            self.$noresults.html('<p>No results matching your query:<code>' + originalQuery + '<code><p>');
+            var noResults = '<p>No results matching your query</p><p><code>' + originalQuery + '</code>';
+            if (item_type) {
+              noResults += ' + <code>type=' + item_type.replace(/_/g, ' ') + '</code>';
+            }
+            if (created_at) {
+              noResults += ' + <code>when=' + created_at.replace(/_/g, ' ') + '</code>';
+            }
+            noResults += '</p>';
+            self.$noresults.html(noResults);
             self.$noresults.show();
           } else {
             self.$noresults.hide();
