@@ -169,22 +169,12 @@
         padding-left: 10px;
       }
 
-      .points, .source {
-        font-size: 0.8em;
-        margin-right: 10px;
-      }
-
-      .author {
+      .points, .comments, .created_at, .author {
+        float: left;
+        margin-right: 5px;
         font-size: 0.8em;
       }
 
-      .comments, .created_at {
-        font-size: 0.8em;
-
-        abbr {
-          margin-left: 10px;
-        }
-      }
     }
 
     a, a:visited, a:hover {
