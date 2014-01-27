@@ -27,14 +27,30 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.page = 0;
       this.firstQuery = true;
       this.hitTemplate = Hogan.compile($('#hitTemplate').text());
+      this.prefixedSearch = true;
 
+      $('#search-form').submit(function(e) {
+        e.preventDefault();
+        // disable prefix search on form submitting
+        self.prefixedSearch = false;
+        self.search(0);
+      });
       $('#inputfield input').keyup(function(e) {
-
+        switch (e.keyCode) {
+          case 13: return false;
+          case 27: $('#inputfield input').val(''); break;
+          default: self.prefixedSearch = true; break;
+        }
         self.search(0);
       });
       $('input[type="radio"]').change(function(e) {
         self.search(0);
       });
+
+      if ($('#inputfield input').val() !== '') {
+        // that's a query from news.ycombinator.com, disable prefix search
+        this.prefixedSearch = false;
+      }
 
       if (location.hash && location.hash.indexOf('#!/') === 0) {
         var parts = location.hash.substring(3).split('/');
@@ -148,6 +164,10 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           tags.push('story_' + stories[i]);
         }
         searchParams.tagFilters.push(tags);
+      }
+
+      if (!this.prefixedSearch) {
+        searchParams.queryType = 'prefixNone';
       }
 
       var self = this;
