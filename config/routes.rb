@@ -17,6 +17,7 @@ Hnsearch::Application.routes.draw do
 
   get '/search' => 'home#index'
   get '/beta' => 'home#beta'
+  get '/legacy' => 'home#legacy'
   root 'home#index'
 
 end

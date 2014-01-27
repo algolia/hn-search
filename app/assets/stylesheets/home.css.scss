@@ -1,5 +1,16 @@
 #search-panel {
+  font-family: Verdana !important;
+  font-size: 10pt !important;
   padding-top: 20px;
+
+  a {
+    font-family: Verdana !important;
+    font-size: 10pt !important;    
+  }
+
+  label {
+    font-weight: normal;
+  }
 
   .search-form {
     margin: 0;
@@ -159,7 +170,7 @@
 
       .comment_text, .story_text {
         text-align: justify;
-        font-size: 0.9em;
+        font-size: 9pt !important;
         margin-left: 10px;
         color: black;
       }
@@ -172,7 +183,11 @@
       .points, .comments, .created_at, .author {
         float: left;
         margin-right: 5px;
-        font-size: 0.8em;
+        font-size: 7pt !important;
+
+        a {
+          font-size: 7pt !important;
+        }
       }
 
     }
@@ -209,9 +224,95 @@
   }
 
   #history {
-    margin-top: 50px;
+    margin-top: 10px;
   }
 
+}
+
+body.legacy {
+  background: white;
+
+  #main {
+    .container {
+      width: 85%;
+      margin-top: 8px;
+      background: #f6f6ef;
+
+      #search-panel {
+        position: relative;
+        padding-top: 0px;
+
+        h1 {
+          display: none;
+        }
+
+        #search-form {
+          padding: 0px;
+          background: #FF6600;
+          position: relative;
+
+          #item_type {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+          }
+
+          #advanced-search {
+            display: none !important;
+          }
+
+          .search_box-wrapper {
+            border-bottom: none;
+            background: transparent;
+            width: 400px;
+            margin: 0px;
+            padding: 5px;
+            padding-left: 5px;
+
+            .search_box {
+              height: auto;
+            }
+
+            #inputfield {
+              margin-right: 0px;
+
+              input {
+                border-radius: 0px;
+                height: auto;
+                font-size: 14px;
+                padding: 2px 5px;
+                float: none;
+              }
+            }
+
+            .searchbutton {
+              display: none;
+            }
+          }
+        }
+
+        #hits {
+          .hit {
+            margin: 0px;
+            padding: 0px 5px;
+          }
+
+          .thumb {
+            display: none !important;
+          }
+
+          .title_url {
+            margin-left: 0px;
+          }
+
+          .comment_text {
+            border: 0px;
+            margin-left: 25px;
+          }
+        }
+      }
+    }
+  }
 }
 
 footer {

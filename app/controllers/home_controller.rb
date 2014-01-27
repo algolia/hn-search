@@ -2,6 +2,10 @@ class HomeController < ApplicationController
   def index
   end
 
+  def legacy
+    render action: 'index'
+  end
+
   def beta
   end
 
