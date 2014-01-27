@@ -1,7 +1,7 @@
 #search-panel {
   font-family: Verdana !important;
   font-size: 10pt !important;
-  padding-top: 20px;
+  padding-top: 0px;
 
   a {
     font-family: Verdana !important;
@@ -66,8 +66,6 @@
     cursor: auto;
     margin: 0em;
     border-radius: 4px 0px 0px 4px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 300;
   }
   .search_box #inputfield input:focus {
     outline-width: 0px;
@@ -154,10 +152,12 @@
         overflow: hidden;
         max-width: 100%;
         text-overflow: ellipsis;
+        font-size: 9pt;
 
         a {
           text-decoration: underline;
           color: black;
+          font-size: 10pt !important;
         }
       }
 
@@ -166,6 +166,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 50%;
+        a {
+          font-size: 9pt !important;
+        }
       }
 
       .comment_text, .story_text {
