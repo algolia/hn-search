@@ -22,7 +22,6 @@
           %i.icon-search.icon-large
     .text-right.hidden-xs
       %ul.list-unstyled.list-inline#created_at
-        %li Items from:
         - %w{last_24h past_week past_month forever sort_by_date}.each do |period|
           %li
             %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'forever')}
