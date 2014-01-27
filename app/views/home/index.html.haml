@@ -33,11 +33,11 @@
   #noresults.text-center
   #pagination.text-center
   #history.text-center
-    - cache 'items_indexed', expires_in: 15.minute do
-      %small <strong>#{number_with_delimiter Item.where(item_type_cd: Item.story).count}</strong> stories and <strong>#{number_with_delimiter Item.where(item_type_cd: Item.comment).count}</strong> comments indexed
+    - cache 'items_indexed', expires_in: 2.minute do
+      %small <strong>#{number_with_delimiter(Item.where(item_type_cd: Item.story).count) rescue 'N/A'}</strong> stories and <strong>#{number_with_delimiter(Item.where(item_type_cd: Item.comment).count) rescue 'N/A'}</strong> comments indexed
+
 :javascript
   $(document).ready(function() {
     window.hnsearch = new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
   });
-
 = render partial: 'hit_template'
