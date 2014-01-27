@@ -29,6 +29,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.hitTemplate = Hogan.compile($('#hitTemplate').text());
 
       $('#inputfield input').keyup(function(e) {
+
         self.search(0);
       });
       $('input[type="radio"]').change(function(e) {
@@ -230,7 +231,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           v.comments = hit.num_comments;
           v.comments_plural = hit.num_comments > 1;
           if (hit.story_text) {
-            v.story_text = hit._highlightResult.story_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
+            v.story_text = this.highlightedTextCleanup(hit._highlightResult.story_text.value);
           }
           v.has_comments = true;
         } else if (type === 'comment') {
@@ -249,7 +250,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
             v.item_url = item_url;
           }
           if (hit.comment_text) {
-            v.comment_text = hit._highlightResult.comment_text.value.replace(/(\\r)?\\n/g, '<br />').replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|p|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
+            v.comment_text = this.highlightedTextCleanup(hit._highlightResult.comment_text.value);
           }
         }
         res += this.hitTemplate.render(v);
@@ -306,6 +307,28 @@ Number.prototype.number_with_delimiter = function(delimiter) {
     gotoPage: function(page) {
       window.scrollTo(0, 0);
       this.search(page);
+    },
+
+    highlightedTextCleanup: function(str) {
+      // handle line breaks
+      str = str.replace(/(\\r)?\\n/g, '<br />');
+
+      // remove stopwords highlighting
+      str = str.replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
+
+      // work-around =\\" escaping bug (6c92ae092359647c04804876139516163d0567de)
+      str = str.replace(/=\\"/g, '="')
+
+      // remove highlighted href attributes breaking links
+      while (true) {
+        var matches = str.match('href="(.*<em>.*[^"]+)"');
+        if (!matches) {
+          break;
+        }
+        str = str.replace(matches[0], 'href="' + matches[1].replace(/<\/?em>/g, '') + '"');
+      }
+
+      return str;
     }
 
   }
