@@ -261,7 +261,8 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       var pagination = '';
       if (content.nbHits > 0) {
         pagination += '<ul class="pagination">';
-        pagination += '<li class="' + (content.page == 0 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.previousPage()">«</a></li>';
+        var prevLink = content.page == 0 ? 'void' : 'window.hnsearch.previousPage()'
+        pagination += '<li class="' + (content.page == 0 ? 'disabled' : '') + '"><a href="javascript:' + prevLink + '">«</a></li>';
         var ellipsis1 = -1;
         var ellipsis2 = -1;
         var n = 0;
@@ -282,7 +283,8 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           pagination += '<li class="' + (i == content.page ? 'active' : '') + '"><a href="javascript:window.hnsearch.gotoPage(' + i + ')">' + (i + 1) + '</a></li>';
           ++n;
         }
-        pagination += '<li class="' + (content.page >= content.nbPages - 1 ? 'disabled' : '') + '"><a href="javascript:window.hnsearch.nextPage()">»</a></li>';
+        var nextLink = content.page >= content.nbPages - 1 ? 'void' : 'window.hnsearch.nextPage()'
+        pagination += '<li class="' + (content.page >= content.nbPages - 1 ? 'disabled' : '') + '"><a href="javascript:' + nextLink + '">»</a></li>';
         pagination += '</ul>';
       }
       this.$pagination.html(pagination);
