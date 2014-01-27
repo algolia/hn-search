@@ -20,7 +20,7 @@
     .search_box-wrapper
       .search_box
         #inputfield
-          %input.autocomplete{autocomplete: 'off', autocorrect: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
+          %input{autocomplete: 'off', autocorrect: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
         .searchbutton
           %i.icon-search.icon-large
     .text-right.hidden-xs
@@ -40,6 +40,6 @@
 
 :javascript
   $(document).ready(function() {
-    window.hnsearch = new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}');
+    window.hnsearch = new HNSearch('#{ENV['ALGOLIASEARCH_APPLICATION_ID']}', '#{ENV['ALGOLIASEARCH_API_KEY_RO']}', '#{Item.index_name}', '#{User.index_name}');
   });
 = render partial: 'hit_template'

@@ -9,16 +9,17 @@ Number.prototype.number_with_delimiter = function(delimiter) {
 };
 
 (function($) {
-  window.HNSearch = function(applicationID, apiKey, indexName) {
-    this.init(applicationID, apiKey, indexName);
+  window.HNSearch = function(applicationID, apiKey, indexName, userIndexName) {
+    this.init(applicationID, apiKey, indexName, userIndexName);
   }
 
   HNSearch.prototype = {
-    init: function(applicationID, apiKey, indexName) {
+    init: function(applicationID, apiKey, indexName, userIndexName) {
       var self = this;
 
       var client = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']);
       this.idx = client.initIndex(indexName);
+      this.idx_user = client.initIndex(userIndexName);
       this.idx_by_date = client.initIndex(indexName + '_sort_date');
       this.$hits = $('#hits');
       this.$pagination = $('#pagination');
@@ -29,6 +30,26 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.hitTemplate = Hogan.compile($('#hitTemplate').text());
       this.prefixedSearch = true;
 
+      $('#inputfield input').tagautocomplete({
+        character: 'author:',
+        source: function(query, process) {
+          var tquery = this.extractor();
+          if(!tquery) {
+            return [];
+          }
+          var author = tquery.substring(this.options.character.length);
+          self.idx_user.search(author, function(success, content) {
+            if (success) {
+              var authors = [];
+              for (var i = 0; i < content.hits.length; ++i) {
+                authors.push(content.hits[i]._highlightResult.username.value);
+              }
+              process(authors);
+            }
+          });
+        }
+      });
+
       $('#search-form').submit(function(e) {
         e.preventDefault();
         // disable prefix search on form submitting
@@ -36,11 +57,22 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         self.search(0);
       });
       $('#inputfield input').keyup(function(e) {
+        $('#inputfield input').tagautocomplete(['keyup', e]);
         switch (e.keyCode) {
           case 13: return false;
           case 27: $('#inputfield input').val(''); break;
           default: self.prefixedSearch = true; break;
         }
+        self.search(0);
+      }).keypress(function(e) {
+        $('#inputfield input').tagautocomplete(['keypress', e]);
+      }).keydown(function(e) {
+        $('#inputfield input').tagautocomplete(['keydown', e]);
+      }).focus(function(e) {
+        $('#inputfield input').tagautocomplete(['focus', e]);
+      }).blur(function(e) {
+        $('#inputfield input').tagautocomplete(['blur', e]);
+      }).change(function(e) {
         self.search(0);
       });
       $('input[type="radio"]').change(function(e) {

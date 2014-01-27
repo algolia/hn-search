@@ -339,6 +339,16 @@ body.legacy {
   }
 }
 
+.dropdown-menu {
+  position: static !important;
+  border: 1px solid red;
+
+  em {
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+
 footer {
   margin-top: 10px;
 }

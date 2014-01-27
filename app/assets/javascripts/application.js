@@ -17,3 +17,5 @@
 //= require jquery.timeago
 //= require hogan
 //= require jquery.cookie
+//= require bootstrap-typeahead
+//= require tagautocomplete
