@@ -26,7 +26,7 @@ class Item < ActiveRecord::Base
     attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
     attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
     tags do
-      [item_type, "author_#{author}", "story_#{story_id}"]
+      [item_type, "author_#{author}", "story_#{story_id || id}"]
     end
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
