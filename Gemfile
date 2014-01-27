@@ -12,6 +12,7 @@ gem 'haml-rails'
 gem 'bourbon'
 gem 'therubyracer'
 gem 'hogan_assets'
+gem 'jquery-cookie-rails'
 
 gem 'algoliasearch-rails'
 gem 'curb'

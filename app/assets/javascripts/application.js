@@ -16,3 +16,4 @@
 //= require algolia/algoliasearch.min
 //= require jquery.timeago
 //= require hogan
+//= require jquery.cookie

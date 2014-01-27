@@ -3,6 +3,9 @@
   = javascript_include_tag "hnsearch"
 
 #search-panel
+  #style-toggler.hidden-xs
+    = link_to_function 'Change style <span></span>'.html_safe, 'hnsearch.toggleStyle();'
+
   %h1.text-center
     Search Hacker News
 

@@ -113,6 +113,22 @@
     font-size: 0.8em;
   }
 
+  #style-toggler {
+    z-index: 100;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+
+    a {
+      font-size: 7pt !important;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
   #hits {
     font-size: 1em;
 

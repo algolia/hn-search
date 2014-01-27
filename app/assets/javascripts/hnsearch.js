@@ -349,7 +349,22 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       }
 
       return str;
-    }
+    },
+
+    toggleStyle: function() {
+      var clazz;
+      switch (($('body').attr('class') || '').trim()) {
+      case 'default':
+      case '':
+        clazz = 'legacy';
+        break;
+      case 'legacy':
+        clazz = 'default';
+      }
+      $('body').attr('class', clazz);
+      $.cookie('style', clazz);
+      $('#style-toggler span').text('(' + clazz + ')');
+    },
 
   }
 })(jQuery);
