@@ -118,7 +118,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         }
         if (originalQuery == $('#inputfield input').val().trim()) {
           if (content.nbHits == 0) {
-            self.$noresults.html('<p>No results matching your query:<code>' + originalQuery + '<code><p>');
+            self.$noresults.html('<p>No results matching your query:<code>' + $('<div />').text(originalQuery).html() + '<code><p>');
             self.$noresults.show();
           } else {
             self.$noresults.hide();
