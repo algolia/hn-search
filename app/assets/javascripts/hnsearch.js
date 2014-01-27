@@ -56,7 +56,14 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         var parts = location.hash.substring(3).split('/');
         $('input[name="item_type"][value="' + parts.shift() + '"]').prop('checked', true);
         $('input[name="created_at"][value="' + parts.shift() + '"]').prop('checked', true);
-        this.page = parseInt(parts.shift());
+        var v = parts.shift();
+        if (v === 'prefix') {
+          this.prefixedSearch = true;
+          this.page = parseInt(parts.shift());
+        } else {
+          this.prefixedSearch = false;
+          this.page = parseInt(v);
+        }
         $('#inputfield input').val(parts.join('/'));
       }
 
@@ -126,7 +133,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         }
       }
 
-      location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + this.page + '/' + originalQuery);
+      location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + (this.prefixedSearch ? 'prefix/' : '') + this.page + '/' + originalQuery);
 
       var authors = [];
       while (true) {
