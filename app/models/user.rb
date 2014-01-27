@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   algoliasearch per_environment: true, id: :username do
     attributesToIndex ['username', 'about', 'karma']
     customRanking ['desc(karma)']
+    separatorsToIndex '_-'
   end
 
   EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (-?\d+) (?:nil|(-?\d+)/?(-?\d*)) (?:nil|"(.*)")\)$}
