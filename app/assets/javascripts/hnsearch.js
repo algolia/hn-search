@@ -109,25 +109,54 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       }
     },
 
-    search: function(p) {
+    follow: function(story_id) {
+      this.follow_cache = this.follow_cache || {};
+      this.idx_by_date.clearCache();
+      this.search(0, { query: 'story:' + story_id, hitsPerPage: 1000, created_at: 'sort_by_date', item_type: 'all', url: false });
+      var self = this;
+      setTimeout(function() {
+        self.follow_cache_notify = true;
+        self.follow(story_id);
+      }, 60000);
+    },
+
+    notify: function(hit) {
+      if (typeof this.follow_cache === 'undefined' || this.follow_cache[hit.objectID]) {
+        return;
+      }
+      this.follow_cache[hit.objectID] = hit;
+      if (!this.follow_cache_notify) {
+        return;
+      }
+      var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+      new Notification((hit.title || hit.story_title), {
+        body: (hit.url || hit.text || hit.story_text || hit.comment_text || ''),
+        icon: ('http://drcs9k8uelb9s.cloudfront.net/' + (hit.story_id || hit.id) + '.png')
+      });
+    },
+
+    search: function(p, args) {
+      var args = args || { url: true };
+
       if (this.page < 0 || this.page > 40) {
         // hard limit
         return;
       }
       this.page = p;
 
-      var query = $('#inputfield input').val().trim();
-      if (query.length == 0) {
+      var query = $('#inputfield input').val() || args.query;
+      if (!query || query.trim().length == 0) {
         this.$hits.empty();
         this.$pagination.empty();
         this.$stats.empty();
         this.$noresults.hide();
         return;
       }
+      query = query.trim();
 
       var originalQuery = query;
       var searchParams = {
-        hitsPerPage: 25,
+        hitsPerPage: args.hitsPerPage || 25,
         page: p,
         getRankingInfo: 1,
         minWordSizefor1Typo: 5,
@@ -139,7 +168,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       var now = new Date(); 
       var now_utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()) / 1000;
 
-      var created_at = $('#created_at input[name="created_at"]:checked').val();
+      var created_at = $('#created_at input[name="created_at"]:checked').val() || args.created_at;
       switch (created_at) {
         case 'last_24h':
           searchParams.numericFilters.push('created_at_i>=' + (now_utc - 24*60*60));
@@ -156,7 +185,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           break;
       }
 
-      var item_type = $('#item_type input[name="item_type"]:checked').val();
+      var item_type = $('#item_type input[name="item_type"]:checked').val() || args.item_type;
       if (item_type && item_type !== 'all') {
         if (item_type === 'poll') {
           searchParams.tagFilters.push(['poll', 'pollopt']);
@@ -165,7 +194,9 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         }
       }
 
-      location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + (this.prefixedSearch ? 'prefix/' : '') + this.page + '/' + originalQuery);
+      if (args.url) {
+        location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + (this.prefixedSearch ? 'prefix/' : '') + this.page + '/' + originalQuery);
+      }
 
       var authors = [];
       while (true) {
@@ -215,7 +246,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           console.log(content);
           return;
         }
-        if (originalQuery == $('#inputfield input').val().trim()) {
+        if (originalQuery == ($('#inputfield input').val() || args.query).trim()) {
           if (content.nbHits == 0) {
             var noResults = '<p>No results matching your query</p><p><code>' + $('<div />').text(originalQuery).html() + '</code>';
             if (item_type) {
@@ -277,7 +308,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           points: hit.points,
           points_plural: (hit.points > 1),
           author: hit.author,
-          highlighted_author: hit._highlightResult.author.value
+          highlighted_author: (hit._highlightResult && hit._highlightResult.author.value) || ''
         };
         if (type === 'story' || type === 'poll' || type === 'pollopt') {
           v.item_url = item_url;
@@ -296,9 +327,9 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         } else if (type === 'comment') {
           v.thumb_item_id = hit.story_id;
           if (hit.story_title) {
-            v.highlighted_story_title = hit._highlightResult.story_title.value;
+            v.highlighted_story_title = hit._highlightResult.story_title && hit._highlightResult.story_title.value;
             if (hit.story_url) {
-              v.highlighted_story_url = hit._highlightResult.story_url.value;
+              v.highlighted_story_url = hit._highlightResult.story_url && hit._highlightResult.story_url.value;
               v.story_url = hit.story_url;
             }
           }
@@ -312,6 +343,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
             v.comment_text = this.highlightedTextCleanup(hit._highlightResult.comment_text.value);
           }
         }
+        this.notify(hit);
         res += this.hitTemplate.render(v);
       }
       this.$hits.html(res);

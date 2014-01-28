@@ -10,7 +10,7 @@
     = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "feed", format: 'rss'}, { title: 'HN Search'})
     = yield(:head)
-  %body{class: controller.action_name == 'legacy' ? 'legacy' : cookies['style']}
+  %body{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
     #main{:role => "main"}
       .container
         .content

@@ -18,6 +18,7 @@ Hnsearch::Application.routes.draw do
   get '/search' => 'home#index'
   get '/beta' => 'home#beta'
   get '/legacy' => 'home#legacy'
+  get '/follow/:story_id' => 'home#follow'
   root 'home#index'
 
 end
