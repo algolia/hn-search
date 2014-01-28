@@ -2,13 +2,32 @@
 %html
   %head
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", :name => "viewport"}
-    %title= content_for?(:title) ? yield(:title) : "HN Search powered by Algolia"
-    %meta{:content => content_for?(:description) ? yield(:description) : "Hnsearch", :name => "description"}
+    - page_title = content_for?(:title) ? yield(:title) : "HN Search powered by Algolia"
+    - page_description = content_for?(:description) ? yield(:description) : "Hacker News Search powered by Algolia, millions articles and comments at your fingertips."
+    %title= page_title
+    %meta{:content => page_description, :name => "description"}
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "feed", format: 'rss'}, { title: 'HN Search'})
+
+    %meta{name: "twitter:card", content: "summary"}
+    %meta{name: "twitter:site", content: "@algolia"}
+    %meta{name: "twitter:title", content: page_title}
+    %meta{name: "twitter:description", content: page_description}
+    %meta{name: "twitter:image:src", content: asset_path('default.png')}
+    %meta{name: "twitter:domain", content: request.host}
+
+    %meta{property: "st:title", content: page_title }
+    %meta{property: "og:url", content: request.url }
+    %meta{property: "og:site_name", content: 'HN Search' }
+    %meta{property: "og:title", content: page_title }
+    %meta{property: "og:description", content: page_description, }
+    %meta{property: "og:image", content: asset_path('default.png') }
+    %meta{property: "og:image:width", content: '80' }
+    %meta{property: "og:image:height", content: '50' }
+
     = yield(:head)
   %body{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
     #main{:role => "main"}
