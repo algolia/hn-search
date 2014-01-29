@@ -96,7 +96,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           this.prefixedSearch = false;
           this.page = parseInt(v);
         }
-        $('#inputfield input').val(parts.join('/'));
+        $('#inputfield input').val(decodeURIComponent(parts.join('/')));
       }
 
       if ($('#inputfield input').val() !== '') {
