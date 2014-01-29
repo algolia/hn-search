@@ -10,7 +10,8 @@
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-    = auto_discovery_link_tag(:rss, {controller: "home", action: "feed", format: 'rss'}, { title: 'HN Search'})
+    = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})
+    = auto_discovery_link_tag(:atom, {controller: "home", action: "latest", format: 'atom'}, { title: 'Latest HN items'})
 
     %meta{name: "twitter:card", content: "summary"}
     %meta{name: "twitter:site", content: "@algolia"}

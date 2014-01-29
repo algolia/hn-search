@@ -8,7 +8,8 @@ Hnsearch::Application.routes.draw do
     end
   end
 
-  get 'feed', controller: 'home', action: 'feed'
+  get 'rss', controller: 'home', action: 'front_page'
+  get 'latest', controller: 'home', action: 'latest'
 
   get 'about' => 'pages#about'
   get 'api' => 'pages#api'

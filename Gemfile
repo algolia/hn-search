@@ -13,7 +13,7 @@ gem 'bourbon'
 gem 'therubyracer'
 gem 'hogan_assets'
 gem 'jquery-cookie-rails'
-
+gem 'rest_client'
 gem 'algoliasearch-rails'
 gem 'curb'
 gem 'aws-s3'

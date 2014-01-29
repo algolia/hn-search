@@ -1,6 +1,6 @@
 atom_feed do |feed|
-  feed.title("HN Search")
-  feed.updated(@stories[0].created_at)
+  feed.title(@title)
+  feed.updated(@updated_at)
 
   @stories.each do |story|
     feed.entry(story, url: "https://news.ycombinator.com/item?id=#{story.id}") do |entry|

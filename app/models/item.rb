@@ -126,6 +126,7 @@ class Item < ActiveRecord::Base
             next if json.nil?
             item = Item.find_or_initialize_by(id: json['id'])
             item.deleted ||= json['deleted']
+            item.dead ||= json['dead']
             item.item_type = json['type'] || 'unknown'
             item.author = json['by']
             item.created_at = json['time'] && Time.at(json['time'])
