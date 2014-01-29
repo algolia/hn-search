@@ -63,17 +63,17 @@ after "deploy:update", "bluepill:quit", "bluepill:start"
 namespace :bluepill do
   desc "Stop processes that bluepill is monitoring and quit bluepill"
   task :quit, :roles => [:cron] do
-    sudo "bundle exec bluepill stop"
-    sudo "bundle exec bluepill quit"
+    "cd #{current_path} && bundle exec bluepill --no-privileged stop"
+    "cd #{current_path} && bundle exec bluepill --no-privileged quit"
   end
 
   desc "Load bluepill configuration and start it"
   task :start, :roles => [:cron] do
-    sudo "bundle exec bluepill load /var/www/hnsearch/current/config/production.pill"
+    "cd #{current_path} && bundle exec bluepill --no-privileged load /var/www/hnsearch/current/config/production.pill"
   end
 
   desc "Prints bluepills monitored processes statuses"
   task :status, :roles => [:cron] do
-    sudo "bundle exec bluepill status"
+    "cd #{current_path} && bundle exec bluepill --no-privileged status"
   end
 end

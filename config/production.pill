@@ -6,8 +6,8 @@ Bluepill.application("hnsearch") do |app|
     process.stop_grace_time     = 10.seconds
     process.restart_grace_time  = 10.seconds
 
-    process.start_command = "RAILS_ENV=production ./bin/delayed_job -n 16 start"
-    process.stop_command  = "RAILS_ENV=production ./bin/delayed_job -n 16 stop"
+    process.start_command = "RAILS_ENV=production /var/www/hnsearch/current/bin/delayed_job -n 16 start"
+    process.stop_command  = "RAILS_ENV=production /var/www/hnsearch/current/bin/delayed_job -n 16 stop"
 
     process.pid_file = "/var/www/hnsearch/shared/pids/delayed_job.pid"
     process.uid = "prod"
