@@ -1,0 +1,16 @@
+Bluepill.application("hnsearch") do |app|
+  app.process("delayed_job") do |process|
+    process.working_dir = "/var/www/hnsearch/current"
+
+    process.start_grace_time    = 10.seconds
+    process.stop_grace_time     = 10.seconds
+    process.restart_grace_time  = 10.seconds
+
+    process.start_command = "RAILS_ENV=production ./bin/delayed_job -n 16 start"
+    process.stop_command  = "RAILS_ENV=production ./bin/delayed_job -n 16 stop"
+
+    process.pid_file = "/var/www/hnsearch/shared/pids/delayed_job.pid"
+    process.uid = "prod"
+    process.gid = "prod"
+  end
+end

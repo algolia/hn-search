@@ -59,11 +59,21 @@ set :whenever_roles, [:cron]
 require "whenever/capistrano"
 
 # delayed job
-require "delayed/recipes"
-set :rails_env, "production"
-set :delayed_job_server_role, :cron
-set :delayed_job_command, 'bin/delayed_job'
-set :delayed_job_args, "-n 16"
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
+after "deploy:update", "bluepill:quit", "bluepill:start"
+namespace :bluepill do
+  desc "Stop processes that bluepill is monitoring and quit bluepill"
+  task :quit, :roles => [:cron] do
+    sudo "bundle exec bluepill stop"
+    sudo "bundle exec bluepill quit"
+  end
+
+  desc "Load bluepill configuration and start it"
+  task :start, :roles => [:cron] do
+    sudo "bundle exec bluepill load /var/www/hnsearch/current/config/production.pill"
+  end
+
+  desc "Prints bluepills monitored processes statuses"
+  task :status, :roles => [:cron] do
+    sudo "bundle exec bluepill status"
+  end
+end
