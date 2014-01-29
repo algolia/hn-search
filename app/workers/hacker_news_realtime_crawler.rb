@@ -21,8 +21,8 @@ class HackerNewsRealtimeCrawler
 
     begin
       item_ids = Item.refresh_since!(last_id).map { |i| i.id }
-      Item.where(id: item_ids).where(deleted: false).reindex!
-      Item.where(id: item_ids).where(deleted: true).find_each do |item|
+      Item.where(id: item_ids).where(deleted: false).where(dead: false).reindex!
+      Item.where(id: item_ids).where('deleted = ? OR dead = ?', true, true).find_each do |item|
         item.remove_from_index!
       end
     rescue Exception => e
@@ -31,7 +31,7 @@ class HackerNewsRealtimeCrawler
 
     # reindex last 5000 items
     first = Item.where(item_type_cd: Item.story).order('id DESC').limit(REINDEX_LAST_STORIES).select('id').last
-    Item.where(item_type_cd: Item.story).where(deleted: false).where('id > ?', first.id).reindex!
+    Item.where(item_type_cd: Item.story).where(deleted: false).where(dead: false).where('id > ?', first.id).reindex!
   end
 
 
