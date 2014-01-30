@@ -276,7 +276,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         stats += 'Page <b>' + (content.page + 1) + ' of ' + content.nbPages + '</b>, ';
         stats += content.nbHits > 1000 ? 'about' : 'got';
         stats += ' <b>' + content.nbHits.number_with_delimiter() + ' result' + (content.nbHits > 1 ? 's' : '') + '</b>';
-        stats += ' in <b>' + content.processingTimeMS + ' ms</b>';
+        stats += ' in <b>' + (content.processingTimeMS < 100 ? ('<a href="http://www.algolia.com">' + content.processingTimeMS + ' ms</a>') : (content.processingTimeMS + ' ms')) + '</b>';
       }
       this.$stats.html(stats);
       
