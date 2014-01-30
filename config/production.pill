@@ -4,9 +4,9 @@ Bluepill.application("hnsearch", :log_file => "/var/www/hnsearch/current/log/blu
       process.working_dir = "/var/www/hnsearch/current"
       process.environment = { 'RAILS_ENV' => 'production' }
 
-      process.start_grace_time    = 10.seconds
-      process.stop_grace_time     = 10.seconds
-      process.restart_grace_time  = 10.seconds
+      process.start_grace_time    = 30.seconds
+      process.stop_grace_time     = 30.seconds
+      process.restart_grace_time  = 30.seconds
 
       process.start_command = "./bin/delayed_job start -i #{i}"
       process.stop_command  = "./bin/delayed_job stop -i #{i}"
