@@ -1,16 +1,17 @@
-Bluepill.application("hnsearch") do |app|
-  app.process("delayed_job") do |process|
-    process.working_dir = "/var/www/hnsearch/current"
+Bluepill.application("hnsearch", :log_file => "/var/www/hnsearch/current/log/bluepill.log") do |app|
+  (1..16).each do |i|
+    app.process("delayed_job.#{i}") do |process|
+      process.working_dir = "/var/www/hnsearch/current"
+      process.environment = { 'RAILS_ENV' => 'production' }
 
-    process.start_grace_time    = 10.seconds
-    process.stop_grace_time     = 10.seconds
-    process.restart_grace_time  = 10.seconds
+      process.start_grace_time    = 10.seconds
+      process.stop_grace_time     = 10.seconds
+      process.restart_grace_time  = 10.seconds
 
-    process.start_command = "RAILS_ENV=production /var/www/hnsearch/current/bin/delayed_job -n 16 start"
-    process.stop_command  = "RAILS_ENV=production /var/www/hnsearch/current/bin/delayed_job -n 16 stop"
+      process.start_command = "./bin/delayed_job start -i #{i}"
+      process.stop_command  = "./bin/delayed_job stop -i #{i}"
 
-    process.pid_file = "/var/www/hnsearch/shared/pids/delayed_job.pid"
-    process.uid = "prod"
-    process.gid = "prod"
+      process.pid_file = "/var/www/hnsearch/shared/pids/delayed_job.#{i}.pid"
+    end
   end
 end
