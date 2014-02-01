@@ -21,6 +21,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.idx = client.initIndex(indexName);
       this.idx_user = client.initIndex(userIndexName);
       this.idx_by_date = client.initIndex(indexName + '_sort_date');
+      this.idx_ordered = client.initIndex(indexName + '_ordered');
       this.$hits = $('#hits');
       this.$pagination = $('#pagination');
       this.$stats = $('#stats');
@@ -167,6 +168,11 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       var idx = this.idx;
       var now = new Date(); 
       var now_utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()) / 1000;
+
+      if (originalQuery.length <= 2) {
+        // small word queries target the 'ordered' index
+        idx = this.idx_ordered;
+      }
 
       var created_at = $('#created_at input[name="created_at"]:checked').val() || args.created_at;
       switch (created_at) {
