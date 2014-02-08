@@ -136,6 +136,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       });
       notification.onclick = function() {
         window.open('https://news.ycombinator.com/item?id=' + (hit.story_id || hit.objectID) + '#up_' + hit.objectID);
+        this.cancel();
       };
     },
 
