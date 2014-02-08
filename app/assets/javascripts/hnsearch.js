@@ -130,10 +130,13 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         return;
       }
       var Notification = window.Notification || window.mozNotification || window.webkitNotification;
-      new Notification((hit.title || hit.story_title), {
+      var notification = new Notification((hit.title || hit.story_title), {
         body: (hit.url || hit.text || hit.story_text || hit.comment_text || ''),
-        icon: ('http://drcs9k8uelb9s.cloudfront.net/' + (hit.story_id || hit.id) + '.png')
+        icon: ('http://drcs9k8uelb9s.cloudfront.net/' + (hit.story_id || hit.objectID) + '.png')
       });
+      notification.onclick = function() {
+        window.open('https://news.ycombinator.com/item?id=' + (hit.story_id || hit.objectID) + '#up_' + hit.objectID);
+      };
     },
 
     search: function(p, args) {
