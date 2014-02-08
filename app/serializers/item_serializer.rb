@@ -1,5 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :created_at, :deleted, :dead, :author, :title, :url, :text, :points, :parent_id
+  attributes :id, :created_at, :author, :title, :url, :text, :points
 
   has_many :children
 
