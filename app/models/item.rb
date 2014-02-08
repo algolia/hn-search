@@ -28,6 +28,7 @@ class Item < ActiveRecord::Base
     tags do
       [item_type, "author_#{author}", "story_#{story_id || id}"]
     end
+    queryType 'prefixLast'
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     separatorsToIndex '+#$'
