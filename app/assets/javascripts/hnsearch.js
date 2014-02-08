@@ -314,13 +314,13 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           points: hit.points,
           points_plural: (hit.points > 1),
           author: hit.author,
-          highlighted_author: (hit._highlightResult && hit._highlightResult.author.value) || ''
+          highlighted_author: (hit._highlightResult.author && hit._highlightResult.author.value) || ''
         };
         if (type === 'story' || type === 'poll' || type === 'pollopt') {
           v.item_url = item_url;
-          v.highlighted_title = hit._highlightResult.title.value;
+          v.highlighted_title = (hit._highlightResult.title && hit._highlightResult.title.value) || '';
           if (hit.url) {
-            v.highlighted_url = hit._highlightResult.url.value;
+            v.highlighted_url = (hit._highlightResult.url && hit._highlightResult.url.value) || '';
           }
           v.thumb_item_id = hit.objectID;
           v.url = (hit.url || item_url);
