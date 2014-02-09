@@ -23,6 +23,10 @@
           %input{autocomplete: 'off', autocorrect: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
         .searchbutton
           %i.icon-search.icon-large
+        .branding.visible-lg
+          Discover the
+          = link_to "realtime search engine", "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia"
+          behind HN Search.
     .text-right.hidden-xs
       %ul.list-unstyled.list-inline#created_at
         - %w{last_24h past_week past_month forever sort_by_date}.each do |period|

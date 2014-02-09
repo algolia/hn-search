@@ -132,6 +132,16 @@
     }
   }
 
+  .branding {
+    margin-top: 13px;
+    margin-left: -15px;
+    font-size: 11px !important;
+    a {
+      font-size: 11px !important;
+      text-decoration: underline;
+    }
+  }
+
   #hits {
     font-size: 1em;
 
@@ -276,6 +286,12 @@ body.legacy {
 
         h1 {
           display: none;
+        }
+
+        .branding {
+          position: absolute;
+          right: -320px;
+          top: -7px;
         }
 
         #search-form {
