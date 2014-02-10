@@ -75,7 +75,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  EXPORT_REGEXP = %r{^\((\d+) (story|comment|poll|pollopt) "(.+)" (\d+) (?:nil|"(.*)") (?:nil|"(.+)") (?:nil|"(.*)") (?:nil|-?(\d+)) (?:nil|\(([\d ]+)\)) (?:nil|(\d+))\)$}
+  EXPORT_REGEXP = %r{^\((\d+) (story|comment|poll|pollopt) "(.+)" (\d+) (?:nil|"(.*)") (?:nil|"(.*)") (?:nil|"(.*)") (?:nil|-?(\d+)) (?:nil|\(([\d ]+)\)) (?:nil|(\d+))\)$}
 
   def self.refresh_since!(id)
     id = 1 if id < 1
