@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 
   def self.cumulated_per_month
     sum = 0
-    User.group_by_month(:created_at).count.map do |k,v|
+    User.where('karma > 0').group_by_month(:created_at).count.map do |k,v|
       sum += v
       [k.is_a?(String) ? DateTime.parse(k) : k, sum]
     end
