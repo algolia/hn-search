@@ -9,7 +9,7 @@ class ItemSerializer < ActiveModel::Serializer
   end
 
   def children
-    object.children.where(deleted: false).where(dead: false).where.not(item_type_cd: Item.pollopt)
+    object.children.where.not(item_type_cd: Item.pollopt)
   end
 
   def options
@@ -17,6 +17,7 @@ class ItemSerializer < ActiveModel::Serializer
   end
 
   def filter(keys)
+    return [:id, :children] if object.deleted || object.dead
     keys -= [:url, :title] if object.item_type == 'comment' || object.item_type == 'pollopt'
     keys -= [:options] if object.item_type != 'poll'
     keys -= [:children, :author, :created_at] if object.item_type == 'pollopt'
