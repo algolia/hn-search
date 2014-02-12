@@ -10,6 +10,7 @@ Hnsearch::Application.routes.draw do
       get 'items/:id', as: :items, controller: 'items', action: 'show'
       get 'users/:username', as: :users, controller: 'users', action: 'show'
       get 'search', as: :search, controller: 'search', action: 'perform'
+      get 'search_by_date', as: :search_by_date, controller: 'search', action: 'by_date'
     end
   end
 

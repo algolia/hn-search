@@ -79,10 +79,15 @@
 
 %h3 Search
 
-%h5 Request
+%h5 Request (sorted by relevance)
 %p
   %span.label.label-info GET
-  <code>#{api_v1_search_url('p1' => 'v1', 'p2' => 'v2...')}</code>
+  <code>#{api_v1_search_url}?query=...</code>
+
+%h5 Request (sorted by date)
+%p
+  %span.label.label-info GET
+  <code>#{api_v1_search_by_date_url}?query=...</code>
 
 %p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
