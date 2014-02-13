@@ -89,6 +89,21 @@
   %span.label.label-info GET
   <code>#{api_v1_search_by_date_url}?query=...</code>
 
+%h3 Examples
+%dl
+  %dt All stories matching <code>foo</code>
+  %dd <code>#{api_v1_search_url}?query=foo&tags=story</code>
+  %dt All comments matching <code>bar</code>
+  %dd <code>#{api_v1_search_url}?query=bar&tags=comment</code>
+  %dt Last stories
+  %dd <code>#{api_v1_search_by_date_url}?tags=story</code>
+  %dt Last stories OR polls
+  %dd <code>#{api_v1_search_by_date_url}?tags=(story,poll)</code>
+  %dt Comments since timestamp X (in second)
+  %dd <code>#{api_v1_search_by_date_url}?tags=comment&numericFilters=created_at_i&gt;X</code>
+  %dt Stories between timestamp <code>X</code> and timestamp <code>Y</code> (in second)
+  %dd <code>#{api_v1_search_by_date_url}?tags=story&numericFilters=created_at_i&gt;X,created_at_i&lt;Y</code>
+
 %p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
 %h5 Answer
