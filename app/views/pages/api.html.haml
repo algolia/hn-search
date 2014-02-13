@@ -103,6 +103,8 @@
   %dd <code>#{api_v1_search_by_date_url}?tags=comment&numericFilters=created_at_i&gt;X</code>
   %dt Stories between timestamp <code>X</code> and timestamp <code>Y</code> (in second)
   %dd <code>#{api_v1_search_by_date_url}?tags=story&numericFilters=created_at_i&gt;X,created_at_i&lt;Y</code>
+  %dt Stories by of <code>pg</code>
+  %dd <code>#{api_v1_search_url}?tags=story,author_pg</code>
 
 %p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
