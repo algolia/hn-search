@@ -79,17 +79,50 @@
 
 %h3 Search
 
-%h5 Request (sorted by relevance)
+%h5 Request (sorted by relevance, then points, then number of comments)
 %p
   %span.label.label-info GET
   <code>#{api_v1_search_url}?query=...</code>
 
-%h5 Request (sorted by date)
+%h5 Request (sorted by date, more recent first)
 %p
   %span.label.label-info GET
   <code>#{api_v1_search_by_date_url}?query=...</code>
 
-%h3 Examples
+%h5 Query parameters
+
+%p Common query parameters:
+
+%dl.dl-horizontal
+  %dt <code>query=</code>
+  %dd full-text query
+  %dt <code>tags=</code>
+  %dd
+    filter on a specific tag. Available tags:
+    %ul
+      %li <code>story</code>
+      %li <code>comment</code>
+      %li <code>poll</code>
+      %li <code>pollop</code>
+      %li <code>show_hn</code>
+      %li <code>ask_hn</code>
+      %li <code>author_:USERNAME</code>
+      %li <code>story_:ID</code>
+  %dt <code>numericFilters=</code>
+  %dd
+    filter on a specific numerical condition (<code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>&gt;</code> or <code>&gt;</code>). Available numerical fields:
+    %ul
+      %li <code>created_at_i</code>
+      %li <code>points</code>
+      %li <code>num_comments</code>
+  %dt <code>page=</code>
+  %dd page number
+
+%p Tags are ANDed by default, can be ORed if between parenthesis. For example <code>author_pg,(story,poll)</code> filters on <code>author=pg AND (type=story OR type=poll)</code>.
+
+%p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
+
+%h5 Examples
 %dl
   %dt All stories matching <code>foo</code>
   %dd <code>#{api_v1_search_url}?query=foo&tags=story</code>
@@ -107,8 +140,6 @@
   %dd <code>#{api_v1_search_url}?tags=story,author_pg</code>
   %dt Comments of story <code>X</code>
   %dd <code>#{api_v1_search_url}?tags=comment,story_X</code>
-
-%p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
 %h5 Answer
 %pre
