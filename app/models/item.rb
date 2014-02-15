@@ -17,6 +17,9 @@ class Item < ActiveRecord::Base
   belongs_to :story, class_name: "Item", foreign_key: "story_id"
   has_many :story_comments, class_name: "Item", foreign_key: "story_id"
 
+  SHOW_HN_RX = /^show hn\b/i
+  ASK_HN_RX = /^ask hn\b/i
+
   include AlgoliaSearch
   algoliasearch per_environment: true do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url
@@ -26,7 +29,16 @@ class Item < ActiveRecord::Base
     attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
     attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
     tags do
-      [item_type, "author_#{author}", "story_#{story_id || id}"]
+      t = [item_type, "author_#{author}", "story_#{story_id || id}"]
+      if item_type_cd == Item.story
+        case title
+        when SHOW_HN_RX
+          t << 'show_hn'
+        when ASK_HN_RX
+          t << 'ask_hn'
+        end
+      end
+      t
     end
     queryType 'prefixLast'
     customRanking ['desc(points)', 'desc(num_comments)']
