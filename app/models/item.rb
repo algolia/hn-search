@@ -15,7 +15,7 @@ class Item < ActiveRecord::Base
   has_many :children, class_name: "Item", foreign_key: "parent_id"
 
   belongs_to :story, class_name: "Item", foreign_key: "story_id"
-  has_many :story_comments, class_name: "Item", foreign_key: "story_id"
+  has_many :story_comments, -> { where('item_type_cd = ?', Item.comment) }, class_name: "Item", foreign_key: "story_id"
 
   SHOW_HN_RX = /^show hn\b/i
   ASK_HN_RX = /^ask hn\b/i
@@ -67,7 +67,7 @@ class Item < ActiveRecord::Base
   end
 
   def num_comments
-    item_type_cd == Item.story ? story_comments.count : nil
+    item_type_cd == Item.story || item_type_cd == Item.poll ? story_comments.count : nil
   end
 
   def crawl_thumbnail!
