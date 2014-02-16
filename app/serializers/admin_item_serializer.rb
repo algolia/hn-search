@@ -9,7 +9,7 @@ class AdminItemSerializer < ActiveModel::Serializer
   end
 
   def children
-    object.children.where.not(item_type_cd: Item.pollopt)
+    object.children.order(points: :desc).where.not(item_type_cd: Item.pollopt)
   end
 
   def options
