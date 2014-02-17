@@ -26,6 +26,7 @@ gem 'active_model_serializers', github: "rails-api/active_model_serializers"
 gem 'delayed_job_active_record'
 gem 'bluepill'
 gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'
+gem 'simple-rss'
 
 group :development do
   gem 'sqlite3'

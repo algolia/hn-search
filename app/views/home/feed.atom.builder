@@ -7,9 +7,9 @@ atom_feed do |feed|
       entry.url(story.url)
       entry.title(story.title)
       entry.content(story.text, type: 'html')
-      entry.author do |author|
-        author.name(story.author)
-      end
+      entry.comments(story.num_comments)
+      entry.points(story.points)
+      entry.author(story.author)
     end
   end
 end
