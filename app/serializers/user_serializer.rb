@@ -1,7 +1,3 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :username, :karma, :about, :submission_count
-
-  def submission_count
-    Item.where(author: object.username).count
-  end
+  attributes :username, :karma, :about, :submission_count, :comment_count
 end

@@ -6,14 +6,22 @@ class User < ActiveRecord::Base
   validates_length_of :username, within: 1..255, allow_nil: false, allow_blank: false
   validates_length_of :about, within: 0..65535, allow_nil: true, allow_blank: true
 
+  has_many :items, foreign_key: "author", primary_key: 'username'
+
   include AlgoliaSearch
   algoliasearch per_environment: true, id: :username do
-    add_attribute :submission_count do
-      Item.where(author: username).count
-    end
+    add_attribute :submission_count, :comment_count
     attributesToIndex ['username', 'about']
     customRanking ['desc(karma)']
     separatorsToIndex '_-'
+  end
+
+  def submission_count
+    items.where(item_type_cd: [Item.story, Item.poll]).count
+  end
+
+  def comment_count
+    items.where(item_type_cd: Item.comment).count
   end
 
   EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (-?\d+) (?:nil|(-?\d+)/?(-?\d*)) (?:nil|"(.*)")\)$}
