@@ -16,12 +16,10 @@ class User < ActiveRecord::Base
   EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (-?\d+) (?:nil|(-?\d+)/?(-?\d*)) (?:nil|"(.*)")\)$}
 
   def self.crawl!(id)
-    return if User.find_by_username(id)
-    url = "#{ENV['HN_SECRET_REALTIME_EXPORT_USER_URL']}#{id}"
-    line = open(url).read
+    line = open("#{ENV['HN_SECRET_REALTIME_EXPORT_USER_URL']}#{id}").read
     m = line.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '').scan(EXPORT_REGEXP).first
     raise ArgumentError.new(line) unless m
-    u = User.new
+    u = User.find_or_initialize_by(username: id)
     u.username = m[0]
     u.created_at = m[2] && Time.at(m[2].to_i)
     u.karma = m[3]
