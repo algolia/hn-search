@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true, id: :username do
-    attributesToIndex ['username', 'about', 'karma']
+    add_attribute :submission_count do
+      Item.where(author: username).count
+    end
+    attributesToIndex ['username', 'about']
     customRanking ['desc(karma)']
     separatorsToIndex '_-'
   end

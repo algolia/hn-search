@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140125051909) do
+ActiveRecord::Schema.define(version: 20140221060118) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140125051909) do
     t.integer  "story_id"
   end
 
+  add_index "items", ["author"], name: "index_items_on_author"
   add_index "items", ["dead"], name: "index_items_on_dead"
   add_index "items", ["deleted"], name: "index_items_on_deleted"
   add_index "items", ["item_type_cd"], name: "index_items_on_item_type_cd"
