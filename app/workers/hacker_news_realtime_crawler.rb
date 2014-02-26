@@ -30,9 +30,8 @@ class HackerNewsRealtimeCrawler
     end
 
     # reindex last 5000 items
-    first = Item.where(item_type_cd: Item.story).order('id DESC').limit(REINDEX_LAST_STORIES).select('id').last
-    Item.where(item_type_cd: Item.story).where(deleted: false).where(dead: false).where('id > ?', first.id).reindex!
+    first = Item.order('id DESC').limit(REINDEX_LAST_STORIES).select('id').last
+    Item.where(deleted: false).where(dead: false).where('id > ?', first.id).reindex!
   end
-
 
 end
