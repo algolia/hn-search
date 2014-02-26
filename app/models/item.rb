@@ -22,7 +22,7 @@ class Item < ActiveRecord::Base
 
   include AlgoliaSearch
   algoliasearch per_environment: true do
-    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url
+    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
     attribute :created_at_i do
       created_at.to_i
     end
