@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   include AlgoliaSearch
   algoliasearch per_environment: true, id: :username do
     add_attribute :submission_count, :comment_count
+    add_attribute :created_at_i do
+      created_at.to_i
+    end
     attributesToIndex ['username', 'about']
     customRanking ['desc(karma)']
     separatorsToIndex '_-'
