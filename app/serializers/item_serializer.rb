@@ -1,11 +1,15 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :created_at, :type, :author, :title, :url, :text, :points
+  attributes :id, :created_at, :created_at_i, :type, :author, :title, :url, :text, :points
 
   has_many :children
   has_many :options
 
   def type
     object.item_type
+  end
+
+  def created_at_i
+    created_at.to_i
   end
 
   def children
