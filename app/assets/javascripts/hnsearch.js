@@ -205,7 +205,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       }
 
       if (args.url) {
-        location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + (this.prefixedSearch ? 'prefix/' : '') + this.page + '/' + originalQuery);
+        location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + (this.prefixedSearch ? 'prefix/' : '') + this.page + '/' + encodeURIComponent(originalQuery));
       }
 
       var authors = [];
