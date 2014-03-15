@@ -8,6 +8,7 @@ module Api
         params.delete :action
         params.delete :controller
         params.delete :format
+        params[:advancedSyntax] = true if params[:advancedSyntax].nil?
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
         json = client.send(method, action, params.to_param, forwarded_ip)
         json = yield(json['objectID']) if block_given?

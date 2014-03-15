@@ -167,7 +167,8 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         minWordSizefor1Typo: 5,
         minWordSizefor2Typos: 9,
         tagFilters: [],
-        numericFilters: []
+        numericFilters: [],
+        advancedSyntax: true
       };
       var idx = this.idx;
       var now = new Date(); 
