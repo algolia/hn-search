@@ -102,7 +102,7 @@
     }
   }
 
-  #created_at, #item_type, #advanced-search {
+  #created_at, #item_type, #advanced-search, small {
     font-size: 0.8em;
     margin: 0px;
   }
@@ -395,4 +395,45 @@ footer {
       font-size: 24px;
     }
   }
+
+  #time {
+    position: absolute;
+    top: 38px;
+    right: 5px;
+  }
+
+  #created_at {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 62px;
+    background: #FF6600;
+    text-align: left;
+
+    li {
+      display: block;
+    }
+  }
+
+  #created_at.opened {
+    display: block;
+  }
+
+  .legacy {
+
+    #main {
+      .container {
+        width: 100% !important;
+        margin-top: 0px !important;
+        p {
+          word-break: break-all;
+        }
+      }
+    }
+
+    #search-form {
+      height: 62px;
+    }
+  }
+
 }

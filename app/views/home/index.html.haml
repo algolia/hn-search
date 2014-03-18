@@ -12,7 +12,7 @@
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
     .pull-right.hidden-xs#advanced-search
       Use <code>author:USERNAME</code> to restrict to a user, <code>story:ID</code> to restrict to a story.
-    %ul.list-unstyled.list-inline#item_type.hidden-xs
+    %ul.list-unstyled.list-inline#item_type
       - %w{all story comment poll}.each do |type|
         %li
           %input{type: 'radio', name: 'item_type', value: type, id: "item_type_#{type}", checked: (type == 'story')}
@@ -27,7 +27,9 @@
           Discover the
           = link_to "realtime search engine", "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia"
           behind HN Search.
-    .text-right.hidden-xs
+    .text-right
+      #time.visible-xs
+        = link_to_function '<small>Time <span class="caret"></span></small>'.html_safe, '$("#created_at").toggleClass("opened")'
       %ul.list-unstyled.list-inline#created_at
         - %w{last_24h past_week past_month forever sort_by_date}.each do |period|
           %li
