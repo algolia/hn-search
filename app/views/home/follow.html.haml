@@ -5,8 +5,10 @@
 
 #search-panel
   .search_box-wrapper
+    .pull-right#points
+      %small= pluralize @story.points, 'point'
     .search_box
-      %h3.text-center= @story.title
+      %h3.text-center.n= @story.title
 
   #stats
   #hits.follow

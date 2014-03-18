@@ -6,8 +6,7 @@
   #style-toggler.hidden-xs
     = link_to_function 'Change style <span></span>'.html_safe, 'hnsearch.toggleStyle();'
 
-  %h1.text-center
-    Search Hacker News
+  %h1.text-center Search Hacker News
 
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
     .pull-right.hidden-xs#advanced-search
