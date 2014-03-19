@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", :name => "viewport"}
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui", :name => "viewport"}
     - page_title = content_for?(:title) ? yield(:title) : "HN Search powered by Algolia"
     - page_description = content_for?(:description) ? yield(:description) : "Hacker News Search, millions articles and comments at your fingertips."
     %title= page_title
