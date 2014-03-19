@@ -419,15 +419,20 @@ footer {
     display: block;
   }
 
+  #main {
+    .container {
+      p {
+        word-break: break-all;
+      }
+    }
+  }
+
   .legacy {
 
     #main {
       .container {
         width: 100% !important;
         margin-top: 0px !important;
-        p {
-          word-break: break-all;
-        }
       }
     }
 
