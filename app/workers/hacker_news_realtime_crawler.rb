@@ -22,9 +22,7 @@ class HackerNewsRealtimeCrawler
     begin
       item_ids = Item.refresh_since!(last_id).map { |i| i.id }
       Item.where(id: item_ids).where(deleted: false).where(dead: false).reindex!
-      Item.where(id: item_ids).where('deleted = ? OR dead = ?', true, true).find_each do |item|
-        item.remove_from_index!
-      end
+      Item.index.delete_objects Item.where(id: item_ids).where('deleted = ? OR dead = ?', true, true).load.map(&:id)
     rescue Exception => e
       puts "Failed to refresh #{last_id}: #{e}"
     end
