@@ -32,13 +32,13 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.prefixedSearch = true;
 
       $('#inputfield input').tagautocomplete({
-        character: 'author:',
+        character: '(author|by):',
         source: function(query, process) {
           var tquery = this.extractor();
           if(!tquery) {
             return [];
           }
-          var author = tquery.substring(this.options.character.length);
+          var author = tquery.substring(tquery.indexOf(':') + 1);
           self.idx_user.search(author, function(success, content) {
             if (success) {
               var authors = [];
@@ -211,13 +211,13 @@ Number.prototype.number_with_delimiter = function(delimiter) {
 
       var authors = [];
       while (true) {
-        var matches = query.match('author:([^ ]+)');
+        var matches = query.match(/(author|by):([^ ]+)/);
         if (!matches) {
           break;
         }
         if (matches.length > 0) {
-          authors.push(matches[1]);
-          query = query.replace('author:' + matches[1], '');
+          authors.push(matches[2]);
+          query = query.replace(matches[1] + ':' + matches[2], '');
         }
       }
       if (authors.length > 0) {
