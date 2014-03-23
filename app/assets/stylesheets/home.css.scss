@@ -291,7 +291,8 @@ body.legacy {
 
         .branding {
           position: absolute;
-          right: -320px;
+          left: 420px;
+          width: 500px;
           top: -7px;
         }
 
@@ -324,6 +325,7 @@ body.legacy {
 
             #inputfield {
               margin-right: 0px;
+              width: 390px;
 
               input {
                 border-radius: 0px;
