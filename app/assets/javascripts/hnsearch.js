@@ -209,6 +209,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         location.replace('#!/' + (item_type || '') + '/' + (created_at || '') + '/' + (this.prefixedSearch ? 'prefix/' : '') + this.page + '/' + encodeURIComponent(originalQuery));
       }
 
+      // authors:pg (ORed)
       var authors = [];
       while (true) {
         var matches = query.match(/(author|by):([^ ]+)/);
@@ -228,6 +229,31 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         searchParams.tagFilters.push(tags);
       }
 
+      // points>42 (ANDed)
+      while (true) {
+        var matches = query.match(/points(=|:|<|>|<=|>=)([0-9]+)/);
+        if (!matches) {
+          break;
+        }
+        if (matches.length > 0) {
+          searchParams.numericFilters.push('points' + matches[1] + matches[2]);
+          query = query.replace('points' + matches[1] + matches[2], '');
+        }
+      }
+
+      // date>1395440948 (ANDed)
+      while (true) {
+        var matches = query.match(/date(=|:|<|>|<=|>=)([0-9]+)/);
+        if (!matches) {
+          break;
+        }
+        if (matches.length > 0) {
+          searchParams.numericFilters.push('created_at_i' + matches[1] + matches[2]);
+          query = query.replace('date' + matches[1] + matches[2], '');
+        }
+      }
+
+      // story:ID (ORed)
       var stories = [];
       while (true) {
         var matches = query.match('story:([0-9]+)');
