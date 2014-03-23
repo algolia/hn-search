@@ -2,6 +2,21 @@
   = stylesheet_link_tag "home"
   = javascript_include_tag "hnsearch"
 
+.modal.fade#modal-advanced-syntax
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{type: "button", class: "close", "data-dismiss" => "modal", "aria-hidden" => true} &times;
+        %h4.modal-title Advanced search syntax
+      .modal-body
+        %ul.list-unstyled
+          %li Use <code>"</code> to match a particular sequence of terms <code>"search engine"</code>,
+          %li Use <code>-</code> to ensure a word won't appear in the result set <code>search -optimization</code>,
+          %li Use <code>author:USERNAME</code> or <code>by:USERNAME</code> to filter by author,
+          %li Use <code>story:ID</code> to filter by story,
+          %li Use <code>points&gt;NUMBER</code> or <code>points&lt;NUMBER</code> to filter by points,
+          %li Use <code>date&gt;TIMESTAMP</code> or <code>date&lt;TIMESTAMP</code> to filter by date.
+
 #search-panel
   #style-toggler.hidden-xs
     = link_to_function 'Change style <span></span>'.html_safe, 'hnsearch.toggleStyle();'
@@ -10,7 +25,7 @@
 
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
     .pull-right.hidden-xs#advanced-search
-      Use <code>author:USERNAME</code> to restrict to a user, <code>story:ID</code> to restrict to a story.
+      = link_to "Advanced search syntax", "#modal-advanced-syntax", "data-toggle" => "modal"
     %ul.list-unstyled.list-inline#item_type
       - %w{all story comment poll}.each do |type|
         %li

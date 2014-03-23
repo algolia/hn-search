@@ -102,8 +102,8 @@
     }
   }
 
-  #created_at, #item_type, #advanced-search, small {
-    font-size: 0.8em;
+  #created_at, #item_type, #advanced-search a, small {
+    font-size: 0.8em !important;
     margin: 0px;
   }
 
