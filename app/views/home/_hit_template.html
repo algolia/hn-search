@@ -20,9 +20,11 @@
           {{/highlighted_story_url}}
         {{/highlighted_story_title}}
       </div>
+      {{#comment_text}}
       <div class="url">
         <a href="{{ item_url }}{{#item_url_anchor}}{{ item_url_anchor }}{{/item_url_anchor}}" target="_blank">{{ item_url }}</a>
       </div>
+      {{/comment_text}}
       <div class="points"><b>{{ points }}</b> point{{#points_plural}}s{{/points_plural}}</div>
       <div class="author"> by <a href="https://news.ycombinator.com/user?id={{ author }}" target="_blank">{{{ highlighted_author }}}</a></div>
       <div class="created_at"><abbr class="timeago" title="{{ created_at }}"></abbr></div>
