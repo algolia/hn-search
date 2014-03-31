@@ -1,6 +1,6 @@
 Bluepill.application("hnsearch", :log_file => "/var/www/hnsearch/current/log/bluepill.log") do |app|
   (1..16).each do |i|
-    app.process("delayed_job.#{i}") do |process|
+    app.process("hnsearch-delayed_job.#{i}") do |process|
       process.working_dir = "/var/www/hnsearch/current"
       process.environment = { 'RAILS_ENV' => 'production' }
 

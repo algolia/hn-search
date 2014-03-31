@@ -63,8 +63,8 @@ after "deploy:update", "bluepill:quit", "bluepill:start"
 namespace :bluepill do
   desc "Stop processes that bluepill is monitoring and quit bluepill"
   task :quit, :roles => [:cron] do
-    run "cd #{current_path} && bundle exec bluepill --no-privileged stop"
-    run "cd #{current_path} && bundle exec bluepill --no-privileged quit"
+    run "cd #{current_path} && bundle exec bluepill hnsearch --no-privileged stop"
+    run "cd #{current_path} && bundle exec bluepill hnsearch --no-privileged quit"
   end
 
   desc "Load bluepill configuration and start it"
@@ -74,6 +74,6 @@ namespace :bluepill do
 
   desc "Prints bluepills monitored processes statuses"
   task :status, :roles => [:cron] do
-    run "cd #{current_path} && bundle exec bluepill --no-privileged status"
+    run "cd #{current_path} && bundle exec bluepill hnsearch --no-privileged status"
   end
 end
