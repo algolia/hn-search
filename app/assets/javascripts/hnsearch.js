@@ -104,9 +104,6 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         this.search(0);
       } else {
         $('#inputfield input').focus();
-
-        // resolve DNS
-        this.idx.search('', function(success, content) { });
       }
     },
 
