@@ -29,6 +29,13 @@ class HomeController < ApplicationController
     feed
   end
 
+  def userfeed
+    @stories = Item.where(item_type_cd: Item.comment).where(deleted: false).where(author: params[:username]).order('id DESC').first(20).reverse
+    @updated_at = DateTime.now
+    @title = params[:username]+"'s comments"
+    feed
+  end
+
   private
   def feed
     respond_to do |format|
