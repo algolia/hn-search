@@ -12,6 +12,11 @@
     font-weight: normal;
   }
 
+  .by {
+    text-transform: none;
+    font-size: 24px;
+  }
+
   .search-form {
     margin: 0;
     padding: 0;
@@ -401,6 +406,10 @@ footer {
     h1 {
       margin-top: 0px;
       font-size: 24px;
+    }
+
+    .by {
+      display: none!important;
     }
   }
 

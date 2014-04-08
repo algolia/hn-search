@@ -21,7 +21,11 @@
   #style-toggler.hidden-xs
     = link_to_function 'Change style <span></span>'.html_safe, 'hnsearch.toggleStyle();'
 
-  %h1.text-center Search Hacker News
+  %h1.text-center
+    Search Hacker News
+    %span.by
+      &nbsp;by
+      = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia256x80.png", style: 'height: 38px; margin-bottom: 12px;', alt: 'Algolia'), "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=header&utm_campaign=hn_algolia", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
 
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
     .pull-right.hidden-xs#advanced-search
