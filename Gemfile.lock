@@ -74,7 +74,6 @@ GEM
       xpath (~> 2.0)
     chronic (0.10.2)
     coderay (1.1.0)
-    curb (0.8.5)
     daemons (1.1.9)
     debug_inspector (0.0.2)
     delayed_job (4.0.0)
@@ -227,7 +226,6 @@ DEPENDENCIES
   bluepill
   bourbon
   capybara
-  curb
   delayed_job_active_record
   factory_girl_rails
   figaro

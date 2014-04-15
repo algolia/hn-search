@@ -7,4 +7,5 @@ AMAZON_ACCESS_KEY_ID: s3accesskeyid
 AMAZON_SECRET_ACCESS_KEY: s3secretaccesskey
 HN_SECRET_REALTIME_EXPORT_ITEM_URL: thatsoursecretsauce
 HN_SECRET_REALTIME_EXPORT_USER_URL: thatsoursecretsauce
-KIMONOLABS_API_KEY: kimonoapikey
+RATE_LIMIT_WHITE_LIST:
+  - 127.0.0.1

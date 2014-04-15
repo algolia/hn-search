@@ -3,11 +3,11 @@ module Api
     class SearchController < BaseController
 
       def perform
-        render_json_request(:get, "/1/indexes/#{Item.index_name}", params)
+        render_json_request(:post, "/1/indexes/#{Item.index_name}/query", params)
       end
 
       def by_date
-        render_json_request(:get, "/1/indexes/#{Item.index_name}_sort_date", params)
+        render_json_request(:post, "/1/indexes/#{Item.index_name}_sort_date/query", params)
       end
 
     end

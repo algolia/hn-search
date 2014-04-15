@@ -11,11 +11,12 @@ module Api
         params[:advancedSyntax] = true if params[:advancedSyntax].nil?
         params[:analytics] = false if params[:analytics].nil?
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
-        json = client.send(method, action, params.to_param, forwarded_ip)
+        forwarded_ip = nil if eval(ENV['RATE_LIMIT_WHITE_LIST']).include?(forwarded_ip)
+        json = client.send(method, action, { params: params.to_param }, forwarded_ip)
         json = yield(json['objectID']) if block_given?
         render json: json, root: false
       rescue Algolia::AlgoliaProtocolError => e
-        render json: JSON.parse(client.body), status: e.code
+        render text: e.message, status: e.code
       end
 
       private
@@ -29,17 +30,20 @@ module Api
     class Client
 
       def initialize(application_id, api_key, forwarded_api_key)
+        @client = HTTPClient.new
+        @client.transparent_gzip_decompression = true
         @cluster = 2.upto(3).map { |i| "#{application_id}-#{i}" } # application_id-1 is dedicated to build
-        @client = Curl::Easy.new do |s|
-          s.headers[Algolia::Protocol::HEADER_API_KEY]           = api_key
-          s.headers[Algolia::Protocol::HEADER_APP_ID]            = application_id
-          s.headers[Algolia::Protocol::HEADER_FORWARDED_API_KEY] = forwarded_api_key
-          s.headers["Content-Type"]                              = "application/json; charset=utf-8"
-          s.headers["User-Agent"]                                = "Algolia for Ruby (hnsearch)"
-        end
+        @forwarded_api_key = forwarded_api_key
+        @headers = {
+          Algolia::Protocol::HEADER_API_KEY           => api_key,
+          Algolia::Protocol::HEADER_APP_ID            => application_id,
+          "Content-Type"                              => "application/json; charset=utf-8",
+          "User-Agent"                                => "Algolia for Ruby (hnsearch)"
+        }
       end
 
       def get(action, params, forwarded_ip)
+        params = params.to_param if params
         request :GET, "#{action}#{'?' if !params.blank?}#{params}", forwarded_ip
       end
 
@@ -55,10 +59,6 @@ module Api
         request :DELETE, action, forwarded_ip
       end
 
-      def body
-        @client.body_str
-      end
-
       private
 
       # Perform an HTTP request for the given uri and method
@@ -66,33 +66,39 @@ module Api
       # Algolia::AlgoliaProtocolError if the response has an error status code,
       # and will return the parsed JSON body on success, if there is one.
       def request(method, uri, forwarded_ip, data = nil)
-        @client.headers[Algolia::Protocol::HEADER_FORWARDED_IP] = forwarded_ip
+        if forwarded_ip
+          headers = @headers.merge({
+            Algolia::Protocol::HEADER_FORWARDED_IP => forwarded_ip,
+            Algolia::Protocol::HEADER_FORWARDED_API_KEY => @forwarded_api_key
+          })
+        else
+          headers = @headers
+        end
+
         @cluster.each do |c|
           begin
-            @client.url = "https://#{c}.algolia.io" + uri
-            case method
+            url = "https://#{c}.algolia.io" + uri
+            answer = case method
             when :GET
-              @client.http_get
+              @client.get(url, header: headers)
             when :POST
-              @client.post_body = data
-              @client.http_post
+              @client.post(url, body: data, header: headers)
             when :PUT
-              @client.put(data)
+              @client.put(url, body: data, header: headers)
             when :DELETE
-              @client.http_delete
+              @client.delete(url, header: headers)
             end
-            if @client.response_code >= 400 || @client.response_code < 200
-              raise Algolia::AlgoliaProtocolError.new(@client.response_code, "#{method} #{@client.url}: #{@client.body_str}")
+            if answer.code >= 400 || answer.code < 200
+              raise Algolia::AlgoliaProtocolError.new(answer.code, "#{method} #{url}: #{answer.content}")
             end
-            return JSON.parse(@client.body_str)
+            return JSON.parse(answer.content)
           rescue Algolia::AlgoliaProtocolError => e
             if e.code != Algolia::Protocol::ERROR_TIMEOUT and e.code != Algolia::Protocol::ERROR_UNAVAILABLE
               raise
             end
-          rescue Curl::Err::CurlError => e
           end
         end
-        raise Algolia::AlgoliaProtocolError.new(0, "Cannot reach any hosts")
+        raise Algolia::AlgoliaProtocolError.new(500, "Cannot reach any hosts")
       end
 
     end
