@@ -12,6 +12,11 @@ class ItemSerializer < ActiveModel::Serializer
     created_at.to_i
   end
 
+  def text
+    return object.text if object.text.blank?
+    "<p>#{object.text.gsub(/<p>/, '</p><p>')}</p>"
+  end
+
   def children
     object.children.order(points: :desc).where.not(item_type_cd: Item.pollopt)
   end

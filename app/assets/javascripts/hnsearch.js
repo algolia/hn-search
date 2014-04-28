@@ -442,7 +442,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       str = str.replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
 
       // work-around =\\" escaping bug (6c92ae092359647c04804876139516163d0567de)
-      str = str.replace(/=\\"/g, '="')
+      str = str.replace(/=\\"/g, '="');
 
       // remove highlighted href attributes breaking links
       while (true) {
@@ -453,7 +453,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         str = str.replace(matches[0], 'href="' + matches[1].replace(/<\/?em>/g, '') + '"');
       }
 
-      return str;
+      return '<p>' +  str.replace(/<p>/g, '</p><p>') + '</p>';
     },
 
     toggleStyle: function() {
