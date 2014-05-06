@@ -21,6 +21,7 @@ Hnsearch::Application.routes.draw do
   get 'about' => 'pages#about'
   get 'api' => 'pages#api'
   get 'cool_apps' => 'pages#cool_apps'
+  get 'opensearch' => 'pages#opensearch'
   get 'stats' => 'stats#index'
 
   get '/search' => 'home#index'
