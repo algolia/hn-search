@@ -44,6 +44,14 @@ class Item < ActiveRecord::Base
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     separatorsToIndex '+#$'
+
+    add_slave "Item_#{Rails.env}_ordered" do # backward compatibility naming
+      attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
+    end
+
+    add_slave "Item_#{Rails.env}_sort_date" do # backward compatibility naming
+      customRanking ['desc(created_at_i)']
+    end
   end
 
   def story_text
