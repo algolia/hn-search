@@ -28,6 +28,7 @@ Hnsearch::Application.routes.draw do
   get '/beta' => 'home#beta'
   get '/legacy' => 'home#legacy'
   get '/follow/:story_id' => 'home#follow'
+  get '/status' => redirect('http://status.algolia.com/hn')
   root 'home#index'
 
 end
