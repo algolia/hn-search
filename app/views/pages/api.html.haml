@@ -120,6 +120,8 @@
 
 %p Tags are ANDed by default, can be ORed if between parenthesis. For example <code>author_pg,(story,poll)</code> filters on <code>author=pg AND (type=story OR type=poll)</code>.
 
+%p By default a limited number of results are returned in each page, so a given query may be broken over dozens of pages. The number of results and page number are available as the variables <code>nbPages</code> and <code>hitsPerPage</code> respectively; they can be specified as arguments in requests, allowing for more results to be requested or iteration over the available pages eg appending to the search URL parameters like <code>&page=2</code> or <code>hitsPerPage=50</code>.
+
 %p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
 %h5 Examples
