@@ -34,11 +34,11 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       $('#inputfield input').tagautocomplete({
         character: '(author|by):',
         source: function(query, process) {
-            
+
           if (query.length > 0)
             $('#hnwatcher-follow').text('Track this result on HNWatcher.com');
           $('#hnwatcher-follow').attr('href', 'https://www.hnwatcher.com/keywords.php?hnsearch_keyword=' + query);
-            
+
           var tquery = this.extractor();
           if(!tquery) {
             return [];
