@@ -34,11 +34,6 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       $('#inputfield input').tagautocomplete({
         character: '(author|by):',
         source: function(query, process) {
-
-          if (query.length > 0)
-            $('#hnwatcher-follow').text('Track this result on HNWatcher.com');
-          $('#hnwatcher-follow').attr('href', 'https://www.hnwatcher.com/keywords.php?hnsearch_keyword=' + query);
-
           var tquery = this.extractor();
           if(!tquery) {
             return [];
@@ -157,11 +152,17 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         this.$pagination.empty();
         this.$stats.empty();
         this.$noresults.hide();
+	$('#hnwatcher-follow').text('Track any results with our partner: HNWatcher.com')
+	$('#hnwatcher-follow').attr('href', 'https://www.hnwatcher.com/');
         return;
       }
       query = query.trim();
 
       var originalQuery = query;
+
+      $('#hnwatcher-follow').text('Follow and get alerts on this result with our partner: HNWatcher.com');
+      $('#hnwatcher-follow').attr('href', 'https://www.hnwatcher.com/keywords.php?hnsearch_keyword=' + encodeURIComponent(query));
+
       var searchParams = {
         hitsPerPage: args.hitsPerPage || 25,
         page: p,
@@ -173,7 +174,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         advancedSyntax: true
       };
       var idx = this.idx;
-      var now = new Date(); 
+      var now = new Date();
       var now_utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()) / 1000;
 
       if (originalQuery.length <= 2) {
@@ -318,7 +319,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         stats += ' in <b>' + (content.processingTimeMS < 100 ? ('<a href="http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=results&utm_campaign=hn_algolia">' + content.processingTimeMS + ' ms</a>') : (content.processingTimeMS + ' ms')) + '</b>';
       }
       this.$stats.html(stats);
-      
+
       var res = '';
       for (var i = 0; i < content.hits.length; ++i) {
         var hit = content.hits[i];
