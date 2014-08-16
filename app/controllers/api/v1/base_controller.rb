@@ -12,10 +12,18 @@ module Api
         params[:analytics] = false if params[:analytics].nil?
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
         forwarded_ip = nil if eval(ENV['RATE_LIMIT_WHITE_LIST']).include?(forwarded_ip)
-        json = client.send(method, action, { params: params.to_param }, forwarded_ip)
-        json = yield(json['objectID']) if block_given?
-        render json: json, root: false
+        if params[:callback] && action.ends_with?('/query')
+          action.gsub!(/\/query$/, '')
+          params[:callback] = "#{params[:callback]},#{ENV['ALGOLIASEARCH_APPLICATION_ID']},#{ENV['ALGOLIASEARCH_API_KEY_RO']}"
+          js = client.get(action, params, forwarded_ip, false)
+          render text: js, content_type: 'text/javascript'
+        else
+          json = client.send(method, action, { params: params.to_param }, forwarded_ip)
+          json = yield(json['objectID']) if block_given?
+          render json: json, root: false
+        end
       rescue Algolia::AlgoliaProtocolError => e
+        raise e
         render text: e.message, status: e.code
       end
 
@@ -42,9 +50,9 @@ module Api
         }
       end
 
-      def get(action, params, forwarded_ip)
+      def get(action, params, forwarded_ip, json = true)
         params = params.to_param if params
-        request :GET, "#{action}#{'?' if !params.blank?}#{params}", forwarded_ip
+        request :GET, "#{action}#{'?' if !params.blank?}#{params}", forwarded_ip, nil, json
       end
 
       def post(action, params, forwarded_ip)
@@ -65,7 +73,7 @@ module Api
       # with common basic response handling. Will raise a
       # Algolia::AlgoliaProtocolError if the response has an error status code,
       # and will return the parsed JSON body on success, if there is one.
-      def request(method, uri, forwarded_ip, data = nil)
+      def request(method, uri, forwarded_ip, data = nil, json = true)
         if forwarded_ip
           headers = @headers.merge({
             Algolia::Protocol::HEADER_FORWARDED_IP => forwarded_ip,
@@ -91,7 +99,7 @@ module Api
             if answer.code >= 400 || answer.code < 200
               raise Algolia::AlgoliaProtocolError.new(answer.code, "#{method} #{url}: #{answer.content}")
             end
-            return JSON.parse(answer.content)
+            return json ? JSON.parse(answer.content) : answer.content
           rescue Algolia::AlgoliaProtocolError => e
             if e.code != Algolia::Protocol::ERROR_TIMEOUT and e.code != Algolia::Protocol::ERROR_UNAVAILABLE
               raise
