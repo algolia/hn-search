@@ -195,7 +195,12 @@ class Item < ActiveRecord::Base
   def after_create_tasks
     self.delay(priority: 0).resolve_parent!  # 0 = top priority
     self.delay(priority: 1).crawl_thumbnail! if !url.blank?
-    self.delay(priority: 2).crawl_author! if !author.blank?
+    if !author.blank?
+      # recrawl the author every hour during the next 48 hours
+      0.upto(48) do |hour|
+        self.delay(priority: 2, run_at: hour.hours.from_now).crawl_author!
+      end
+    end
   end
 
   def self.per_hour_since(item_type, ago)
