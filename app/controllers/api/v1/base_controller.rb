@@ -23,7 +23,6 @@ module Api
           render json: json, root: false
         end
       rescue Algolia::AlgoliaProtocolError => e
-        raise e
         render text: e.message, status: e.code
       end
 
