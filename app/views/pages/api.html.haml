@@ -130,6 +130,8 @@
   %dd <code>#{api_v1_search_url}?query=foo&tags=story</code>
   %dt All comments matching <code>bar</code>
   %dd <code>#{api_v1_search_url}?query=bar&tags=comment</code>
+  %dt All URLs matching <code>bar</code>
+  %dd <code>#{api_v1_search_url}?query=bar&restrictSearchableAttributes=url</code>
   %dt Last stories
   %dd <code>#{api_v1_search_by_date_url}?tags=story</code>
   %dt Last stories OR polls
