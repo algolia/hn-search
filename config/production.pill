@@ -1,4 +1,16 @@
 Bluepill.application("hnsearch", :log_file => "/var/www/hnsearch/current/log/bluepill.log") do |app|
+  app.process("hnsearch-crawler") do |process|
+    process.working_dir = "/var/www/hnsearch/current"
+    process.environment = { 'RAILS_ENV' => 'production' }
+
+    process.start_grace_time    = 30.seconds
+    process.stop_grace_time     = 30.seconds
+    process.restart_grace_time  = 30.seconds
+
+    process.start_command = "./bin/crawler"
+
+    process.pid_file = "/var/www/hnsearch/shared/pids/crawler.pid"
+  end
   (1..16).each do |i|
     app.process("hnsearch-delayed_job.#{i}") do |process|
       process.working_dir = "/var/www/hnsearch/current"

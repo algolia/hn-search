@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :items, foreign_key: "author", primary_key: 'username'
 
   include AlgoliaSearch
-  algoliasearch per_environment: true, id: :username do
+  algoliasearch per_environment: true, id: :username, auto_index: false do
     add_attribute :submission_count, :comment_count
     add_attribute :created_at_i do
       created_at.to_i
@@ -29,17 +29,16 @@ class User < ActiveRecord::Base
 
   EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (-?\d+) (?:nil|(-?\d+)/?(-?\d*)) (?:nil|"(.*)")\)$}
 
-  def self.crawl!(id)
-    line = open("#{ENV['HN_SECRET_REALTIME_EXPORT_USER_URL']}#{id}").read
-    m = line.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '').scan(EXPORT_REGEXP).first
-    raise ArgumentError.new(line) unless m
-    u = User.find_or_initialize_by(username: id)
-    u.username = m[0]
-    u.created_at = m[2] && Time.at(m[2].to_i)
-    u.karma = m[3]
-    u.avg = m[4].to_i > 0 && m[5].to_i > 0 ? m[4].to_i / m[5].to_f : 0
-    u.about = m[6]
-    u.save
+  def self.from_api!(id)
+    h = Firebase::Client.new(ENV['HN_API_URL']).get("/v0/user/#{id}").body
+    u = User.find_or_initialize_by(username: h['id'])
+    u.created_at = Time.at(h['created'])
+    u.karma = h['karma']
+    u.delay = h['delay']
+    u.submitted = h['submitted'].size
+    u.about = h['about']
+    puts "[#{u.created_at}][user] #{u.username}" if u.new_record?
+    u.save!
   end
 
   def self.cumulated_per_month

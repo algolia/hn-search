@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
   ASK_HN_RX = /^ask hn\b/i
 
   include AlgoliaSearch
-  algoliasearch per_environment: true do
+  algoliasearch per_environment: true, auto_index: false do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
     attribute :created_at_i do
       created_at.to_i
@@ -97,41 +97,21 @@ class Item < ActiveRecord::Base
 
   EXPORT_REGEXP = %r{^\((\d+) (story|comment|poll|pollopt) "(.+)" (\d+) (?:nil|"(.*)") (?:nil|"(.*)") (?:nil|"(.*)") (?:nil|-?(\d+)) (?:nil|\(([\d ]+)\)) (?:nil|(\d+))\)$}
 
-  def self.refresh_since!(id)
-    id = 1 if id < 1
-    url = "#{ENV['HN_SECRET_REALTIME_EXPORT_ITEM_URL']}#{id}"
-    puts "====================== #{url}"
-    export = open(url).read
-    items = []
-    Item.without_auto_index do
-      export.split("\n").each do |line|
-        m = line.encode!('UTF-8', :undef => :replace, :invalid => :replace, :replace => '').scan(EXPORT_REGEXP).first
-        raise ArgumentError.new(line) unless m
-        id = m[0].to_i
-        item = Item.find_or_initialize_by(id: id)
-        item.item_type = m[1] ||'unknown'
-        item.author = m[2]
-        item.created_at = m[3] && Time.at(m[3].to_i)
-        item.url = m[4]
-        item.title = m[5] && m[5].gsub(/(^|[^\\])\\"/, '\1"')
-        item.text = m[6] && m[6].gsub(/(^|[^\\])\\"/, '\1"')
-        item.points = m[7] && m[7].to_i
-        #item.children: m[8] && m[8].split(' ').map { |s| s.to_i }
-        item.parent_id = m[9] && m[9].to_i
-        item.deleted = false
-        puts "#{item.created_at}: #{item.title}" if item.new_record? and item.item_type == 'story'
-        item.save rescue "not fatal"
-        items << item
-      end
-      ((items.first.id..items.last.id).to_a - items.map { |item| item.id }).each do |deleted_id|
-        item = Item.find_or_initialize_by(id: deleted_id)
-        item.item_type ||= 'unknown'
-        item.deleted = true
-        item.save rescue "not fatal"
-        items << item
-      end
-    end
-    items
+  def self.from_api!(id)
+    h = Firebase::Client.new(ENV['HN_API_URL']).get("/v0/item/#{id}").body
+    item = Item.find_or_initialize_by(id: h['id'])
+    item.item_type = h['type'] ||'unknown'
+    item.author = h['by']
+    item.created_at = h['time'] && Time.at(h['time'].to_i)
+    item.url = h['url']
+    item.title = h['title']
+    item.text = h['text']
+    item.points = h['score']
+    item.parent_id = h['parent']
+    item.deleted = h['deleted'] == true
+    item.dead = h['dead'] == true
+    puts "[#{item.created_at}][item] #{item.title}" if item.new_record? and item.item_type == 'story'
+    item.save!
   end
 
   def self.import_from_dump!(path)
@@ -150,7 +130,7 @@ class Item < ActiveRecord::Base
             item.dead ||= json['dead']
             item.item_type = json['type'] || 'unknown'
             item.author = json['by']
-            item.created_at = json['time'] && Time.at(json['time'])
+            item.created_at = Time.at(json['time'])
             item.url = json['url']
             item.title = json['title']
             item.text = json['text']
@@ -166,23 +146,6 @@ class Item < ActiveRecord::Base
     Item.reindex!
   end
 
-  def resolve_parent!(force = false)
-    return if item_type != 'comment'
-    return if !force && self.story_id
-    Item.without_auto_index do
-      p = self
-      while p.parent and p.parent.story_id.nil?
-        p = p.parent
-      end
-      self.story_id = p.parent ? p.parent.story_id : (p.story_id || p.id)
-      self.save
-    end
-  end
-
-  def crawl_author!
-    User.crawl!(author)
-  end
-
   def self.stories_per_hour_since(ago)
     per_hour_since(Item.story, ago)
   end
@@ -193,14 +156,7 @@ class Item < ActiveRecord::Base
 
   private
   def after_create_tasks
-    self.delay(priority: 0).resolve_parent!  # 0 = top priority
     self.delay(priority: 1).crawl_thumbnail! if !url.blank?
-    if !author.blank?
-      # recrawl the author every hour during the next 48 hours
-      0.upto(48) do |hour|
-        self.delay(priority: 2, run_at: hour.hours.from_now).crawl_author!
-      end
-    end
   end
 
   def self.per_hour_since(item_type, ago)

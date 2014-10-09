@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221060118) do
+ActiveRecord::Schema.define(version: 20141009182754) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20140221060118) do
     t.integer  "points"
     t.integer  "parent_id"
     t.integer  "story_id"
+    t.datetime "updated_at"
   end
 
   add_index "items", ["author"], name: "index_items_on_author"
@@ -49,15 +50,20 @@ ActiveRecord::Schema.define(version: 20140221060118) do
   add_index "items", ["item_type_cd"], name: "index_items_on_item_type_cd"
   add_index "items", ["parent_id"], name: "index_items_on_parent_id"
   add_index "items", ["story_id"], name: "index_items_on_story_id"
+  add_index "items", ["updated_at"], name: "index_items_on_updated_at"
 
   create_table "users", force: true do |t|
-    t.string   "username",   null: false
+    t.string   "username",               null: false
     t.text     "about"
     t.integer  "karma"
-    t.datetime "created_at", null: false
+    t.datetime "created_at",             null: false
     t.float    "avg"
+    t.integer  "delay"
+    t.integer  "submitted",  default: 0, null: false
+    t.datetime "updated_at"
   end
 
+  add_index "users", ["updated_at"], name: "index_users_on_updated_at"
   add_index "users", ["username"], name: "index_users_on_username"
 
 end

@@ -27,6 +27,11 @@ gem 'bluepill'
 gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'
 gem 'simple-rss'
 
+gem 'firebase'
+gem "eventmachine", "~> 1.0.3"
+gem "em-http-request", "~> 1.1.1"
+gem "httparty", "~> 0.12.0"
+
 group :development do
   gem 'sqlite3'
   gem 'better_errors'

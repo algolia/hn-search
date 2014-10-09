@@ -3,5 +3,6 @@ set :output, "log/cron.log"
 job_type :runner, "source ${HOME}/.rvm/scripts/rvm && cd :path && bundle exec rails runner -e :environment ':task' :output"
 
 every 1.minute, roles: [:cron] do
-  runner "HackerNewsRealtimeCrawler.cron"
+  runner "User.where('updated_at >= ?', 1.minute.ago).reindex!"
+  runner "Item.where('updated_at >= ?', 1.minute.ago).reindex!"
 end
