@@ -21,7 +21,7 @@ gem 'simple_enum'
 gem 'whenever'
 gem 'thin'
 gem 'rails-api'
-gem 'active_model_serializers', github: "rails-api/active_model_serializers"
+gem 'active_model_serializers', '~> 0.9.0'
 gem 'delayed_job_active_record'
 gem 'bluepill'
 gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'

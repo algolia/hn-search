@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/rails-api/active_model_serializers.git
-  revision: 97023db9045f5ae692beb50116ff8b197c0cdd10
-  specs:
-    active_model_serializers (0.10.0.pre)
-      activemodel (>= 4.0)
-
-GIT
   remote: https://github.com/mieko/groupdate.git
   revision: f75a3d47a27a7351998555a5bfe532a7be9248ed
   branch: sqlite3
@@ -25,6 +18,8 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
+    active_model_serializers (0.9.0)
+      activemodel (>= 3.2)
     activemodel (4.0.10)
       activesupport (= 4.0.10)
       builder (~> 3.1.0)
@@ -234,7 +229,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers!
+  active_model_serializers (~> 0.9.0)
   algoliasearch-rails
   aws-s3
   better_errors
