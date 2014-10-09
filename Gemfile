@@ -42,6 +42,7 @@ group :development do
 end
 group :production do
   gem 'mysql2'
+  gem "lograge"
 end
 group :development, :test do
   gem 'factory_girl_rails'
