@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
   ASK_HN_RX = /^ask hn\b/i
 
   include AlgoliaSearch
-  algoliasearch per_environment: true, auto_index: false do
+  algoliasearch per_environment: true, auto_index: false, if: :live? do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
     attribute :created_at_i do
       created_at.to_i
@@ -162,6 +162,10 @@ class Item < ActiveRecord::Base
 
   def self.per_hour_since(item_type, ago)
     Item.where(item_type_cd: item_type).where('created_at > ?', ago).group_by_hour(:created_at).count.map { |k,v| [k.is_a?(String) ? DateTime.parse(k) : k, v] }
+  end
+
+  def live?
+    !deleted && !dead
   end
 
 end
