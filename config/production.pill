@@ -8,6 +8,7 @@ Bluepill.application("hnsearch", :log_file => "/var/www/hnsearch/current/log/blu
     process.restart_grace_time  = 30.seconds
 
     process.start_command = "./bin/crawler"
+    process.daemonize = true
 
     process.pid_file = "/var/www/hnsearch/shared/pids/crawler.pid"
   end
