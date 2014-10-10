@@ -35,11 +35,11 @@ class HackerNewsRealtimeCrawler
 
   def refresh(data = {})
     (data['items'] || []).map do |id|
-      puts "Refreshing item=#{id}"
+      puts "[#{DateTime.now}] Refreshing item=#{id}"
       Item.delay.from_api!(id)
     end
     (data['profiles'] || []).map do |id|
-      puts "Refreshing user=#{id}"
+      puts "[#{DateTime.now}] Refreshing user=#{id}"
       User.delay.from_api!(id)
     end
   end
