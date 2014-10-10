@@ -27,8 +27,6 @@ class User < ActiveRecord::Base
     items.where(item_type_cd: Item.comment).count
   end
 
-  EXPORT_REGEXP = %r{^\("(.+)" (?:nil|"(.*)") (\d+) (-?\d+) (?:nil|(-?\d+)/?(-?\d*)) (?:nil|"(.*)")\)$}
-
   def self.from_api!(id)
     h = Firebase::Client.new(ENV['HN_API_URL']).get("/v0/user/#{id}").body
     u = User.find_or_initialize_by(username: h['id'])

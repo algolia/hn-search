@@ -95,8 +95,6 @@ class Item < ActiveRecord::Base
     end
   end
 
-  EXPORT_REGEXP = %r{^\((\d+) (story|comment|poll|pollopt) "(.+)" (\d+) (?:nil|"(.*)") (?:nil|"(.*)") (?:nil|"(.*)") (?:nil|-?(\d+)) (?:nil|\(([\d ]+)\)) (?:nil|(\d+))\)$}
-
   def self.from_api!(id)
     h = Firebase::Client.new(ENV['HN_API_URL']).get("/v0/item/#{id}").body
     item = Item.find_or_initialize_by(id: h['id'])
