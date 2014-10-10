@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     u.delay = h['delay']
     u.submitted = h['submitted'].size
     u.about = h['about']
-    u.updated_at = DateTime.now
+    u.updated_at ||= DateTime.now
     puts "[#{u.created_at}][user] #{u.username}" if u.new_record?
     u.save!
   end

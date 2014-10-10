@@ -108,7 +108,7 @@ class Item < ActiveRecord::Base
     item.parent_id = h['parent']
     item.deleted = h['deleted'] == true
     item.dead = h['dead'] == true
-    item.updated_at = DateTime.now
+    item.updated_at ||= DateTime.now
     puts "[#{item.created_at}][item] #{item.title}" if item.new_record? and item.item_type == 'story'
     item.save!
   end
