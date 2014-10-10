@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     u.karma = h['karma']
     u.delay = h['delay']
     u.submitted = h['submitted'].size
-    u.about = h['about']
+    u.about = (h['about'] || '').force_encoding('binary').encode('UTF-8', invalid: :replace, undef: :replace, replace: '') rescue nil
     u.updated_at ||= DateTime.now
     puts "[#{u.created_at}][user] #{u.username}" if u.new_record?
     u.save!
