@@ -33,7 +33,7 @@ class HackerNewsRealtimeCrawler
 
   def sanity_check(limit)
     # from the last `limit` items, check if some of them haven't been fetched and refresh them
-    last_ids = Item.select(:id).order('id DESC').last(limit).map { |item| item.id }.sort
+    last_ids = Item.select(:id).last(limit).map { |item| item.id }.sort
     to_refresh = last_ids.first.upto(last_ids.last).to_a - last_ids
     if !to_refresh.empty?
       puts "[#{DateTime.now}] Refreshing #{to_refresh.size} missing items (#{to_refresh.inspect})"
