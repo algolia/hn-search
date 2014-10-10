@@ -97,8 +97,10 @@ class Item < ActiveRecord::Base
 
   def self.from_api!(id)
     h = Firebase::Client.new(ENV['HN_API_URL']).get("/v0/item/#{id}").body
+    raise "Not found" if h.nil?
     item = Item.find_or_initialize_by(id: h['id'])
-    item.item_type = h['type'] ||'unknown'
+    raise "Unknown type: #{h['type']}" if h['type'].blank?
+    item.item_type = h['type']
     item.author = h['by']
     item.created_at = h['time'] && Time.at(h['time'].to_i)
     item.url = h['url']
