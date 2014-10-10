@@ -165,7 +165,7 @@ class Item < ActiveRecord::Base
   end
 
   def live?
-    !deleted && !dead
+    !deleted && !dead && !author.blank?
   end
 
 end
