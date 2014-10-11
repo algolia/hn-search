@@ -147,6 +147,17 @@ class Item < ActiveRecord::Base
     Item.reindex!
   end
 
+  def resolve_parent!(force = false)
+    return if item_type != 'comment'
+    return if !force && self.story_id
+    p = self
+    while p.parent and p.parent.story_id.nil?
+      p = p.parent
+    end
+    self.story_id = p.parent ? p.parent.story_id : (p.story_id || p.id)
+    self.save
+  end
+
   def self.stories_per_hour_since(ago)
     per_hour_since(Item.story, ago)
   end
@@ -157,6 +168,7 @@ class Item < ActiveRecord::Base
 
   private
   def after_create_tasks
+    self.delay(priority: 0).resolve_parent! # 0 = top priority
     self.delay(priority: 1).crawl_thumbnail! if !url.blank?
   end
 
