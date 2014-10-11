@@ -156,6 +156,7 @@ class Item < ActiveRecord::Base
     end
     self.story_id = p.parent ? p.parent.story_id : (p.story_id || p.id)
     self.save
+    self.story.update_attributes(updated_at: DateTime.now) if self.story
   end
 
   def self.stories_per_hour_since(ago)
