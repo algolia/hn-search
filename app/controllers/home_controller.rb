@@ -6,9 +6,6 @@ class HomeController < ApplicationController
     render action: 'index'
   end
 
-  def beta
-  end
-
   def follow
     @story = Item.where(item_type_cd: Item.story).where(deleted: false).find(params[:story_id])
   end
