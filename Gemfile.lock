@@ -39,7 +39,7 @@ GEM
     algoliasearch (1.2.12)
       httpclient (~> 2.3)
       json (>= 1.5.1)
-    algoliasearch-rails (1.11.4)
+    algoliasearch-rails (1.11.5)
       algoliasearch (>= 1.2.5)
       json (>= 1.5.1)
     arel (4.0.2)
