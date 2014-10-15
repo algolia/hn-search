@@ -1,3 +1,5 @@
+require 'net/http'
+
 class HomeController < ApplicationController
   def index
   end
@@ -11,7 +13,7 @@ class HomeController < ApplicationController
   end
 
   def front_page
-    @stories = SimpleRSS.parse(RestClient.get("https://news.ycombinator.com/rss")).items.map do |item|
+    @stories = SimpleRSS.parse(Net::HTTP.get(URI.parse('https://news.ycombinator.com/rss'))).items.map do |item|
       Item.find(item[:comments].split('=').last) rescue nil
     end.compact
     @updated_at = DateTime.now
