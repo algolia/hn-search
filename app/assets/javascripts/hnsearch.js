@@ -17,7 +17,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
     init: function(applicationID, apiKey, indexName, userIndexName) {
       var self = this;
 
-      var client = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']);
+      var client = new AlgoliaSearch(applicationID, apiKey, null, true, [applicationID + '-dsn.algolia.io', applicationID + '-2.algolia.io', applicationID + '-3.algolia.io']);
       this.idx = client.initIndex(indexName);
       this.idx_user = client.initIndex(userIndexName);
       this.idx_by_date = client.initIndex(indexName + '_sort_date');
