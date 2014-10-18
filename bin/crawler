@@ -1,4 +1,12 @@
 #!/usr/bin/env ruby
 
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
-HackerNewsRealtimeCrawler.new.cron
+
+begin
+  # work-arounds recent API hangs by restarting the crawler every 15 minutes
+  Timeout::timeout(60*15) do
+    HackerNewsRealtimeCrawler.new.crawler
+  end
+rescue Timeout::Error
+  exit 1
+end

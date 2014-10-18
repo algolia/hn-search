@@ -6,7 +6,7 @@ require "em-http-request"
 
 class HackerNewsRealtimeCrawler
 
-  def cron
+  def crawler
     EM.run do
       @source = EventMachine::EventSource.new("#{ENV['HN_API_URL']}/v0/updates.json", headers = {"Accept" => "text/event-stream"})
       @source.on "keep-alive" do |unused|
