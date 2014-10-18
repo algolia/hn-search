@@ -32,6 +32,8 @@ gem "em-http-request", "~> 1.1.1"
 gem "httparty", "~> 0.12.0"
 
 group :development do
+  gem 'capistrano', '< 3.0.0'
+  gem 'rvm-capistrano'
   gem 'sqlite3'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :mri_21, :rbx]
