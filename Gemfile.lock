@@ -59,6 +59,8 @@ GEM
       blue-daemons (~> 1.1.11)
       i18n (~> 0.5)
       state_machine (~> 1.1)
+    bootstrap-sass (3.3.0.1)
+      sass (~> 3.2)
     bourbon (3.2.3)
       sass (~> 3.2)
       thor
@@ -109,6 +111,8 @@ GEM
     firebase (0.2.2)
       json
       typhoeus (>= 0.6.1)
+    font-awesome-rails (4.1.0.0)
+      railties (>= 3.2, < 5.0)
     haml (4.1.0.beta.1)
       tilt
     haml-rails (0.5.3)
@@ -252,6 +256,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bluepill
+  bootstrap-sass (~> 3.3.0)
   bourbon
   capistrano (< 3.0.0)
   capybara
@@ -261,6 +266,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   firebase
+  font-awesome-rails
   groupdate!
   haml-rails
   hogan_assets
