@@ -21,13 +21,14 @@
   #style-toggler.hidden-xs
     = link_to_function 'Change style <span></span>'.html_safe, 'hnsearch.toggleStyle();'
 
-  %h1.text-center
-    Search Hacker News
-    %span.by
-      &nbsp;by
-      = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia256x80.png", style: 'height: 38px; margin-bottom: 12px;', alt: 'Algolia'), "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=header&utm_campaign=hn_algolia", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
-
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
+    .clearfix
+    %h1.text-center
+      SEARCH HACKER NEWS
+      %span.by
+        &nbsp;by
+        = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia_white.png", style: 'height: 38px; margin-bottom: 12px;', alt: 'Algolia'), "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=header&utm_campaign=hn_algolia", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
+
     .pull-right.hidden-xs#advanced-search
       = link_to "Advanced search syntax", "#modal-advanced-syntax", "data-toggle" => "modal"
     %ul.list-unstyled.list-inline#item_type
@@ -40,7 +41,7 @@
         #inputfield
           %input{autocomplete: 'off', autocorrect: 'off', name: 'address', placeholder: 'HN Stories, Comments, Source, Author ...', type: 'text', spellcheck: 'false', value: params[:q]}
         .searchbutton
-          %i.icon-search.icon-large
+          %i.fa.fa-search
         .branding.visible-lg
           Discover the
           = link_to "realtime search engine", "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia"
