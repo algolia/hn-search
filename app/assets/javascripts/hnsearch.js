@@ -448,15 +448,6 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       // work-around =\\" escaping bug (6c92ae092359647c04804876139516163d0567de)
       str = str.replace(/=\\"/g, '="');
 
-      // remove highlighted href attributes breaking links
-      while (true) {
-        var matches = str.match('href="(.*<em>.*[^"]+)"');
-        if (!matches) {
-          break;
-        }
-        str = str.replace(matches[0], 'href="' + matches[1].replace(/<\/?em>/g, '') + '"');
-      }
-
       return '<p>' +  str.replace(/<p>/g, '</p><p>') + '</p>';
     },
 
