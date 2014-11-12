@@ -33,8 +33,9 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       this.firstQuery = true;
       this.hitTemplate = Hogan.compile($('#hitTemplate').text());
       this.prefixedSearch = true;
+      this.$input = $('#inputfield input');
 
-      $('#inputfield input').tagautocomplete({
+      this.$input.tagautocomplete({
         character: '(author|by):',
         source: function(query, process) {
           var tquery = this.extractor();
@@ -60,22 +61,22 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         self.prefixedSearch = false;
         self.search(0);
       });
-      $('#inputfield input').keyup(function(e) {
-        $('#inputfield input').tagautocomplete(['keyup', e]);
+      this.$input.keyup(function(e) {
+        self.$input.tagautocomplete(['keyup', e]);
         switch (e.keyCode) {
           case 13: return false;
-          case 27: $('#inputfield input').val(''); break;
+          case 27: self.$input.val(''); break;
           default: self.prefixedSearch = true; break;
         }
         self.search(0);
       }).keypress(function(e) {
-        $('#inputfield input').tagautocomplete(['keypress', e]);
+        self.$input.tagautocomplete(['keypress', e]);
       }).keydown(function(e) {
-        $('#inputfield input').tagautocomplete(['keydown', e]);
+        self.$input.tagautocomplete(['keydown', e]);
       }).focus(function(e) {
-        $('#inputfield input').tagautocomplete(['focus', e]);
+        self.$input.tagautocomplete(['focus', e]);
       }).blur(function(e) {
-        $('#inputfield input').tagautocomplete(['blur', e]);
+        self.$input.tagautocomplete(['blur', e]);
       }).change(function(e) {
         self.search(0);
       });
@@ -83,7 +84,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
         self.search(0);
       });
 
-      if ($('#inputfield input').val() !== '') {
+      if (this.$input.val() !== '') {
         // that's a query from news.ycombinator.com, disable prefix search
         this.prefixedSearch = false;
       }
@@ -100,13 +101,13 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           this.prefixedSearch = false;
           this.page = parseInt(v);
         }
-        $('#inputfield input').val(decodeURIComponent(parts.join('/')));
+        this.$input.val(decodeURIComponent(parts.join('/')));
       }
 
-      if ($('#inputfield input').val() !== '') {
+      if (this.$input.val() !== '') {
         this.search(0);
       } else {
-        $('#inputfield input').focus();
+        this.$input.focus();
       }
     },
 
@@ -149,7 +150,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
       }
       this.page = p;
 
-      var query = $('#inputfield input').val() || args.query;
+      var query = this.$input.val() || args.query;
       if (!query || query.trim().length == 0) {
         this.$hits.empty();
         this.$pagination.empty();
@@ -283,7 +284,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           console.log(content);
           return;
         }
-        if (originalQuery == ($('#inputfield input').val() || args.query).trim()) {
+        if (originalQuery == (self.$input.val() || args.query).trim()) {
           if (content.nbHits == 0) {
             var noResults = '<p>No results matching your query</p><p><code>' + $('<div />').text(originalQuery).html() + '</code>';
             if (item_type) {
