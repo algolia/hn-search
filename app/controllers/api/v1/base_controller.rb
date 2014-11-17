@@ -100,9 +100,7 @@ module Api
             end
             return json ? JSON.parse(answer.content) : answer.content
           rescue Algolia::AlgoliaProtocolError => e
-            if e.code != Algolia::Protocol::ERROR_TIMEOUT and e.code != Algolia::Protocol::ERROR_UNAVAILABLE
-              raise
-            end
+            raise if e.code == Algolia::Protocol::ERROR_FORBIDDEN || e.code == Algolia::Protocol::ERROR_BAD_REQUEST
           end
         end
         raise Algolia::AlgoliaProtocolError.new(500, "Cannot reach any hosts")
