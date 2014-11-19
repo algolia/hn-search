@@ -39,7 +39,7 @@ module Api
       def initialize(application_id, api_key, forwarded_api_key)
         @client = HTTPClient.new
         @client.transparent_gzip_decompression = true
-        @cluster = 2.upto(3).map { |i| "#{application_id}-#{i}" } # application_id-1 is dedicated to build
+        @cluster = 2.upto(3).map { |i| "#{application_id}-#{i}" }.shuffle # application_id-1 is dedicated to build
         @forwarded_api_key = forwarded_api_key
         @headers = {
           Algolia::Protocol::HEADER_API_KEY           => api_key,
