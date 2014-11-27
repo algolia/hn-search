@@ -26,6 +26,9 @@ Bluepill.application("hnsearch", :log_file => "/var/www/hnsearch/current/log/blu
       process.stop_command  = "./bin/delayed_job stop -i #{i}"
 
       process.pid_file = "/var/www/hnsearch/shared/pids/delayed_job.#{i}.pid"
+
+      # seems our delayed_job workers get stucked, let's try to restart them every 2 hours (#49)
+      process.checks :running_time, :every => 10.minutes, :below => 2.hours
     end
   end
 end
