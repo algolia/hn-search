@@ -12,7 +12,7 @@ class Item < ActiveRecord::Base
 
   algoliasearch per_environment: true do
     # the list of attributes sent to Algolia's API
-    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :
+    attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title
     attribute :created_at_i do
       created_at.to_i
     end
