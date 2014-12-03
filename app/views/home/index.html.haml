@@ -23,8 +23,9 @@
 
   %form#search-form{method: "get", action: '#', onsubmit: 'return false;'}
     .clearfix
-    %h1.text-center
-      SEARCH HACKER NEWS
+    %h1.text-title
+      Search
+      = link_to "Hacker News", "https://news.ycombinator.com"
       %span.by
         &nbsp;by
         = link_to image_tag("//d3ibatyzauff7b.cloudfront.net/assets/algolia_white.png", style: 'height: 38px; margin-bottom: 12px;', alt: 'Algolia'), "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=header&utm_campaign=hn_algolia", onclick: "_gaq.push(['_link', 'http://www.algolia.com']); return false;", title: 'Hosted full-text, numerical, faceted search'
