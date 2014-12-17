@@ -7,3 +7,7 @@ every 1.minute, roles: [:cron] do
   runner "User.where('updated_at >= ?', 1.minute.ago).reindex!"
   runner "Item.where('updated_at >= ?', 1.minute.ago).reindex!"
 end
+
+every 10.minute, roles: [:cron] do
+  runner "HackerNewsRealtimeCrawler.new.indexing_check"
+end

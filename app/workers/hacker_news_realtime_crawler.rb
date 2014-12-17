@@ -52,6 +52,12 @@ class HackerNewsRealtimeCrawler
     end
   end
 
+  def indexing_check
+    last_hit_at = DateTime.parse(JSON.parse(RestClient.get('http://hn.algolia.com/api/v1/search_by_date?hitsPerPage=1'))['hits'].first['created_at']) rescue nil
+    status = last_hit_at.nil? || last_hit_at < 1.hour.ago ? 'degraded_performance' : 'operational'
+    RestClient.post(ENV['HN_STATUS_API'], status: status, name: 'Indexing') rescue nil # not fatal
+  end
+
   private
 
   def refresh(data = {})
@@ -63,6 +69,7 @@ class HackerNewsRealtimeCrawler
       puts "[#{DateTime.now}] Refreshing user=#{id}"
       User.delay.from_api!(id)
     end
+    RestClient.post(ENV['HN_STATUS_API'], status: 'operational', name: 'Crawling') rescue nil # not fatal
   end
 
 end

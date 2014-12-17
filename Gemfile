@@ -27,6 +27,7 @@ gem 'delayed_job_active_record'
 gem 'bluepill'
 gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'
 gem 'simple-rss'
+gem 'rest-client'
 
 gem 'firebase'
 gem "eventmachine", "~> 1.0.3"
