@@ -53,7 +53,7 @@ class HackerNewsRealtimeCrawler
   end
 
   def indexing_check
-    last_hit_at = DateTime.parse(JSON.parse(RestClient.get('http://hn.algolia.com/api/v1/search_by_date?hitsPerPage=1'))['hits'].first['created_at']) rescue nil
+    last_hit_at = DateTime.parse(Algolia::Index.new("Item_#{Rails.env}_sort_date").search('', hitsPerPage: 1)['hits'].first['created_at']) rescue nil
     status = last_hit_at.nil? || last_hit_at < 1.hour.ago ? 'degraded_performance' : 'operational'
     RestClient.post(ENV['HN_STATUS_API'], status: status, name: 'Indexing') rescue nil # not fatal
   end
