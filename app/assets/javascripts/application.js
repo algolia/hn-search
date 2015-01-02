@@ -11,21 +11,13 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-
-//= require bootstrap
-//= require bootstrap-typeahead
-//= require tagautocomplete
-
-//= require algolia/algoliasearch.min
-//= require jquery.timeago
-//= require jquery.cookie
-//= require hogan
-
 //= require angular
 //= require angular-route
 //= require angular-rails-templates
+//= require algoliasearch.angular
 
-//= require hnsearch
 //= require_tree ../templates
+
 //= require app
+//= require controllers
+//= require services
