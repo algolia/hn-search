@@ -12,16 +12,20 @@
 //
 //= require jquery
 //= require jquery_ujs
+
 //= require bootstrap
-//= require algolia/algoliasearch.min
-//= require jquery.timeago
-//= require hogan
-//= require jquery.cookie
 //= require bootstrap-typeahead
 //= require tagautocomplete
-//= require hnsearch
+
+//= require algolia/algoliasearch.min
+//= require jquery.timeago
+//= require jquery.cookie
+//= require hogan
+
 //= require angular
 //= require angular-route
 //= require angular-rails-templates
+
+//= require hnsearch
 //= require_tree ../templates
 //= require app
