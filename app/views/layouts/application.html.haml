@@ -32,9 +32,9 @@
 
     = yield(:head)
   %body{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
-    #main{role: 'main', 'ng-view' => true}
+    #main{role: 'main'}
       .container
-        .row
+        .row{'ng-view' => true}
           = content_for?(:content) ? yield(:content) : yield
 
       %footer.text-center
