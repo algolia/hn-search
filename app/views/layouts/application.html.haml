@@ -1,5 +1,5 @@
 !!!
-%html
+%html{'ng-app' => 'HNSearch'}
   %head
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui", :name => "viewport"}
     - page_title = content_for?(:title) ? yield(:title) : "HN Search powered by Algolia"
@@ -32,7 +32,7 @@
 
     = yield(:head)
   %body{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
-    #main{:role => "main"}
+    #main{role: 'main', 'ng-view' => true}
       .container
         .row
           = content_for?(:content) ? yield(:content) : yield

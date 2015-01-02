@@ -19,3 +19,9 @@
 //= require jquery.cookie
 //= require bootstrap-typeahead
 //= require tagautocomplete
+//= require hnsearch
+//= require angular
+//= require angular-route
+//= require angular-rails-templates
+//= require_tree ../templates
+//= require app

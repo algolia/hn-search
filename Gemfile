@@ -28,6 +28,8 @@ gem 'bluepill'
 gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'
 gem 'simple-rss'
 gem 'rest-client'
+gem 'angularjs-rails'
+gem 'angular-rails-templates'
 
 gem 'firebase'
 gem "eventmachine", "~> 1.0.3"
@@ -43,6 +45,18 @@ group :development do
   gem 'html2haml'
   gem 'quiet_assets'
   gem 'rails_layout'
+  gem 'guard-bundler'
+  gem 'guard-rails'
+  gem 'guard-rspec'
+  gem 'guard-pow', require: false
+  gem 'hub', :require=>nil
+  gem 'rb-fchange', :require=>false
+  gem 'rb-fsevent', :require=>false
+  gem 'rb-inotify', :require=>false
+  gem 'spring-commands-rspec'
+  gem 'guard-livereload',        :require => false
+  gem 'rack-livereload'
+  gem 'terminal-notifier-guard'
 end
 group :production do
   gem 'mysql2'
