@@ -74,8 +74,8 @@ Contribution
  * ```git clone https://github.com/algolia/hn-search```
  * `bundle`
  * `cp config/database.example.yml config/database.yml` (feel free to edit, default configuration is OK)
- * create your database: `bundle exec rake db:migrate`
  * `cp config/application.example.yml config/application.yml` (feel free to edit, default configuration is OK)
+ * create your database: `bundle exec rake db:migrate`
  * populate your DB using 2 fake items and 1 user: `bundle exec rake db:seed`
- * `bundle exec rails server`
- * open http://localhost:3000
+ * `guard`
+ * `open http://localhost:3000`
