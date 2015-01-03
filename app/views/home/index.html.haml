@@ -33,7 +33,7 @@
     .pull-right.hidden-xs#advanced-search
       = link_to "Advanced search syntax", "#modal-advanced-syntax", "data-toggle" => "modal"
     %ul.list-unstyled.list-inline#item_type
-      - %w{all story comment poll}.each do |type|
+      - %w{all story comment poll job}.each do |type|
         %li
           %input{type: 'radio', name: 'item_type', value: type, id: "item_type_#{type}", checked: (type == 'story')}
           %label{for: "item_type_#{type}"}= type.capitalize.gsub('_', ' ')
