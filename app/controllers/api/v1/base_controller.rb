@@ -84,7 +84,7 @@ module Api
 
         @cluster.each do |c|
           begin
-            url = "https://#{c}.algolia.io" + uri
+            url = "https://#{c}.algolia.net" + uri
             answer = case method
             when :GET
               @client.get(url, header: headers)
