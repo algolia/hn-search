@@ -84,7 +84,7 @@ angular.module('HNSearch.services', [])
 
 .filter('moment', function() {
     return function(dateString, format) {
-        return moment(dateString * 1000).format(format);
+        return moment(dateString * 1000).fromNow();
     };
 })
 

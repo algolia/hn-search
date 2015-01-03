@@ -1,15 +1,16 @@
 .item-input-inset
   %hnsearch.search-wrapper-light{placeholder:"Search a story", "min-length"=>"0", model:"results", source:"getSearch(query)"}
 
-  .list
+  .search-results
     .item{"ng-repeat"=>"hit in results.hits", "ng-click"=>"loadComments(hit)"}
       / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
       %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
-      %p by <span class="author" ng-style="{color:'{{hit.author|color}}'}">{{hit.author}}</span> {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+      %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
+      %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
       %ul
-        %li.item{"ng-repeat"=>"comment in story[hit.objectID]"}
+        %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID]"}
           %span.author {{comment.author}} {{comment.author|color}}
-          %small {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
+          %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
           .reply-container{"ng-bind-html"=>"comment.text"}
           %collection{collection:"comment.children"}
