@@ -28,9 +28,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     );
   };
 
-  $scope.openNews = function(hit) {
+  $scope.loadComments = function(hit) {
     story.set(hit);
-    window.open('#/tab/news', '_self');
   };
 
 })
