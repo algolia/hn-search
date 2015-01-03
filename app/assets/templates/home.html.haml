@@ -1,7 +1,8 @@
 .item-input-inset
   %hnsearch.search-wrapper-light{placeholder:"Search a story", "min-length"=>"0", model:"results", source:"getSearch(query)"}
+
   .list
     .item.item-thumbnail-left{"ng-repeat"=>"hit in results.hits", "ng-click"=>"openNews(hit)"}
-      %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+      / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
       %a.hit-link.clearfix{href:"#"} {{hit.url}}

@@ -1,6 +1,6 @@
-angular.module('HNSearch.controllers', ['algoliasearch'])
+angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', function($scope, algolia, story, search, settings) {
+.controller('SearchCtrl', function($scope, $sce, algolia, story, search, settings) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose
@@ -42,15 +42,11 @@ angular.module('HNSearch.controllers', ['algoliasearch'])
   });
 })
 
-.controller('ViewCtrl', function($scope, $http, $ionicLoading, story) {
+.controller('ViewCtrl', function($scope, $http, story) {
   $scope.story = story.get();
-  $ionicLoading.show({
-    template: 'Loading...'
-  });
   $http.get('http://hn.algolia.com/api/v1/items/' + $scope.story.objectID).
   success(function(data) {
     $scope.story.full = data ;
-    $ionicLoading.hide();
   });
 })
 

@@ -13,6 +13,7 @@
 //= require jquery
 //= require angular
 //= require angular-route
+//= require angular-sanitize
 //= require angular-rails-templates
 //= require algoliasearch.angular
 
