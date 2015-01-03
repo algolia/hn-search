@@ -96,7 +96,7 @@ module Api
               @client.delete(url, header: headers)
             end
             if answer.code >= 400 || answer.code < 200
-              raise Algolia::AlgoliaProtocolError.new(answer.code, "#{method} #{url}: #{answer.content}")
+              raise "#{method} #{url} (#{answer.code}): #{answer.content}"
             end
             return json ? JSON.parse(answer.content) : answer.content
           rescue Algolia::AlgoliaProtocolError => e
