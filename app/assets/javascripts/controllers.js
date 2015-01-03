@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', function($scope, $sce, algolia, story, search, settings) {
+.controller('SearchCtrl', function($scope, $http, $sce, algolia, story, search, settings) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose
@@ -28,10 +28,14 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     );
   };
 
-  $scope.loadComments = function(hit) {
-    story.set(hit);
-  };
+  $scope.story= {};
 
+  $scope.loadComments = function(hit) {
+    $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
+    success(function(data) {
+      $scope.story[hit.objectID] = {comments: data};
+    });
+  };
 })
 
 .controller('SettingsCtrl', function($scope, settings) {
@@ -41,25 +45,6 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   });
 })
 
-.controller('ViewCtrl', function($scope, $http, story) {
-  $scope.story = story.get();
-  $http.get('http://hn.algolia.com/api/v1/items/' + $scope.story.objectID).
-  success(function(data) {
-    $scope.story.full = data ;
-  });
-})
-
-.directive('errSrc', function() {
-  return {
-    link: function(scope, element, attrs) {
-      element.bind('error', function() {
-        if (attrs.src != attrs.errSrc) {
-          attrs.$set('src', attrs.errSrc);
-        }
-      });
-    }
-  }
-})
 
 .directive('collection', function() {
   return {
