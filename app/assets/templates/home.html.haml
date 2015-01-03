@@ -1,18 +1,82 @@
-.item-input-inset
-  %hnsearch.search-wrapper-light{placeholder:"Search a story", "min-length"=>"0", model:"results", source:"getSearch(query)"}
+.container
+  %header.page-header
+    .col-1
+      .logo
+        %img{src:"/assets/logo-hn-search.png"}
+        %span.logo-name
+          Search
+          %br
+          Hacker News
+    .col-2
+      %nav.navigation
+        %ul.list-inline
+          %li.active
+            Most Popular
+          %li
+            Most Recent
+    .col-3
+      %hnsearch.search-wrapper-light{placeholder:"Search a story", "min-length"=>"0", model:"results", source:"getSearch(query)"}
+.container
+  %aside.sidebar
+    %ul
+      %li
+        %i.icon-news
+        All
+      %li
+        %i.icon-megaphone
+        Show HN
+      %li
+        %i.icon-bulb
+        Ask HN
+      %li
+        %i.icon-wallet
+        Jobs
+      %li.divider
+      %li
+        %i.icon-star
+        Starred
+      %li
+        %i.icon-fire
+        Hot
 
-  .search-results
-    .item{"ng-repeat"=>"hit in results.hits", "ng-click"=>"loadComments(hit)"}
-      / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
-      %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
-      %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
-      %i.icon-user
-      %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
-      %i.icon-clock
-      %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-      %ul{"ng-show"=>"story[hit.objectID]"}
-        %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID]"}
-          %span.author {{comment.author}} {{comment.author|color}}
-          %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
-          .reply-container{"ng-bind-html"=>"comment.text"}
-          %collection{collection:"comment.children"}      }
+  %section.main
+    %header
+      %button.btn-refresh
+        %i.icon-settings
+      %h1 Ask HN
+      %small.search-infos 42 results in 9 ms
+      .date-range-filter
+        %ul.list-inline
+          %li
+            %label
+              %input{name:"date-range", type:"radio"}
+              Last 24h
+          %li
+            %label
+              %input{name:"date-range", type:"radio"}
+              Past week
+          %li
+            %label
+              %input{name:"date-range", type:"radio"}
+              Past month
+          %li
+            %label
+              %input{name:"date-range", type:"radio"}
+              Forever
+    %section.search-results
+      .item{"ng-repeat"=>"hit in results.hits", "ng-click"=>"loadComments(hit)"}
+        / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+        %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
+        %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
+        %i.icon-user
+        %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
+        %i.icon-clock
+        %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+        %i.icon-bubble
+        %span.date {{hit.num_comments}} comments
+        %ul{"ng-show"=>"story[hit.objectID]"}
+          %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID]"}
+            %span.author {{comment.author}} {{comment.author|color}}
+            %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
+            .reply-container{"ng-bind-html"=>"comment.text"}
+            %collection{collection:"comment.children"}

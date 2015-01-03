@@ -32,10 +32,8 @@
 
     = yield(:head)
   %body{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
-    #main{role: 'main'}
-      .container
-        .row{'ng-view' => true}
-          = content_for?(:content) ? yield(:content) : yield
+    #main{role: 'main','ng-view' => true}
+      / = content_for?(:content) ? yield(:content) : yield
 
     :javascript
       var _gaq = _gaq || [];

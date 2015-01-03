@@ -1,11 +1,111 @@
+.container
+  width: 1200px
+  margin: 0 auto
+.page-header
+  border-bottom: solid 1px #eee
+  padding: 20px
+  height: 100px
+  .col-1, .col-2, .col-3
+    float: left
+    margin: 0
+    padding: 0
+  .col-1
+    width: 25%
+  .col-2
+    width: 35%
+  .col-3
+    width: 40%
+  .logo
+    img
+      float: left
+      margin-right: 10px
+    .logo-name
+      float: left
+      font-size: 22px
+      line-height: 1.2em
+      padding-top: 5px
+  .navigation
+    ul
+      position: relative
+      top: 15px
+    li
+      margin-right: 20px
+      padding-bottom: 5px
+      &.active
+        font-weight: bold
+        border-bottom: solid 2px #FF742B
+
+
+ul.list-inline
+  display: inline-block
+  li
+    display: inline-block
+
+.sidebar
+  width: 200px
+  float: left
+  background-color: #F8F8F8
+  height: 100%
+  ul
+    display: block
+    padding: 20px 0
+    li
+      float: left
+      width: 100%
+      padding: 10px 20px
+      &.divider
+        margin: 10px 0
+        padding: 0
+        border-bottom: solid 1px #eee
+      i
+        margin-right: 10px
+
+.main
+  width: calc(100% - 200px)
+  float: left
+  padding-left: 10px
+  header
+    padding: 20px 30px
+    border-bottom: solid 1px #eee
+    position: relative
+    h1
+      display: inline-block
+      font-size: 25px
+      font-weight: 200
+      color: #5C5C5C
+      margin-right: 10px
+    .search-infos
+      display: inline-block
+      color: #ccc
+    .btn-refresh
+      width: 30px
+      height: 30px
+      line-height: 30px
+      text-align: center
+      padding: 0
+      background-color: white
+      border: solid 1px #F8F8F8
+      border-radius: 50%
+      color: #5C5C5C
+    .date-range-filter
+      position: absolute
+      right: 0
+      top: 25px
+      label
+        font-size: 12px
+        font-weight: normal
+
+
 .search-results
   .item
-    padding: 20px
+    padding: 20px 30px
     border-bottom: solid 1px #eee
     h2
-      font-size: 15px
-      font-weight: 400
+      font-size: 16px
+      font-weight: normal
       color: #5C5C5C
+      em
+        font-weight: bold
     a.hit-link
       font-size: 12px
       color: #5A96B1
