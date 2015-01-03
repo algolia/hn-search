@@ -3,7 +3,7 @@ require 'zlib'
 
 class Item < ActiveRecord::Base
 
-  as_enum :item_type, %w{story comment poll pollopt unknown}
+  as_enum :item_type, %w{story comment poll pollopt unknown job}
 
   validates_length_of :url, within: 0..32768, allow_nil: true, allow_blank: true
   validates_length_of :text, within: 0..32768, allow_nil: true, allow_blank: true
