@@ -9,9 +9,10 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'figaro'
 gem 'haml-rails'
-gem 'bootstrap-sass', '~> 3.3.0'
-gem "font-awesome-rails"
+gem 'bitters'
 gem 'bourbon'
+gem 'neat'
+gem "font-awesome-rails"
 gem 'therubyracer'
 gem 'hogan_assets'
 gem 'jquery-cookie-rails'
