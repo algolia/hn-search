@@ -9,7 +9,6 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'figaro'
 gem 'haml-rails'
-gem 'bootstrap-sass', '~> 3.3.0'
 gem "font-awesome-rails"
 gem 'bourbon'
 gem 'therubyracer'
