@@ -6,3 +6,4 @@
       / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
       %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
+      %p by <span class="author">{{hit.author}}</span> {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}

@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require moment
 //= require angular
 //= require angular-route
 //= require angular-sanitize
