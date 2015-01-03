@@ -73,8 +73,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
       }
     },
     template: '<li>' +
-                '<i class="icon ion-reply"></i> <span class="author">{{reply.author}}</span> - <small>{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</small>' +
-                '<div ng-bind-html="reply.text"></div>' +
+                '<span class="author">{{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
+                '<div class="reply-content" ng-bind-html="reply.text"></div>' +
               '</li>'
   };
 })

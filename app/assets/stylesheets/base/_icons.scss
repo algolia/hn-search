@@ -1,0 +1,73 @@
+@font-face {
+  font-family: 'icomoon';
+  src:url('/assets/fonts/icomoon.eot?-oqsbri');
+  src:url('/assets/icomoon.eot?#iefix-oqsbri') format('embedded-opentype'),
+    url('/assets/icomoon.woff?-oqsbri') format('woff'),
+    url('/assets/icomoon.ttf?-oqsbri') format('truetype'),
+    url('/assets/icomoon.svg?-oqsbri#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-star:before {
+  content: "\e600";
+}
+
+.icon-user:before {
+  content: "\e601";
+}
+
+.icon-search:before {
+  content: "\e602";
+}
+
+.icon-settings:before {
+  content: "\e603";
+}
+
+.icon-tag:before {
+  content: "\e604";
+}
+
+.icon-bulb:before {
+  content: "\e605";
+}
+
+.icon-bubble:before {
+  content: "\e606";
+}
+
+.icon-news:before {
+  content: "\e607";
+}
+
+.icon-clock:before {
+  content: "\e608";
+}
+
+.icon-megaphone:before {
+  content: "\e609";
+}
+
+.icon-fire:before {
+  content: "\e60a";
+}
+
+.icon-wallet:before {
+  content: "\e60b";
+}
+
