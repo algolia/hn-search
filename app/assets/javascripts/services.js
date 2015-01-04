@@ -41,7 +41,9 @@ angular.module('HNSearch.services', ['ngStorage'])
         dateRange: (queryParameters.dateRange || 'last24h'),
         type: (queryParameters.type || 'story'),
         sort: (queryParameters.sort || 'byDate'),
-        category: (queryParameters.category || '')
+        category: (queryParameters.category || ''),
+        prefix: (queryParameters.prefix || true),
+        page: (queryParameters.page || 0)
     };
     var settings = {};
     var settingsService = {};
@@ -83,11 +85,12 @@ angular.module('HNSearch.services', ['ngStorage'])
 
     searchService.applySettings = function(settings) {
         this.params.tagFilters = [];
-        console.log(settings);
 
         // query
         $location.search('query', this.query, false);
         $location.search('sort', settings.sort, false);
+        $location.search('prefix', settings.prefix, false);
+        $location.search('page', settings.page, false);
 
         // date range
         $location.search('dateRange', settings.dateRange, false);
