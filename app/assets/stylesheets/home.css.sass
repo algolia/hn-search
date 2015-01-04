@@ -1,3 +1,6 @@
+body
+  color: #B6B6B6
+
 .container
   width: 1200px
   margin: 0 auto
@@ -10,9 +13,9 @@
     margin: 0
     padding: 0
   .col-1
-    width: 25%
+    width: 23%
   .col-2
-    width: 35%
+    width: 37%
   .col-3
     width: 40%
   .logo
@@ -35,7 +38,6 @@
         font-weight: bold
         border-bottom: solid 2px #FF742B
 
-
 ul.list-inline
   display: inline-block
   li
@@ -52,11 +54,18 @@ ul.list-inline
     li
       float: left
       width: 100%
-      padding: 10px 20px
+      &.active
+        a
+          background-color: #E4E3E5
       &.divider
         margin: 10px 0
         padding: 0
         border-bottom: solid 1px #eee
+      a
+        display: block
+        width: 100%
+        padding: 10px 20px
+        color: #5C5C5C
       i
         margin-right: 10px
 
@@ -94,17 +103,55 @@ ul.list-inline
       label
         font-size: 12px
         font-weight: normal
+        white-space: nowrap
+        margin-left: 20px
+      input.radio:empty
+        margin-left: -9999px
 
+      input.radio:empty ~ label
+        position: relative
+        float: left
+        line-height: 23px
+        text-indent: 30px
+        cursor: pointer
+        user-select: none
 
+      input.radio:empty ~ label:before
+        position: absolute
+        display: block
+        top: 0
+        bottom: 0
+        left: 0
+        content: ''
+        height: 20px
+        width: 20px
+        border: solid 1px #ccc
+        line-height: 20px
+        border-radius: 50%
+
+      input.radio:checked ~ label:before
+        box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+
+      input.radio:focus ~ label:before
+        box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+
+.search-wrapper
+  input
+    border-radius: 20px
+    box-shadow: none
 .search-results
   .item
     padding: 20px 30px
     border-bottom: solid 1px #eee
+    cursor: pointer
+    &:hover
+      background-color: #F8F8F8
     h2
       font-size: 16px
       font-weight: normal
       color: #5C5C5C
       em
+        font-style: normal
         font-weight: bold
     a.hit-link
       font-size: 12px
@@ -119,7 +166,9 @@ ul.list-inline
     [class^="icon-"], [class*=" icon-"]
       color: #B6B6B6
   ul
-    display: block
-    margin: 0 0 0 5px
-    padding: 0 0 0 10px
-    border-left: solid 1px #ccc
+    padding-top: 25px
+    ul
+      display: block
+      margin: 0 0 0 5px
+      padding: 0 0 0 10px
+      border-left: solid 1px #ccc

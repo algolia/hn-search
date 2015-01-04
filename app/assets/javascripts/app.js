@@ -15,5 +15,10 @@ var app = angular.module('HNSearch', [
     .when('/', {
       templateUrl: 'home.html',
       controller: 'SearchCtrl'
+    }).when('/:cat', {
+      templateUrl: 'home.html',
+      controller: 'SearchCtrl'
+    }).otherwise({
+      redirectTo: '/'
     });
 }]);

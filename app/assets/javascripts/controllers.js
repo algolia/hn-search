@@ -13,22 +13,20 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   var index = client.initIndex(algoliaConfig.index);
 
 
-  // Search
-  search.setParams(settings.init());
-  $scope.search = search.get();
+  // Init search et params
+  $scope.settings = settings.init();
+  $scope.search = search.setParams(settings.init());
   $scope.results = [];
+  $scope.story= {};
 
   //Search scope
-  $scope.getSearch = function(query) {
-    search.setQuery(query);
-    index.search(query, undefined, $scope.search.params).then(
+  $scope.getSearch = function() {
+    index.search($scope.search.query, undefined, $scope.search.params).then(
       function(results) {
         $scope.results = results;
       }
     );
   };
-
-  $scope.story= {};
 
   $scope.loadComments = function(hit) {
     $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
@@ -36,13 +34,12 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
       $scope.story[hit.objectID] = {comments: data};
     });
   };
-})
 
-.controller('SettingsCtrl', function($scope, settings) {
-  $scope.settings = settings.get();
   $scope.$watchCollection('settings', function(newSettings){
-    settings.set(newSettings);
+    search.setParams(newSettings);
+    $scope.getSearch($scope.search.query,$scope.search.params);
   });
+
 })
 
 
@@ -90,13 +87,17 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     link: function(scope, element, attrs) {
       attrs.minLength = attrs.minLength || 0;
       scope.placeholder = attrs.placeholder || '';
-      scope.search = search.get();
 
       if (attrs.class)
         element.addClass(attrs.class);
 
       scope.$watch('search.query', function (newValue, oldValue) {
-        scope.getData({query: newValue});
+        if(newValue === oldValue){
+          return;
+        }
+        var query = newValue || '';
+        search.setQuery(query);
+        scope.getData();
       });
 
       scope.clearSearch = function() {

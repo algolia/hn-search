@@ -24,10 +24,11 @@ angular.module('HNSearch.services', [])
 
     settingsService.init = function() {
         settings = defaultSettings;
-        return settings;
+        return defaultSettings;
     };
     settingsService.set = function(settings) {
         settings = settings;
+        return settings;
     };
     settingsService.get = function() {
         return settings;
@@ -73,6 +74,7 @@ angular.module('HNSearch.services', [])
                 search.params.tagFilters = settings.type;
             }
         }
+        return search;
     };
 
     searchService.get = function() {
