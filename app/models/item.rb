@@ -75,7 +75,7 @@ class Item < ActiveRecord::Base
   end
 
   def num_comments
-    item_type_cd == Item.story || item_type_cd == Item.poll ? story_comments.count : nil
+    item_type_cd == Item.story || item_type_cd == Item.poll ? story_comments.where(deleted: false).where(dead: false).count : nil
   end
 
   def crawl_thumbnail!
