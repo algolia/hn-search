@@ -1,5 +1,27 @@
 angular.module('HNSearch.services', ['ngStorage'])
 
+.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+    // add an extra parameter "reload" to $location.search to avoid controller reloading
+    var original = $location.search;
+    $location.search = function (key, value, reload) {
+        if (reload === false) {
+            var lastRoute = $route.current;
+            var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+                un();
+            });
+        }
+        var args = [];
+        if (typeof key !== 'undefined') {
+            args.push(key);
+        }
+        if (typeof value !== 'undefined') {
+            args.push(value);
+        }
+        return original.apply($location, args);
+    };
+}])
+
 .factory('story', function() {
     var story = [];
     var storyService = {};
@@ -12,20 +34,21 @@ angular.module('HNSearch.services', ['ngStorage'])
     return storyService;
 })
 
-.factory('settings', function() {
+.factory('settings', ['$location', function($location) {
     //default settings
+    var queryParameters = $location.search();
     var defaultSettings = {
-        dateRange: 'last24h',
-        type: 'story',
-        sort: 'byDate',
-        category: null
+        dateRange: (queryParameters.dateRange || 'last24h'),
+        type: (queryParameters.type || 'story'),
+        sort: (queryParameters.sort || 'byDate'),
+        category: (queryParameters.category || '')
     };
     var settings = {};
     var settingsService = {};
 
     settingsService.init = function(category) {
         settings = angular.copy(defaultSettings);
-        settings.category = category;
+        settings.category = category || '';
         return settings;
     };
     settingsService.set = function(settings) {
@@ -36,11 +59,12 @@ angular.module('HNSearch.services', ['ngStorage'])
         return settings;
     };
     return settingsService;
-})
+}])
 
-.factory('search', function() {
+.factory('search', ['$location', function($location) {
+    var queryParameters = $location.search();
     var searchService = {
-        query: '',
+        query: (queryParameters.query || ''),
         params: {}
     };
 
@@ -54,11 +78,19 @@ angular.module('HNSearch.services', ['ngStorage'])
 
     searchService.setQuery = function(query) {
         this.query = query;
+        $location.search('query', this.query, false);
     };
 
     searchService.applySettings = function(settings) {
         this.params.tagFilters = [];
+        console.log(settings);
 
+        // query
+        $location.search('query', this.query, false);
+        $location.search('sort', settings.sort, false);
+
+        // date range
+        $location.search('dateRange', settings.dateRange, false);
         if (settings.hasOwnProperty('dateRange')){
             if (settings.dateRange === 'all'){
                 this.params.numericFilters = '';
@@ -72,6 +104,7 @@ angular.module('HNSearch.services', ['ngStorage'])
         }
 
         // story type
+        $location.search('category', settings.category, false);
         switch (settings.category) {
         case 'ask-hn':
             this.params.tagFilters.push('ask_hn');
@@ -85,6 +118,7 @@ angular.module('HNSearch.services', ['ngStorage'])
         }
 
         // item type
+        $location.search('type', settings.type, false);
         if (settings.type && settings.category !== 'jobs') {
             this.params.tagFilters.push(settings.type);
         }
@@ -112,7 +146,7 @@ angular.module('HNSearch.services', ['ngStorage'])
     };
 
     return searchService;
-})
+}])
 
 
 .factory('hot', ['$q', '$http', function($q, $http) {
