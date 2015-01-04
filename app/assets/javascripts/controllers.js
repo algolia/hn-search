@@ -125,4 +125,24 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
                 '<i ng-if="search.query.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
               '</div>'
   };
-}]);
+}])
+
+.directive('activeLink', ['$location', function(location) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs, controller) {
+      var path = attrs.href;
+      path = path.substring(1); //hack because path does not return including hashbang
+      scope.location = location;
+      scope.$watch('location.path()', function(newPath) {
+        if (path === newPath) {
+          element.addClass('active');
+        } else {
+          element.removeClass('active');
+        }
+      });
+    }
+  };
+}])
+
+;
