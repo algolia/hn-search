@@ -22,18 +22,6 @@ angular.module('HNSearch.services', ['ngStorage'])
     };
 }])
 
-.factory('story', function() {
-    var story = [];
-    var storyService = {};
-    storyService.set = function(hit) {
-        story = hit;
-    };
-    storyService.get = function() {
-        return story;
-    };
-    return storyService;
-})
-
 .factory('settings', ['$location', function($location) {
     //default settings
     var queryParameters = $location.search();
@@ -43,7 +31,7 @@ angular.module('HNSearch.services', ['ngStorage'])
         sort: (queryParameters.sort || 'byDate'),
         category: (queryParameters.category || ''),
         prefix: (queryParameters.prefix || true),
-        page: (queryParameters.page || 0)
+        page: (parseInt(queryParameters.page, 10) || 0)
     };
     var settings = {};
     var settingsService = {};
@@ -91,6 +79,7 @@ angular.module('HNSearch.services', ['ngStorage'])
         $location.search('sort', settings.sort, false);
         $location.search('prefix', settings.prefix, false);
         $location.search('page', settings.page, false);
+        this.params.page = settings.page;
 
         // date range
         $location.search('dateRange', settings.dateRange, false);

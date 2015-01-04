@@ -3,7 +3,7 @@
     .col-1
       .logo
         %img{src:"/assets/logo-hn-search.png"}
-        %span.logo-name
+        %a.logo-name{href: '/#/'}
           Search
           %br
           Hacker News
@@ -107,3 +107,12 @@
             %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
             .reply-container{"ng-bind-html"=>"comment.text"}
             %collection{collection:"comment.children"}
+
+      %ul.search-pagination{'ng-if' => 'results'}
+        %li
+          %button{'ng-click' => 'prevPage()', 'ng-disabled' => 'settings.page == 0'} &laquo;
+        %li{'ng-repeat' => 'n in getPages(results) track by $index', 'ng-class' => '{ "active": (n == settings.page) }'}
+          %button{'ng-click' => 'toPage(n)', 'ng-show' => 'n !== "..."'} {{ n + 1 }}
+          %button{disabled: true, 'ng-show' => 'n === "..."'} &hellip;
+        %li
+          %button{'ng-click' => 'nextPage()', 'ng-disabled' => 'settings.page >= results.nbPages - 1'} &raquo;

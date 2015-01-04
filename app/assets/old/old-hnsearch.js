@@ -348,7 +348,7 @@ Number.prototype.number_with_delimiter = function(delimiter) {
           author: hit.author,
           highlighted_author: (hit._highlightResult.author && hit._highlightResult.author.value) || ''
         };
-        if (type === 'story' || type === 'poll' || type === 'pollopt') {
+        if (type === 'story' || type === 'poll' || type === 'pollopt' || type === 'job') {
           v.item_url = item_url;
           v.highlighted_title = (hit._highlightResult.title && hit._highlightResult.title.value) || '';
           if (hit.url) {
