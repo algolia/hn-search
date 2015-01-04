@@ -86,8 +86,9 @@
             %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
         .item-actions.pull-right
           %i.icon-bubble
-          %a{href:"#", "ng-click"=>"loadComments($event, hit)"}
-            %ng-pluralize{count:"hit.num_comments", when:"{'0': 'no comment','one': '1 comment','other': '{} comments'}"}
+          %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
+            %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
+          %span{'ng-if' => 'hit.num_comments == 0'} no comment
           %a{href: '#'}
             %i.icon-share
           %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
