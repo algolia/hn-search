@@ -26,7 +26,6 @@ angular.module('HNSearch.services', [])
     settingsService.init = function(category) {
         settings = angular.copy(defaultSettings);
         settings.category = category;
-        console.log(settings, defaultSettings);
         return settings;
     };
     settingsService.set = function(settings) {
