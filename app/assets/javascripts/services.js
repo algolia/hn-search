@@ -71,11 +71,6 @@ angular.module('HNSearch.services', [])
             }
         }
 
-        // item type
-        if (settings.type) {
-            this.params.tagFilters.push(settings.type);
-        }
-
         // story type
         switch (settings.category) {
         case 'ask-hn':
@@ -87,6 +82,11 @@ angular.module('HNSearch.services', [])
         case 'jobs':
             this.params.tagFilters.push('job');
             break;
+        }
+
+        // item type
+        if (settings.type && settings.category !== 'jobs') {
+            this.params.tagFilters.push(settings.type);
         }
 
         return this.params;
