@@ -17,7 +17,7 @@ angular.module('HNSearch.services', [])
     var defaultSettings = {
         dateRange: 'last24h',
         type: 'story',
-        sort: 'byPopularity'
+        sort: 'byDate'
     };
     var settings = {};
     var settingsService = {};

@@ -6,22 +6,32 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   // Hacker news credentials for demo purpose
   var algoliaConfig = {
     appID: 'UJ5WYC0L7X',
-    apiKey: '8ece23f8eb07cd25d40262a1764599b1',
-    index: 'Item_production'
+    apiKey: '8ece23f8eb07cd25d40262a1764599b1'
   }
   var client = algolia.Client(algoliaConfig.appID, algoliaConfig.apiKey);
-  var index = client.initIndex(algoliaConfig.index);
-
+  var indexSortedByPopularity = client.initIndex('Item_production');
+  var indexSortedByPopularityOrdered = client.initIndex('Item_production_ordered');
+  var indexSortedByDate = client.initIndex('Item_production_sort_date');
 
   // Init search et params
   $scope.settings = settings.init();
   $scope.search = search.setParams(settings.init());
   $scope.results = [];
-  $scope.story= {};
+  $scope.story = {};
+
+  var getIndex = function(q) {
+    if ($scope.settings.sort === 'byDate') {
+      return indexSortedByDate;
+    } else if (q.trim().split(/ +/).length === 1) {
+      return indexSortedByPopularityOrdered;
+    } else {
+      return indexSortedByPopularity;
+    }
+  };
 
   //Search scope
   $scope.getSearch = function() {
-    index.search($scope.search.query, undefined, $scope.search.params).then(
+    getIndex($scope.search.query).search($scope.search.query, undefined, $scope.search.params).then(
       function(results) {
         $scope.results = results;
       }
@@ -35,9 +45,13 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     });
   };
 
+  $scope.sortBy = function(order) {
+    $scope.settings.sort = order;
+  };
+
   $scope.$watchCollection('settings', function(newSettings){
     search.setParams(newSettings);
-    $scope.getSearch($scope.search.query,$scope.search.params);
+    $scope.getSearch($scope.search.query, $scope.search.params);
   });
 
 }])
