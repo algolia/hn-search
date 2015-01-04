@@ -38,6 +38,15 @@ body
       &.active
         font-weight: bold
         border-bottom: solid 2px #FF742B
+.clearfix
+  *zoom: 1
+  &:before,
+  &:after
+    display: table
+    content: ""
+    line-height: 0
+  &:after
+    clear: both
 
 ul.list-inline
   display: inline-block
@@ -149,12 +158,16 @@ ul.list-inline
     &:hover
       background-color: #F8F8F8
     h2
+      float: left
       font-size: 16px
       font-weight: normal
       color: #5C5C5C
       em
         font-style: normal
         font-weight: bold
+    .item-infos
+      float: left
+      clear: both
     a.hit-link
       font-size: 12px
       color: #5A96B1

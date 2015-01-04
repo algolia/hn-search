@@ -71,13 +71,20 @@
       .item{"ng-repeat"=>"hit in results.hits", "ng-click"=>"loadComments(hit)"}
         / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
         %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
-        %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
-        %i.icon-user
-        %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
-        %i.icon-clock
-        %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-        %i.icon-bubble
-        %span.date {{hit.num_comments}} comments
+        %p.item-infos
+          %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
+          %i.icon-user
+          %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
+          %i.icon-tag
+          %span.date {{hit.points}} points
+          %i.icon-clock
+          %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+        .pull-right
+          %i.icon-bubble
+          %a{href:"#"} {{hit.num_comments}} comments
+          Share
+          Star
+        .clearfix
         %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
           %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
             %span.author{"ng-style"=>"{color:'{{comment.author|color}}'}"} {{comment.author}} -
