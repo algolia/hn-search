@@ -40,7 +40,8 @@
             %label{for:"range-4"} Forever
     %section.search-results
       .item{"ng-repeat"=>"hit in results.hits"}
-        %img.thumbnail{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+        .item-thumbnail
+          %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
         .item-title-and-infos
           %h2
             %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
