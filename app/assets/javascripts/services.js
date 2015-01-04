@@ -219,6 +219,12 @@ angular.module('HNSearch.services', ['ngStorage'])
     };
 })
 
+.filter('firstLetter', function() {
+    return function(str) {
+        return str.charAt(0);
+    };
+})
+
 .filter('color', function() {
     return function(str) {
         if(typeof str !== 'undefined'){

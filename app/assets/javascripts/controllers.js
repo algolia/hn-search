@@ -116,7 +116,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
       }
     },
     template: '<li>' +
-                '<span ng-style="{color:\'{{reply.author|color}}\'}" class="author">{{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
+                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
                 '<div class="reply-content" ng-bind-html="reply.text"></div>' +
               '</li>'
   };
@@ -153,12 +153,24 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
     },
     template: '<div class="item-input-wrapper">' +
-                '<i class="icon ion-android-search"></i>' +
+                '<i class="icon-search"></i>' +
                 '<input type="search" placeholder="{{placeholder}}" ng-model="query">' +
                 '<i ng-if="search.query.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
               '</div>'
   };
 }])
+
+.directive('avatar', [function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: {
+      author: "="
+    },
+    template: '<span class="item-avatar" style="background-color:{{author|color}}">{{author|firstLetter}}</span>'
+  };
+}])
+
 
 .directive('activeLink', ['$location', function(location) {
   return {

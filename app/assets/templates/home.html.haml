@@ -16,6 +16,9 @@
             Most Recent
     .col-3
       %hnsearch.search-wrapper{placeholder:"Story, author, comment", "min-length"=>"0", model:"results", source:"getSearch(query)"}
+      %span.powered-by
+        powered by
+        %img{src:"/assets/algolia.jpg", width:60}
 .container
   %aside.sidebar
     %ul
@@ -75,7 +78,7 @@
         %ul.item-infos.list-inline
           %li
             %i.icon-head
-            %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
+            %span.author {{hit.author}}
           %li
             %i.icon-heart
             %span.date {{hit.points}} points
@@ -83,7 +86,9 @@
             %i.icon-clock
             %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
           %li
-            %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
+            %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
+              %i.icon-link
+              {{hit.url|domain}}
         .item-actions.pull-right
           %i.icon-bubble
           %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
@@ -96,7 +101,9 @@
         .clearfix
         %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
           %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
-            %span.author{"ng-style"=>"{color:'{{comment.author|color}}'}"} {{comment.author}} -
+            %span.author
+              %avatar{author:"comment.author"}
+              {{comment.author}} -
             %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
             .reply-container{"ng-bind-html"=>"comment.text"}
             %collection{collection:"comment.children"}
