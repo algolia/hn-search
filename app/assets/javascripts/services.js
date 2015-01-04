@@ -1,4 +1,4 @@
-angular.module('HNSearch.services', [])
+angular.module('HNSearch.services', ['ngStorage'])
 
 .factory('story', function() {
     var story = [];
@@ -89,11 +89,6 @@ angular.module('HNSearch.services', [])
             this.params.tagFilters.push(settings.type);
         }
 
-        // restrict to starred items
-        if (settings.category === 'starred') {
-            this.params.tagFilters.push('FIXME');
-        }
-
         return this.params;
     };
 
@@ -102,11 +97,15 @@ angular.module('HNSearch.services', [])
 
         // restrict the search to a subset of story IDs
         if (storyIDs) {
-            var stories = [];
-            for (var i = 0; i < storyIDs.length; ++i) {
-                stories.push('story_' + storyIDs[i]);
+            if (storyIDs.length === 0) {
+                res.tagFilters.push('no_results');
+            } else {
+                var stories = [];
+                for (var i = 0; i < storyIDs.length; ++i) {
+                    stories.push('story_' + storyIDs[i]);
+                }
+                res.tagFilters.push(stories);
             }
-            res.tagFilters.push(stories);
         }
 
         return res;
@@ -140,6 +139,41 @@ angular.module('HNSearch.services', [])
     };
 
     return hotService;
+}])
+
+.factory('starred', ['$localStorage', function($localStorage) {
+    var starredService = {};
+
+    $localStorage.starred = $localStorage.starred || {};
+    starredService.add = function(id) {
+        $localStorage.starred[id] = new Date();
+    };
+
+    starredService.remove = function(id) {
+        delete $localStorage.starred[id];
+    };
+
+    starredService.toggle = function(id) {
+        if (this.is(id)) {
+            this.remove(id);
+        } else {
+            this.add(id);
+        }
+    };
+
+    starredService.is = function(id) {
+        return !!$localStorage.starred[id];
+    }
+
+    starredService.all = function() {
+        var res = [];
+        for (var id in $localStorage.starred) {
+            res.push(id);
+        }
+        return res;
+    };
+
+    return starredService;
 }])
 
 .filter('moment', function() {
