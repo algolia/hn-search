@@ -71,14 +71,18 @@
       .item{"ng-repeat"=>"hit in results.hits", "ng-click"=>"loadComments(hit)"}
         / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
         %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
-        %p.item-infos
-          %i.icon-head
-          %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
-          %i.icon-heart
-          %span.date {{hit.points}} points
-          %i.icon-clock
-          %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-          %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
+        %ul.item-infos.list-inline
+          %li
+            %i.icon-head
+            %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
+          %li
+            %i.icon-heart
+            %span.date {{hit.points}} points
+          %li
+            %i.icon-clock
+            %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+          %li
+            %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
         .item-actions.pull-right
           %i.icon-bubble
           %a{href:"#"}
