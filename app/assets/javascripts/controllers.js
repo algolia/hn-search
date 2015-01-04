@@ -50,7 +50,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     scope: {
       collection: "="
     },
-    template: "<ul class='replies-list'><reply ng-repeat='reply in collection' reply='reply'></reply></ul>"
+    template: "<ul ng-show='collection.length>0' class='replies-list'><reply ng-repeat='reply in collection' reply='reply'></reply></ul>"
   };
 })
 
@@ -70,7 +70,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
       }
     },
     template: '<li>' +
-                '<span class="author">{{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
+                '<span ng-style="{color:\'{{reply.author|color}}\'}" class="author">{{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
                 '<div class="reply-content" ng-bind-html="reply.text"></div>' +
               '</li>'
   };

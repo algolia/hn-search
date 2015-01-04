@@ -76,9 +76,9 @@
         %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
         %i.icon-bubble
         %span.date {{hit.num_comments}} comments
-        %ul{"ng-show"=>"story[hit.objectID]"}
-          %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID]"}
-            %span.author {{comment.author}} {{comment.author|color}}
+        %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
+          %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
+            %span.author{"ng-style"=>"{color:'{{comment.author|color}}'}"} {{comment.author}} -
             %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
             .reply-container{"ng-bind-html"=>"comment.text"}
             %collection{collection:"comment.children"}
