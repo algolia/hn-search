@@ -104,9 +104,12 @@ ul.list-inline
       text-align: center
       padding: 0
       background-color: white
-      border: solid 1px #F8F8F8
+      border: solid 1px #ccc
       border-radius: 50%
       color: #5C5C5C
+      position: relative
+      top: -5px
+      margin-right: 4px
     .date-range-filter
       position: absolute
       right: 0
@@ -152,9 +155,10 @@ ul.list-inline
     box-shadow: none
 .search-results
   .item
-    padding: 20px 30px
+    padding: 20px 30px 0 30px
     border-bottom: solid 1px #eee
     cursor: pointer
+    min-height: 85px
     &:hover
       background-color: #F8F8F8
     h2
@@ -168,6 +172,19 @@ ul.list-inline
     .item-infos
       float: left
       clear: both
+      i
+        position: relative
+        top: 2px
+        font-size: 14px
+    .item-actions
+      font-size: 12px
+      position: relative
+      top: -10px
+      a
+        color: #FF742B
+      i
+        margin-left: 20px
+        font-size: 18px
     a.hit-link
       font-size: 12px
       color: #5A96B1
@@ -186,6 +203,8 @@ ul.list-inline
     > li
       padding: 2em 0 1.7em 0
       border-bottom: solid 1px #EEEEEE
+      &:last-child
+        border: none
     ul
       display: block
       margin: 0 0 0 5px

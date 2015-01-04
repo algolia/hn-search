@@ -33,7 +33,7 @@
           Ask HN
       %li
         %a{href:"#/jobs", 'active-link' => true}
-          %i.icon-wallet
+          %i.icon-banknote
           Jobs
       %li.divider
       %li
@@ -48,7 +48,7 @@
   %section.main
     %header
       %button.btn-refresh
-        %i.icon-settings
+        %i.icon-repeat
       %h1 {{ categoryTitle() }}
       %small.search-infos{'ng-show' => 'results'}
         %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
@@ -73,17 +73,17 @@
         %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
         %p.item-infos
           %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
-          %i.icon-user
+          %i.icon-head
           %span.author{"ng-style"=>"{color:'{{hit.author|color}}'}"} {{hit.author}}
-          %i.icon-tag
+          %i.icon-heart
           %span.date {{hit.points}} points
           %i.icon-clock
           %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-        .pull-right
-          %i.icon-bubble
+        .item-actions.pull-right
+          %i.icon-speech-bubble
           %a{href:"#"} {{hit.num_comments}} comments
-          Share
-          Star
+          %i.icon-share
+          %i.icon-star
         .clearfix
         %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
           %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
