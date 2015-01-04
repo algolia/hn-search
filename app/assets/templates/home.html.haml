@@ -10,9 +10,9 @@
     .col-2
       %nav.navigation
         %ul.list-inline
-          %li.active
+          %li{'ng-class' => '{active: settings.sort === "byPopularity"}', 'ng-click' => 'sortBy("byPopularity")'}
             Most Popular
-          %li
+          %li{'ng-class' => '{active: settings.sort === "byDate"}', 'ng-click' => 'sortBy("byDate")'}
             Most Recent
     .col-3
       %hnsearch.search-wrapper{placeholder:"Search a story", "min-length"=>"0", model:"results", source:"getSearch(query)"}
