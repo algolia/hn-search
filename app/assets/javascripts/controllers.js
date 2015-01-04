@@ -48,7 +48,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     }
   };
 
-  $scope.loadComments = function(hit) {
+  $scope.loadComments = function($event, hit) {
+    $event.preventDefault();
     $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
     success(function(data) {
       $scope.story[hit.objectID] = {comments: data};

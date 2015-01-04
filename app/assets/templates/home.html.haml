@@ -85,7 +85,7 @@
             %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
         .item-actions.pull-right
           %i.icon-bubble
-          %a{href:"#", "ng-click"=>"loadComments(hit)"}
+          %a{href:"#", "ng-click"=>"loadComments($event, hit)"}
             %ng-pluralize{count:"hit.num_comments", when:"{'0': 'no comment','one': '1 comment','other': '{} comments'}"}
           %a{href: '#'}
             %i.icon-share
