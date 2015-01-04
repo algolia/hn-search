@@ -186,15 +186,10 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
         scope.getData();
       });
 
-      scope.clearSearch = function() {
-        scope.search.query = '';
-      };
-
     },
     template: '<div class="item-input-wrapper">' +
-                '<i class="icon-search"></i>' +
+                '<i ng-hide="query" class="icon-search"></i>' +
                 '<input type="search" placeholder="{{placeholder}}" ng-model="query">' +
-                '<i ng-if="search.query.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
               '</div>'
   };
 }])
