@@ -14,7 +14,10 @@ var app = angular.module('HNSearch', [
 
   // routes
   $routeProvider
-    .when('/:cat?', {
+    .when('/settings', {
+      templateUrl: 'settings.html',
+      controller: 'SettingsCtrl'
+    }).when('/:cat?', {
       templateUrl: 'home.html',
       controller: 'SearchCtrl'
     }).otherwise({

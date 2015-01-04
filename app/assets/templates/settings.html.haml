@@ -1,0 +1,15 @@
+.container
+  %header.page-header
+    .col-1
+      %div{'ng-include' => '"_logo.html"'}
+.container
+  %section.main
+    %div{'ng-include' => '"_sidebar.html"'}
+    %header
+      %h1 Settings
+
+    %section.edit-settings
+      %h2 Display
+      %fieldset
+        Display thumbnails
+        %input{type: 'checkbox', id: ''}

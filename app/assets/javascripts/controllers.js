@@ -127,6 +127,9 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
 }])
 
+.controller('SettingsCtrl', ['$scope', function($scope) {
+  $scope.isSettings = true;
+}])
 
 .directive('collection', function() {
   return {

@@ -1,0 +1,31 @@
+%aside.sidebar
+  %ul
+    %li
+      %a{href:"#/", 'active-link' => true}
+        %i.icon-news
+        All
+    %li
+      %a{href:"#/show-hn", 'active-link' => true}
+        %i.icon-megaphone
+        Show HN
+    %li
+      %a{href:"#/ask-hn", 'active-link' => true}
+        %i.icon-bulb
+        Ask HN
+    %li
+      %a{href:"#/jobs", 'active-link' => true}
+        %i.icon-banknote
+        Jobs
+    %li.divider
+    %li
+      %a{href:"#/starred", 'active-link' => true}
+        %i.icon-star
+        Starred
+    %li
+      %a{href:"#/hot", 'active-link' => true}
+        %i.icon-fire
+        Hot
+    %li.last{'ng-show' => 'results || isSettings'}
+      %a{href:"#/settings", 'active-link' => true}
+        %i.icon-settings
+        Settings

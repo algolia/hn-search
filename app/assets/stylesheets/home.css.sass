@@ -64,13 +64,17 @@ ul.list-inline
     display: inline-block
 
 .sidebar
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 110px
   width: 200px
-  float: left
   background-color: #F8F8F8
-  height: 100%
   ul
     display: block
     padding: 20px 0
+    height: 100%
+    position: relative
     li
       float: left
       width: 100%
@@ -89,11 +93,19 @@ ul.list-inline
         color: #5C5C5C
       i
         margin-right: 10px
+      &.last
+        position: absolute
+        bottom: 0
+        right: 0
+        left: 0
+        background-color: #E4E3E5
 
 .main
-  width: calc(100% - 200px)
+  position: relative
+  padding-left: 210px
+  width: 100%
   float: left
-  padding-left: 10px
+  min-height: 800px
   header
     padding: 20px 30px
     border-bottom: solid 1px #eee
@@ -160,6 +172,12 @@ ul.list-inline
 
       input.radio:focus ~ label:before
         box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+  h2
+    display: inline-block
+    font-size: 20px
+    font-weight: 200
+    color: #5C5C5C
+    margin-top: 1em
 
 .search-wrapper
   display: inline-block
@@ -197,6 +215,13 @@ ul.list-inline
       em
         font-style: normal
         font-weight: bold
+    .thumbnail
+      width: 100px
+      float: left
+      margin-right: 10px
+      margin-bottom: 20px
+    .item-title-and-infos
+      float: left
     .item-infos
       float: left
       clear: both

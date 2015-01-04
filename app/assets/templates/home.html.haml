@@ -1,12 +1,7 @@
 .container
   %header.page-header
     .col-1
-      .logo
-        %img{src:"/assets/logo-hn-search.png"}
-        %a.logo-name{href: '/#/'}
-          Search
-          %br
-          Hacker News
+      %div{'ng-include' => '"_logo.html"'}
     .col-2
       %nav.navigation
         %ul.list-inline
@@ -20,35 +15,8 @@
         powered by
         %img{src:"/assets/algolia.jpg", width:60}
 .container
-  %aside.sidebar
-    %ul
-      %li
-        %a{href:"#/", 'active-link' => true}
-          %i.icon-news
-          All
-      %li
-        %a{href:"#/show-hn", 'active-link' => true}
-          %i.icon-megaphone
-          Show HN
-      %li
-        %a{href:"#/ask-hn", 'active-link' => true}
-          %i.icon-bulb
-          Ask HN
-      %li
-        %a{href:"#/jobs", 'active-link' => true}
-          %i.icon-banknote
-          Jobs
-      %li.divider
-      %li
-        %a{href:"#/starred", 'active-link' => true}
-          %i.icon-star
-          Starred
-      %li
-        %a{href:"#/hot", 'active-link' => true}
-          %i.icon-fire
-          Hot
-
   %section.main
+    %div{'ng-include' => '"_sidebar.html"'}
     %header
       %button.btn-refresh
         %i.icon-repeat
@@ -72,23 +40,24 @@
             %label{for:"range-4"} Forever
     %section.search-results
       .item{"ng-repeat"=>"hit in results.hits"}
-        / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
-        %h2
-          %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
-        %ul.item-infos.list-inline
-          %li
-            %i.icon-head
-            %span.author {{hit.author}}
-          %li
-            %i.icon-heart
-            %span.date {{hit.points}} points
-          %li
-            %i.icon-clock
-            %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-          %li
-            %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
-              %i.icon-link
-              {{hit.url|domain}}
+        %img.thumbnail{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+        .item-title-and-infos
+          %h2
+            %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
+          %ul.item-infos.list-inline
+            %li
+              %i.icon-head
+              %span.author {{hit.author}}
+            %li
+              %i.icon-heart
+              %span.date {{hit.points}} points
+            %li
+              %i.icon-clock
+              %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+            %li
+              %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
+                %i.icon-link
+                {{hit.url|domain}}
         .item-actions.pull-right
           %i.icon-bubble
           %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
