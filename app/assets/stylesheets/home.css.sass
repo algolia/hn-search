@@ -115,7 +115,7 @@ ul.list-inline
     .date-range-filter
       position: absolute
       right: 0
-      top: 25px
+      top: 28px
       label
         font-size: 12px
         font-weight: normal
@@ -152,9 +152,16 @@ ul.list-inline
         box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
 
 .search-wrapper
+  position: relative
+  top: 5px
   input
-    border-radius: 20px
+    border-radius: 25px
     box-shadow: none
+    line-height: 25px
+    @include placeholder
+      color: #ccc
+      font-size: 14px
+
 .search-results
   .item
     padding: 20px 30px 0 30px
@@ -167,7 +174,8 @@ ul.list-inline
       float: left
       font-size: 16px
       font-weight: normal
-      color: #5C5C5C
+      a
+        color: #5C5C5C
       em
         font-style: normal
         font-weight: bold
@@ -207,7 +215,7 @@ ul.list-inline
     [class^="icon-"], [class*=" icon-"]
       color: #B6B6B6
   ul.list-item-comments
-    padding: 15px 0 0 30px
+    padding: 0s 0 0 30px
     color: #5C5C5C
     > li
       padding: 2em 0 1.7em 0

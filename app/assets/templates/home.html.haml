@@ -15,7 +15,7 @@
           %li{'ng-class' => '{active: settings.sort === "byDate"}', 'ng-click' => 'sortBy("byDate")'}
             Most Recent
     .col-3
-      %hnsearch.search-wrapper{placeholder:"Search a story", "min-length"=>"0", model:"results", source:"getSearch(query)"}
+      %hnsearch.search-wrapper{placeholder:"Story, author, comment", "min-length"=>"0", model:"results", source:"getSearch(query)"}
 .container
   %aside.sidebar
     %ul
@@ -70,7 +70,8 @@
     %section.search-results
       .item{"ng-repeat"=>"hit in results.hits", "ng-click"=>"loadComments(hit)"}
         / %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
-        %h2{"ng-bind-html"=>"hit._highlightResult.title.value"}
+        %h2
+          %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
         %ul.item-infos.list-inline
           %li
             %i.icon-head
