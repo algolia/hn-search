@@ -17,14 +17,17 @@ angular.module('HNSearch.services', [])
     var defaultSettings = {
         dateRange: 'last24h',
         type: 'story',
-        sort: 'byDate'
+        sort: 'byDate',
+        category: null
     };
     var settings = {};
     var settingsService = {};
 
-    settingsService.init = function() {
-        settings = defaultSettings;
-        return defaultSettings;
+    settingsService.init = function(category) {
+        settings = angular.copy(defaultSettings);
+        settings.category = category;
+        console.log(settings, defaultSettings);
+        return settings;
     };
     settingsService.set = function(settings) {
         settings = settings;
@@ -37,11 +40,10 @@ angular.module('HNSearch.services', [])
 })
 
 .factory('search', function() {
-    var search = {
-            query: '',
-            params: {}
-        };
-    var searchService = {};
+    var searchService = {
+        query: '',
+        params: {}
+    };
 
     //dates
     var last24h = new Date();
@@ -52,34 +54,49 @@ angular.module('HNSearch.services', [])
     pastMonth = pastMonth.setDate(pastMonth.getDate() - 31) / 1000;
 
     searchService.setQuery = function(query) {
-        search.query = query;
+        this.query = query;
     };
 
-    searchService.setParams = function(settings) {
+    searchService.applySettings = function(settings) {
+        this.params.tagFilters = [];
+
         if (settings.hasOwnProperty('dateRange')){
             if (settings.dateRange === 'all'){
-                search.params.numericFilters = '';
+                this.params.numericFilters = '';
             } else if (settings.dateRange === 'last24h'){
-                search.params.numericFilters = 'created_at_i>' + last24h;
+                this.params.numericFilters = 'created_at_i>' + last24h;
             } else if (settings.dateRange === 'pastWeek'){
-                search.params.numericFilters = 'created_at_i>' + pastWeek;
+                this.params.numericFilters = 'created_at_i>' + pastWeek;
             } else if (settings.dateRange === 'pastMonth'){
-                search.params.numericFilters = 'created_at_i>' + pastMonth;
+                this.params.numericFilters = 'created_at_i>' + pastMonth;
             }
         }
-        if (settings.hasOwnProperty('type')){
-            if (settings.type === 'all'){
-                search.params.tagFilters = '';
-            } else if (settings.type === 'poll' || settings.type === 'comment' || settings.type === 'story') {
-                search.params.tagFilters = settings.type;
-            }
+
+        // item type
+        if (settings.type) {
+            this.params.tagFilters.push(settings.type);
         }
-        return search;
+
+        // story type
+        switch (settings.category) {
+        case 'ask-hn':
+            this.params.tagFilters.push('ask_hn');
+            break;
+        case 'show-hn':
+            this.params.tagFilters.push('show_hn');
+            break;
+        case 'jobs':
+            this.params.tagFilters.push('job');
+            break;
+        }
+
+        return this.params;
     };
 
-    searchService.get = function() {
-        return search;
+    searchService.getParams = function() {
+        return this.params;
     };
+
     return searchService;
 })
 

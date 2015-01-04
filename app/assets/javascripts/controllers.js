@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$http', '$sce', 'algolia', 'story', 'search', 'settings', function($scope, $http, $sce, algolia, story, search, settings) {
+.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'story', 'search', 'settings', function($scope, $http, $routeParams, $sce, algolia, story, search, settings) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose
@@ -14,8 +14,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   var indexSortedByDate = client.initIndex('Item_production_sort_date');
 
   // Init search et params
-  $scope.settings = settings.init();
-  $scope.search = search.setParams(settings.init());
+  $scope.settings = settings.init($routeParams.cat);
+  search.applySettings($scope.settings);
   $scope.results = null;
   $scope.story = {};
 
@@ -31,7 +31,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
   //Search scope
   $scope.getSearch = function() {
-    getIndex($scope.search.query).search($scope.search.query, undefined, $scope.search.params).then(
+    getIndex(search.query).search(search.query, undefined, search.getParams()).then(
       function(results) {
         $scope.results = results;
       }
@@ -49,9 +49,19 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     $scope.settings.sort = order;
   };
 
+  $scope.categoryTitle = function() {
+    switch ($routeParams.cat) {
+    case undefined: return 'All';
+    case "ask-hn": return "Ask HN";
+    case "show-hn": return "Show HN";
+    case "jobs": return "Jobs";
+    default: return "HN Search";
+    }
+  }
+
   $scope.$watchCollection('settings', function(newSettings){
-    search.setParams(newSettings);
-    $scope.getSearch($scope.search.query, $scope.search.params);
+    search.applySettings(newSettings);
+    $scope.getSearch(search.query, search.params);
   });
 
 }])
