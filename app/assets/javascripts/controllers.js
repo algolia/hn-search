@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', function($scope, $http, $sce, algolia, story, search, settings) {
+.controller('SearchCtrl', ['$scope', '$http', '$sce', 'algolia', 'story', 'search', 'settings', function($scope, $http, $sce, algolia, story, search, settings) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose
@@ -40,7 +40,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     $scope.getSearch($scope.search.query,$scope.search.params);
   });
 
-})
+}])
 
 
 .directive('collection', function() {
@@ -54,7 +54,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   };
 })
 
-.directive('reply', function($compile) {
+.directive('reply', ['$compile', function($compile) {
   return {
     restrict: 'E',
     replace: true,
@@ -74,9 +74,9 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
                 '<div class="reply-content" ng-bind-html="reply.text"></div>' +
               '</li>'
   };
-})
+}])
 
-.directive('hnsearch', function(search) {
+.directive('hnsearch', ['search', function(search) {
   return {
     restrict: 'E',
     replace: true,
@@ -111,4 +111,4 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
                 '<i ng-if="search.query.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
               '</div>'
   };
-});
+}]);
