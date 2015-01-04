@@ -89,16 +89,58 @@ angular.module('HNSearch.services', [])
             this.params.tagFilters.push(settings.type);
         }
 
+        // restrict to starred items
+        if (settings.category === 'starred') {
+            this.params.tagFilters.push('FIXME');
+        }
+
         return this.params;
     };
 
-    searchService.getParams = function() {
-        return this.params;
+    searchService.getParams = function(storyIDs) {
+        var res = angular.copy(this.params);
+
+        // restrict the search to a subset of story IDs
+        if (storyIDs) {
+            var stories = [];
+            for (var i = 0; i < storyIDs.length; ++i) {
+                stories.push('story_' + storyIDs[i]);
+            }
+            res.tagFilters.push(stories);
+        }
+
+        return res;
     };
 
     return searchService;
 })
 
+
+.factory('hot', ['$q', '$http', function($q, $http) {
+    var hotService = {
+        items: [],
+        refreshedAt: 0
+    };
+
+    // get top stories IDs (async, 60sec refresh rate)
+    hotService.get = function() {
+        var now = new Date().getTime();
+        var deferred = $q.defer();
+        if (this.items.length === 0 || this.refreshedAt < now - 60000) {
+            var self = this;
+            $http.get('https://hacker-news.firebaseio.com/v0/topstories.json').then(function(result) {
+                self.refreshedAt = now;
+                self.items = result.data;
+                deferred.resolve(self.items);
+            });
+        } else {
+            deferred.resolve(this.items);
+        }
+        return deferred.promise;
+    };
+
+    return hotService;
+}])
 
 .filter('moment', function() {
     return function(dateString, format) {

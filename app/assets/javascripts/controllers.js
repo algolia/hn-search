@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'story', 'search', 'settings', function($scope, $http, $routeParams, $sce, algolia, story, search, settings) {
+.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'story', 'search', 'settings', 'hot', function($scope, $http, $routeParams, $sce, algolia, story, search, settings, hot) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose
@@ -31,11 +31,19 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
   //Search scope
   $scope.getSearch = function() {
-    getIndex(search.query).search(search.query, undefined, search.getParams()).then(
-      function(results) {
+    var _search = function(ids) {
+      getIndex(search.query).search(search.query, undefined, search.getParams(ids)).then(function(results) {
         $scope.results = results;
-      }
-    );
+      });
+    };
+
+    if ($routeParams.cat === 'hot') {
+      hot.get().then(function(ids) {
+        _search(ids);
+      });
+    } else {
+      _search();
+    }
   };
 
   $scope.loadComments = function(hit) {
@@ -55,6 +63,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     case "ask-hn": return "Ask HN";
     case "show-hn": return "Show HN";
     case "jobs": return "Jobs";
+    case "hot": return "Hot";
+    case "starred": return "Starred";
     default: return "HN Search";
     }
   }
