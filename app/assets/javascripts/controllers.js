@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'story', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, algolia, story, search, settings, hot, starred) {
+.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, algolia, search, settings, hot, starred) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose

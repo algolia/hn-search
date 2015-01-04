@@ -22,18 +22,6 @@ angular.module('HNSearch.services', ['ngStorage'])
     };
 }])
 
-.factory('story', function() {
-    var story = [];
-    var storyService = {};
-    storyService.set = function(hit) {
-        story = hit;
-    };
-    storyService.get = function() {
-        return story;
-    };
-    return storyService;
-})
-
 .factory('settings', ['$location', function($location) {
     //default settings
     var queryParameters = $location.search();
