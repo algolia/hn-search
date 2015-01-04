@@ -48,7 +48,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     }
   };
 
-  $scope.loadComments = function(hit) {
+  $scope.loadComments = function($event, hit) {
+    $event.preventDefault();
     $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
     success(function(data) {
       $scope.story[hit.objectID] = {comments: data};
@@ -132,16 +133,17 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     link: function(scope, element, attrs) {
       attrs.minLength = attrs.minLength || 0;
       scope.placeholder = attrs.placeholder || '';
+      scope.query = search.query;
 
-      if (attrs.class)
+      if (attrs.class) {
         element.addClass(attrs.class);
+      }
 
-      scope.$watch('search.query', function (newValue, oldValue) {
-        if(newValue === oldValue){
+      scope.$watch('query', function (newValue, oldValue) {
+        if(newValue === oldValue || typeof newValue === 'undefined') {
           return;
         }
-        var query = newValue || '';
-        search.setQuery(query);
+        search.setQuery(newValue);
         scope.getData();
       });
 
@@ -152,7 +154,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     },
     template: '<div class="item-input-wrapper">' +
                 '<i class="icon ion-android-search"></i>' +
-                '<input type="search" placeholder="{{placeholder}}" ng-model="search.query">' +
+                '<input type="search" placeholder="{{placeholder}}" ng-model="query">' +
                 '<i ng-if="search.query.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
               '</div>'
   };
