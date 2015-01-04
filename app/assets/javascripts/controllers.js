@@ -57,6 +57,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   };
 
   $scope.sortBy = function(order) {
+    $scope.settings.page = 0;
     $scope.settings.sort = order;
   };
 
@@ -81,9 +82,47 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     return starred.is(id);
   };
 
+  // Pagination
+  $scope.nextPage = function() {
+    $scope.toPage($scope.settings.page + 1);
+  };
+  $scope.prevPage = function() {
+    if ($scope.settings.page > 0) {
+      $scope.toPage($scope.settings.page - 1);
+    }
+  };
+  $scope.toPage = function(page) {
+    $scope.settings.page = page;
+  };
+  $scope.getPages = function(results) {
+    var pages = [];
+    var min;
+    if ($scope.settings.page > 5) {
+      pages.push(0);
+      pages.push('...');
+      min = 0;
+    } else {
+      for (var i = 0; i < $scope.settings.page + 5 && i < results.nbPages; ++i) {
+        pages.push(i);
+        min = i;
+      }
+    }
+    for (var i = $scope.settings.page - 5; i < $scope.settings.page + 5; ++i) {
+      if (i >= 0 && i < results.nbPages && i > min && i < results.nbPages) {
+        pages.push(i);
+      }
+    }
+    if ($scope.settings.page < results.nbPages - 5) {
+      pages.push('...');
+      pages.push(results.nbPages - 1);
+    }
+    return pages;
+  };
+
+  // Watch settings
   $scope.$watchCollection('settings', function(newSettings){
     search.applySettings(newSettings);
-    $scope.getSearch(search.query, search.params);
+    $scope.getSearch();
   });
 
 }])
