@@ -3,7 +3,7 @@ require 'zlib'
 
 class Item < ActiveRecord::Base
 
-  as_enum :item_type, %w{story comment poll pollopt unknown}
+  as_enum :item_type, %w{story comment poll pollopt unknown job}
 
   validates_length_of :url, within: 0..32768, allow_nil: true, allow_blank: true
   validates_length_of :text, within: 0..32768, allow_nil: true, allow_blank: true
@@ -75,7 +75,7 @@ class Item < ActiveRecord::Base
   end
 
   def num_comments
-    item_type_cd == Item.story || item_type_cd == Item.poll ? story_comments.count : nil
+    item_type_cd == Item.story || item_type_cd == Item.poll ? story_comments.where(deleted: false).where(dead: false).count : nil
   end
 
   def crawl_thumbnail!
