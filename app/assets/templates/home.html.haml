@@ -80,7 +80,7 @@
             %span.date {{hit.points}} points
           %li
             %i.icon-clock
-            %span.date {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+            %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
           %li
             %a.hit-link{"ng-href"=>"{{hit.url}}"} {{hit.url|domain}}
         .item-actions.pull-right
