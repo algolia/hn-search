@@ -82,8 +82,10 @@
         .item-actions.pull-right
           %i.icon-speech-bubble
           %a{href:"#"} {{hit.num_comments}} comments
-          %i.icon-share
-          %i.icon-star
+          %a{href: '#'}
+            %i.icon-share
+          %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
+            %i.icon-star
         .clearfix
         %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
           %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}

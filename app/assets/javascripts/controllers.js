@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'story', 'search', 'settings', 'hot', function($scope, $http, $routeParams, $sce, algolia, story, search, settings, hot) {
+.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'story', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, algolia, story, search, settings, hot, starred) {
 
   // Algolia settings
   // Hacker news credentials for demo purpose
@@ -41,6 +41,8 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
       hot.get().then(function(ids) {
         _search(ids);
       });
+    } else if ($routeParams.cat === 'starred') {
+      _search(starred.all());
     } else {
       _search();
     }
@@ -68,6 +70,15 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     default: return "HN Search";
     }
   }
+
+  $scope.toggleStar = function($event, id) {
+    $event.preventDefault();
+    starred.toggle(id);
+  };
+
+  $scope.isStarred = function(id) {
+    return starred.is(id);
+  };
 
   $scope.$watchCollection('settings', function(newSettings){
     search.applySettings(newSettings);
