@@ -16,7 +16,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   // Init search et params
   $scope.settings = settings.init();
   $scope.search = search.setParams(settings.init());
-  $scope.results = [];
+  $scope.results = null;
   $scope.story = {};
 
   var getIndex = function(q) {

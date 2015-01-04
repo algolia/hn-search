@@ -50,7 +50,9 @@
       %button.btn-refresh
         %i.icon-settings
       %h1 Ask HN
-      %small.search-infos 42 results in 9 ms
+      %small.search-infos{'ng-show' => 'results'}
+        %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
+        in {{ results.processingTimeMS | number }} ms
       .date-range-filter
         %ul.list-inline
           %li
