@@ -44,31 +44,31 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
       $scope.story[hit.objectID] = { comments: data };
     });
 
-    var titleBarHeight = 78;
-    var itemHeight = 90;
+    var titleBarHeight = 72;
+    var itemHeight = 95;
 
-    var wrap = $(".search-results");
-    var startStickPosition = (item.position().top - titleBarHeight);
+    var wrap = $(window);
+    var startStickPosition = (item.position().top + 102);
     var endStickPosition;
     var firstStick = false;
 
     //DRAFT
     wrap.on("scroll", function(e) {
       if (typeof endStickPosition === 'undefined'){
-        endStickPosition = item.height() + item.position().top - itemHeight - titleBarHeight;
+        endStickPosition = item.height() + itemHeight + 202;
         console.log(endStickPosition);
       }
-      if (this.scrollTop > startStickPosition && this.scrollTop < endStickPosition && firstStick === false) {
+      if ($(window).scrollTop() > startStickPosition && $(window).scrollTop() < endStickPosition && firstStick === false) {
         item.addClass("item-fixed");
         item.removeClass('item-absolute-bottom');
         console.log('start');
         firstStick = 'start';
       }
-      if (this.scrollTop < startStickPosition && firstStick === 'start') {
+      if ($(window).scrollTop() < startStickPosition && firstStick === 'start') {
         item.removeClass("item-fixed");
         firstStick = false;
       }
-      if (this.scrollTop > endStickPosition && firstStick === 'start') {
+      if ($(window).scrollTop() > endStickPosition && firstStick === 'start') {
         item.removeClass("item-fixed");
         item.addClass('item-absolute-bottom');
         firstStick = false;

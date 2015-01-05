@@ -1,8 +1,13 @@
+$itemHeight: 95px
+$itemWidth: 1000px
+$titleHeight: 77px
+
 html, body
   margin: 0
   padding: 0
   color: #B6B6B6
   height: 100%
+  font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
 
 .container
   width: 1200px
@@ -118,35 +123,32 @@ ul.list-inline
         font-weight: normal
         white-space: nowrap
         margin-left: 20px
-      input.radio:empty
-        margin-left: -9999px
-
-      input.radio:empty ~ label
-        position: relative
-        float: left
-        line-height: 23px
-        text-indent: 30px
-        cursor: pointer
-        user-select: none
-
-      input.radio:empty ~ label:before
-        position: absolute
-        display: block
-        top: 0
-        bottom: 0
-        left: 0
-        content: ''
-        height: 20px
-        width: 20px
-        border: solid 1px #ccc
-        line-height: 20px
-        border-radius: 50%
-
-      input.radio:checked ~ label:before
-        box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
-
-      input.radio:focus ~ label:before
-        box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+      input
+        &.radio:empty
+          margin-left: -9999px
+        &.radio:empty ~ label
+          position: relative
+          float: left
+          line-height: 23px
+          text-indent: 30px
+          cursor: pointer
+          user-select: none
+        &.radio:empty ~ label:before
+          position: absolute
+          display: block
+          top: 0
+          bottom: 0
+          left: 0
+          content: ''
+          height: 20px
+          width: 20px
+          border: solid 1px #ccc
+          line-height: 20px
+          border-radius: 50%
+        &.radio:checked ~ label:before
+          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+        &.radio:focus ~ label:before
+          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
   h2
     display: inline-block
     font-size: 20px
@@ -236,33 +238,33 @@ ul.list-inline
   position: relative
   background: white
   .item
-    padding: 20px 30px 0 30px
     border-bottom: solid 1px #eee
-    min-height: 90px
     position: relative
+    padding: 0
     .item-main
+      padding: 20px 20px 0
       background-color: white
+      display: block
+      min-height: $itemHeight
+      width: $itemWidth
+    &.item-fixed // sticked item
+      padding-top: $itemHeight
+      .item-main
+        width: 1000px
+        position: fixed
+        top: $titleHeight
+        height: $itemHeight
+        z-index: 150
+        box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 3px 0 rgba(0,0,0,.1)
     &.item-show-comments
       // background-color: red
-    &.item-absolute-bottom
-      padding-top: 90px
+    &.item-absolute-bottom //end of stick transition state
+      padding-top: $itemHeight
       .item-main
         width: 1000px
         left: 0
-        padding: 20px 30px
         position: absolute
         bottom: 0
-    &.item-fixed
-      padding-top: 90px
-      .item-main
-        width: 990px
-        margin: -20px -30px 0
-        padding: 20px 30px 0
-        position: fixed
-        top: 198px
-        height: 95px
-        z-index: 150
-        box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 3px 0 rgba(0,0,0,.1)
     h2
       margin-top: 5px
       float: left
@@ -277,7 +279,6 @@ ul.list-inline
       width: 54px
       float: left
       margin-right: 15px
-      margin-bottom: 20px
       border: solid 1px #eee
       border-radius: 3px
       padding: 3px
