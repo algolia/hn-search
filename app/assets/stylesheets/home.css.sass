@@ -1,13 +1,22 @@
-body
+html, body
+  margin: 0
+  padding: 0
   color: #B6B6B6
+  height: 100%
 
 .container
   width: 1200px
-  margin: 0 auto
+  height: 100%
+  top: 0
+  left: 50%
+  margin-left: -600px
+  position: fixed
 .page-header
+  width: 100%
   border-bottom: solid 1px #eee
   padding: 20px
   height: 100px
+  background-color: white
   .col-1, .col-2, .col-3
     float: left
     margin: 0
@@ -67,8 +76,8 @@ ul.list-inline
 .sidebar
   position: absolute
   top: 0
+  bottom: 0
   left: 0
-  bottom: 110px
   width: 200px
   background-color: #F8F8F8
   ul
@@ -103,14 +112,19 @@ ul.list-inline
 
 .main
   position: relative
-  padding-left: 210px
   width: 100%
+  height: calc(100% - 100px)
   float: left
-  min-height: 800px
+  padding: 78px 0 50px 210px
   header
     padding: 20px 30px
     border-bottom: solid 1px #eee
-    position: relative
+    position: absolute
+    background-color: white
+    z-index: 110
+    top: 0
+    left: 200px
+    width: 1000px
     h1
       display: inline-block
       font-size: 25px
@@ -137,7 +151,7 @@ ul.list-inline
         color: #FF742B
     .date-range-filter
       position: absolute
-      right: 0
+      right: 15px
       top: 28px
       label
         font-size: 12px
@@ -201,6 +215,9 @@ ul.list-inline
       font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
 
 .search-results
+  overflow: auto
+  height: 100%
+  display: block
   .item
     padding: 20px 30px 0 30px
     border-bottom: solid 1px #eee
@@ -292,14 +309,17 @@ ul.list-inline
     p
       margin-bottom: .3em
   .search-pagination
-    margin-top: 2em
-    margin-bottom: 2em
+    width: 1000px
     text-align: center
+    position: fixed
+    bottom: 8px
+    background-color: white
     li
       display: inline-block
       button
-        width: 3em
         margin: 3px
+        padding: 5px 10px
+        font-size: 12px
         text-align: center
         background: none
         color: #B6B6B6
