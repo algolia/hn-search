@@ -59,7 +59,7 @@
               %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
                 %i.icon-link
                 {{hit.url|domain}}
-        .item-actions.pull-right
+        .item-actions
           %i.icon-bubble
           %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
             %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
