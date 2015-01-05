@@ -1,4 +1,4 @@
-angular.module('HNSearch.services', ['ngStorage'])
+angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
 .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
     // add an extra parameter "reload" to $location.search to avoid controller reloading
@@ -22,7 +22,9 @@ angular.module('HNSearch.services', ['ngStorage'])
     };
 }])
 
-.factory('settings', ['$location', function($location) {
+.factory('settings', ['$location', 'algolia', function($location, algolia) {
+    var settingsService = {};
+
     //default settings
     var queryParameters = $location.search();
     var defaultSettings = {
@@ -33,21 +35,21 @@ angular.module('HNSearch.services', ['ngStorage'])
         prefix: (queryParameters.prefix || true),
         page: (parseInt(queryParameters.page, 10) || 0)
     };
-    var settings = {};
-    var settingsService = {};
+
+    // Algolia settings
+    var algoliaConfig = { appID: 'UJ5WYC0L7X', apiKey: '8ece23f8eb07cd25d40262a1764599b1' }; // FIXME
+
+    settingsService.client = algolia.Client(algoliaConfig.appID, algoliaConfig.apiKey);
+    settingsService.indexSortedByPopularity = settingsService.client.initIndex('Item_production');
+    settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
+    settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
 
     settingsService.init = function(category) {
-        settings = angular.copy(defaultSettings);
+        var settings = angular.copy(defaultSettings);
         settings.category = category || '';
         return settings;
     };
-    settingsService.set = function(settings) {
-        settings = settings;
-        return settings;
-    };
-    settingsService.get = function() {
-        return settings;
-    };
+
     return settingsService;
 }])
 
