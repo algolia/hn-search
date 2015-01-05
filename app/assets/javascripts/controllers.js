@@ -239,7 +239,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
       path = path.substring(1); //hack because path does not return including hashbang
       scope.location = location;
       scope.$watch('location.path()', function(newPath) {
-        if (path === newPath) {
+        if (path === newPath || (path === '/' && newPath === '')) {
           element.addClass('active');
         } else {
           element.removeClass('active');
