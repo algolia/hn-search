@@ -212,7 +212,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
 .filter('firstLetter', function() {
     return function(str) {
-        return str.charAt(0);
+        return str ? str.charAt(0) : '';
     };
 })
 
