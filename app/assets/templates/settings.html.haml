@@ -9,7 +9,8 @@
       %h1 Settings
 
     %section.edit-settings
-      %h2 Display
+      %h2 Display options
       %fieldset
-        Display thumbnails
-        %input{type: 'checkbox', id: ''}
+        %label{for: 'showThumbnails'}
+          %input{type: 'checkbox', id: 'showThumbnails', 'ng-model' => 'settings.showThumbnails'}
+          Show thumbnails

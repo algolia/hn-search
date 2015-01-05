@@ -2,7 +2,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
 
 .controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, search, settings, hot, starred) {
   // Init search et params
-  $scope.settings = settings.init($routeParams.cat);
+  $scope.settings = settings.get($routeParams.cat);
   $scope.results = null;
   $scope.story = {};
 
@@ -150,8 +150,13 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   $scope.getSearch();
 }])
 
-.controller('SettingsCtrl', ['$scope', function($scope) {
+.controller('SettingsCtrl', ['$scope', 'settings', function($scope, settings) {
   $scope.isSettings = true;
+  $scope.settings = settings.get();
+
+  $scope.$watchCollection('settings', function() {
+    settings.save();
+  });
 }])
 
 .directive('collection', function() {

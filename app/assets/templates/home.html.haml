@@ -40,7 +40,7 @@
     %section.search-results
       .item{"ng-repeat"=>"hit in results.hits"}
         .item-main
-          .item-thumbnail
+          .item-thumbnail{'ng-show' => 'settings.showThumbnails'}
             %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
           .item-title-and-infos
             %h2
