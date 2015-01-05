@@ -56,7 +56,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     //DRAFT
     wrap.on("scroll", function(e) {
       if (typeof endStickPosition === 'undefined'){
-        endStickPosition = item.height() + itemHeight + 202;
+        endStickPosition = item.height() + itemHeight + 2;
         console.log(endStickPosition);
       }
       if ($(window).scrollTop() > startStickPosition && $(window).scrollTop() < endStickPosition && firstStick === false) {
