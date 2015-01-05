@@ -22,18 +22,22 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     };
 }])
 
-.factory('settings', ['$location', 'algolia', function($location, algolia) {
+.factory('settings', ['$location', 'algolia', '$localStorage', function($location, algolia, $localStorage) {
     var settingsService = {};
 
     //default settings
+    var storage = $localStorage.$default({
+        showThumbnails: true
+    });
     var queryParameters = $location.search();
-    var defaultSettings = {
+    var settings = {
         dateRange: (queryParameters.dateRange || 'last24h'),
         type: (queryParameters.type || 'story'),
         sort: (queryParameters.sort || 'byDate'),
         category: (queryParameters.category || ''),
         prefix: (queryParameters.prefix || true),
-        page: (parseInt(queryParameters.page, 10) || 0)
+        page: (parseInt(queryParameters.page, 10) || 0),
+        showThumbnails: storage.showThumbnails
     };
 
     // Algolia settings
@@ -44,10 +48,13 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
 
-    settingsService.init = function(category) {
-        var settings = angular.copy(defaultSettings);
+    settingsService.get = function(category) {
         settings.category = category || '';
         return settings;
+    };
+
+    settingsService.save = function() {
+        $localStorage.showThumbnails = settings.showThumbnails;
     };
 
     return settingsService;
