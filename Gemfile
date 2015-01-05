@@ -12,7 +12,6 @@ gem 'haml-rails'
 gem 'bitters'
 gem 'bourbon'
 gem 'neat'
-gem "font-awesome-rails"
 gem 'therubyracer'
 gem 'hogan_assets'
 gem 'jquery-cookie-rails'
