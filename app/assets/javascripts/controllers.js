@@ -2,7 +2,8 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
 
 .controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, search, settings, hot, starred) {
   // Init search et params
-  $scope.settings = settings.get($routeParams.cat);
+  $scope.category = $routeParams.cat;
+  $scope.settings = settings.get($scope.category);
   $scope.results = null;
   $scope.story = {};
 
@@ -24,11 +25,11 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
       });
     };
 
-    if ($routeParams.cat === 'hot') {
+    if ($scope.category === 'hot') {
       hot.get().then(function(ids) {
         _search(ids);
       });
-    } else if ($routeParams.cat === 'starred') {
+    } else if ($scope.category === 'starred') {
       _search(starred.all());
     } else {
       _search();
@@ -82,7 +83,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 
   $scope.categoryTitle = function() {
-    switch ($routeParams.cat) {
+    switch ($scope.category) {
     case undefined: return 'All';
     case "ask-hn": return "Ask HN";
     case "show-hn": return "Show HN";
