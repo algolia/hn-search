@@ -124,8 +124,6 @@ GEM
     firebase (0.2.2)
       json
       typhoeus (>= 0.6.1)
-    font-awesome-rails (4.1.0.0)
-      railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     guard (2.10.5)
       formatador (>= 0.2.4)
@@ -352,7 +350,6 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   firebase
-  font-awesome-rails
   groupdate!
   guard-bundler
   guard-livereload

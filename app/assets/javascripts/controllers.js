@@ -1,31 +1,18 @@
-angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
+angular.module('HNSearch.controllers', ['ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'algolia', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, algolia, search, settings, hot, starred) {
-
-  // Algolia settings
-  // Hacker news credentials for demo purpose
-  var algoliaConfig = {
-    appID: 'UJ5WYC0L7X',
-    apiKey: '8ece23f8eb07cd25d40262a1764599b1'
-  }
-  var client = algolia.Client(algoliaConfig.appID, algoliaConfig.apiKey);
-  var indexSortedByPopularity = client.initIndex('Item_production');
-  var indexSortedByPopularityOrdered = client.initIndex('Item_production_ordered');
-  var indexSortedByDate = client.initIndex('Item_production_sort_date');
-
+.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, search, settings, hot, starred) {
   // Init search et params
   $scope.settings = settings.init($routeParams.cat);
-  search.applySettings($scope.settings);
   $scope.results = null;
   $scope.story = {};
 
   var getIndex = function(q) {
     if ($scope.settings.sort === 'byDate') {
-      return indexSortedByDate;
+      return settings.indexSortedByDate;
     } else if (q.trim().split(/ +/).length === 1) {
-      return indexSortedByPopularityOrdered;
+      return settings.indexSortedByPopularityOrdered;
     } else {
-      return indexSortedByPopularity;
+      return settings.indexSortedByPopularity;
     }
   };
 
@@ -153,11 +140,13 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   };
 
   // Watch settings
-  $scope.$watchCollection('settings', function(newSettings){
+  $scope.$watchCollection('settings', function(newSettings) {
     search.applySettings(newSettings);
     $scope.getSearch();
   });
 
+  search.applySettings($scope.settings);
+  $scope.getSearch();
 }])
 
 .controller('SettingsCtrl', ['$scope', function($scope) {
