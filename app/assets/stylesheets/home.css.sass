@@ -6,16 +6,13 @@ html, body
 
 .container
   width: 1200px
-  height: 100%
-  top: 0
-  left: 50%
-  margin-left: -600px
-  position: fixed
+  margin: 0 auto
 .page-header
-  width: 100%
-  border-bottom: solid 1px #eee
+  position: fixed
+  width: 1200px
   padding: 20px
   height: 100px
+  border-bottom: solid 1px #eee
   background-color: white
   .col-1, .col-2, .col-3
     float: left
@@ -73,59 +70,21 @@ ul.list-inline
   li
     display: inline-block
 
-.sidebar
-  position: absolute
-  top: 0
-  bottom: 0
-  left: 0
-  width: 200px
-  background-color: #F8F8F8
-  ul
-    display: block
-    padding: 20px 0
-    height: 100%
-    position: relative
-    li
-      float: left
-      width: 100%
-      a
-        display: block
-        &.active
-          background-color: #E4E3E5
-      &.divider
-        margin: 10px 0
-        padding: 0
-        border-bottom: solid 1px #eee
-      a
-        display: block
-        width: 100%
-        padding: 10px 20px
-        color: #5C5C5C
-      i
-        margin-right: 10px
-      &.settings
-        text-align: center
-        position: absolute
-        bottom: 0
-        right: 0
-        left: 0
-        background-color: #E4E3E5
-
 .main
   position: relative
   width: 100%
-  height: calc(100% - 100px)
   float: left
-  padding: 78px 0 50px 210px
+  padding: 180px 0 50px 200px
   header
+    position: fixed
+    top: 100px
+    left: 200px
+    width: 1000px
     padding: 20px 30px
     border-bottom: solid 1px #eee
     position: absolute
     background-color: white
     z-index: 110
-    top: 0
-    left: 200px
-    width: 1000px
     h1
       display: inline-block
       font-size: 25px
@@ -195,6 +154,64 @@ ul.list-inline
     color: #5C5C5C
     margin-top: 1em
 
+  .sidebar
+    position: absolute
+    top: 100px
+    bottom: 0
+    left: 0
+    width: 200px
+    background-color: #F8F8F8
+    ul
+      display: block
+      padding: 20px 0
+      height: 100%
+      position: relative
+      li
+        float: left
+        width: 100%
+        a
+          display: block
+          &.active
+            background-color: #E4E3E5
+        &.divider
+          margin: 10px 0
+          padding: 0
+          border-bottom: solid 1px #eee
+        a
+          display: block
+          width: 100%
+          padding: 10px 20px
+          color: #5C5C5C
+        i
+          margin-right: 10px
+        &.settings
+          text-align: center
+          position: absolute
+          bottom: 0
+          right: 0
+          left: 0
+          background-color: #E4E3E5
+
+.main-fixed
+  .site-header
+    display: none
+  .main
+    padding-top: 0
+    header
+      position: fixed
+      top: 0
+      left: 50%
+      width: 1000px
+      margin-left: -400px
+    .sidebar
+      position: fixed
+      top: 0
+      left: 50%
+      width: 200px
+      margin-left: -600px
+    .search-results
+      padding-top: 180px
+
 .search-wrapper
   display: inline-block
   position: relative
@@ -216,9 +233,8 @@ ul.list-inline
       font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
 
 .search-results
-  overflow: auto
-  height: 100%
-  display: block
+  position: relative
+  background: white
   .item
     padding: 20px 30px 0 30px
     border-bottom: solid 1px #eee
@@ -344,10 +360,8 @@ ul.list-inline
       a
         color: #517B91
   .search-pagination
-    width: 1000px
+    margin-top: 20px
     text-align: center
-    position: fixed
-    bottom: 8px
     background-color: white
     li
       display: inline-block

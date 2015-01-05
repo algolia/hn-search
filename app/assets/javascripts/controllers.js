@@ -145,6 +145,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     $scope.getSearch();
   });
 
+  // run 1st query
   search.applySettings($scope.settings);
   $scope.getSearch();
 }])
