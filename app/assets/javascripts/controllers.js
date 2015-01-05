@@ -41,7 +41,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     $event.preventDefault();
     $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
     success(function(data) {
-      $scope.story[hit.objectID] = {comments: data};
+      $scope.story[hit.objectID] = { comments: data };
     });
 
     var titleBarHeight = 78;
@@ -181,7 +181,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     },
     template: '<li>' +
                 '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
-                '<div class="reply-container" ng-bind-html="reply.text"></div>' +
+                '<div class="reply-container" ng-bind-html="reply.text|cleanup"></div>' +
               '</li>'
   };
 }])

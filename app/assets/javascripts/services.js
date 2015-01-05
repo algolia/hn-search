@@ -237,4 +237,26 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     if ( matches !== null ) output = matches[1];
     return output;
   };
-});
+})
+
+.filter('cleanup', function() {
+    return function (input) {
+        return input;
+        if (!input) {
+            return input;
+        }
+
+        // handle line breaks
+        var str = input.replace(/(\\r)?\\n/g, '<br />');
+
+        // remove stopwords highlighting
+        str = str.replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
+
+        // work-around =\\" escaping bug (6c92ae092359647c04804876139516163d0567de)
+        str = str.replace(/=\\"/g, '="');
+
+        return '<p>' +  str.replace(/<p>/g, '</p><p>') + '</p>';
+    };
+})
+
+;

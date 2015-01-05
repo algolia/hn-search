@@ -79,7 +79,7 @@
               %avatar{author:"comment.author"}
               {{comment.author}} -
             %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
-            .reply-container{"ng-bind-html"=>"comment.text"}
+            .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
             %collection{collection:"comment.children"}
 
       %ul.search-pagination{'ng-if' => 'results.hits.length >= 20'}
