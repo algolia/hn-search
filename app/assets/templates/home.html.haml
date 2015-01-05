@@ -39,35 +39,40 @@
             %label{for:"range-4"} Forever
     %section.search-results
       .item{"ng-repeat"=>"hit in results.hits"}
-        .item-thumbnail
-          %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
-        .item-title-and-infos
-          %h2
-            %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
-          %ul.item-infos.list-inline
-            %li
-              %i.icon-head
-              %span.author {{hit.author}}
-            %li
-              %i.icon-heart
-              %span.date {{hit.points}} points
-            %li
-              %i.icon-clock
-              %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-            %li
-              %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
-                %i.icon-link
-                {{hit.url|domain}}
-        .item-actions.pull-right
-          %i.icon-bubble
-          %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
-            %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
-          %span{'ng-if' => 'hit.num_comments == 0'} no comment
-          %a{href: '#'}
-            %i.icon-share
-          %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
-            %i.icon-star
-        .clearfix
+        .item-main
+          .item-thumbnail
+            %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+          .item-title-and-infos
+            %h2
+              %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
+            %ul.item-infos.list-inline
+              %li
+                %i.icon-head
+                %span.author {{hit.author}}
+              %li
+                %i.icon-heart
+                %span.date {{hit.points}} points
+              %li
+                %i.icon-clock
+                %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
+              %li
+                %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
+                  %i.icon-link
+                  {{hit.url|domain}}
+          .item-actions.pull-right
+            %ul.list-inline
+              %li.action-toggle-comments
+                %i.icon-bubble
+                %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
+                  %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
+                %span{'ng-if' => 'hit.num_comments == 0'} no comment
+              %li.action-share
+                %a{href: '#'}
+                  %i.icon-share
+              %li.action-toggle-star
+                %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
+                  %i.icon-star
+          .clearfix
         %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
           %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
             %span.author
@@ -77,7 +82,7 @@
             .reply-container{"ng-bind-html"=>"comment.text"}
             %collection{collection:"comment.children"}
 
-      %ul.search-pagination{'ng-if' => 'results'}
+      %ul.search-pagination{'ng-if' => 'results.hits.length >= 20'}
         %li
           %button{'ng-click' => 'prevPage()', 'ng-disabled' => 'settings.page == 0'} &laquo;
         %li{'ng-repeat' => 'n in getPages(results) track by $index', 'ng-class' => '{ "active": (n == settings.page) }'}

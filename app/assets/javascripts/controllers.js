@@ -49,10 +49,43 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
   };
 
   $scope.loadComments = function($event, hit) {
+    var item = $($event.currentTarget).closest('.item');
+    item.addClass('item-show-comments');
     $event.preventDefault();
     $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
     success(function(data) {
       $scope.story[hit.objectID] = {comments: data};
+    });
+
+    var titleBarHeight = 78;
+    var itemHeight = 90;
+
+    var wrap = $(".search-results");
+    var startStickPosition = (item.position().top - titleBarHeight);
+    var endStickPosition;
+    var firstStick = false;
+
+    //DRAFT
+    wrap.on("scroll", function(e) {
+      if (typeof endStickPosition === 'undefined'){
+        endStickPosition = item.height() + item.position().top - itemHeight - titleBarHeight;
+        console.log(endStickPosition);
+      }
+      if (this.scrollTop > startStickPosition && this.scrollTop < endStickPosition && firstStick === false) {
+        item.addClass("item-fixed");
+        item.removeClass('item-absolute-bottom');
+        console.log('start');
+        firstStick = 'start';
+      }
+      if (this.scrollTop < startStickPosition && firstStick === 'start') {
+        item.removeClass("item-fixed");
+        firstStick = false;
+      }
+      if (this.scrollTop > endStickPosition && firstStick === 'start') {
+        item.removeClass("item-fixed");
+        item.addClass('item-absolute-bottom');
+        firstStick = false;
+      }
     });
   };
 
@@ -159,7 +192,7 @@ angular.module('HNSearch.controllers', ['algoliasearch', 'ngSanitize'])
     },
     template: '<li>' +
                 '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
-                '<div class="reply-content" ng-bind-html="reply.text"></div>' +
+                '<div class="reply-container" ng-bind-html="reply.text"></div>' +
               '</li>'
   };
 }])

@@ -103,7 +103,8 @@ ul.list-inline
         color: #5C5C5C
       i
         margin-right: 10px
-      &.last
+      &.settings
+        text-align: center
         position: absolute
         bottom: 0
         right: 0
@@ -221,9 +222,31 @@ ul.list-inline
   .item
     padding: 20px 30px 0 30px
     border-bottom: solid 1px #eee
-    min-height: 85px
-    &:hover
-      background-color: #F8F8F8
+    min-height: 90px
+    position: relative
+    .item-main
+      background-color: white
+    &.item-show-comments
+      // background-color: red
+    &.item-absolute-bottom
+      padding-top: 90px
+      .item-main
+        width: 1000px
+        left: 0
+        padding: 20px 30px
+        position: absolute
+        bottom: 0
+    &.item-fixed
+      padding-top: 90px
+      .item-main
+        width: 990px
+        margin: -20px -30px 0
+        padding: 20px 30px 0
+        position: fixed
+        top: 198px
+        height: 95px
+        z-index: 150
+        box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 3px 0 rgba(0,0,0,.1)
     h2
       margin-top: 5px
       float: left
@@ -258,14 +281,16 @@ ul.list-inline
         font-size: 14px
     .item-avatar
       display: inline-block
-      width: 18px
-      height: 18px
-      line-height: 18px
+      width: 16px
+      height: 16px
+      line-height: 16px
       text-align: center
       text-transform: capitalize
       color: white
-      font-size: 14px
+      font-weight: 500
+      font-size: 12px
       border-radius: 3px
+      margin-right: 2px
     .item-actions
       font-size: 12px
       position: relative
@@ -282,7 +307,10 @@ ul.list-inline
       font-size: 12px
       color: #5A96B1
     .author
-      font-size: 12px
+      display: inline-block
+      font-size: 13px
+      margin-bottom: 6px
+      color: #B6B6B6
     .date
       font-size: 12px
       color: #B6B6B6
@@ -294,20 +322,26 @@ ul.list-inline
     [class^="icon-"], [class*=" icon-"]
       color: #B6B6B6
   ul.list-item-comments
-    padding: 0 0 0 30px
+    padding: 0 0 20px 30px
     color: #5C5C5C
     > li
-      padding: 2em 0 1.7em 0
+      padding: 15px 0 10px 0
       border-bottom: solid 1px #EEEEEE
       &:last-child
         border: none
+    .replies-list
+      margin-bottom: 15px
     ul
       display: block
       margin: 0 0 0 5px
-      padding: 8px 0 0 10px
+      padding: 8px 0 0 15px
       border-left: solid 1px #ccc
-    p
-      margin-bottom: .3em
+    .reply-container
+      padding-left: 8px
+      p
+        margin-bottom: 4px
+      a
+        color: #517B91
   .search-pagination
     width: 1000px
     text-align: center
