@@ -455,3 +455,33 @@ footer
   a
     color: $lightGray
     font-size: 12px
+
+.dropdown-menu
+  position: absolute
+  top: 100%
+  left: 0
+  z-index: 1000
+  display: none
+  float: left
+  min-width: 160px
+  padding: 0
+  list-style: none
+  font-size: 14px
+  text-align: left
+  background-color: #ffffff
+  border: 1px solid #cccccc
+  border: 1px solid rgba(0, 0, 0, 0.15)
+  border-radius: 4px
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175)
+
+  > li
+    padding: 2px 5px
+    a
+      color: $darkGray
+    em
+      font-weight: bold
+      font-style: normal
+    &.active
+      background: $orange
+      a
+        color: white

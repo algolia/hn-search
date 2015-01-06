@@ -17,9 +17,11 @@
 //= require angular-sanitize
 //= require angular-rails-templates
 //= require angular-ui-router.min
-//= require ngStorage.min.js
+//= require ngStorage.min
 //= require algoliasearch.angular
 //= require nprogress
+//= require bootstrap-typeahead
+//= require tagautocomplete
 
 //= require_tree ../templates
 

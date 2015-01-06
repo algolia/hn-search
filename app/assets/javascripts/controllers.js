@@ -337,6 +337,27 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
         }
       };
 
+      var input = $($(element).find('input')[0]);
+      input.tagautocomplete({
+        character: '(author|by):',
+        source: function(query, process) {
+          var tquery = this.extractor();
+          if(!tquery) {
+            return [];
+          }
+          var author = tquery.substring(tquery.indexOf(':') + 1);
+          settings.indexUser.search(author, function(success, content) {
+            if (success) {
+              var authors = [];
+              for (var i = 0; i < content.hits.length; ++i) {
+                authors.push(content.hits[i]._highlightResult.username.value);
+              }
+              process(authors);
+            }
+          });
+        }
+      });
+
       scope.$watch('query', function (newValue, oldValue) {
         if(newValue === oldValue || typeof newValue === 'undefined') {
           return;
