@@ -145,7 +145,6 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
         return res;
     };
-
     return searchService;
 }])
 

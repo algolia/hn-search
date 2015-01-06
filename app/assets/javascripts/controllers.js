@@ -28,6 +28,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
         $scope.results = results;
       });
     };
+    $scope.query = search.query;
 
     if ($scope.category === 'hot') {
       hot.get().then(function(ids) {
