@@ -18,15 +18,11 @@ Hnsearch::Application.routes.draw do
   get 'latest', controller: 'home', action: 'latest'
   get 'userfeed/:username', controller: 'home', action: 'userfeed'
 
-  get 'about' => redirect('/#/about')
-  get 'api' => redirect('/#/api')
-  get 'cool_apps' => redirect('/#/cool_apps')
-  get 'opensearch' => 'pages#opensearch'
-
-  get '/search' => 'home#index'
   get '/beta' => redirect('/')
   get '/legacy' => redirect('/')
   get '/status' => redirect('http://status.algolia.com/hn')
+
   root 'home#index'
+  match '*path' => 'home#index', via: :all
 
 end

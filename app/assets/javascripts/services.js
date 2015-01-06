@@ -30,6 +30,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     settingsService.indexSortedByPopularity = settingsService.client.initIndex('Item_production');
     settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
+    settingsService.indexUser = settingsService.client.initIndex('User_production');
 
     settingsService.get = function() {
         return settings;
@@ -60,8 +61,14 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 .factory('search', ['$location', function($location) {
     var queryParameters = $location.search();
     var searchService = {
-        query: (queryParameters.query || ''),
-        params: {}
+        query: (queryParameters.query || queryParameters.q || ''),
+        params: {
+            hitsPerPage: 20,
+            minWordSizefor1Typo: 5,
+            minWordSizefor2Typos: 9,
+            advancedSyntax: true,
+            ignorePlurals: true
+        }
     };
 
     //dates
@@ -119,6 +126,9 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         if (settings.type && (settings.category !== 'jobs' && settings.category !== 'polls')) {
             this.params.tagFilters.push(settings.type);
         }
+
+        // prefix
+        this.params.queryType = settings.prefix ? 'prefixLast' : 'prefixNone';
 
         return this.params;
     };

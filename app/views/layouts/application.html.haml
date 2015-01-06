@@ -6,6 +6,7 @@
     - page_description = content_for?(:description) ? yield(:description) : "Hacker News Search, millions articles and comments at your fingertips."
     %title= page_title
     %meta{:content => page_description, :name => "description"}
+    %base{:href=> root_url}
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}
     %link{:href => '/opensearch.xml', :rel => 'search', :title => 'HN Search', :type => 'application/opensearchdescription+xml'}
     = stylesheet_link_tag "application", :media => "all"

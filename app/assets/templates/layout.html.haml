@@ -1,7 +1,7 @@
 .container
   %header.page-header
     .col-1{'ui-view' => 'col-1'}
-      %a.logo{href: '#/', 'ng-click' => 'resetQuery()'}
+      %a.logo{href: '/', 'ng-click' => 'resetQuery()'}
         %img{src:"/assets/logo-hn-search.png"}
         .logo-name
           Search
@@ -16,11 +16,11 @@
     %footer
       %ul.list-inline
         %li
-          %a{href: '#/about'} About
+          %a{href: '/about'} About
         %li
           •
         %li
-          %a{href: '#/help'} Help
+          %a{href: '/help'} Help
         %li
           •
         %li
@@ -32,12 +32,12 @@
         %li
           •
         %li
-          %a{href: '#/'} Search
+          %a{href: '/'} Search
         %li
           •
         %li
-          %a{href: '#/cool_apps'} Cool apps
+          %a{href: '/cool_apps'} Cool apps
         %li
           •
         %li
-          %a{href: '#/api'} API
+          %a{href: '/api'} API
