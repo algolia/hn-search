@@ -7,14 +7,16 @@
           %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
         %ul.item-infos.list-inline
           %li
-            %i.icon-head
-            %span.author {{hit.author}}
+            %a{'ng-href' => 'https://news.ycombinator.com/user?id={{hit.author}}'}
+              %i.icon-head
+              %span.author {{hit.author}}
           %li
             %i.icon-heart
             %span.date {{hit.points}} points
           %li
-            %i.icon-clock
-            %span.date {{hit.created_at_i|moment}}
+            %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit.objectID}}'}
+              %i.icon-clock
+              %span.date {{hit.created_at_i|moment}}
           %li
             %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
               %i.icon-link
