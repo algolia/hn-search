@@ -19,7 +19,8 @@ var app = angular.module('HNSearch', [
       controller: 'SettingsCtrl'
     }).when('/:cat?', {
       templateUrl: 'home.html',
-      controller: 'SearchCtrl'
+      controller: 'SearchCtrl',
+      roloadOnSearch: false
     }).otherwise({
       redirectTo: '/'
     });

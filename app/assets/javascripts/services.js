@@ -1,27 +1,5 @@
 angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
-.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
-    // add an extra parameter "reload" to $location.search to avoid controller reloading
-    var original = $location.search;
-    $location.search = function (key, value, reload) {
-        if (reload === false) {
-            var lastRoute = $route.current;
-            var un = $rootScope.$on('$locationChangeSuccess', function () {
-                $route.current = lastRoute;
-                un();
-            });
-        }
-        var args = [];
-        if (typeof key !== 'undefined') {
-            args.push(key);
-        }
-        if (typeof value !== 'undefined') {
-            args.push(value);
-        }
-        return original.apply($location, args);
-    };
-}])
-
 .factory('settings', ['$location', 'algolia', '$localStorage', function($location, algolia, $localStorage) {
     var settingsService = {};
 
