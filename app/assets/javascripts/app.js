@@ -42,6 +42,13 @@ var app = angular.module('HNSearch', [
         'main-content': { templateUrl: 'api.html' }
       }
     })
+    .state('root.help', {
+      url: '/help',
+      views: {
+        'main-header': { template: '<h1>Help</h1>' },
+        'main-content': { templateUrl: 'help.html' }
+      }
+    })
     .state('root.settings', {
       url: '/settings',
       views: {
