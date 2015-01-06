@@ -83,7 +83,10 @@
             .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
             %collection{collection:"comment.children"}
       .no-results{'ng-show' => 'results.hits.length == 0'}
-        %p Your search - <strong>{{query}}</strong> - did not match any results.
+        %p
+          Your search
+          %span{'ng-show' => 'query'}- <strong>{{ query }}</strong> -
+          did not match any results.
         %p Suggestions:
         %ul
           %li
