@@ -299,4 +299,26 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 }])
 
+// image preload
+.directive('imgPreload', ['$rootScope', function($rootScope) {
+  return {
+    restrict: 'A',
+    scope: {
+      ngSrc: '@'
+    },
+    link: function(scope, element, attrs) {
+      element.addClass('fade');
+      element.on('load', function() {
+        element.addClass('in');
+      }).on('error', function() {
+        //
+      });
+      scope.$watch('ngSrc', function(newVal) {
+        element.removeClass('in');
+      });
+    }
+  };
+}])
+
+
 ;

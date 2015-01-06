@@ -86,10 +86,18 @@ html, body
   &:after
     clear: both
 
+//common
 ul.list-inline
   display: inline-block
   li
     display: inline-block
+
+.fade
+  opacity: 0
+  @include transition(opacity .15s linear)
+  &.in
+    opacity: 1
+
 
 .main
   float: left
@@ -298,14 +306,11 @@ ul.list-inline
         font-weight: bold
     .item-thumbnail
       float: left
-      width: 54px
+      width: 55px
       padding: 3px
       margin-right: 15px
       border: solid 1px #eee
       border-radius: 3px
-      img
-        display: block
-        width: 100%
     .item-title-and-infos
       float: left
     .item-infos
