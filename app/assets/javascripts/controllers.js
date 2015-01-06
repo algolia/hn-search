@@ -26,6 +26,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
 
   //Search scope
   $scope.getSearch = function(withComments) {
+    NProgress.start();
     var _search = function(ids) {
       getIndex(search.query).search(search.query, undefined, search.getParams(ids)).then(function(results) {
         $scope.results = results;
@@ -258,7 +259,6 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
           return;
         }
         search.query = scope.query;
-        NProgress.start();
         scope.getData();
       });
 
