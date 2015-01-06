@@ -180,7 +180,10 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 
   // Watch settings
-  $scope.$watchCollection('settings', function(newSettings) {
+  $scope.$watchCollection('settings', function(newSettings, oldSettings) {
+    if (newSettings.page == oldSettings.page) {
+      newSettings.page = 0;
+    }
     search.applySettings(newSettings);
     $scope.getSearch();
   });
@@ -232,7 +235,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 }])
 
-.directive('hnsearch', ['search', '$location', function(search, $location) {
+.directive('hnsearch', ['search', 'settings', '$location', function(search, settings, $location) {
   return {
     restrict: 'E',
     replace: true,
@@ -257,6 +260,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
         if(newValue === oldValue || typeof newValue === 'undefined') {
           return;
         }
+        settings.get().page = 0;
         search.query = scope.query;
         scope.getData();
       });
