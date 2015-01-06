@@ -13,7 +13,8 @@
       %hnsearch.search-wrapper{placeholder:"Story, author, comment", "min-length"=>"0", model:"results", source:"getSearch(query)"}
       %span.powered-by
         powered by
-        %img{src:"/assets/algolia.jpg", width:60}
+        %a{href: 'http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia', title: 'Realtime Search Engine'}
+          = image_tag "algolia.jpg"
   %section.main
     %div{'ng-include' => '"_sidebar.html"'}
     %header
