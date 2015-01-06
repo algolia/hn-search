@@ -13,7 +13,6 @@
             %i.icon-heart
             %span.date {{hit.points}} points
           %li
-          %li
             %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
               %i.icon-link
               {{hit.url|domain}}
@@ -62,3 +61,8 @@
       %button{disabled: true, 'ng-show' => 'n === "..."'} &hellip;
     %li
       %button{'ng-click' => 'nextPage()', 'ng-hide' => 'settings.page >= results.nbPages - 1'} &raquo;
+
+  %a.scroll-to-top.fade{title:'Back to top', href:'#'}
+    %span ^
+    %span.tooltip
+      %span Top [↑]

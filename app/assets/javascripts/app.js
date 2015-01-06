@@ -116,16 +116,27 @@ var app = angular.module('HNSearch', [
   });
 }]);
 
-
 $(document).ready(function() {
   // sticky main
   var body = $('body');
+  var scrollTopBtn = $('.scroll-to-top');
   var doc = $(document)
   doc.on("scroll", function(e) {
     if (doc.scrollTop() > 100) {
       body.addClass('small-header');
+      scrollTopBtn.addClass('in');
     } else {
       body.removeClass('small-header');
+      scrollTopBtn.removeClass('in');
     }
+  });
+  //scroll top
+  $('.scroll-to-top').on('click', function(e){
+    e.preventDefault();
+    doc.scrollTop(0);
+  });
+  doc.keydown(function(e){
+    if (e.keyCode == 38)
+      doc.scrollTop(0);
   });
 });
