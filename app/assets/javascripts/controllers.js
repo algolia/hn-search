@@ -116,6 +116,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     }
   };
   $scope.toPage = function(page) {
+    window.scrollTo(0, 0);
     $scope.settings.page = page;
   };
   $scope.getPages = function(results) {

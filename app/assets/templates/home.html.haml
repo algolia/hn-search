@@ -21,8 +21,9 @@
         %i.icon-repeat
       %h1 {{ categoryTitle() }}
       %small.search-infos{'ng-show' => 'results'}
+        %span{'ng-show' => 'settings.page > 0'} Page {{ settings.page + 1 }} of
         %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
-        in {{ results.processingTimeMS | number }} ms
+        ({{ results.processingTimeMS / 1000.0 | number }} seconds)
       .date-range-filter
         %ul.list-inline
           %li
