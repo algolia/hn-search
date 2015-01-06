@@ -1,7 +1,7 @@
 %section.search-results
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
     .item-main
-      %img.item-thumbnail{'ng-show' => 'settings.showThumbnails && category !== "ask-hn" && category !== "polls"',"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+      %img.item-thumbnail{'ng-show' => 'settings.showThumbnails && settings.category !== "ask-hn" && settings.category !== "polls"',"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       .item-title-and-infos
         %h2
           %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
@@ -19,7 +19,7 @@
               {{hit.url|domain}}
       .item-actions.pull-right
         %ul.list-inline
-          %li.action-toggle-comments{'ng-show' => 'category != "jobs"'}
+          %li.action-toggle-comments{'ng-show' => 'settings.category != "jobs"'}
             %i.icon-speech-bubble
             %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'ng-if' => 'hit.num_comments > 0'}
               %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
