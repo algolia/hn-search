@@ -63,7 +63,7 @@
           .item-actions.pull-right
             %ul.list-inline
               %li.action-toggle-comments{'ng-show' => 'category != "jobs"'}
-                %i.icon-bubble
+                %i.icon-speech-bubble
                 %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'ng-if' => 'hit.num_comments > 0'}
                   %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
                 %span{'ng-if' => 'hit.num_comments == 0'} no comment
@@ -81,7 +81,9 @@
             %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
             .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
             %collection{collection:"comment.children"}
-      .no-results{'ng-show' => 'results.hits.length == 0'}
+      .no-results.text-center{'ng-show' => 'results.hits.length == 0 && settings.category == "starred" '}
+        %p You don't have any starred items.
+      .no-results{'ng-show' => 'results.hits.length == 0 && settings.category != "starred"'}
         %p
           Your search
           %span{'ng-show' => 'query'}- <strong>{{ query }}</strong> -

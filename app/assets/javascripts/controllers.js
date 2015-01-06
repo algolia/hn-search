@@ -29,7 +29,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     var _search = function(ids) {
       getIndex(search.query).search(search.query, undefined, search.getParams(ids)).then(function(results) {
         $scope.results = results;
-
+        NProgress.done();
         if (withComments) {
           for (var i = 0; i < $scope.settings.loadedComments.length; ++i) {
             $scope.loadComments($scope.settings.loadedComments[i]);
@@ -258,6 +258,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
           return;
         }
         search.query = scope.query;
+        NProgress.start();
         scope.getData();
       });
 

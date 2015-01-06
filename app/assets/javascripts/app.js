@@ -66,8 +66,9 @@ var app = angular.module('HNSearch', [
   });
 }]);
 
-// sticky main
+
 $(document).ready(function() {
+  // sticky main
   var body = $('body');
   var doc = $(document)
   doc.on("scroll", function(e) {

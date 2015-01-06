@@ -18,6 +18,7 @@
 //= require angular-rails-templates
 //= require ngStorage.min.js
 //= require algoliasearch.angular
+//= require nprogress
 
 //= require_tree ../templates
 
