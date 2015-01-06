@@ -32,8 +32,7 @@
 
     = yield(:head)
   %body.main-fixed{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
-    #main{role: 'main','ng-view' => true}
-      / = content_for?(:content) ? yield(:content) : yield
+    #main{role: 'main', 'ui-view' => true}
 
     :javascript
       var _gaq = _gaq || [];

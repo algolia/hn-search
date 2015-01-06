@@ -27,8 +27,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
 
-    settingsService.get = function(category) {
-        settings.category = category || '';
+    settingsService.get = function() {
         return settings;
     };
 

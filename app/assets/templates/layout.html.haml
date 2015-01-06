@@ -1,0 +1,19 @@
+.container
+  %header.page-header
+    .col-1{'ui-view' => 'col-1'}
+      %a.logo{href: '#/', 'ng-click' => 'resetQuery()'}
+        %img{src:"/assets/logo-hn-search.png"}
+        .logo-name
+          Search
+          %br
+          Hacker News
+    .col-2{'ui-view' => 'col-2'}
+    .col-3{'ui-view' => 'col-3'}
+  %section.main
+    %div{'ng-include' => '"_sidebar.html"'}
+    %header{'ui-view' => 'main-header'}
+    %section{'ui-view' => 'main-content'}
+    %footer
+      %a{href: '#/about'} About
+      %a{href: '#/cool_apps'} Cool apps
+      %a{href: '#/api'} API

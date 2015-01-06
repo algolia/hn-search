@@ -1,107 +1,64 @@
-.container
-  %header.page-header
-    .col-1
-      %div{'ng-include' => '"_logo.html"'}
-    .col-2
-      %nav.navigation
+%section.search-results
+  .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
+    .item-main
+      %img.item-thumbnail{'ng-show' => 'settings.showThumbnails && category !== "ask-hn" && category !== "polls"',"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+      .item-title-and-infos
+        %h2
+          %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
+        %ul.item-infos.list-inline
+          %li
+            %i.icon-head
+            %span.author {{hit.author}}
+          %li
+            %i.icon-heart
+            %span.date {{hit.points}} points
+          %li
+          %li
+            %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
+              %i.icon-link
+              {{hit.url|domain}}
+      .item-actions.pull-right
         %ul.list-inline
-          %li{'ng-class' => '{active: settings.sort === "byPopularity"}', 'ng-click' => 'sortBy("byPopularity")'}
-            Most Popular
-          %li{'ng-class' => '{active: settings.sort === "byDate"}', 'ng-click' => 'sortBy("byDate")'}
-            Most Recent
-    .col-3
-      %hnsearch.search-wrapper{placeholder:"Story, author, comment", "min-length"=>"0", model:"results", source:"getSearch(query)"}
-      %span.powered-by
-        powered by
-        %a{href: 'http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia', title: 'Realtime Search Engine'}
-          = image_tag "algolia.jpg"
-  %section.main
-    %div{'ng-include' => '"_sidebar.html"'}
-    %header
-      %button.btn-refresh
-        %i.icon-repeat
-      %h1 {{ categoryTitle() }}
-      %small.search-infos{'ng-show' => 'results'}
-        %span{'ng-show' => 'settings.page > 0'} Page {{ settings.page + 1 }} of
-        %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
-        ({{ results.processingTimeMS / 1000.0 | number }} seconds)
-      .date-range-filter
-        %ul.list-inline
-          %li
-            %input#range-1.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"last24h"}
-            %label{for:"range-1"} Last 24h
-          %li
-            %input#range-2.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"pastWeek"}
-            %label{for:"range-2"} Past week
-          %li
-            %input#range-3.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"pastMonth"}
-            %label{for:"range-3"} Past month
-          %li
-            %input#range-4.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"all"}
-            %label{for:"range-4"} Forever
-    %section.search-results
-      .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
-        .item-main
-          %img.item-thumbnail{'ng-show' => 'settings.showThumbnails && category !== "ask-hn" && category !== "polls"',"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
-          .item-title-and-infos
-            %h2
-              %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
-            %ul.item-infos.list-inline
-              %li
-                %i.icon-head
-                %span.author {{hit.author}}
-              %li
-                %i.icon-heart
-                %span.date {{hit.points}} points
-              %li
-                %i.icon-clock
-                %a.date{'ng-href'=>"https://news.ycombinator.com/item?id={{hit.objectID}}"} {{hit.created_at_i | moment:'M/D/YYYY h:m A'}}
-              %li
-                %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
-                  %i.icon-link
-                  {{hit.url|domain}}
-          .item-actions.pull-right
-            %ul.list-inline
-              %li.action-toggle-comments{'ng-show' => 'category != "jobs"'}
-                %i.icon-speech-bubble
-                %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'ng-if' => 'hit.num_comments > 0'}
-                  %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
-                %span{'ng-if' => 'hit.num_comments == 0'} no comment
-              %li.action-share
-                %a{href: '#'}
-                  %i.icon-share
-              %li.action-toggle-star
-                %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
-                  %i.icon-star
-        %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
-          %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
-            %span.author
-              %avatar{author:"comment.author"}
-              {{comment.author}} -
-            %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
-            .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
-            %collection{collection:"comment.children"}
-      .no-results.text-center{'ng-show' => 'results.hits.length == 0 && settings.category == "starred" '}
-        %p You don't have any starred items.
-      .no-results{'ng-show' => 'results.hits.length == 0 && settings.category != "starred"'}
-        %p
-          Your search
-          %span{'ng-show' => 'query'}- <strong>{{ query }}</strong> -
-          did not match any results.
-        %p Suggestions:
-        %ul
-          %li
-            %a{href:"#"} Try different keywords.
-          %li
-            %a{href:"#"} Try larger date range.
-          %li
-            %a{href:"#"} Try different Type/Category.
+          %li.action-toggle-comments{'ng-show' => 'category != "jobs"'}
+            %i.icon-speech-bubble
+            %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'ng-if' => 'hit.num_comments > 0'}
+              %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
+            %span{'ng-if' => 'hit.num_comments == 0'} no comment
+          %li.action-share
+            %a{href: '#'}
+              %i.icon-share
+          %li.action-toggle-star
+            %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
+              %i.icon-star
+    %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
+      %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
+        %span.author
+          %avatar{author:"comment.author"}
+          {{comment.author}} -
+        %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
+        .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
+        %collection{collection:"comment.children"}
+  .no-results.text-center{'ng-show' => 'results.hits.length == 0 && settings.category == "starred" '}
+    %p You don't have any starred items.
+  .no-results{'ng-show' => 'results.hits.length == 0 && settings.category != "starred"'}
+    %p
+      Your search
+      %span{'ng-show' => 'query'}- <strong>{{ query }}</strong> -
+      did not match any results.
+    %p Suggestions:
+    %ul
+      %li
+        %a{href:"#"} Try different keywords.
+      %li
+        %a{href:"#"} Try larger date range.
+      %li
+        %a{href:"#"} Try different Type/Category.
 
-      %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
-        %li
-          %button{'ng-click' => 'prevPage()', 'ng-hide' => 'settings.page == 0'} &laquo;
-        %li{'ng-repeat' => 'n in getPages(results) track by $index', 'ng-class' => '{ "active": (n == settings.page) }'}
-          %button{'ng-click' => 'toPage(n)', 'ng-show' => 'n !== "..."'} {{ n + 1 }}
-          %button{disabled: true, 'ng-show' => 'n === "..."'} &hellip;
-        %li
-          %button{'ng-click' => 'nextPage()', 'ng-hide' => 'settings.page >= results.nbPages - 1'} &raquo;
+  %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
+    %li
+      %button{'ng-click' => 'prevPage()', 'ng-hide' => 'settings.page == 0'} &laquo;
+    %li{'ng-repeat' => 'n in getPages(results) track by $index', 'ng-class' => '{ "active": (n == settings.page) }'}
+      %button{'ng-click' => 'toPage(n)', 'ng-show' => 'n !== "..."'} {{ n + 1 }}
+      %button{disabled: true, 'ng-show' => 'n === "..."'} &hellip;
+    %li
+      %button{'ng-click' => 'nextPage()', 'ng-hide' => 'settings.page >= results.nbPages - 1'} &raquo;

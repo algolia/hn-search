@@ -1,9 +1,8 @@
 angular.module('HNSearch.controllers', ['ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$location', '$http', '$routeParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $routeParams, $sce, search, settings, hot, starred) {
+.controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
   // Init search et params
-  $scope.category = $routeParams.cat;
-  $scope.settings = settings.get($scope.category);
+  $scope.settings = settings.get();
   $scope.results = null;
   $scope.story = {};
 
@@ -40,11 +39,11 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     };
     $scope.query = search.query;
 
-    if ($scope.category === 'hot') {
+    if ($scope.settings.category === 'hot') {
       hot.get().then(function(ids) {
         _search(ids);
       });
-    } else if ($scope.category === 'starred') {
+    } else if ($scope.settings.category === 'starred') {
       _search(starred.all());
     } else {
       _search();
@@ -121,8 +120,8 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 
   $scope.categoryTitle = function() {
-    switch ($scope.category) {
-    case undefined: return 'All';
+    switch ($scope.settings.category) {
+    case undefined: case '': return 'All';
     case "ask-hn": return "Ask HN";
     case "show-hn": return "Show HN";
     case "jobs": return "Jobs";

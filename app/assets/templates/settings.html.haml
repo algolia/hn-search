@@ -1,16 +1,6 @@
-.container
-  %header.page-header
-    .col-1
-      %div{'ng-include' => '"_logo.html"'}
-.container
-  %section.main
-    %div{'ng-include' => '"_sidebar.html"'}
-    %header
-      %h1 Settings
-
-    %section.edit-settings
-      %h2 Display options
-      %fieldset
-        %label{for: 'showThumbnails'}
-          %input{type: 'checkbox', id: 'showThumbnails', 'ng-model' => 'settings.showThumbnails'}
-          Show thumbnails
+%section.edit-settings
+  %h2 Display options
+  %fieldset
+    %label{for: 'showThumbnails'}
+      %input{type: 'checkbox', id: 'showThumbnails', 'ng-model' => 'settings.showThumbnails'}
+      Show thumbnails
