@@ -2,18 +2,10 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
 
 .controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
   // Init search et params
+  $scope.state = '';
   $scope.settings = settings.get();
   $scope.results = null;
   $scope.story = {};
-
-  // reset
-  window.scrollTo(0, 0);
-  $scope.resetQuery = function() {
-    $scope.settings.page = 0;
-    $scope.settings.comments = [];
-    search.query = '';
-    $('.search-wrapper input').val('');
-  };
 
   var getIndex = function(q) {
     if ($scope.settings.sort === 'byDate') {
@@ -113,11 +105,11 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     };
     $scope.query = search.query;
 
-    if ($scope.settings.category === 'hot') {
+    if ($scope.state === 'hot') {
       hot.get().then(function(ids) {
         _search(ids);
       });
-    } else if ($scope.settings.category === 'starred') {
+    } else if ($scope.state === 'starred') {
       _search(starred.all());
     } else {
       _search();
@@ -198,8 +190,8 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     $scope.settings.sort = order;
   };
 
-  $scope.categoryTitle = function() {
-    switch ($scope.settings.category) {
+  $scope.pageTitle = function() {
+    switch ($scope.state) {
     case undefined: case '': return 'All';
     case "ask-hn": return "Ask HN";
     case "show-hn": return "Show HN";
@@ -258,17 +250,33 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     return pages;
   };
 
+  $scope.gotoMenu = function($event, path) {
+    $event.preventDefault();
+
+    $location.path(path).search($location.search());
+    window.scrollTo(0, 0);
+  };
+
   // Watch settings
   $scope.$watchCollection('settings', function(newSettings, oldSettings) {
     if (newSettings.page == oldSettings.page) {
-      newSettings.page = 0;
+      $scope.page = 0;
     }
-    search.applySettings(newSettings);
+    search.applySettings(newSettings, $scope.state);
     $scope.getSearch();
   });
 
+  // Watch+Handle page change
+  $scope.$watch('state', function(newSettings, oldSettings) {
+    settings.reload();
+  });
+  $scope.$on("$stateChangeSuccess", function(event, toState, toParams) {
+    $scope.state = toParams.page;
+    window.scrollTo(0, 0);
+  });
+
   // run 1st query
-  search.applySettings($scope.settings);
+  search.applySettings($scope.settings, $scope.state);
   $scope.getSearch(true);
 }])
 
@@ -398,10 +406,9 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     restrict: 'A',
     link: function(scope, element, attrs, controller) {
       var path = attrs.href;
-      //path = path.substring(1); //hack because path does not return including hashbang
       scope.location = location;
       scope.$watch('location.path()', function(newPath) {
-        if (path === newPath || (path === '/' && newPath === '')) {
+        if (path === newPath || (path === '/' && !newPath) || (newPath === '/' && !path)) {
           element.addClass('active');
         } else {
           element.removeClass('active');

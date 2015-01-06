@@ -1,32 +1,32 @@
 %aside.sidebar
   %ul
     %li
-      %a{href:"/", 'active-link' => true}
+      %a{href:"/", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/")'}
         %i.icon-news
         All
     %li
-      %a{href:"/show-hn", 'active-link' => true}
+      %a{href:"/show-hn", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/show-hn")'}
         %i.icon-megaphone
         Show HN
     %li
-      %a{href:"/ask-hn", 'active-link' => true}
+      %a{href:"/ask-hn", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/ask-hn")'}
         %i.icon-bubble
         Ask HN
     %li
-      %a{href:"/polls", 'active-link' => true}
+      %a{href:"/polls", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/polls")'}
         %i.icon-bulb
         Polls
     %li
-      %a{href:"/jobs", 'active-link' => true}
+      %a{href:"/jobs", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/jobs")'}
         %i.icon-banknote
         Jobs
     %li.divider
     %li
-      %a{href:"/starred", 'active-link' => true}
+      %a{href:"/starred", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/starred")'}
         %i.icon-star
         Starred
     %li
-      %a{href:"/hot", 'active-link' => true}
+      %a{href:"/hot", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/hot")'}
         %i.icon-fire
         Hot
     %li.settings{'ng-show' => 'results || isSettings'}

@@ -9,19 +9,22 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         defaultSort: 'byDate',
         defaultDateRange: 'last24h'
     });
-    var queryParameters = $location.search();
-    var settings = {
-        dateRange: (queryParameters.dateRange || storage.defaultDateRange),
-        defaultDateRange: storage.defaultDateRange,
-        type: (queryParameters.type || 'story'),
-        sort: (queryParameters.sort || storage.defaultSort),
-        defaultSort: storage.defaultSort,
-        category: (queryParameters.category || ''),
-        prefix: (queryParameters.prefix || true),
-        page: (parseInt(queryParameters.page, 10) || 0),
-        showThumbnails: storage.showThumbnails,
-        loadedComments: (queryParameters.comments ? queryParameters.comments.split(',') : [])
-    };
+
+    var _loadSettings = function() {
+        var queryParameters = $location.search();
+        return {
+            dateRange: (queryParameters.dateRange || storage.defaultDateRange),
+            defaultDateRange: storage.defaultDateRange,
+            type: (queryParameters.type || 'story'),
+            sort: (queryParameters.sort || storage.defaultSort),
+            defaultSort: storage.defaultSort,
+            prefix: (queryParameters.prefix || true),
+            page: (parseInt(queryParameters.page, 10) || 0),
+            showThumbnails: storage.showThumbnails,
+            loadedComments: (queryParameters.comments ? queryParameters.comments.split(',') : [])
+        };
+    }
+    var settings = _loadSettings();
 
     // Algolia settings
     var algoliaConfig = { appID: 'UJ5WYC0L7X', apiKey: '8ece23f8eb07cd25d40262a1764599b1' }; // FIXME
@@ -31,6 +34,14 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
     settingsService.indexUser = settingsService.client.initIndex('User_production');
+
+    settingsService.reload = function() {
+        var tmp = _loadSettings();
+        for (var k in tmp) {
+            settings[k] = tmp[k];
+        }
+        return settings;
+    };
 
     settingsService.get = function() {
         return settings;
@@ -79,7 +90,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     pastWeek = pastWeek.setDate(pastWeek.getDate() - 7) / 1000;
     pastMonth = pastMonth.setDate(pastMonth.getDate() - 31) / 1000;
 
-    searchService.applySettings = function(settings) {
+    searchService.applySettings = function(settings, page) {
         this.params.tagFilters = [];
 
         // query
@@ -105,8 +116,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         }
 
         // story type
-        $location.search('category', settings.category);
-        switch (settings.category) {
+        switch (page) {
         case 'ask-hn':
             this.params.tagFilters.push('ask_hn');
             break;

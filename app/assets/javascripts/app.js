@@ -64,17 +64,14 @@ var app = angular.module('HNSearch', [
       templateUrl: 'layout.html',
       controller: 'SearchCtrl'
     })
-    .state('search.home', {
-      url: '/:cat',
+    .state('search.page', {
+      url: '/:page',
       views: {
         'col-2@search': { templateUrl: '_home-col-2.html' },
         'col-3@search': { templateUrl: '_home-col-3.html' },
         'main-header@search': { templateUrl: '_home-header.html' },
         'main-content@search': { templateUrl: 'home.html' }
-      },
-      onEnter: ['settings', '$stateParams', function(settings, $stateParams) {
-        settings.get().category = $stateParams.cat;
-      }]
+      }
     })
     ;
 }])
