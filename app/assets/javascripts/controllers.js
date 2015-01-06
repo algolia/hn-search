@@ -7,6 +7,10 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   $scope.results = null;
   $scope.story = {};
 
+  // reset
+  $scope.settings.page = 0;
+  window.scrollTo(0, 0);
+
   var getIndex = function(q) {
     if ($scope.settings.sort === 'byDate') {
       return settings.indexSortedByDate;
@@ -45,21 +49,19 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
       $scope.story[hit.objectID] = { comments: data };
     });
 
-    var titleBarHeight = 100;
     var itemHeight = 95;
-    var headerHeight = 100;
     var itemMarginBorder = 23; //WTF
     var wrap = $(window);
 
     var firstStick = false;
-    var startStickPosition = item.position().top - titleBarHeight + itemMarginBorder;
+    var startStickPosition = item.position().top - itemHeight + itemMarginBorder;
     var endStickPosition;
     //DRAFT
     wrap.on("scroll", function(e) {
       console.log(startStickPosition + ' < ' + wrap.scrollTop() + ' < ' + endStickPosition);
 
       if (typeof endStickPosition === 'undefined') {
-        endStickPosition = item.next().position().top - itemHeight - titleBarHeight + itemMarginBorder;
+        endStickPosition = item.next().position().top - 2 * itemHeight + itemMarginBorder;
         console.log('endStickPosition');
       }
 

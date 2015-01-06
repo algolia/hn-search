@@ -1,4 +1,5 @@
 $headerHeight: 100px
+$headerSmallHeight: 60px
 $itemHeight: 95px
 $itemWidth: 1000px
 $titleHeight: 77px
@@ -40,6 +41,7 @@ html, body
   .logo
     color: $lightGray
     img
+      height: 60px
       float: left
       margin-right: 10px
     .logo-name
@@ -390,3 +392,24 @@ ul.list-inline
           border-color: $orange
           color: $orange
 
+.small-header
+  .page-header
+    @include transition(all 0.5s ease)
+    height: $headerSmallHeight
+    padding-top: 5px
+    padding-bottom: 5px
+    .logo
+      img
+        @include transition(all 0.5s ease)
+        height: 45px
+      .logo-name
+        font-size: 18px
+  .main
+    margin-top: $headerSmallHeight
+    header
+      top: $headerSmallHeight
+    .sidebar
+      top: $headerSmallHeight
+    .item-fixed
+      .item-main
+        top: $headerSmallHeight + $titleHeight
