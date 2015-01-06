@@ -12,6 +12,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     $scope.settings.page = 0;
     $scope.settings.comments = [];
     search.query = '';
+    $('.search-wrapper input').val('');
   };
 
   var getIndex = function(q) {
