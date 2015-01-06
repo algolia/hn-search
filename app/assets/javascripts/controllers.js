@@ -10,6 +10,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   window.scrollTo(0, 0);
   $scope.resetQuery = function() {
     $scope.settings.page = 0;
+    $scope.settings.comments = [];
     search.query = '';
   };
 
@@ -197,7 +198,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   $scope.isSettings = true;
   $scope.settings = settings.get();
 
-  $scope.$watchCollection('settings', function() {
+  $scope.$watchCollection('settings', function(oldSettings, newSettings) {
     settings.save();
   });
 }])
