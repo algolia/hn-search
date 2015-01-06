@@ -125,6 +125,9 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 
   $scope.loadComments = function(id, $event) {
+
+    NProgress.start();
+
     if ($event) {
       settings.loadComments(id);
       $event.preventDefault();
@@ -140,6 +143,9 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     if (!found) return;
 
     $http.get('https://hn.algolia.com/api/v1/items/' + id).success(function(data) {
+
+      NProgress.done();
+
       $scope.story[id] = { comments: data };
 
       var item;
@@ -162,7 +168,6 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
       var endStickPosition;
       //DRAFT
       wrap.on("scroll", function(e) {
-        //console.log(startStickPosition + ' < ' + wrap.scrollTop() + ' < ' + endStickPosition);
 
         if (typeof endStickPosition === 'undefined') {
           endStickPosition = item.next().position().top - 2 * itemHeight + itemMarginBorder;

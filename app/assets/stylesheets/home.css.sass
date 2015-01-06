@@ -12,7 +12,6 @@ $lightGray: #B6B6B6
 $darkGray: #5C5C5C
 $orange: #FF742B
 $blue: #2A9ED9
-
 $sidebarColor: #F8F8F8
 $linkColor: #5A96B1
 
@@ -30,8 +29,8 @@ html, body
   position: fixed
   z-index: 15
   width: $containerWidth
-  height: 100px
-  padding: 20px
+  height: $headerHeight
+  padding: 20px 5px 20px 20px
   border-bottom: solid 1px #eee
   background-color: white
   .col-1, .col-2, .col-3
@@ -113,10 +112,11 @@ h1, h2, h3, h4, h5
   padding: 78px 0 50px 200px
   header
     position: absolute
-    z-index: 110
+    z-index: 30
     top: 0px
     left: 200px
-    width: 1000px
+    height: $titleHeight
+    width: $itemWidth
     padding: 20px 30px
     border-bottom: solid 1px #eee
     background-color: white
@@ -265,6 +265,7 @@ h1, h2, h3, h4, h5
     box-shadow: none
     line-height: 25px
     padding-left: 110px
+    margin: 0
     &:focus
       outline: 0
       box-shadow: none
@@ -297,15 +298,13 @@ h1, h2, h3, h4, h5
       padding-top: $itemHeight
       .item-main
         position: fixed
-        z-index: 150
+        z-index: 10
         top: $headerHeight + $titleHeight
         width: $itemWidth
         height: $itemHeight
-        box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 3px 0 rgba(0,0,0,.1)
+        box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 4px 0 rgba(0,0,0,.05)
     &.item-show-comments
-      //box-shadow: inset 0 0 0 5px $orange
-      // background-color: red
-      border-left: solid 2px $orange
+      //border-left: solid 2px $lightGray
     &.item-absolute-bottom //end of stick transition state
       padding-top: $itemHeight
       .item-main
@@ -385,7 +384,7 @@ h1, h2, h3, h4, h5
     [class^="icon-"], [class*=" icon-"]
       color: $lightGray
   ul.list-item-comments
-    padding: 0 0 20px 50px
+    padding: 0 50px 20px
     color: $darkGray
     > li
       padding: 15px 0 10px 0
@@ -438,9 +437,9 @@ h1, h2, h3, h4, h5
 
 .small-header
   .page-header
-    @include transition(all 0.5s ease)
     height: $headerSmallHeight
     padding: 5px
+    @include transition(all 0.5s ease)
     .logo
       img
         @include transition(all 0.5s ease)
@@ -481,12 +480,22 @@ footer
   bottom: 20px
   background: rgba(black, .1)
   z-index: 4000
-  line-height: 30px
-  text-align: center
-  color: $darkGray
+  &:after
+    opacity: .6
+    position: absolute
+    right: 11px
+    top: 11px
+    content: ''
+    width: 0px
+    height: 0px
+    border-style: solid
+    border-width: 0 4px 8px 4px
+    border-color: transparent transparent $darkGray transparent
   &:hover
     background-color: $orange
     color: white
+    &:after
+      border-color: transparent transparent white transparent
   .tooltip
     position: absolute
     left: 50%
@@ -517,7 +526,6 @@ footer
       border-color: $darkGray transparent transparent transparent
     .dropdown-content a
       color: $lightGray
-
   .dropdown-toggle
     position: absolute
     z-index: 500
@@ -540,27 +548,25 @@ footer
     &:focus ~ .dropdown-text:after
       border-width: 0 4px 5px 4px
       border-color: transparent transparent $lightGray transparent
-
   .dropdown-content
-    @include transition(all .25s ease)
+    opacity: 0
+    visibility: hidden
     position: absolute
     width: 140px
     top: 32px
     padding: 0
     margin: 0
-    opacity: 0
-    visibility: hidden
-    border-radius: 3px
+    border: 1px solid #ccc
     text-indent: 10px
     line-height: 32px
     list-style-type: none
+    border-radius: 3px
     background-color: white
-    border: 1px solid #ccc
+    @include transition(all .25s ease)
     a
       display: block
       &:hover
-        background: #e8e8e8
-
+        background: $lightGray
   .dropdown-content:hover,
   .dropdown-toggle:focus ~ .dropdown-content
     opacity: 1
