@@ -3,27 +3,34 @@ $headerSmallHeight: 60px
 $itemHeight: 95px
 $itemWidth: 1000px
 $titleHeight: 77px
+$containerWidth: 1200px
+$sidebarWidth: 200px
+
+$fontBase: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
 
 $lightGray: #B6B6B6
 $darkGray: #5C5C5C
 $orange: #FF742B
 
+$sidebarColor: #F8F8F8
+$linkColor: #5A96B1
+
 html, body
+  height: 100%
   margin: 0
   padding: 0
   color: $lightGray
-  height: 100%
-  font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
+  font-family: $fontBase
 
 .container
-  width: 1200px
+  width: $containerWidth
   margin: 0 auto
 .page-header
   position: fixed
   z-index: 150
-  width: 1200px
-  padding: 20px
+  width: $containerWidth
   height: 100px
+  padding: 20px
   border-bottom: solid 1px #eee
   background-color: white
   .col-1, .col-2, .col-3
@@ -41,15 +48,15 @@ html, body
   .logo
     color: $lightGray
     img
-      height: 60px
       float: left
+      height: 60px
       margin-right: 10px
     .logo-name
-      color: $lightGray
       float: left
-      font-size: 22px
-      line-height: 1.2em
       padding-top: 3px
+      line-height: 1.2em
+      font-size: 22px
+      color: $lightGray
   .navigation
     ul
       position: relative
@@ -84,28 +91,27 @@ ul.list-inline
     display: inline-block
 
 .main
+  float: left
   position: relative
   width: 100%
-  float: left
+  min-height: 800px
   margin-top: 100px
   padding: 78px 0 50px 200px
-  min-height: 800px
   header
-    position: fixed
+    position: absolute
+    z-index: 110
     top: 0px
     left: 200px
     width: 1000px
     padding: 20px 30px
     border-bottom: solid 1px #eee
-    position: absolute
     background-color: white
-    z-index: 110
     h1
       display: inline-block
+      margin-right: 10px
       font-size: 25px
       font-weight: 200
       color: $darkGray
-      margin-right: 10px
     .search-infos
       display: inline-block
       color: #ccc
@@ -124,25 +130,30 @@ ul.list-inline
       &:hover
         border-color: #ccc
         color: $orange
+      &:active
+        border-color: $orange
+      &:focus
+        box-shadow: none
+        outline: 0
     .date-range-filter
       position: absolute
       right: 15px
       top: 28px
       label
+        margin-left: 20px
         font-size: 12px
         font-weight: normal
         white-space: nowrap
-        margin-left: 20px
       input
         &.radio:empty
           margin-left: -9999px
         &.radio:empty ~ label
-          position: relative
           float: left
+          position: relative
           line-height: 23px
           text-indent: 30px
           cursor: pointer
-          user-select: none
+          @include user-select(none)
         &.radio:empty ~ label:before
           position: absolute
           display: block
@@ -161,10 +172,10 @@ ul.list-inline
           box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
   h2
     display: inline-block
+    margin-top: 1em
     font-size: 20px
     font-weight: 200
     color: $darkGray
-    margin-top: 1em
 
   .sidebar
     position: absolute
@@ -172,37 +183,36 @@ ul.list-inline
     bottom: 0
     left: 0
     width: 200px
-    background-color: #F8F8F8
+    background-color: $sidebarColor
     ul
-      display: block
-      padding: 20px 0
-      height: 100%
       position: relative
+      display: block
+      height: 100%
+      padding: 20px 0
       li
         float: left
         width: 100%
         a
           display: block
+          width: 100%
+          padding: 10px 20px
+          color: $darkGray
           &.active
             background-color: #E4E3E5
+        i
+          margin-right: 10px
         &.divider
           margin: 10px 0
           padding: 0
           border-bottom: solid 1px #eee
-        a
-          display: block
-          width: 100%
-          padding: 10px 20px
-          color: $darkGray
-        i
-          margin-right: 10px
         &.settings
-          text-align: center
           position: absolute
           bottom: 0
           right: 0
           left: 0
-          background-color: #E4E3E5
+          padding-bottom: 20px
+          text-align: center
+          background-color: darken($sidebarColor,3%)
   .edit-settings
     margin-top: $titleHeight
     padding: 10px
@@ -214,26 +224,27 @@ ul.list-inline
       position: fixed
       top: $headerHeight
       left: 50%
-      width: 1000px
-      margin-left: -400px
+      width: $itemWidth
+      margin-left: - $containerWidth/2 + $sidebarWidth
     .sidebar
       position: fixed
       top: 100px
       left: 50%
-      width: 200px
-      margin-left: -600px
+      width: $sidebarWidth
+      margin-left: - $containerWidth/2
     .search-results
       padding-top: 78px
 
 .search-wrapper
   display: inline-block
   position: relative
+  margin-right: 10px
   .icon-search
     color: $orange
     position: absolute
-    font-size: 24px
     top: 8px
     right: 14px
+    font-size: 24px
   input
     width: 350px
     border-radius: 25px
@@ -243,7 +254,6 @@ ul.list-inline
       color: #ccc
       font-size: 14px
       font-weight: 300
-      font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
 
 .search-results
   position: relative
@@ -253,32 +263,32 @@ ul.list-inline
     position: relative
     padding: 0
     .item-main
+      display: block
+      width: $itemWidth
+      min-height: $itemHeight
       padding: 20px 30px 0
       background-color: white
-      display: block
-      min-height: $itemHeight
-      width: $itemWidth
     &.item-fixed // sticked item
       padding-top: $itemHeight
       .item-main
-        width: $itemWidth
         position: fixed
-        top: $headerHeight + $titleHeight
-        height: $itemHeight
         z-index: 150
+        top: $headerHeight + $titleHeight
+        width: $itemWidth
+        height: $itemHeight
         box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 3px 0 rgba(0,0,0,.1)
     &.item-show-comments
       // background-color: red
     &.item-absolute-bottom //end of stick transition state
       padding-top: $itemHeight
       .item-main
-        width: 1000px
-        left: 0
         position: absolute
+        left: 0
         bottom: 0
+        width: $itemWidth
     h2
-      margin-top: 5px
       float: left
+      margin-top: 5px
       font-size: 16px
       font-weight: normal
       a
@@ -287,12 +297,12 @@ ul.list-inline
         font-style: normal
         font-weight: bold
     .item-thumbnail
-      width: 54px
       float: left
+      width: 54px
+      padding: 3px
       margin-right: 15px
       border: solid 1px #eee
       border-radius: 3px
-      padding: 3px
       img
         display: block
         width: 100%
@@ -311,14 +321,14 @@ ul.list-inline
       display: inline-block
       width: 16px
       height: 16px
-      line-height: 16px
+      margin-right: 2px
       text-align: center
-      text-transform: capitalize
+      line-height: 16px
       color: white
+      text-transform: capitalize
       font-weight: 500
       font-size: 12px
       border-radius: 3px
-      margin-right: 2px
     .item-actions
       float: right
       font-size: 12px
@@ -334,7 +344,7 @@ ul.list-inline
             color: $orange
     a.hit-link
       font-size: 12px
-      color: #5A96B1
+      color: $linkColor
     .author
       display: inline-block
       font-size: 13px
@@ -382,7 +392,7 @@ ul.list-inline
         padding: 5px 10px
         font-size: 12px
         text-align: center
-        background: none
+        background: transparent
         color: $lightGray
         font-weight: normal
         border: 1px solid $lightGray
@@ -393,7 +403,7 @@ ul.list-inline
           color: $orange
 
 .no-results
-  width: 600px
+  width: $itemWidth / 2
   margin: 0 auto
   padding: 50px 0
   ul
@@ -406,8 +416,7 @@ ul.list-inline
   .page-header
     @include transition(all 0.5s ease)
     height: $headerSmallHeight
-    padding-top: 5px
-    padding-bottom: 5px
+    padding: 5px
     .logo
       img
         @include transition(all 0.5s ease)

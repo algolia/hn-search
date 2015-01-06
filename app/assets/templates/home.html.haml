@@ -82,7 +82,7 @@
             .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
             %collection{collection:"comment.children"}
       .no-results{'ng-show' => 'results.hits.length == 0'}
-        %p Your search - <strong>{{query}}</strong> - did not match any documents.
+        %p Your search - <strong>{{query}}</strong> - did not match any result.
         %p Suggestions:
         %ul
           %li
@@ -90,7 +90,7 @@
           %li
             %a{href:"#"} Try larger date range.
           %li
-            %a{href:"#"} Try different type
+            %a{href:"#"} Try different Type/Category.
 
       %ul.search-pagination{'ng-show' => 'results.nbPages > 1'}
         %li
