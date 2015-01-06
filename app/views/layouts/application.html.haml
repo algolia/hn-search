@@ -31,7 +31,7 @@
     %meta{property: "og:image:height", content: '400' }
 
     = yield(:head)
-  %body{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
+  %body.main-fixed{class: controller.action_name == 'legacy' || controller.action_name == 'follow' ? 'legacy' : cookies['style']}
     #main{role: 'main','ng-view' => true}
       / = content_for?(:content) ? yield(:content) : yield
 

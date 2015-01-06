@@ -1,11 +1,16 @@
+$headerHeight: 100px
 $itemHeight: 95px
 $itemWidth: 1000px
 $titleHeight: 77px
 
+$lightGray: #B6B6B6
+$darkGray: #5C5C5C
+$orange: #FF742B
+
 html, body
   margin: 0
   padding: 0
-  color: #B6B6B6
+  color: $lightGray
   height: 100%
   font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
 
@@ -14,6 +19,7 @@ html, body
   margin: 0 auto
 .page-header
   position: fixed
+  z-index: 150
   width: 1200px
   padding: 20px
   height: 100px
@@ -32,12 +38,12 @@ html, body
     padding-top: 5px
     text-align: right
   .logo
-    color: #B6B6B6
+    color: $lightGray
     img
       float: left
       margin-right: 10px
     .logo-name
-      color: #B6B6B6
+      color: $lightGray
       float: left
       font-size: 22px
       line-height: 1.2em
@@ -52,7 +58,7 @@ html, body
       cursor: pointer
       &.active
         font-weight: bold
-        border-bottom: solid 2px #FF742B
+        border-bottom: solid 2px $orange
   .powered-by
     font-size: 12px
     display: inline-block
@@ -96,7 +102,7 @@ ul.list-inline
       display: inline-block
       font-size: 25px
       font-weight: 200
-      color: #5C5C5C
+      color: $darkGray
       margin-right: 10px
     .search-infos
       display: inline-block
@@ -115,7 +121,7 @@ ul.list-inline
       margin-right: 4px
       &:hover
         border-color: #ccc
-        color: #FF742B
+        color: $orange
     .date-range-filter
       position: absolute
       right: 15px
@@ -148,14 +154,14 @@ ul.list-inline
           line-height: 20px
           border-radius: 50%
         &.radio:checked ~ label:before
-          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
         &.radio:focus ~ label:before
-          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px #FF742B
+          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
   h2
     display: inline-block
     font-size: 20px
     font-weight: 200
-    color: #5C5C5C
+    color: $darkGray
     margin-top: 1em
 
   .sidebar
@@ -185,7 +191,7 @@ ul.list-inline
           display: block
           width: 100%
           padding: 10px 20px
-          color: #5C5C5C
+          color: $darkGray
         i
           margin-right: 10px
         &.settings
@@ -199,19 +205,17 @@ ul.list-inline
     padding: 10px
 
 .main-fixed
-  .site-header
-    display: none
   .main
     padding-top: 0
     header
       position: fixed
-      top: 0
+      top: $headerHeight
       left: 50%
       width: 1000px
       margin-left: -400px
     .sidebar
       position: fixed
-      top: 0
+      top: 100px
       left: 50%
       width: 200px
       margin-left: -600px
@@ -222,7 +226,7 @@ ul.list-inline
   display: inline-block
   position: relative
   .icon-search
-    color: #FF742B
+    color: $orange
     position: absolute
     font-size: 24px
     top: 8px
@@ -246,7 +250,7 @@ ul.list-inline
     position: relative
     padding: 0
     .item-main
-      padding: 20px 20px 0
+      padding: 20px 30px 0
       background-color: white
       display: block
       min-height: $itemHeight
@@ -254,9 +258,9 @@ ul.list-inline
     &.item-fixed // sticked item
       padding-top: $itemHeight
       .item-main
-        width: 1000px
+        width: $itemWidth
         position: fixed
-        top: $titleHeight
+        top: $headerHeight + $titleHeight
         height: $itemHeight
         z-index: 150
         box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 3px 0 rgba(0,0,0,.1)
@@ -275,7 +279,7 @@ ul.list-inline
       font-size: 16px
       font-weight: normal
       a
-        color: #5C5C5C
+        color: $darkGray
       em
         font-style: normal
         font-weight: bold
@@ -318,13 +322,13 @@ ul.list-inline
       position: relative
       top: 14px
       a
-        color: #FF742B
+        color: $orange
         i
           margin-left: 20px
           font-size: 18px
         &:hover
           i
-            color: #FF742B
+            color: $orange
     a.hit-link
       font-size: 12px
       color: #5A96B1
@@ -332,20 +336,20 @@ ul.list-inline
       display: inline-block
       font-size: 13px
       margin-bottom: 6px
-      color: #B6B6B6
+      color: $lightGray
     .date
       font-size: 12px
-      color: #B6B6B6
+      color: $lightGray
     .item-comments
       font-size: 12px
     .starred
       i
-        color: #FF742B
+        color: $orange
     [class^="icon-"], [class*=" icon-"]
-      color: #B6B6B6
+      color: $lightGray
   ul.list-item-comments
-    padding: 0 0 20px 30px
-    color: #5C5C5C
+    padding: 0 0 20px 50px
+    color: $darkGray
     > li
       padding: 15px 0 10px 0
       border-bottom: solid 1px #EEEEEE
@@ -376,12 +380,12 @@ ul.list-inline
         font-size: 12px
         text-align: center
         background: none
-        color: #B6B6B6
+        color: $lightGray
         font-weight: normal
-        border: 1px solid #B6B6B6
+        border: 1px solid $lightGray
         outline: none
       &.active
         button
-          border-color: #FF742B
-          color: #FF742B
+          border-color: $orange
+          color: $orange
 

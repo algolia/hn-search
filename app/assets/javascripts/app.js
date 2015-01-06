@@ -66,14 +66,14 @@ var app = angular.module('HNSearch', [
 }]);
 
 // sticky main
-$(document).ready(function() {
-  var body = $('body');
-  var doc = $(document)
-  doc.on("scroll", function(e) {
-    if (doc.scrollTop() > 100) {
-      body.addClass("main-fixed");
-    } else {
-      body.removeClass("main-fixed");
-    }
-  });
-});
+// $(document).ready(function() {
+//   var body = $('body');
+//   var doc = $(document)
+//   doc.on("scroll", function(e) {
+//     if (doc.scrollTop() > 100) {
+//       body.addClass("main-fixed");
+//     } else {
+//       body.removeClass("main-fixed");
+//     }
+//   });
+// });
