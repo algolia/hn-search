@@ -1,4 +1,15 @@
-%hnsearch.search-wrapper{placeholder:"Story, author, comment", "min-length"=>"0", model:"results", source:"getSearch(query)"}
+.search-wrapper
+  .type-select.dropdown
+    %input.dropdown-toggle{type:"text"}
+    .dropdown-text All
+    %ul.dropdown-content
+      %li
+        %a{href:"#"} Story
+      %li
+        %a{href:"#"} Comment
+      %li
+        %a{href:"#"} Author
+  %hnsearch{placeholder:"Story, author, comment", "min-length"=>"0", model:"results", source:"getSearch(query)"}
 %span.powered-by
   powered by
   %a{href: 'http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia', title: 'Realtime Search Engine'}

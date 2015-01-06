@@ -13,6 +13,9 @@
             %i.icon-heart
             %span.date {{hit.points}} points
           %li
+            %i.icon-clock
+            %span.date {{hit.created_at_i|moment}}
+          %li
             %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
               %i.icon-link
               {{hit.url|domain}}
@@ -24,7 +27,7 @@
               %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
             %span{'ng-if' => 'hit.num_comments == 0'} no comment
           %li.action-share
-            %a{href: '#'}
+            %a.dropwdown-share{href:'THIS_PAGE_URL_WITH_FOCUS_ON_THIS_ITEM'}
               %i.icon-share
           %li.action-toggle-star
             %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
@@ -62,7 +65,7 @@
     %li
       %button{'ng-click' => 'nextPage()', 'ng-hide' => 'settings.page >= results.nbPages - 1'} &raquo;
 
-  %a.scroll-to-top.fade{title:'Back to top', href:'#'}
-    %span ^
-    %span.tooltip
-      %span Top [↑]
+%a.scroll-to-top.fade{title:'Back to top', href:'#'}
+  %span ^
+  %span.tooltip
+    %span Top [↑]
