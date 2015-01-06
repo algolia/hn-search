@@ -42,7 +42,7 @@
     %section.search-results
       .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
         .item-main
-          .item-thumbnail{'ng-show' => 'settings.showThumbnails && category !== "ask-hn"'}
+          .item-thumbnail{'ng-show' => 'settings.showThumbnails && category !== "ask-hn" && category !== "polls"'}
             %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
           .item-title-and-infos
             %h2

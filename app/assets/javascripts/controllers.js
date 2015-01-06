@@ -125,6 +125,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     case "ask-hn": return "Ask HN";
     case "show-hn": return "Show HN";
     case "jobs": return "Jobs";
+    case "polls": return "Polls";
     case "hot": return "Hot";
     case "starred": return "Starred";
     default: return "HN Search";

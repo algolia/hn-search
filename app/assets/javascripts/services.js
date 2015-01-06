@@ -96,11 +96,14 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         case 'jobs':
             this.params.tagFilters.push('job');
             break;
+        case 'polls':
+            this.params.tagFilters.push('poll');
+            break;
         }
 
         // item type
         $location.search('type', settings.type);
-        if (settings.type && settings.category !== 'jobs') {
+        if (settings.type && (settings.category !== 'jobs' && settings.category !== 'polls')) {
             this.params.tagFilters.push(settings.type);
         }
 
