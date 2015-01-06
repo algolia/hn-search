@@ -15,7 +15,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         category: (queryParameters.category || ''),
         prefix: (queryParameters.prefix || true),
         page: (parseInt(queryParameters.page, 10) || 0),
-        showThumbnails: storage.showThumbnails
+        showThumbnails: storage.showThumbnails,
+        loadedComments: (queryParameters.comments ? queryParameters.comments.split(',') : [])
     };
 
     // Algolia settings
@@ -33,6 +34,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
     settingsService.save = function() {
         $localStorage.showThumbnails = settings.showThumbnails;
+    };
+
+    settingsService.loadComments = function(id) {
+        settings.loadedComments.push(id);
+        $location.search('comments', settings.loadedComments.join(','));
     };
 
     return settingsService;
@@ -53,23 +59,19 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     pastWeek = pastWeek.setDate(pastWeek.getDate() - 7) / 1000;
     pastMonth = pastMonth.setDate(pastMonth.getDate() - 31) / 1000;
 
-    searchService.setQuery = function(query) {
-        this.query = query;
-        $location.search('query', this.query, false);
-    };
-
     searchService.applySettings = function(settings) {
         this.params.tagFilters = [];
 
         // query
-        $location.search('query', this.query, false);
-        $location.search('sort', settings.sort, false);
-        $location.search('prefix', settings.prefix, false);
-        $location.search('page', settings.page, false);
+        $location.search('query', this.query);
+        $location.search('sort', settings.sort);
+        $location.search('prefix', settings.prefix);
+        $location.search('page', settings.page);
+        $location.search('comments', settings.loadedComments.join(','));
         this.params.page = settings.page;
 
         // date range
-        $location.search('dateRange', settings.dateRange, false);
+        $location.search('dateRange', settings.dateRange);
         if (settings.hasOwnProperty('dateRange')){
             if (settings.dateRange === 'all'){
                 this.params.numericFilters = '';
@@ -83,7 +85,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         }
 
         // story type
-        $location.search('category', settings.category, false);
+        $location.search('category', settings.category);
         switch (settings.category) {
         case 'ask-hn':
             this.params.tagFilters.push('ask_hn');
@@ -97,7 +99,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         }
 
         // item type
-        $location.search('type', settings.type, false);
+        $location.search('type', settings.type);
         if (settings.type && settings.category !== 'jobs') {
             this.params.tagFilters.push(settings.type);
         }

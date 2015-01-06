@@ -1,6 +1,6 @@
 angular.module('HNSearch.controllers', ['ngSanitize'])
 
-.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $http, $routeParams, $sce, search, settings, hot, starred) {
+.controller('SearchCtrl', ['$scope', '$location', '$http', '$routeParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $routeParams, $sce, search, settings, hot, starred) {
   // Init search et params
   $scope.category = $routeParams.cat;
   $scope.settings = settings.get($scope.category);
@@ -10,6 +10,9 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   // reset
   $scope.settings.page = 0;
   window.scrollTo(0, 0);
+  $scope.resetQuery = function() {
+    search.query = '';
+  };
 
   var getIndex = function(q) {
     if ($scope.settings.sort === 'byDate') {
@@ -22,10 +25,16 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 
   //Search scope
-  $scope.getSearch = function() {
+  $scope.getSearch = function(withComments) {
     var _search = function(ids) {
       getIndex(search.query).search(search.query, undefined, search.getParams(ids)).then(function(results) {
         $scope.results = results;
+
+        if (withComments) {
+          for (var i = 0; i < $scope.settings.loadedComments.length; ++i) {
+            $scope.loadComments($scope.settings.loadedComments[i]);
+          }
+        }
       });
     };
     $scope.query = search.query;
@@ -41,45 +50,67 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     }
   };
 
-  $scope.loadComments = function($event, hit) {
-    var item = $($event.currentTarget).closest('.item');
-    item.addClass('item-show-comments');
-    $event.preventDefault();
-    $http.get('https://hn.algolia.com/api/v1/items/' + hit.objectID).
-    success(function(data) {
-      $scope.story[hit.objectID] = { comments: data };
-    });
+  $scope.loadComments = function(id, $event) {
+    if ($event) {
+      settings.loadComments(id);
+      $event.preventDefault();
+    }
 
-    var itemHeight = 95;
-    var itemMarginBorder = 23; //WTF
-    var wrap = $(window);
+    var found = false;
+    for (var i = 0; i < $scope.results.hits.length; ++i) {
+      if ($scope.results.hits[i].objectID == id) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) return;
 
-    var firstStick = false;
-    var startStickPosition = item.position().top - itemHeight + itemMarginBorder;
-    var endStickPosition;
-    //DRAFT
-    wrap.on("scroll", function(e) {
-      console.log(startStickPosition + ' < ' + wrap.scrollTop() + ' < ' + endStickPosition);
+    $http.get('https://hn.algolia.com/api/v1/items/' + id).success(function(data) {
+      $scope.story[id] = { comments: data };
 
-      if (typeof endStickPosition === 'undefined') {
-        endStickPosition = item.next().position().top - 2 * itemHeight + itemMarginBorder;
-        console.log('endStickPosition');
+      var item;
+      if ($event) {
+        item = $($event.currentTarget).closest('.item');
+      } else {
+        item = $('.item_' + id)[0];
       }
+      if (!item || !item.position) {
+        return;
+      }
+      item.addClass('item-show-comments');
 
-      if (wrap.scrollTop() > startStickPosition && wrap.scrollTop() < endStickPosition && firstStick === false) {
-        item.addClass("item-fixed");
-        item.removeClass('item-absolute-bottom');
-        firstStick = 'start';
-      }
-      if (wrap.scrollTop() < startStickPosition && firstStick === 'start') {
-        item.removeClass("item-fixed");
-        firstStick = false;
-      }
-      if (wrap.scrollTop() > endStickPosition && firstStick === 'start') {
-        item.removeClass("item-fixed");
-        item.addClass('item-absolute-bottom');
-        firstStick = false;
-      }
+      var itemHeight = 95;
+      var itemMarginBorder = 23; //WTF
+      var wrap = $(window);
+
+      var firstStick = false;
+      var startStickPosition = item.position().top - itemHeight + itemMarginBorder;
+      var endStickPosition;
+      //DRAFT
+      wrap.on("scroll", function(e) {
+        //console.log(startStickPosition + ' < ' + wrap.scrollTop() + ' < ' + endStickPosition);
+
+        if (typeof endStickPosition === 'undefined') {
+          endStickPosition = item.next().position().top - 2 * itemHeight + itemMarginBorder;
+          //console.log('endStickPosition');
+        }
+
+        if (wrap.scrollTop() > startStickPosition && wrap.scrollTop() < endStickPosition && firstStick === false) {
+          item.addClass("item-fixed");
+          item.removeClass('item-absolute-bottom');
+          firstStick = 'start';
+        }
+        if (wrap.scrollTop() < startStickPosition && firstStick === 'start') {
+          item.removeClass("item-fixed");
+          firstStick = false;
+        }
+        if (wrap.scrollTop() > endStickPosition && firstStick === 'start') {
+          item.removeClass("item-fixed");
+          item.addClass('item-absolute-bottom');
+          firstStick = false;
+        }
+      });
+
     });
   };
 
@@ -155,7 +186,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
 
   // run 1st query
   search.applySettings($scope.settings);
-  $scope.getSearch();
+  $scope.getSearch(true);
 }])
 
 .controller('SettingsCtrl', ['$scope', 'settings', function($scope, settings) {
@@ -200,7 +231,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   };
 }])
 
-.directive('hnsearch', ['search', function(search) {
+.directive('hnsearch', ['search', '$location', function(search, $location) {
   return {
     restrict: 'E',
     replace: true,
@@ -217,18 +248,22 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
         element.addClass(attrs.class);
       }
 
+      scope.blurred = function() {
+        $location.search('query', scope.query);
+      };
+
       scope.$watch('query', function (newValue, oldValue) {
         if(newValue === oldValue || typeof newValue === 'undefined') {
           return;
         }
-        search.setQuery(newValue);
+        search.query = scope.query;
         scope.getData();
       });
 
     },
     template: '<div class="item-input-wrapper">' +
                 '<i ng-hide="query" class="icon-search"></i>' +
-                '<input type="search" placeholder="{{placeholder}}" ng-model="query">' +
+                '<input type="search" placeholder="{{placeholder}}" ng-model="query" ng-blur="blurred()">' +
               '</div>'
   };
 }])

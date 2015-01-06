@@ -40,7 +40,7 @@
             %input#range-4.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"all"}
             %label{for:"range-4"} Forever
     %section.search-results
-      .item{"ng-repeat"=>"hit in results.hits"}
+      .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
         .item-main
           .item-thumbnail{'ng-show' => 'settings.showThumbnails && category !== "ask-hn"'}
             %img{"ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
@@ -65,7 +65,7 @@
             %ul.list-inline
               %li.action-toggle-comments{'ng-show' => 'category != "jobs"'}
                 %i.icon-bubble
-                %a{href:"#", "ng-click"=>"loadComments($event, hit)", 'ng-if' => 'hit.num_comments > 0'}
+                %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'ng-if' => 'hit.num_comments > 0'}
                   %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
                 %span{'ng-if' => 'hit.num_comments == 0'} no comment
               %li.action-share
