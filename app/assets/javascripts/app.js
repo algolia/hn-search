@@ -13,6 +13,9 @@ var app = angular.module('HNSearch', [
   // use JSON by default
   $httpProvider.defaults.headers.common.Accept = 'application/json';
 
+  // html 5 mode
+  $locationProvider.html5Mode(true);
+
   // routes
   $urlRouterProvider.otherwise('/');
   $stateProvider

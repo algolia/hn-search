@@ -61,7 +61,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 .factory('search', ['$location', function($location) {
     var queryParameters = $location.search();
     var searchService = {
-        query: (queryParameters.query || ''),
+        query: (queryParameters.query || queryParameters.q || ''),
         params: {
             hitsPerPage: 20,
             minWordSizefor1Typo: 5,

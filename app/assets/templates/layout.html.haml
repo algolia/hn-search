@@ -1,7 +1,7 @@
 .container
   %header.page-header
     .col-1{'ui-view' => 'col-1'}
-      %a.logo{href: '#/', 'ng-click' => 'resetQuery()'}
+      %a.logo{href: '/', 'ng-click' => 'resetQuery()'}
         %img{src:"/assets/logo-hn-search.png"}
         .logo-name
           Search
@@ -14,10 +14,10 @@
     %header{'ui-view' => 'main-header'}
     %section{'ui-view' => 'main-content'}
     %footer
-      %a{href: '#/about'} About
-      %a{href: '#/help'} Help
+      %a{href: '/about'} About
+      %a{href: '/help'} Help
       %a{href: 'https://github.com/algolia/hn-search'} GitHub
       %a{href: 'http://status.algolia.com/hn'} Status
-      %a{href: '#/'} Search
-      %a{href: '#/cool_apps'} Cool apps
-      %a{href: '#/api'} API
+      %a{href: '/'} Search
+      %a{href: '/cool_apps'} Cool apps
+      %a{href: '/api'} API

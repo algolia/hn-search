@@ -393,7 +393,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     restrict: 'A',
     link: function(scope, element, attrs, controller) {
       var path = attrs.href;
-      path = path.substring(1); //hack because path does not return including hashbang
+      //path = path.substring(1); //hack because path does not return including hashbang
       scope.location = location;
       scope.$watch('location.path()', function(newPath) {
         if (path === newPath || (path === '/' && newPath === '')) {
