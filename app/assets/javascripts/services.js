@@ -133,7 +133,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
         // item type
         $location.search('type', settings.type);
-        if (settings.type && (settings.category !== 'jobs' && settings.category !== 'polls')) {
+        if (settings.type && (page !== 'jobs' && page !== 'polls')) {
             this.params.tagFilters.push(settings.type);
         }
 
