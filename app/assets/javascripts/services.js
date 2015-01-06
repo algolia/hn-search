@@ -5,13 +5,17 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
     //default settings
     var storage = $localStorage.$default({
-        showThumbnails: true
+        showThumbnails: true,
+        defaultSort: 'byDate',
+        defaultDateRange: 'last24h'
     });
     var queryParameters = $location.search();
     var settings = {
-        dateRange: (queryParameters.dateRange || 'last24h'),
+        dateRange: (queryParameters.dateRange || storage.defaultDateRange),
+        defaultDateRange: storage.defaultDateRange,
         type: (queryParameters.type || 'story'),
-        sort: (queryParameters.sort || 'byDate'),
+        sort: (queryParameters.sort || storage.defaultSort),
+        defaultSort: storage.defaultSort,
         category: (queryParameters.category || ''),
         prefix: (queryParameters.prefix || true),
         page: (parseInt(queryParameters.page, 10) || 0),
@@ -33,6 +37,16 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
     settingsService.save = function() {
         $localStorage.showThumbnails = settings.showThumbnails;
+
+        if ($localStorage.defaultSort != settings.defaultSort) {
+            settings.sort = settings.defaultSort;
+        }
+        $localStorage.defaultSort = settings.defaultSort;
+
+        if ($localStorage.defaultDateRange != settings.defaultDateRange) {
+            settings.dateRange = settings.defaultDateRange;
+        }
+        $localStorage.defaultDateRange = settings.defaultDateRange;
     };
 
     settingsService.loadComments = function(id) {

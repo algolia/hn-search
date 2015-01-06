@@ -10,6 +10,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   window.scrollTo(0, 0);
   $scope.resetQuery = function() {
     $scope.settings.page = 0;
+    $scope.settings.comments = [];
     search.query = '';
   };
 
@@ -197,7 +198,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   $scope.isSettings = true;
   $scope.settings = settings.get();
 
-  $scope.$watchCollection('settings', function() {
+  $scope.$watchCollection('settings', function(oldSettings, newSettings) {
     settings.save();
   });
 }])
@@ -229,7 +230,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
       }
     },
     template: '<li>' +
-                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <span class="date">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</span>' +
+                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#up_{{reply.id}}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a>' +
                 '<div class="reply-container" ng-bind-html="reply.text|cleanup"></div>' +
               '</li>'
   };

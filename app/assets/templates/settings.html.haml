@@ -4,3 +4,19 @@
     %label{for: 'showThumbnails'}
       %input{type: 'checkbox', id: 'showThumbnails', 'ng-model' => 'settings.showThumbnails'}
       Show thumbnails
+
+  %h2 Ranking option
+  %fieldset
+    %label{for: 'sortOrder'}
+      Default sort order
+      %select{id: 'sortOrder', 'ng-model' => 'settings.defaultSort'}
+        %option{value: 'byDate'} Most Recent First
+        %option{value: 'byPopularity'} Most Popular First
+
+    %label{for: 'dateRange'}
+      Default date range
+      %select{id: 'dateRange', 'ng-model' => 'settings.defaultDateRange'}
+        %option{value: 'last24h'} Last 24h
+        %option{value: 'pastWeek'} Past Week
+        %option{value: 'pastMonth'} Past Month
+        %option{value: 'all'} Forever

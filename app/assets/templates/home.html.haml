@@ -34,7 +34,7 @@
         %span.author
           %avatar{author:"comment.author"}
           {{comment.author}} -
-        %span.date {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
+        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}'} {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && settings.category == "starred" '}
