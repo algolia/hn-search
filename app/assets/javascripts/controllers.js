@@ -267,7 +267,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   });
 
   // Watch+Handle page change
-  $scope.$watch('state', function(newSettings, oldSettings) {
+  $scope.$watch('state', function() {
     settings.reload();
   });
   $scope.$on("$stateChangeSuccess", function(event, toState, toParams) {
