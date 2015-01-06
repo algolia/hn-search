@@ -8,9 +8,9 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   $scope.story = {};
 
   // reset
-  $scope.settings.page = 0;
   window.scrollTo(0, 0);
   $scope.resetQuery = function() {
+    $scope.settings.page = 0;
     search.query = '';
   };
 

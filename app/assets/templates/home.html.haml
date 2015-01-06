@@ -97,7 +97,7 @@
           %li
             %a{href:"#"} Try different Type/Category.
 
-      %ul.search-pagination{'ng-show' => 'results.nbPages > 1'}
+      %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
         %li
           %button{'ng-click' => 'prevPage()', 'ng-hide' => 'settings.page == 0'} &laquo;
         %li{'ng-repeat' => 'n in getPages(results) track by $index', 'ng-class' => '{ "active": (n == settings.page) }'}
