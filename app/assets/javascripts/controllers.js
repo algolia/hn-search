@@ -17,18 +17,90 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   var getIndex = function(q) {
     if ($scope.settings.sort === 'byDate') {
       return settings.indexSortedByDate;
-    } else if (q.trim().split(/ +/).length === 1) {
+    } else if (q.length <= 2) {
       return settings.indexSortedByPopularityOrdered;
     } else {
       return settings.indexSortedByPopularity;
     }
   };
 
+  var parseQuery = function(query, params) {
+    params.tagFilters = params.tagFilters || [];
+    params.numericFilters = params.numericFilters || [];
+
+    // authors:pg (ORed)
+    var authors = [];
+    while (true) {
+      var matches = query.match(/(author|by):([^ ]+)/);
+      if (!matches) {
+        break;
+      }
+      if (matches.length > 0) {
+        authors.push(matches[2]);
+        query = query.replace(matches[1] + ':' + matches[2], '');
+      }
+    }
+    if (authors.length > 0) {
+      var tags = [];
+      for (var i = 0; i < authors.length; ++i) {
+        tags.push('author_' + authors[i]);
+      }
+      params.tagFilters.push(tags);
+    }
+
+    // points>42 (ANDed)
+    while (true) {
+      var matches = query.match(/points(=|:|<|>|<=|>=)([0-9]+)/);
+      if (!matches) {
+        break;
+      }
+      if (matches.length > 0) {
+        params.numericFilters.push('points' + matches[1] + matches[2]);
+        query = query.replace('points' + matches[1] + matches[2], '');
+      }
+    }
+
+    // date>1395440948 (ANDed)
+    while (true) {
+      var matches = query.match(/date(=|:|<|>|<=|>=)([0-9]+)/);
+      if (!matches) {
+        break;
+      }
+      if (matches.length > 0) {
+        params.numericFilters.push('created_at_i' + matches[1] + matches[2]);
+        query = query.replace('date' + matches[1] + matches[2], '');
+      }
+    }
+
+    // story:ID (ORed)
+    var stories = [];
+    while (true) {
+      var matches = query.match('story:([0-9]+)');
+      if (!matches) {
+        break;
+      }
+      if (matches.length > 0) {
+        stories.push(matches[1]);
+        query = query.replace('story:' + matches[1], '');
+      }
+    }
+    if (stories.length > 0) {
+      var tags = [];
+      for (var i = 0; i < stories.length; ++i) {
+        tags.push('story_' + stories[i]);
+      }
+      params.tagFilters.push(tags);
+    }
+
+    return { query: query, params: params };
+  };
+
   //Search scope
   $scope.getSearch = function(withComments) {
     NProgress.start();
     var _search = function(ids) {
-      getIndex(search.query).search(search.query, undefined, search.getParams(ids)).then(function(results) {
+      var parsedQuery = parseQuery(search.query, search.getParams(ids));
+      getIndex(parsedQuery.query).search(parsedQuery.query, undefined, parsedQuery.params).then(function(results) {
         $scope.results = results;
         NProgress.done();
         if (withComments) {
@@ -257,6 +329,14 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
         $location.search('query', scope.query);
       };
 
+      scope.keyup = function($event) {
+        if ($event.keyCode === 13) {
+          settings.get().prefix = false;
+        } else {
+          settings.get().prefix = true;
+        }
+      };
+
       scope.$watch('query', function (newValue, oldValue) {
         if(newValue === oldValue || typeof newValue === 'undefined') {
           return;
@@ -269,7 +349,7 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
     },
     template: '<div class="item-input-wrapper">' +
                 '<i ng-hide="query" class="icon-search"></i>' +
-                '<input type="search" placeholder="{{placeholder}}" ng-model="query" ng-blur="blurred()">' +
+                '<input type="search" placeholder="{{placeholder}}" ng-model="query" ng-blur="blurred()" ng-keyup="keyup($event)">' +
               '</div>'
   };
 }])

@@ -61,7 +61,13 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     var queryParameters = $location.search();
     var searchService = {
         query: (queryParameters.query || ''),
-        params: {}
+        params: {
+            hitsPerPage: 20,
+            minWordSizefor1Typo: 5,
+            minWordSizefor2Typos: 9,
+            advancedSyntax: true,
+            ignorePlurals: true
+        }
     };
 
     //dates
@@ -119,6 +125,9 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         if (settings.type && (settings.category !== 'jobs' && settings.category !== 'polls')) {
             this.params.tagFilters.push(settings.type);
         }
+
+        // prefix
+        this.params.queryType = settings.prefix ? 'prefixLast' : 'prefixNone';
 
         return this.params;
     };
