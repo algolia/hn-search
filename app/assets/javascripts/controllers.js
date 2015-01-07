@@ -283,8 +283,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
     }
   ];
 
-
-
   // Pagination
   $scope.nextPage = function() {
     $scope.toPage($scope.settings.page + 1);

@@ -1,20 +1,3 @@
-$headerHeight: 100px
-$headerSmallHeight: 60px
-$itemHeight: 95px
-$itemWidth: 1000px
-$titleHeight: 77px
-$containerWidth: 1200px
-$sidebarWidth: 200px
-
-$fontBase: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif
-
-$lightGray: #B6B6B6
-$darkGray: #5C5C5C
-$orange: #FF742B
-$blue: #2A9ED9
-$sidebarColor: #F8F8F8
-$linkColor: #5A96B1
-
 html, body
   height: 100%
   margin: 0
@@ -77,14 +60,7 @@ html, body
       top: 1px
       vertical-align: bottom
 .clearfix
-  *zoom: 1
-  &:before,
-  &:after
-    display: table
-    content: ""
-    line-height: 0
-  &:after
-    clear: both
+  @extend %clearfix
 
 //common
 ul.list-inline
@@ -455,14 +431,6 @@ h1, h2, h3, h4, h5
     .item-fixed
       .item-main
         top: $headerSmallHeight + $titleHeight
-
-.page
-  margin-top: $titleHeight
-  padding: 10px
-  pre
-    background: white
-    border: 1px solid $lightGray
-    font-size: 12px
 
 footer
   margin-top: 50px

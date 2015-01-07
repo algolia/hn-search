@@ -27,7 +27,7 @@ var app = angular.module('HNSearch', [
     .state('root.about', {
       url: '/about',
       views: {
-        'main-header': { template: '<h1>About</h1>' },
+        'main-header': { template: '<a href="#"><i class="icon-star"></i></a><h1>About</h1>' },
         'main-content': { templateUrl: 'about.html' }
       }
     })

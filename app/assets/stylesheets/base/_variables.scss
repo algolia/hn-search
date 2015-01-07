@@ -63,3 +63,21 @@ $form-box-shadow: inset 0 1px 3px rgba(black,0.06);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(darken($form-border-color-focus, 5), 0.7);
 $form-font-size: $base-font-size;
 $form-font-family: $base-font-family;
+
+//
+$headerHeight: 100px;
+$headerSmallHeight: 60px;
+$itemHeight: 95px;
+$itemWidth: 1000px;
+$titleHeight: 77px;
+$containerWidth: 1200px;
+$sidebarWidth: 200px;
+
+$fontBase: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+
+$lightGray: #B6B6B6;
+$darkGray: #5C5C5C;
+$orange: #FF742B;
+$blue: #2A9ED9;
+$sidebarColor: #F8F8F8;
+$linkColor: #5A96B1;
