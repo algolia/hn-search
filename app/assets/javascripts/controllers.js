@@ -340,6 +340,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       }
       $scope.settings.sort = 'byDate';
       $scope.settings.dateRange = 'all';
+      $scope.settings.type = 'story';
       if (!$scope.savedQuery) {
         $scope.savedQuery = $scope.query;
       }
