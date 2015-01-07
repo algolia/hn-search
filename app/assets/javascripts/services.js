@@ -20,8 +20,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
             defaultSort: storage.defaultSort,
             prefix: (queryParameters.prefix || true),
             page: (parseInt(queryParameters.page, 10) || 0),
-            showThumbnails: storage.showThumbnails,
-            loadedComments: (queryParameters.comments ? queryParameters.comments.split(',') : [])
+            showThumbnails: storage.showThumbnails
         };
     }
     var settings = _loadSettings();
@@ -61,11 +60,6 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         $localStorage.defaultDateRange = settings.defaultDateRange;
     };
 
-    settingsService.loadComments = function(id) {
-        settings.loadedComments.push(id);
-        $location.search('comments', settings.loadedComments.join(','));
-    };
-
     return settingsService;
 }])
 
@@ -98,7 +92,6 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         $location.search('sort', settings.sort);
         $location.search('prefix', settings.prefix);
         $location.search('page', settings.page);
-        $location.search('comments', settings.loadedComments.join(','));
         this.params.page = settings.page;
 
         // date range

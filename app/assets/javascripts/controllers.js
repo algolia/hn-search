@@ -97,11 +97,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       getIndex(parsedQuery.query).search(parsedQuery.query, undefined, parsedQuery.params).then(function(results) {
         $scope.results = results;
         NProgress.done();
-        // if (withComments) {
-        //   for (var i = 0; i < $scope.settings.loadedComments.length; ++i) {
-        //     $scope.loadComments($scope.settings.loadedComments[i]);
-        //   }
-        // }
       });
     };
     $scope.query = search.query;
@@ -118,18 +113,15 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
   };
 
   $scope.loadComments = function(id, $event) {
+    $event.preventDefault();
 
-    NProgress.start();
+    $('.item-show-comments').removeClass('item-show-comments');
 
-    if ($event) {
-      $event.preventDefault();
-
-      // reset previous comments
-      $scope.story = {};
-      $scope.settings.loadedComments = [];
-
-      // load comment
-      settings.loadComments(id);
+    // reset previous comments
+    var s = $scope.story[id];
+    $scope.story = {};
+    if (s) {
+      return;
     }
 
     var found = false;
@@ -140,27 +132,16 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       }
     }
     if (!found) {
-      NProgress.done();
       return;
     }
 
+    NProgress.start();
     $http.get('https://hn.algolia.com/api/v1/items/' + id).success(function(data) {
-
       NProgress.done();
 
       $scope.story[id] = { comments: data };
 
-      var item;
-      if ($event) {
-        item = $($event.currentTarget).closest('.item');
-      } else {
-        item = $('.item_' + id)[0];
-      }
-      if (!item || !item.position) {
-        return;
-      }
-
-      $('.item-show-comments').removeClass('item-show-comments');
+      var item = $($event.currentTarget).closest('.item');
       item.addClass('item-show-comments');
       $(window).scrollTop(item.offset().top - $('.page-header').outerHeight() - $('.main > header').outerHeight());
     });
