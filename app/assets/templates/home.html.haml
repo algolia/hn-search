@@ -30,7 +30,7 @@
               %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
             %span{'ng-if' => 'hit.num_comments == 0'} no comment
           %li.action-share
-            %a.dropwdown-share{href:'FIXME:THIS_PAGE_URL_WITH_FOCUS_ON_THIS_ITEM',"dropdown-menu"=>"ddMenuShare"}
+            %a.dropwdown-share{href:'FIXME:THIS_PAGE_URL_WITH_FOCUS_ON_THIS_ITEM',"dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected, hit.objectID)"}
               %i.icon-share
           %li.action-toggle-star
             %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}

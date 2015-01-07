@@ -270,18 +270,35 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
   $scope.ddMenuShare = [
     {
       text: 'Share on Twitter',
-      href: '#',
-      icon: 'icon-twitter'
+      icon: 'icon-twitter',
+      share: 'twitter'
     }, {
       text: 'Share on Facebook',
-      href: '#',
-      icon: 'icon-facebook'
+      icon: 'icon-facebook',
+      share: 'facebook'
     }, {
       text: 'Share by Email',
-      href: '#',
-      icon: 'icon-envelope-o'
+      icon: 'icon-envelope-o',
+      share: 'email'
     }
   ];
+  // Share item
+  $scope.shareItem = function(selected, objectID){
+    console.log('share ' + objectID + ' on ' + selected.share);
+    var url = 'http://FIXME';
+    var title = 'FIXME as well';
+    switch (selected.share){
+      case 'twitter':
+        window.open("https://twitter.com/share?url=" + escape(url) + "&text=" + title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        break;
+      case 'facebook':
+        window.open("https://www.facebook.com/sharer/sharer.php?u=" + escape(url) + "&t=" + title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        break;
+      case 'email':
+        console.log('FIXME email')
+        break;
+    }
+  };
 
   // Pagination
   $scope.nextPage = function() {
