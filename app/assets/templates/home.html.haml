@@ -55,12 +55,9 @@
       did not match any results.
     %p Suggestions:
     %ul
-      %li
-        %a{href:"#"} Try different keywords.
-      %li
-        %a{href:"#"} Try larger date range.
-      %li
-        %a{href:"#"} Try different Type/Category.
+      %li{'ng-show' => 'query'} Try different keywords.
+      %li{'ng-show' => 'settings.dateRange !== "all"'} Try larger date range.
+      %li{'ng-show' => 'settings.type !== "all"'} Try different Type/Category.
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
     %li
