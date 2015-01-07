@@ -133,7 +133,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
         break;
       }
     }
-    if (!found) return;
+    if (!found) {
+      NProgress.done();
+      return;
+    }
 
     $http.get('https://hn.algolia.com/api/v1/items/' + id).success(function(data) {
 
