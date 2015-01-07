@@ -1,154 +1,116 @@
-%section.page
-  %style{type: 'text/css'}
-    :plain
-      ul {
-        list-style-type: none;
-        margin: 0px;
-        padding: 0px;
-      }
-
-      .property {
-        font-weight: bold;
-      }
-
-      .type-null {
-        color: gray;
-      }
-
-      .type-boolean {
-        color: firebrick;
-      }
-
-      .type-number {
-        color: blue;
-      }
-
-      .type-string {
-        color: green;
-      }
-
-      .callback-function {
-        color: gray;
-      }
-
-      .collapsible {
-        margin-left: 10px;
-      }
-
-      .hoverable {
-        padding-top: 1px;
-        padding-bottom: 1px;
-        padding-left: 2px;
-        padding-right: 2px;
-        border-radius: 2px;
-      }
-
-      .hovered {
-        background-color: rgba(235, 238, 249, 1);  
-      }
-
-      .collapser {
-        padding-right: 6px;
-        padding-left: 6px;
-      }
+%section.page.api-doc
 
   %p This API is built on top of Algolia Search's API. It enables developers to access HN data programmatically using a REST API. This documentation describes how to request data from the API and how to interpret the response.
+  %br
+  .panel
+    %h2 Items
+    %p
+      %span.label-get GET
+      <code>#{api_v1_items_url(':id', host: 'hn.algolia.com')}</code>
+    %pre
+      <div id="json"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">id</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">created_at</span>: <span class="type-string">"2006-10-09T18:21:51.000Z"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">title</span>: <span class="type-string">"Y Combinator"</span>,</div></li><li><div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a href="http://ycombinator.com">http://ycombinator.com</a><span class="type-string">"</span>,</div></li><li><div class="hoverable"><span class="property">text</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">57</span>,</div></li><li><div class="hoverable"><span class="property">parent_id</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">children</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">id</span>: <span class="type-number">15</span>,</div></li><li><div class="hoverable"><span class="property">created_at</span>: <span class="type-string">"2006-10-09T19:51:01.000Z"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"sama"</span>,</div></li><li><div class="hoverable"><span class="property">text</span>: <span class="type-string">"&amp;#34;the rising star of venture capital&amp;#34; -unknown VC eating lunch on SHR"</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">5</span>,</div></li><li><div class="hoverable"><span class="property">parent_id</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">children</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">id</span>: <span class="type-number">17</span>,</div></li><li><div class="hoverable"><span class="property">created_at</span>: <span class="type-string">"2006-10-09T19:52:45.000Z"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">text</span>: <span class="type-string">"Is there anywhere to eat on Sandhill Road?"</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">5</span>,</div></li><li><div class="hoverable"><span class="property">parent_id</span>: <span class="type-number">15</span>,</div></li><li><div class="hoverable"><span class="property">children</span>: [ ]</div></li></ul>}</div></li></ul>]</div></li></ul>}</div></li></ul>]</div></li></ul>}</div>
 
-  %h3 Items
+  .panel
+    %h2 Users
+    %p
+      %span.label-get GET
+      <code>#{api_v1_users_url(':username', host: 'hn.algolia.com')}</code>
+    %pre
+      <div id="json">{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">username</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">about</span>: <span class="type-string">"PG's bio"</span>,</div></li><li><div class="hoverable"><span class="property">karma</span>: <span class="type-string">99999</span></div></li></ul>}</div>
 
-  %h5 Request
-  %p
-    %span.label.label-info GET
-    <code>#{api_v1_items_url(':id', host: 'hn.algolia.com')}</code>
+  .panel
+    %h2 Search
+    %h3 Sorted by relevance, then points, then number of comments
+    %p
+      %span.label-get GET
+      <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=...</code>
 
-  %h5 Answer
-  %pre
-    <div id="json"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">id</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">created_at</span>: <span class="type-string">"2006-10-09T18:21:51.000Z"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">title</span>: <span class="type-string">"Y Combinator"</span>,</div></li><li><div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a href="http://ycombinator.com">http://ycombinator.com</a><span class="type-string">"</span>,</div></li><li><div class="hoverable"><span class="property">text</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">57</span>,</div></li><li><div class="hoverable"><span class="property">parent_id</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">children</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">id</span>: <span class="type-number">15</span>,</div></li><li><div class="hoverable"><span class="property">created_at</span>: <span class="type-string">"2006-10-09T19:51:01.000Z"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"sama"</span>,</div></li><li><div class="hoverable"><span class="property">text</span>: <span class="type-string">"&amp;#34;the rising star of venture capital&amp;#34; -unknown VC eating lunch on SHR"</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">5</span>,</div></li><li><div class="hoverable"><span class="property">parent_id</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">children</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">id</span>: <span class="type-number">17</span>,</div></li><li><div class="hoverable"><span class="property">created_at</span>: <span class="type-string">"2006-10-09T19:52:45.000Z"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">text</span>: <span class="type-string">"Is there anywhere to eat on Sandhill Road?"</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">5</span>,</div></li><li><div class="hoverable"><span class="property">parent_id</span>: <span class="type-number">15</span>,</div></li><li><div class="hoverable"><span class="property">children</span>: [ ]</div></li></ul>}</div></li></ul>]</div></li></ul>}</div></li></ul>]</div></li></ul>}</div>
+    %h3 Sorted by date, more recent first
+    %p
+      %span.label-get GET
+      <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?query=...</code>
 
-  %h3 Users
 
-  %h5 Request
-  %p
-    %span.label.label-info GET
-    <code>#{api_v1_users_url(':username', host: 'hn.algolia.com')}</code>
+    / %p Common query parameters:
+    %table
+      %tr
+        %th{style:"width:25%"}
+          Parameter
+        %th
+          Description
+        %th{style:"width:15%"}
+          Type
+      %tr
+        %td
+          <code>query=</code>
+        %td
+          full-text query
+        %td
+          String
+      %tr
+        %td
+          <code>tags=</code>
+        %td
+          filter on a specific tag. Available tags:
+          %ul
+            %li <code>story</code>
+            %li <code>comment</code>
+            %li <code>poll</code>
+            %li <code>pollopt</code>
+            %li <code>show_hn</code>
+            %li <code>ask_hn</code>
+            %li <code>author_:USERNAME</code>
+            %li <code>story_:ID</code>
+        %td
+          String
+      %tr
+        %td
+          <code>numericFilters=</code>
+        %td
+          filter on a specific numerical condition (<code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>&gt;</code> or <code>&gt;=</code>).
+          %br
+          Available numerical fields:
+          %ul
+            %li <code>created_at_i</code>
+            %li <code>points</code>
+            %li <code>num_comments</code>
+        %td
+          String
+      %tr
+        %td <code>page=</code>
+        %td page number
+        %td Integer
+    %br
+    %p Tags are ANDed by default, can be ORed if between parenthesis. For example <code>author_pg,(story,poll)</code> filters on <code>author=pg AND (type=story OR type=poll)</code>.
 
-  %h5 Answer
-  %pre
-    <div id="json">{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">username</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">about</span>: <span class="type-string">"PG's bio"</span>,</div></li><li><div class="hoverable"><span class="property">karma</span>: <span class="type-string">99999</span></div></li></ul>}</div>
+    %p By default a limited number of results are returned in each page, so a given query may be broken over dozens of pages. The number of results and page number are available as the variables <code>nbPages</code> and <code>hitsPerPage</code> respectively; they can be specified as arguments in requests, allowing for more results to be requested or iteration over the available pages eg appending to the search URL parameters like <code>&page=2</code> or <code>hitsPerPage=50</code>.
 
-  %h3 Search
+    %p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
 
-  %h5 Request (sorted by relevance, then points, then number of comments)
-  %p
-    %span.label.label-info GET
-    <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=...</code>
+    %h3 Examples
+    %dl
+      %dt All stories matching <code>foo</code>
+      %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=foo&tags=story</code>
+      %dt All comments matching <code>bar</code>
+      %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=bar&tags=comment</code>
+      %dt All URLs matching <code>bar</code>
+      %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=bar&restrictSearchableAttributes=url</code>
+      %dt Last stories
+      %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=story</code>
+      %dt Last stories OR polls
+      %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=(story,poll)</code>
+      %dt Comments since timestamp <code>X</code> (in second)
+      %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=comment&numericFilters=created_at_i&gt;X</code>
+      %dt Stories between timestamp <code>X</code> and timestamp <code>Y</code> (in second)
+      %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=story&numericFilters=created_at_i&gt;X,created_at_i&lt;Y</code>
+      %dt Stories of <code>pg</code>
+      %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?tags=story,author_pg</code>
+      %dt Comments of story <code>X</code>
+      %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?tags=comment,story_X</code>
 
-  %h5 Request (sorted by date, more recent first)
-  %p
-    %span.label.label-info GET
-    <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?query=...</code>
+    %pre
+      <div id="json"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">hits</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">title</span>: <span class="type-string">"Y Combinator"</span>,</div></li><li><div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a href="http://ycombinator.com">http://ycombinator.com</a><span class="type-string">"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">57</span>,</div></li><li><div class="hoverable"><span class="property">story_text</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">comment_text</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">_tags</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><span class="type-string">"story"</span></div></li></ul>],</div></li><li><div class="hoverable"><span class="property">num_comments</span>: <span class="type-number">2</span>,</div></li><li><div class="hoverable"><span class="property">objectID</span>: <span class="type-string">"1"</span>,</div></li><li><div class="hoverable"><span class="property">_highlightResult</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">title</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">value</span>: <span class="type-string">"Y Combinator"</span>,</div></li><li><div class="hoverable"><span class="property">matchLevel</span>: <span class="type-string">"none"</span>,</div></li><li><div class="hoverable"><span class="property">matchedWords</span>: [ ]</div></li></ul>},</div></li><li><div class="hoverable"><span class="property">url</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">value</span>: <span class="type-string">"</span><a href="http://ycombinator.com">http://ycombinator.com</a><span class="type-string">"</span>,</div></li><li><div class="hoverable"><span class="property">matchLevel</span>: <span class="type-string">"none"</span>,</div></li><li><div class="hoverable"><span class="property">matchedWords</span>: [ ]</div></li></ul>},</div></li><li><div class="hoverable"><span class="property">author</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">value</span>: <span class="type-string">"&lt;em&gt;pg&lt;/em&gt;"</span>,</div></li><li><div class="hoverable"><span class="property">matchLevel</span>: <span class="type-string">"full"</span>,</div></li><li><div class="hoverable"><span class="property">matchedWords</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><span class="type-string">"pg"</span></div></li></ul>]</div></li></ul>}</div></li></ul>}</div></li></ul>}, [...]</div></li></ul>],</div></li><li><div class="hoverable"><span class="property">page</span>: <span class="type-number">0</span>,</div></li><li><div class="hoverable"><span class="property">nbHits</span>: <span class="type-number">11</span>,</div></li><li><div class="hoverable"><span class="property">nbPages</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">hitsPerPage</span>: <span class="type-number">20</span>,</div></li><li><div class="hoverable"><span class="property">processingTimeMS</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">query</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">params</span>: <span class="type-string">"query=pg"</span></div></li></ul>}</div>
 
-  %h5 Query parameters
-
-  %p Common query parameters:
-
-  %dl.dl-horizontal
-    %dt <code>query=</code>
-    %dd full-text query
-    %dt <code>tags=</code>
-    %dd
-      filter on a specific tag. Available tags:
-      %ul
-        %li <code>story</code>
-        %li <code>comment</code>
-        %li <code>poll</code>
-        %li <code>pollopt</code>
-        %li <code>show_hn</code>
-        %li <code>ask_hn</code>
-        %li <code>author_:USERNAME</code>
-        %li <code>story_:ID</code>
-    %dt <code>numericFilters=</code>
-    %dd
-      filter on a specific numerical condition (<code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>&gt;</code> or <code>&gt;=</code>). Available numerical fields:
-      %ul
-        %li <code>created_at_i</code>
-        %li <code>points</code>
-        %li <code>num_comments</code>
-    %dt <code>page=</code>
-    %dd page number
-
-  %p Tags are ANDed by default, can be ORed if between parenthesis. For example <code>author_pg,(story,poll)</code> filters on <code>author=pg AND (type=story OR type=poll)</code>.
-
-  %p By default a limited number of results are returned in each page, so a given query may be broken over dozens of pages. The number of results and page number are available as the variables <code>nbPages</code> and <code>hitsPerPage</code> respectively; they can be specified as arguments in requests, allowing for more results to be requested or iteration over the available pages eg appending to the search URL parameters like <code>&page=2</code> or <code>hitsPerPage=50</code>.
-
-  %p The complete list of search parameters is available in Algolia <a href="https://www.algolia.com/doc/rest_api#QueryIndex">Search API documentation</a>.
-
-  %h5 Examples
-  %dl
-    %dt All stories matching <code>foo</code>
-    %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=foo&tags=story</code>
-    %dt All comments matching <code>bar</code>
-    %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=bar&tags=comment</code>
-    %dt All URLs matching <code>bar</code>
-    %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=bar&restrictSearchableAttributes=url</code>
-    %dt Last stories
-    %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=story</code>
-    %dt Last stories OR polls
-    %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=(story,poll)</code>
-    %dt Comments since timestamp <code>X</code> (in second)
-    %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=comment&numericFilters=created_at_i&gt;X</code>
-    %dt Stories between timestamp <code>X</code> and timestamp <code>Y</code> (in second)
-    %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=story&numericFilters=created_at_i&gt;X,created_at_i&lt;Y</code>
-    %dt Stories of <code>pg</code>
-    %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?tags=story,author_pg</code>
-    %dt Comments of story <code>X</code>
-    %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?tags=comment,story_X</code>
-
-  %h5 Answer
-  %pre
-    <div id="json"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">hits</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">title</span>: <span class="type-string">"Y Combinator"</span>,</div></li><li><div class="hoverable"><span class="property">url</span>: <span class="type-string">"</span><a href="http://ycombinator.com">http://ycombinator.com</a><span class="type-string">"</span>,</div></li><li><div class="hoverable"><span class="property">author</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">points</span>: <span class="type-number">57</span>,</div></li><li><div class="hoverable"><span class="property">story_text</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">comment_text</span>: <span class="type-null">null</span>,</div></li><li><div class="hoverable"><span class="property">_tags</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><span class="type-string">"story"</span></div></li></ul>],</div></li><li><div class="hoverable"><span class="property">num_comments</span>: <span class="type-number">2</span>,</div></li><li><div class="hoverable"><span class="property">objectID</span>: <span class="type-string">"1"</span>,</div></li><li><div class="hoverable"><span class="property">_highlightResult</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">title</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">value</span>: <span class="type-string">"Y Combinator"</span>,</div></li><li><div class="hoverable"><span class="property">matchLevel</span>: <span class="type-string">"none"</span>,</div></li><li><div class="hoverable"><span class="property">matchedWords</span>: [ ]</div></li></ul>},</div></li><li><div class="hoverable"><span class="property">url</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">value</span>: <span class="type-string">"</span><a href="http://ycombinator.com">http://ycombinator.com</a><span class="type-string">"</span>,</div></li><li><div class="hoverable"><span class="property">matchLevel</span>: <span class="type-string">"none"</span>,</div></li><li><div class="hoverable"><span class="property">matchedWords</span>: [ ]</div></li></ul>},</div></li><li><div class="hoverable"><span class="property">author</span>: <div class="collapser"></div>{<span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property">value</span>: <span class="type-string">"&lt;em&gt;pg&lt;/em&gt;"</span>,</div></li><li><div class="hoverable"><span class="property">matchLevel</span>: <span class="type-string">"full"</span>,</div></li><li><div class="hoverable"><span class="property">matchedWords</span>: <div class="collapser"></div>[<span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable"><span class="type-string">"pg"</span></div></li></ul>]</div></li></ul>}</div></li></ul>}</div></li></ul>}, [...]</div></li></ul>],</div></li><li><div class="hoverable"><span class="property">page</span>: <span class="type-number">0</span>,</div></li><li><div class="hoverable"><span class="property">nbHits</span>: <span class="type-number">11</span>,</div></li><li><div class="hoverable"><span class="property">nbPages</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">hitsPerPage</span>: <span class="type-number">20</span>,</div></li><li><div class="hoverable"><span class="property">processingTimeMS</span>: <span class="type-number">1</span>,</div></li><li><div class="hoverable"><span class="property">query</span>: <span class="type-string">"pg"</span>,</div></li><li><div class="hoverable"><span class="property">params</span>: <span class="type-string">"query=pg"</span></div></li></ul>}</div>
-
-  %h2 Rate limits
-
-  %p
-    We are limiting the number of API requests from a single IP to 10,000 per hour. If you or your application has been blacklisted and you think there has been an error, please #{mail_to 'support@algolia.com', 'contact us', subject: 'HN Search: rate limit', :encode => :javascript}.
+  .panel
+    %h2 Rate limits
+    %p We are limiting the number of API requests from a single IP to 10,000 per hour. If you or your application has been blacklisted and you think there has been an error, please #{mail_to 'support@algolia.com', 'contact us', subject: 'HN Search: rate limit', :encode => :javascript}.
