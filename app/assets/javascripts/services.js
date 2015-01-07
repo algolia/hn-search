@@ -28,7 +28,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     // Algolia settings
     var algoliaConfig = { appID: 'UJ5WYC0L7X', apiKey: '8ece23f8eb07cd25d40262a1764599b1' }; // FIXME
 
-    settingsService.client = algolia.Client(algoliaConfig.appID, algoliaConfig.apiKey);
+    settingsService.client = algolia.Client(algoliaConfig.appID, algoliaConfig.apiKey, { dsn: true });
     settingsService.indexSortedByPopularity = settingsService.client.initIndex('Item_production');
     settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
