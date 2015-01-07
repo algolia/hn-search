@@ -56,6 +56,10 @@
             %input{type: 'radio', name: 'created_at', value: period, id: "created_at_#{period}", checked: (period == 'forever')}
             %label{for: "created_at_#{period}"}= period.capitalize.gsub('_', ' ')
 
+  #hnwatcher
+    %blockquote.text-center
+      <a href='https://www.hnwatcher.com' id='hnwatcher-follow'>Track any result with our partner: HNWatcher.com</a>
+
   #stats
   #hits
   #noresults.text-center
