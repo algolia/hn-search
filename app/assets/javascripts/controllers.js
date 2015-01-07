@@ -271,15 +271,15 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
     {
       text: 'Share on Twitter',
       href: '#',
-      iconCls: 'icon-twitter'
+      icon: 'icon-twitter'
     }, {
       text: 'Share on Facebook',
       href: '#',
-      iconCls: 'icon-facebook'
+      icon: 'icon-facebook'
     }, {
       text: 'Share by Email',
       href: '#',
-      iconCls: 'icon-envelope-o'
+      icon: 'icon-envelope-o'
     }
   ];
 

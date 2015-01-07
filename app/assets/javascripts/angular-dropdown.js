@@ -1,5 +1,6 @@
 /**
  * @license MIT http://jseppi.mit-license.org/license.html
+ * modified by kevin granger @algolia
 */
 (function(window, angular, undefined) {
 'use strict';
@@ -47,6 +48,7 @@ dd.run(['$templateCache', function ($templateCache) {
       ' ng-if="!dropdownMenuItem.divider"',
       ' ng-href="{{dropdownMenuItem.href}}"',
       ' ng-click="selectItem()">',
+        '<i ng-if="dropdownMenuItem.icon" ng-class="dropdownMenuItem.icon"></i>',
         '{{dropdownMenuItem[dropdownItemLabel]}}',
       '</a>',
     '</li>'
@@ -173,7 +175,8 @@ dd.directive('dropdownMenuItem', [
       replace: true,
       scope: {
         dropdownMenuItem: '=',
-        dropdownItemLabel: '='
+        dropdownItemLabel: '=',
+        dropdownItemIcon: '='
       },
 
       link: function (scope, element, attrs, dropdownMenuCtrl) {

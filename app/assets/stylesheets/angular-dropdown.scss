@@ -3,25 +3,16 @@
 .wrap-dd-select {
   /* Size and position */
   position: relative;
-  width: 200px;
-  margin: 0 auto;
-  padding: 10px;
-
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  user-select:none;
-    
+  width: 90px;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: left;
+  @include user-select(none);
+  border-right: solid 1px lighten($lightGray, 10%);
   /* Styles */
-  background: #fff;
-  border-radius: 7px;
-  border: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 1px 1px rgba(50,50,50,0.1);
   cursor: pointer;
   outline: none;
-
-  /* Font settings */
-  font-weight: bold;
-  color: #8AA8BD;
+  color: $lightGray;
 }
 
 .wrap-dd-select:after {
@@ -29,30 +20,30 @@
   width: 0;
   height: 0;
   position: absolute;
-  right: 15px;
+  right: 10px;
   top: 50%;
   margin-top: -3px;
   border-width: 6px 6px 0 6px;
   border-style: solid;
-  border-color: #8aa8bd transparent;
+  border-color: $lightGray transparent;
 }
 
 .wrap-dd-select .dropdown {
   /* Size & position */
   position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  width: 150px;
+  top: 30px;
+  right: -6px;
 
   /* Styles */
   background: white;
   padding: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(0,0,0,0.17);
+  border-radius: 5px;
+  border: 1px solid $lightGray;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
   font-weight: normal;
-  transition: all 0.2s ease-in;
   list-style: none;
+  @include transition(all 0.2s ease-in);
 
   /* Hiding */
   opacity: 0;
@@ -66,12 +57,11 @@
 
 .wrap-dd-select .dropdown li a {
   display: block;
-  padding: 10px;
+  padding: 4px 12px;
   text-decoration: none;
-  color: #8aa8bd;
+  color: $lightGray;
   border-bottom: 1px solid #e6e8ea;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,1);
-  transition: all 0.3s ease-out;
+  @include transition(all 0.3s ease-out);
 }
 
 .wrap-dd-select .dropdown li i {
@@ -92,6 +82,7 @@
 
 .wrap-dd-select .dropdown li:hover a {
   background: #f3f8f8;
+  color: $darkGray;
 }
 
 .wrap-dd-select .dropdown:after {
@@ -115,7 +106,7 @@
   right: 13px;
   border-width: 0 8px 8px 8px;
   border-style: solid;
-  border-color: rgba(0,0,0,0.1) transparent;
+  border-color: $lightGray transparent;
 }
 
 .wrap-dd-select.active .dropdown {
@@ -127,25 +118,25 @@
 .wrap-dd-menu {
   /* Size and position */
   position: relative;
-  width: 200px;
-  margin: 0 auto;
-  padding: 10px;
+  // width: 200px;
+  //margin: 0 auto;
 }
 
 .wrap-dd-menu .dropdown {
   /* Size & position */
+  width: 170px;
   position: absolute;
   z-index: 1;
-  top: 70%;
-  left: 0;
-  right: 0;
+  top: 30px;
+  right: -45px;;
+  // left: 0;
 
   /* Styles */
   background: white;
   padding: 0;
   border-radius: 7px;
-  border: 1px solid rgba(0,0,0,0.17);
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  border: 1px solid $lightGray;
+  box-shadow: 0 0 5px rgba(black,.1);
   font-weight: normal;
   transition: all 0.2s ease-in;
   list-style: none;
@@ -160,19 +151,26 @@
   background: #e6e8ea;
 }
 
+.wrap-dd-menu .dropdown li {
+  display: block;
+  width: 100%;
+}
+
 .wrap-dd-menu .dropdown li a {
   display: block;
-  padding: 10px;
+  width: 100%;
+  padding: 8px;
   text-decoration: none;
-  color: #8aa8bd;
+  color: $lightGray !important;
   border-bottom: 1px solid #e6e8ea;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,1);
-  transition: all 0.3s ease-out;
+  @include transition(all 0.3s ease-out);
 }
 
 .wrap-dd-menu .dropdown li i {
   float: right;
   color: inherit;
+  width: 20px;
+  text-align: center;
 }
 
 .wrap-dd-menu .dropdown li:first-of-type a {
@@ -187,6 +185,7 @@
 /* Hover state */
 
 .wrap-dd-menu .dropdown li:hover a {
+  color: $orange !important;
   background: #f3f8f8;
 }
 
@@ -196,6 +195,7 @@
   height: 0;
   position: absolute;
   bottom: 100%;
+  right: 47px;
   border-width: 0 6px 6px 6px;
   border-style: solid;
   border-color: #fff transparent;
@@ -207,10 +207,10 @@
   height: 0;
   position: absolute;
   bottom: 100%;
-  right: 95px;
+  right: 45px;
   border-width: 0 8px 8px 8px;
   border-style: solid;
-  border-color: rgba(0,0,0,0.1) transparent;
+  border-color: $lightGray transparent;
 }
 
 .wrap-dd-menu .dropdown.active {

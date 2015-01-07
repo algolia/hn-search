@@ -264,9 +264,10 @@ h1, h2, h3, h4, h5
     border-radius: 25px
     box-shadow: none
     line-height: 25px
-    padding-left: 110px
+    padding-left: 115px
+    padding-right: 15px
     margin: 0
-    border-color: $lightGray
+    border-color: lighten($lightGray, 10%)
     &:focus
       outline: 0
       box-shadow: none
@@ -275,12 +276,10 @@ h1, h2, h3, h4, h5
       color: #ccc
       font-size: 14px
       font-weight: 300
-  .type-select
+  .type-dropdown
     position: absolute
     top: 5px
-    left: 10px
-    .dropdown-text
-      border-right: solid 1px #ccc
+    left: 20px
 
 .search-results
   position: relative
@@ -502,11 +501,7 @@ footer
     top: -50px
     display: none
 
-.dropdown
-  position: relative
-  display: inline-block
-  text-align: left
-  width: 90px
+.old_dropdown
   .dropdown-text
     cursor: pointer
     position: absolute
