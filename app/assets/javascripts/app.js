@@ -52,11 +52,16 @@ var app = angular.module('HNSearch', [
         'main-content': { templateUrl: 'help.html' }
       }
     })
-    .state('root.settings', {
+    .state('settings', {
+      abstract: true,
+      templateUrl: 'layout.html',
+      controller: 'SettingsCtrl'
+    })
+    .state('settings.edit', {
       url: '/settings',
       views: {
         'main-header': { template: '<h1>Settings</h1>' },
-        'main-content': { templateUrl: 'settings.html', controller: 'SettingsCtrl' }
+        'main-content': { templateUrl: 'settings.html' }
       }
     })
     .state('search', {

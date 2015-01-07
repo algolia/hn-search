@@ -2,6 +2,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
 
 .controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
   // Init search et params
+  $scope.query = search.query;
   $scope.state = '';
   $scope.settings = settings.get();
   $scope.results = null;
@@ -338,9 +339,43 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
     $scope.getSearch();
   });
 
+  // Watch query
+  $scope.$watch('query', function (newValue, oldValue) {
+    if(newValue === oldValue || typeof newValue === 'undefined') {
+      return;
+    }
+    $scope.settings.page = 0;
+    search.query = newValue;
+    $scope.getSearch();
+  });
+
   // Watch+Handle page change
-  $scope.$watch('state', function(newSettings, oldSettings) {
-    settings.reload();
+  //  -> if on "starred", backup the settings & use byDate/all/<empty>
+  $scope.savedSettings = null;
+  $scope.savedQuery = null;
+  $scope.$watch('state', function() {
+    if ($scope.state === 'starred') {
+      if (!$scope.savedSettings) {
+        $scope.savedSettings = angular.copy($scope.settings);
+      }
+      $scope.settings.sort = 'byDate';
+      $scope.settings.dateRange = 'all';
+      if (!$scope.savedQuery) {
+        $scope.savedQuery = $scope.query;
+      }
+      $scope.query = search.query = '';
+    } else {
+      if ($scope.savedSettings) {
+        $scope.settings = $scope.savedSettings;
+        $scope.savedSettings = null;
+      }
+      if ($scope.savedQuery) {
+        $scope.query = search.query = $scope.savedQuery;
+        $scope.savedQuery = null;
+      }
+    }
+    search.applySettings($scope.settings, $scope.state);
+    $scope.getSearch();
   });
   $scope.$on("$stateChangeSuccess", function(event, toState, toParams) {
     $scope.state = toParams.page;
@@ -398,14 +433,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
   return {
     restrict: 'E',
     replace: true,
-    scope: {
-      getData: '&source',
-      model: '=?'
-    },
+    scope: false,
     link: function(scope, element, attrs) {
       attrs.minLength = attrs.minLength || 0;
-      scope.placeholder = attrs.placeholder || '';
-      scope.query = search.query;
 
       if (attrs.class) {
         element.addClass(attrs.class);
@@ -443,20 +473,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
           });
         }
       });
-
-      scope.$watch('query', function (newValue, oldValue) {
-        if(newValue === oldValue || typeof newValue === 'undefined') {
-          return;
-        }
-        settings.get().page = 0;
-        search.query = scope.query;
-        scope.getData();
-      });
-
     },
     template: '<div class="item-input-wrapper">' +
                 '<i ng-hide="query" class="icon-search"></i>' +
-                '<input type="search" placeholder="{{placeholder}}" ng-model="query" ng-blur="blurred()" ng-keyup="keyup($event)">' +
+                '<input type="search" placeholder="{{placeholder}}" ng-model="$parent.query" ng-blur="blurred()" ng-keyup="keyup($event)">' +
               '</div>'
   };
 }])
