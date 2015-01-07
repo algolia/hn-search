@@ -22,6 +22,7 @@
 //= require nprogress
 //= require bootstrap-typeahead
 //= require tagautocomplete
+//= require angular-dropdown
 
 //= require_tree ../templates
 

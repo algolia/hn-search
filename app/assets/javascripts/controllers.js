@@ -1,4 +1,4 @@
-angular.module('HNSearch.controllers', ['ngSanitize'])
+angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
 
 .controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
   // Init search et params
@@ -206,11 +206,83 @@ angular.module('HNSearch.controllers', ['ngSanitize'])
   $scope.toggleStar = function($event, id) {
     $event.preventDefault();
     starred.toggle(id);
+    // stupid animation
+    var target = $('.sidebar .icon-star');
+    var elementToDrag = $($event.currentTarget).not('.starred').find('.icon-star').eq(0);
+    if ( elementToDrag.length != 0 ) {
+      var clone = elementToDrag
+        .clone()
+        .offset({
+          top: elementToDrag.offset().top,
+          left: elementToDrag.offset().left
+        })
+        .css({
+          'opacity': '0.8',
+          'position': 'absolute',
+          'z-index': '100',
+          'color': '#FF742B'
+        })
+        .appendTo($('body'))
+        .animate({
+          'top': target.offset().top + 0,
+          'left': target.offset().left + 0,
+          'width': 75,
+          'height': 75
+        }, 700, 'linear');
+
+      clone.animate({
+        'width': 0,
+        'height': 0
+      }, function () {
+        $(this).detach();
+      });
+    }
   };
 
   $scope.isStarred = function(id) {
     return starred.is(id);
   };
+
+  //Dropdowns
+  //https://github.com/jseppi/angular-dropdowns
+  $scope.ddSelectOptions = [
+    {
+      text: 'All',
+      value: 'all',
+    }, {
+      text: 'Story',
+      value: 'story'
+    }, {
+      text: 'Author',
+      value: 'author'
+    }, {
+      text: 'Comment',
+      value: 'comment'
+    }
+  ];
+
+  $scope.ddSelectSelected = {
+    text: 'All',
+    value: 'all'
+  };
+
+  $scope.ddMenuShare = [
+    {
+      text: 'Share on Twitter',
+      href: '#',
+      iconCls: 'icon-twitter'
+    }, {
+      text: 'Share on Facebook',
+      href: '#',
+      iconCls: 'icon-facebook'
+    }, {
+      text: 'Share by Email',
+      href: '#',
+      iconCls: 'icon-envelope-o'
+    }
+  ];
+
+
 
   // Pagination
   $scope.nextPage = function() {

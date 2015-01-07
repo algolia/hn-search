@@ -1,0 +1,219 @@
+/****** dropdown-select *******/
+
+.wrap-dd-select {
+  /* Size and position */
+  position: relative;
+  width: 200px;
+  margin: 0 auto;
+  padding: 10px;
+
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  user-select:none;
+    
+  /* Styles */
+  background: #fff;
+  border-radius: 7px;
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+  cursor: pointer;
+  outline: none;
+
+  /* Font settings */
+  font-weight: bold;
+  color: #8AA8BD;
+}
+
+.wrap-dd-select:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -3px;
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #8aa8bd transparent;
+}
+
+.wrap-dd-select .dropdown {
+  /* Size & position */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  /* Styles */
+  background: white;
+  padding: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(0,0,0,0.17);
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  font-weight: normal;
+  transition: all 0.2s ease-in;
+  list-style: none;
+
+  /* Hiding */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wrap-dd-select .dropdown li.divider {
+  padding: 2px 0;
+  background: #e6e8ea;
+}
+
+.wrap-dd-select .dropdown li a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #8aa8bd;
+  border-bottom: 1px solid #e6e8ea;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,1);
+  transition: all 0.3s ease-out;
+}
+
+.wrap-dd-select .dropdown li i {
+  float: right;
+  color: inherit;
+}
+
+.wrap-dd-select .dropdown li:first-of-type a {
+  border-radius: 7px 7px 0 0;
+}
+
+.wrap-dd-select .dropdown li:last-of-type a {
+  border-radius: 0 0 7px 7px;
+  border: none;
+}
+
+/* Hover state */
+
+.wrap-dd-select .dropdown li:hover a {
+  background: #f3f8f8;
+}
+
+.wrap-dd-select .dropdown:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 100%;
+  right: 15px;
+  border-width: 0 6px 6px 6px;
+  border-style: solid;
+  border-color: #fff transparent;
+}
+
+.wrap-dd-select .dropdown:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 100%;
+  right: 13px;
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.1) transparent;
+}
+
+.wrap-dd-select.active .dropdown {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/****** dropdown-menu *******/
+.wrap-dd-menu {
+  /* Size and position */
+  position: relative;
+  width: 200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.wrap-dd-menu .dropdown {
+  /* Size & position */
+  position: absolute;
+  z-index: 1;
+  top: 70%;
+  left: 0;
+  right: 0;
+
+  /* Styles */
+  background: white;
+  padding: 0;
+  border-radius: 7px;
+  border: 1px solid rgba(0,0,0,0.17);
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  font-weight: normal;
+  transition: all 0.2s ease-in;
+  list-style: none;
+
+  /* Hiding */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wrap-dd-menu .dropdown li.divider {
+  padding: 2px 0;
+  background: #e6e8ea;
+}
+
+.wrap-dd-menu .dropdown li a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #8aa8bd;
+  border-bottom: 1px solid #e6e8ea;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,1);
+  transition: all 0.3s ease-out;
+}
+
+.wrap-dd-menu .dropdown li i {
+  float: right;
+  color: inherit;
+}
+
+.wrap-dd-menu .dropdown li:first-of-type a {
+  border-radius: 7px 7px 0 0;
+}
+
+.wrap-dd-menu .dropdown li:last-of-type a {
+  border-radius: 0 0 7px 7px;
+  border: none;
+}
+
+/* Hover state */
+
+.wrap-dd-menu .dropdown li:hover a {
+  background: #f3f8f8;
+}
+
+.wrap-dd-menu .dropdown:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 100%;
+  border-width: 0 6px 6px 6px;
+  border-style: solid;
+  border-color: #fff transparent;
+}
+
+.wrap-dd-menu .dropdown:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 100%;
+  right: 95px;
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.1) transparent;
+}
+
+.wrap-dd-menu .dropdown.active {
+  opacity: 1;
+  pointer-events: auto;
+}
