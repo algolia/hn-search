@@ -518,12 +518,18 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       ngSrc: '@'
     },
     link: function(scope, element, attrs) {
-      element.addClass('fade');
+      var loaded = false;
       element.on('load', function() {
+        loaded = true;
         element.addClass('in');
       }).on('error', function() {
         //
       });
+      setTimeout(function() {
+        if (!loaded) {
+          element.addClass('fade')
+        }
+      }, 10); // is 10ms to detect the image was in the cache?
       scope.$watch('ngSrc', function(newVal) {
         element.removeClass('in');
       });
