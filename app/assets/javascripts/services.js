@@ -260,7 +260,6 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
 .filter('cleanup', function() {
     return function (input) {
-        return input;
         if (!input) {
             return input;
         }
