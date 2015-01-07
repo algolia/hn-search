@@ -251,14 +251,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 })
 
 .filter( 'domain', function () {
-  return function ( input ) {
-    var matches,
-        output = "",
-        urls = /\w+:\/\/([\w|\.]+)/;
-    matches = urls.exec( input );
-    if ( matches !== null ) output = matches[1];
-    return output;
-  };
+    return function ( input ) {
+        var a = document.createElement('a');
+        a.href = input;
+        return a.hostname;
+    };
 })
 
 .filter('cleanup', function() {
