@@ -333,7 +333,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
   // Watch settings
   $scope.$watchCollection('settings', function(newSettings, oldSettings) {
     if (newSettings.page == oldSettings.page) {
-      $scope.page = 0;
+      $scope.settings.page = 0;
     }
     search.applySettings(newSettings, $scope.state);
     $scope.getSearch();
