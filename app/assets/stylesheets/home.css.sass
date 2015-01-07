@@ -263,6 +263,9 @@ h1, h2, h3, h4, h5
     border-bottom: solid 1px #eee
     position: relative
     padding: 0
+    a[href].item-thumbnail-link:hover
+      img.item-thumbnail
+        border-color: lighten($lightGray,10%)
     .item-main
       display: block
       width: $itemWidth
@@ -294,6 +297,8 @@ h1, h2, h3, h4, h5
       font-weight: normal
       a
         color: $darkGray
+        &[href]:hover
+          color: darken($darkGray,20%)
       em
         font-style: normal
         font-weight: bold
@@ -315,6 +320,8 @@ h1, h2, h3, h4, h5
         position: relative
         top: 2px
         font-size: 14px
+      a:hover
+        border-bottom: dotted 1px #ccc
     .item-avatar
       display: inline-block
       width: 16px

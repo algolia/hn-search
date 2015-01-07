@@ -1,26 +1,26 @@
 %section.search-results
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
     .item-main
-      %img.item-thumbnail{'ng-show' => 'settings.showThumbnails && state !== "ask-hn" && state !== "polls"',"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+      %a.item-thumbnail-link{'ng-if' => 'settings.showThumbnails && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
+        %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       .item-title-and-infos
         %h2
           %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
         %ul.item-infos.list-inline
           %li
+            %i.icon-head
             %a{'ng-href' => 'https://news.ycombinator.com/user?id={{hit.author}}', title:'See {{hit.author}} profile'}
-              %i.icon-head
               %span.author {{hit.author}}
           %li
+            %i.icon-heart
             %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit.objectID}}', title:'See original post on HN'}
-              %i.icon-heart
               %span.date {{hit.points}} points
           %li
+            %i.icon-clock
             %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit.objectID}}', title:'{{hit.created_at}}'}
-              %i.icon-clock
               %span.date {{hit.created_at_i|moment}}
           %li
             %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
-              %i.icon-link
               {{hit.url|domain}}
       .item-actions.pull-right
         %ul.list-inline
