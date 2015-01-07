@@ -511,9 +511,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
           element.addClass('fade')
         }
       }, 10); // is 10ms to detect the image was in the cache?
-      scope.$watch('ngSrc', function(newVal) {
-        element.removeClass('in');
-      });
     }
   };
 }])
