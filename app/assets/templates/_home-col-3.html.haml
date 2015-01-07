@@ -1,5 +1,5 @@
 .search-wrapper
-  .type-dropdown{"dropdown-select"=>"ddSelectOptions", "dropdown-model"=>"ddSelectSelected", "dropdown-item-label"=>"text"}
+  .type-dropdown{"dropdown-select"=>"ddSelectOptions", "dropdown-model"=>"ddSelectSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectType(selected)"}
   %hnsearch{placeholder:"Story, author, comment", "min-length" => 0}
 %span.powered-by
   powered by

@@ -273,18 +273,15 @@ h1, h2, h3, h4, h5
       padding: 20px 30px 0
       background-color: white
     &.item-fixed // sticked item
-      padding-top: $itemHeight
       .item-main
         position: fixed
         z-index: 10
         top: $headerHeight + $titleHeight
         width: $itemWidth
-        height: $itemHeight
         box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 4px 0 rgba(0,0,0,.05)
     &.item-show-comments
       //border-left: solid 2px $lightGray
     &.item-absolute-bottom //end of stick transition state
-      padding-top: $itemHeight
       .item-main
         position: absolute
         left: 0
@@ -311,6 +308,13 @@ h1, h2, h3, h4, h5
       border-radius: 3px
     .item-title-and-infos
       float: left
+    .text-container
+      clear: both
+      font-size: 12px
+      em
+        font-weight: bold
+        font-style: normal
+        color: $darkGray
     .item-infos
       float: left
       clear: both

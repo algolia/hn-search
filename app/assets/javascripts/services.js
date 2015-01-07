@@ -6,8 +6,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     //default settings
     var storage = $localStorage.$default({
         showThumbnails: true,
-        defaultSort: 'byDate',
-        defaultDateRange: 'last24h'
+        defaultSort: 'byPopularity',
+        defaultDateRange: 'all'
     });
 
     var _loadSettings = function() {
@@ -133,8 +133,18 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
         // item type
         $location.search('type', settings.type);
-        if (settings.type && (page !== 'jobs' && page !== 'polls')) {
-            this.params.tagFilters.push(settings.type);
+        if (page !== 'jobs' || page !== 'polls') {
+            switch (settings.type) {
+                case '':
+                case undefined:
+                case 'all':
+                  this.params.tagFilters.push(['story', 'comment', 'poll', 'job']);
+                  break;
+                case 'story':
+                case 'comment':
+                  this.params.tagFilters.push(settings.type);
+                  break;
+            }
         }
 
         // prefix

@@ -97,11 +97,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       getIndex(parsedQuery.query).search(parsedQuery.query, undefined, parsedQuery.params).then(function(results) {
         $scope.results = results;
         NProgress.done();
-        if (withComments) {
-          for (var i = 0; i < $scope.settings.loadedComments.length; ++i) {
-            $scope.loadComments($scope.settings.loadedComments[i]);
-          }
-        }
+        // if (withComments) {
+        //   for (var i = 0; i < $scope.settings.loadedComments.length; ++i) {
+        //     $scope.loadComments($scope.settings.loadedComments[i]);
+        //   }
+        // }
       });
     };
     $scope.query = search.query;
@@ -122,8 +122,14 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
     NProgress.start();
 
     if ($event) {
-      settings.loadComments(id);
       $event.preventDefault();
+
+      // reset previous comments
+      $scope.story = {};
+      $scope.settings.loadedComments = [];
+
+      // load comment
+      settings.loadComments(id);
     }
 
     var found = false;
@@ -153,39 +159,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       if (!item || !item.position) {
         return;
       }
+
+      $('.item-show-comments').removeClass('item-show-comments');
       item.addClass('item-show-comments');
-
-      var itemHeight = 95;
-      var itemMarginBorder = 23; //WTF
-      var wrap = $(window);
-
-      var firstStick = false;
-      var startStickPosition = item.position().top - itemHeight + itemMarginBorder;
-      var endStickPosition;
-      //DRAFT
-      wrap.on("scroll", function(e) {
-
-        if (typeof endStickPosition === 'undefined') {
-          endStickPosition = item.next().position().top - 2 * itemHeight + itemMarginBorder;
-          //console.log('endStickPosition');
-        }
-
-        if (wrap.scrollTop() > startStickPosition && wrap.scrollTop() < endStickPosition && firstStick === false) {
-          item.addClass("item-fixed");
-          item.removeClass('item-absolute-bottom');
-          firstStick = 'start';
-        }
-        if (wrap.scrollTop() < startStickPosition && firstStick === 'start') {
-          item.removeClass("item-fixed");
-          firstStick = false;
-        }
-        if (wrap.scrollTop() > endStickPosition && firstStick === 'start') {
-          item.removeClass("item-fixed");
-          item.addClass('item-absolute-bottom');
-          firstStick = false;
-        }
-      });
-
+      $(window).scrollTop(item.offset().top - $('.page-header').outerHeight() - $('.main > header').outerHeight());
     });
   };
 
@@ -257,17 +234,17 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       text: 'Story',
       value: 'story'
     }, {
-      text: 'Author',
-      value: 'author'
-    }, {
       text: 'Comment',
       value: 'comment'
     }
   ];
-
-  $scope.ddSelectSelected = {
-    text: 'All',
-    value: 'all'
+  for (var i = 0; i < $scope.ddSelectOptions.length; ++i) {
+    if ($scope.ddSelectOptions[i].value === $scope.settings.type) {
+      $scope.ddSelectSelected = angular.copy($scope.ddSelectOptions[i]);
+    }
+  }
+  $scope.selectType = function(selected) {
+    $scope.settings.type = selected.value;
   };
 
   $scope.ddMenuShare = [
@@ -555,5 +532,59 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
   };
 }])
 
+// sticky
+.directive('stickyList', function() {
+  return {
+    link: function(scope, element, attrs) {
+      // Store list element.
+      var $list = $(element);
+
+      // When window scrolls.
+      var $pageHeader = $('.page-header');
+      var $mainHeader = $('.main > header');
+      $(window).scroll(function() {
+        // Unstick unselected headers which are are still sticky.
+        $('.item.item-fixed:not(.item-show-comments), .item.item-absolute-bottom:not(.item-show-comments)')
+          .removeClass('item-fixed')
+          .removeClass('item-absolute-bottom')
+          .data('stickyOriginalTop', '')
+          .css('padding-top', 0);
+
+        // Skip if no header is selected.
+        var $header = $('.item.item-show-comments', $list);
+        if ($header.length === 0) {
+          return;
+        }
+
+        // Store original header top.
+        if (!$header.data('stickyOriginalTop')) {
+          var stickyOriginalTop = $header.offset().top - $pageHeader.outerHeight() - $mainHeader.outerHeight();
+          $header.data('stickyOriginalTop', stickyOriginalTop);
+        }
+
+        // Get positions.
+        var scrollTop = $(this).scrollTop();
+        var headerTop = $header.data('stickyOriginalTop');
+        var bodyBottom = $header.next().offset().top - $header.find('.item-main').outerHeight() - $pageHeader.outerHeight() - $mainHeader.outerHeight();
+
+        // Stick/unstick header.
+        if (scrollTop > headerTop && scrollTop < bodyBottom && !$header.data('stickyStarted')) {
+          $header.addClass('item-fixed').removeClass('item-absolute-bottom').data('stickyStarted', 'yes');
+        }
+        if (scrollTop < headerTop && $header.data('stickyStarted')) {
+          $header.removeClass('item-fixed').data('stickyStarted', '');
+        }
+        if (scrollTop > bodyBottom && $header.data('stickyStarted')) {
+          $header.removeClass('item-fixed').addClass('item-absolute-bottom').data('stickyStarted', '');
+        }
+        if (!$header.hasClass('item-fixed') && !$header.hasClass('item-absolute-bottom')) {
+          $header.data('stickyOriginalTop', '').css('padding-top', 0);
+        } else {
+          $header.css('padding-top', $header.find('.item-main').outerHeight() + 'px');
+        }
+      });
+    }
+  }
+});
 
 ;

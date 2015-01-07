@@ -1,28 +1,29 @@
-%section.search-results
+%section.search-results{'sticky-list' => true}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
     .item-main
-      %a.item-thumbnail-link{'ng-if' => 'settings.showThumbnails && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
+      %a.item-thumbnail-link{'ng-if' => 'settings.showThumbnails && hit._tags[0] === "story"  && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
         %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       .item-title-and-infos
         %h2
-          %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value"}
+          %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value", "ng-if" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
+          %a{"ng-href"=>"{{hit.story_url}}", "ng-bind-html"=>"hit.story_title", "ng-if" => "hit._tags[0] === 'comment'"}
         %ul.item-infos.list-inline
           %li
             %i.icon-head
             %a{'ng-href' => 'https://news.ycombinator.com/user?id={{hit.author}}', title:'See {{hit.author}} profile'}
               %span.author {{hit.author}}
-          %li
+          %li{'ng-show' => 'hit.points'}
             %i.icon-heart
             %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit.objectID}}', title:'See original post on HN'}
               %span.date {{hit.points}} points
           %li
             %i.icon-clock
-            %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit.objectID}}', title:'{{hit.created_at}}'}
+            %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID}}', title:'{{hit.created_at}}'}
               %span.date {{hit.created_at_i|moment}}
           %li
             %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
               {{hit.url|domain}}
-      .item-actions.pull-right
+      .item-actions.pull-right{'ng-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'ng-show' => 'state != "jobs"'}
             %i.icon-speech-bubble
@@ -35,6 +36,8 @@
           %li.action-toggle-star
             %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
               %i.icon-star
+      .text-container{"ng-bind-html"=>"hit._highlightResult.comment_text.value|cleanup", 'ng-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
+      .text-container{"ng-bind-html"=>"hit._highlightResult.story_text.value|cleanup", 'ng-show' => 'hit.story_text && hit._tags[0] === "story"'}
     %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
       %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
         %span.author
