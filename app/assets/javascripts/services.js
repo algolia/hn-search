@@ -126,7 +126,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
         // item type
         $location.search('type', settings.type);
-        if (page !== 'jobs' || page !== 'polls') {
+        if (page !== 'jobs' && page !== 'polls') {
             switch (settings.type) {
                 case '':
                 case undefined:
