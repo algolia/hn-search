@@ -21,6 +21,10 @@
         %i.icon-banknote
         Jobs
     %li.divider
+    %li{'ng-if' => 'settings.login'}
+      %a{href:"/user", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/user")'}
+        %i.icon-envelope-o
+        {{ settings.login }}
     %li
       %a{href:"/starred", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/starred")'}
         %i.icon-star

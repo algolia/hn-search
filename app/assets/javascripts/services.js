@@ -20,7 +20,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
             defaultSort: storage.defaultSort,
             prefix: (queryParameters.prefix || true),
             page: (parseInt(queryParameters.page, 10) || 0),
-            showThumbnails: storage.showThumbnails
+            showThumbnails: storage.showThumbnails,
+            login: storage.login
         };
     }
     var settings = _loadSettings();
@@ -47,6 +48,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
     settingsService.save = function() {
         $localStorage.showThumbnails = settings.showThumbnails;
+        $localStorage.login = settings.login;
 
         if ($localStorage.defaultSort != settings.defaultSort) {
             settings.sort = settings.defaultSort;
@@ -120,6 +122,9 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
             break;
         case 'polls':
             this.params.tagFilters.push('poll');
+            break;
+        case 'user':
+            this.params.tagFilters.push('author_' + settings.login);
             break;
         }
 

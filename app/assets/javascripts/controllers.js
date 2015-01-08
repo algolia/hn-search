@@ -176,6 +176,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     case "polls": return "Polls";
     case "hot": return "Hot";
     case "starred": return "Starred";
+    case "user": return $scope.settings.login;
     default: return "HN Search";
     }
   }

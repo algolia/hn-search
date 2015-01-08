@@ -20,3 +20,9 @@
         %option{value: 'pastWeek'} Past Week
         %option{value: 'pastMonth'} Past Month
         %option{value: 'all'} Forever
+
+  %h2 Your options
+  %fieldset
+    %label{for: 'login'}
+      Your HN login
+      %input{type: 'text', id: 'login', 'ng-model' => 'settings.login'}
