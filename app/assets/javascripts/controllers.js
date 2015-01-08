@@ -492,7 +492,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 }])
 
 // image preload
-.directive('imgPreload', ['$rootScope', function($rootScope) {
+.directive('imgPreload', ['$timeout', function($timeout) {
   return {
     restrict: 'A',
     scope: {
@@ -506,7 +506,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       }).on('error', function() {
         //
       });
-      setTimeout(function() {
+      $timeout(function() {
         if (!loaded) {
           element.addClass('fade')
         }
