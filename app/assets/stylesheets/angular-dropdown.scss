@@ -161,6 +161,7 @@
   width: 100%;
   padding: 8px;
   text-decoration: none;
+  cursor: pointer;
   color: $lightGray !important;
   border-bottom: 1px solid #e6e8ea;
   @include transition(all 0.3s ease-out);
