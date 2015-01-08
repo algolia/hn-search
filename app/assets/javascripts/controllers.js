@@ -431,8 +431,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     replace: true,
     scope: false,
     link: function(scope, element, attrs) {
-      attrs.minLength = attrs.minLength || 0;
-
       if (attrs.class) {
         element.addClass(attrs.class);
       }
