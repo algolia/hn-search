@@ -626,7 +626,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   }
 })
 
-.directive("deferShareDropdown", function($compile) {
+.directive("deferShareDropdown", ['$compile', function($compile) {
   function compile(tElement, tAttributes) {
     var tOverlay = tElement.find("a.dropwdown-share").remove();
     var transcludeOverlay = $compile(tOverlay);
@@ -653,7 +653,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     return( link );
   }
   return({compile: compile});
-})
+}])
 
 
 ;
