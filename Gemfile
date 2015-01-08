@@ -30,6 +30,7 @@ gem 'simple-rss'
 gem 'rest-client'
 gem 'angularjs-rails'
 gem 'angular-rails-templates'
+gem 'actionpack-action_caching'
 
 gem 'firebase'
 gem "eventmachine", "~> 1.0.3"

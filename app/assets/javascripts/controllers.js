@@ -410,6 +410,16 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.state = toParams.page;
     window.scrollTo(0, 0);
   });
+
+  $scope.setQuery = function($event, q) {
+    $event.preventDefault();
+    search.query = $scope.query = q;
+  };
+
+  $scope.populars = [];
+  $http.get('/popular.json').then(function(results) {
+    $scope.populars = results.data;
+  });
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {

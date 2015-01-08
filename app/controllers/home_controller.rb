@@ -1,7 +1,15 @@
 require 'net/http'
 
 class HomeController < ApplicationController
+
+  caches_action :popular, expires_in: 1.hour
+
   def index
+  end
+
+  def popular
+    body = RestClient.get("https://analytics.algolia.com/1/searches/Item_production/popular?startAt=#{DateTime.now.utc.to_i - 24*60*60}&size=10", { 'X-Algolia-API-Key' => ENV['ALGOLIASEARCH_API_KEY'], 'X-Algolia-Application-Id' => ENV['ALGOLIASEARCH_APPLICATION_ID'] })
+    render json: JSON.parse(body)['topSearches'], root: false
   end
 
   def front_page
