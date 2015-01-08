@@ -68,14 +68,28 @@ Credits
 * [HackerNews](https://news.ycombinator.com) for the real-time export API
 * [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to back the thumbnails' crawl
 
-Contribution
+
+Development/Contribution
 -------------
 
- * ```git clone https://github.com/algolia/hn-search```
- * `bundle`
- * `cp config/database.example.yml config/database.yml` (feel free to edit, default configuration is OK)
- * `cp config/application.example.yml config/application.yml` (feel free to edit, default configuration is OK)
- * create your database: `bundle exec rake db:migrate`
- * populate your DB using 2 fake items and 1 user: `bundle exec rake db:seed`
- * `guard`
- * `open http://localhost:3000`
+```sh
+# clone the repository
+git clone https://github.com/algolia/hn-search
+cd hn-search
+
+# install dependencies
+bundle install
+
+# setup credentials
+cp config/database.example.yml config/database.yml # feel free to edit, default configuration is OK for search-only
+cp config/application.example.yml config/application.yml # feel free to edit, default configuration is OK for search-only
+
+# setup your (sqlite3) database
+rake db:migrate
+
+# start contributing enjoying Guard (watchers, livereload, notifications, ...)
+guard
+
+# done!
+open http://localhost:3000
+```
