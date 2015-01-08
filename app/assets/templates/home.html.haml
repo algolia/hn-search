@@ -1,11 +1,11 @@
 %section.search-results{'sticky-list' => true,"defer-share-dropdown"=>true,}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID', 'bindonce' => true}
     .item-main
-      %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "bo-href"=>"hit.url"}
+      %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
         %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       .item-title-and-infos
         %h2
-          %a{"bo-href"=>"hit.url", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
+          %a{"ng-href"=>"{{hit.url}}", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
           %a{"bo-href"=>"hit.story_url", "bo-html"=>"hit.story_title", "bo-if" => "hit._tags[0] === 'comment'"}
         %ul.item-infos.list-inline
           %li
