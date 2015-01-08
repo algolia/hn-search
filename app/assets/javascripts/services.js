@@ -34,12 +34,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
     settingsService.indexUser = settingsService.client.initIndex('User_production');
 
-    settingsService.reload = function() {
-        var tmp = _loadSettings();
-        for (var k in tmp) {
-            settings[k] = tmp[k];
-        }
-        return settings;
+    settingsService.reset = function() {
+        settings.dateRange = settings.defaultDateRange;
+        settings.sort = settings.defaultSort;
+        settings.type = 'story';
+        settings.page = 0;
     };
 
     settingsService.get = function() {

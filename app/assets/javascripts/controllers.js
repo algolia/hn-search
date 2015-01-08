@@ -349,9 +349,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     search.query = newValue;
     $scope.getSearch(true);
   });
-  $scope.clear = function() {
+  $scope.reset = function() {
     search.query = $scope.query = '';
-    settings.page = 0;
+    settings.reset();
   };
 
   // Watch+Handle page change
