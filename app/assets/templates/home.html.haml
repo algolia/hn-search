@@ -61,9 +61,12 @@
     %div{'ng-show' => 'query || settings.dateRange !== "all" || settings.type !== "all"'}
       %p Suggestions:
       %ul
-        %li{'ng-show' => 'query'} Try different keywords.
-        %li{'ng-show' => 'settings.dateRange !== "all"'} Try a wider date range.
-        %li{'ng-show' => 'settings.type !== "all"'} Search for all items.
+        %li{'ng-show' => 'query'}
+          %a{href:'#', 'ng-click' => 'selectInput($event)'} Try different keywords.
+        %li{'ng-show' => 'settings.dateRange !== "all"'}
+          %a{href:'#', 'ng-click' => 'widerDateRange($event)'} Try a wider date range.
+        %li{'ng-show' => 'settings.type !== "all"'}
+          %a{href:'#', 'ng-click' => 'searchAllItems($event)'} Search for all items.
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
     %li

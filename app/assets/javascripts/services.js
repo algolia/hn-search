@@ -7,7 +7,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     var storage = $localStorage.$default({
         showThumbnails: true,
         defaultSort: 'byPopularity',
-        defaultDateRange: 'all'
+        defaultDateRange: 'last24h'
     });
 
     var _loadSettings = function() {

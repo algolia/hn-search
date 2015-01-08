@@ -245,6 +245,21 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.settings.type = selected.value;
   };
 
+  $scope.selectInput = function($event) {
+    $event.preventDefault();
+    $('.page-header input[type="search"]').select();
+  };
+
+  $scope.widerDateRange = function($event) {
+    $event.preventDefault();
+    $scope.settings.dateRange = 'all';
+  };
+
+  $scope.searchAllItems = function($event) {
+    $event.preventDefault();
+    $scope.settings.type = 'all';
+  };
+
   $scope.ddMenuShare = [
     {
       text: 'Share on Twitter',
