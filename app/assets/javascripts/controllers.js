@@ -262,7 +262,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   ];
   // Share item
   $scope.shareItem = function(selected, hit){
-    var url = $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID;
+    var url = $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID + "/" + $scope.friendly(hit.title);
     var title = hit.title + ' - HNSearch';
     switch (selected.share){
       case 'twitter':
@@ -321,6 +321,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $location.path(path).search($location.search());
     window.scrollTo(0, 0);
   };
+
+  $scope.friendly = function(v) {
+    return v && $.friendly_id(v);
+  }
 
   // Watch settings
   $scope.$watchCollection('settings', function(newSettings, oldSettings) {

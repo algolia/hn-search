@@ -24,6 +24,7 @@
 //= require tagautocomplete
 //= require angular-dropdown
 //= require bindonce.min
+//= require jquery.friendly_id
 
 //= require_tree ../templates
 
