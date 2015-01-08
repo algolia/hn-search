@@ -97,8 +97,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
     var _search = function(ids) {
       var parsedQuery = parseQuery(search.query, search.getParams(ids));
+      console.log(parsedQuery);
       getIndex(parsedQuery.query).search(parsedQuery.query, undefined, parsedQuery.params).then(function(results) {
-        if (search.query === results.query) {
+        if (parsedQuery.query === results.query) {
           $scope.results = results;
         }
         if (!noProgres) {
@@ -229,10 +230,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       text: 'All',
       value: 'all',
     }, {
-      text: 'Story',
+      text: 'Stories',
       value: 'story'
     }, {
-      text: 'Comment',
+      text: 'Comments',
       value: 'comment'
     }
   ];
@@ -333,7 +334,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       $scope.placeholder = 'Stories, polls, jobs, comments';
     } else if (newSettings.type === 'story') {
       $scope.placeholder = 'Search stories by title, url or author';
-    } else if (newSettings.type === 'comments') {
+    } else if (newSettings.type === 'comment') {
       $scope.placeholder = 'Search comments';
     }
 
@@ -434,7 +435,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       }
     },
     template: '<li>' +
-                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#up_{{reply.id}}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a>' +
+                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#up_{{reply.id}}" title="{{ reply.created_at }}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a>' +
                 '<div class="reply-container" ng-bind-html="reply.text|cleanup"></div>' +
               '</li>'
   };

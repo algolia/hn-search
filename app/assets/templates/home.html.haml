@@ -44,21 +44,24 @@
         %span.author
           %avatar{author:"comment.author"}
           {{ ::comment.author }} -
-        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
+        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" '}
     %p You don't have any starred items.
-  .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred"'}
+  .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "user" '}
+    %p No items for user <code>{{settings.login}}</code>.
+  .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred" && state != "user"'}
     %p
       Your search
       %span{'ng-show' => 'query'}- <strong>{{ query }}</strong> -
       did not match any results.
-    %p Suggestions:
-    %ul
-      %li{'ng-show' => 'query'} Try different keywords.
-      %li{'ng-show' => 'settings.dateRange !== "all"'} Try larger date range.
-      %li{'ng-show' => 'settings.type !== "all"'} Try different Type/Category.
+    %div{'ng-show' => 'query || settings.dateRange !== "all" || settings.type !== "all"'}
+      %p Suggestions:
+      %ul
+        %li{'ng-show' => 'query'} Try different keywords.
+        %li{'ng-show' => 'settings.dateRange !== "all"'} Try a wider date range.
+        %li{'ng-show' => 'settings.type !== "all"'} Search for all items.
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
     %li
