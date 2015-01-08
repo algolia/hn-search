@@ -38,8 +38,8 @@
               %i.icon-star
       .text-container{"bo-html"=>"hit._highlightResult.comment_text.value|cleanup", 'bo-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
       .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && hit._tags[0] === "story"'}
-    %ul.list-item-comments{"bo-show"=>"story[hit.objectID]"}
-      %li.item-comments{"bo-repeat"=>"comment in story[hit.objectID].comments.children", "bo-if"=>"comment.author"}
+    %ul.list-item-comments{"ng-if"=>"story[hit.objectID]"}
+      %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
         %span.author
           %avatar{author:"comment.author"}
           {{ ::comment.author }} -
