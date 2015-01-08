@@ -339,6 +339,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     search.query = newValue;
     $scope.getSearch(true);
   });
+  $scope.clear = function() {
+    search.query = $scope.query = '';
+    settings.page = 0;
+  };
 
   // Watch+Handle page change
   //  -> if on "starred", backup the settings & use byDate/all/<empty>
