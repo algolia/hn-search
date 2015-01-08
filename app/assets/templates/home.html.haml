@@ -52,11 +52,20 @@
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange != "all"'}
     %p You don't have any starred items <strong>for this period</strong>.
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "user" '}
-    %p No items for user <code>{{settings.login}}</code>.
+    %p No items for user <code>{{settings.login}}</code><span ng-if="query"> matching <strong>{{ query }}</strong></span>.
   .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred" && state != "user"'}
     %p
       Your search
-      %span{'ng-show' => 'query'} - <strong>{{ query }}</strong> -
+      %span{'ng-show' => 'query'}
+        \-
+        %strong
+          %span{'ng-show' => 'state === "ask-hn"'} Ask HN:
+          %span{'ng-show' => 'state === "show-hn"'} Show HN:
+          %span{'ng-show' => 'state === "jobs"'} Jobs:
+          %span{'ng-show' => 'state === "polls"'} Polls:
+          %span{'ng-show' => 'state === "hot"'} Hot:
+          {{ query }}
+        \-
       did not match any results.
     %div{'ng-show' => 'query || settings.dateRange !== "all" || settings.type !== "all"'}
       %p Suggestions:
