@@ -63,16 +63,18 @@
       %ul
         %li{'ng-show' => 'query'}
           %a{href:'#', 'ng-click' => 'selectInput($event)'} Try different keywords
-          or one of the most popular queries those last 24 hours:
-          %ul
-            %li{'ng-repeat' => 'p in populars', bindonce: true}
-              %i.icon-fast-forward
-              %a{href: '#', 'ng-click' => 'setQuery($event, p.query)'} {{ p.query }}
-
         %li{'ng-show' => 'settings.dateRange !== "all"'}
           %a{href:'#', 'ng-click' => 'widerDateRange($event)'} Try a wider date range.
         %li{'ng-show' => 'settings.type !== "all"'}
           %a{href:'#', 'ng-click' => 'searchAllItems($event)'} Search for all items.
+      .spacer2
+      %p
+        Or try popular queries:
+        %br
+        %span{'ng-repeat' => 'p in populars', bindonce: true}
+          %span{'ng-show' => '$index !== 0'}>,&nbsp;
+          %a{href: '#', 'ng-click' => 'setQuery($event, p.query)'}>{{ p.query }}
+
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
     %li
