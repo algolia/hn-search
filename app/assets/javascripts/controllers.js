@@ -1,4 +1,4 @@
-angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
+angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bindonce'])
 
 .controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
   // Init search et params
@@ -90,13 +90,19 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
   };
 
   //Search scope
-  $scope.getSearch = function(withComments) {
-    NProgress.start();
+  $scope.getSearch = function(noProgres) {
+    if (!noProgres) {
+      NProgress.start();
+    }
     var _search = function(ids) {
       var parsedQuery = parseQuery(search.query, search.getParams(ids));
       getIndex(parsedQuery.query).search(parsedQuery.query, undefined, parsedQuery.params).then(function(results) {
-        $scope.results = results;
-        NProgress.done();
+        if (search.query === results.query) {
+          $scope.results = results;
+        }
+        if (!noProgres) {
+          NProgress.done();
+        }
       });
     };
     $scope.query = search.query;
@@ -322,7 +328,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
     }
     $scope.settings.page = 0;
     search.query = newValue;
-    $scope.getSearch();
+    $scope.getSearch(true);
   });
 
   // Watch+Handle page change
@@ -336,6 +342,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       }
       $scope.settings.sort = 'byDate';
       $scope.settings.dateRange = 'all';
+      $scope.settings.type = 'story';
       if (!$scope.savedQuery) {
         $scope.savedQuery = $scope.query;
       }
@@ -360,7 +367,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
 
   // run 1st query
   search.applySettings($scope.settings, $scope.state);
-  $scope.getSearch(true);
+  $scope.getSearch();
 }])
 
 .controller('SettingsCtrl', ['$scope', 'settings', function($scope, settings) {
@@ -452,7 +459,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
     },
     template: '<div class="item-input-wrapper">' +
                 '<i ng-hide="query" class="icon-search"></i>' +
-                '<input type="search" placeholder="{{placeholder}}" ng-model="$parent.query" ng-blur="blurred()" ng-keyup="keyup($event)">' +
+                '<input type="search" placeholder="{{placeholder}}" ng-model="$parent.query" ng-model-options="{debounce: 100}" ng-blur="blurred()" ng-keyup="keyup($event)" autofocus>' +
               '</div>'
   };
 }])
@@ -487,7 +494,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
 }])
 
 // image preload
-.directive('imgPreload', ['$rootScope', function($rootScope) {
+.directive('imgPreload', ['$timeout', function($timeout) {
   return {
     restrict: 'A',
     scope: {
@@ -501,14 +508,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       }).on('error', function() {
         //
       });
-      setTimeout(function() {
+      $timeout(function() {
         if (!loaded) {
           element.addClass('fade')
         }
       }, 10); // is 10ms to detect the image was in the cache?
-      scope.$watch('ngSrc', function(newVal) {
-        element.removeClass('in');
-      });
     }
   };
 }])

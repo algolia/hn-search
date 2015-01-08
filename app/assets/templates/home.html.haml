@@ -1,51 +1,51 @@
 %section.search-results{"item-list"=>true,'sticky-list' => true}
-  .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
+  .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID', 'bindonce' => true}
     .item-main
-      %a.item-thumbnail-link{'ng-if' => 'settings.showThumbnails && hit._tags[0] === "story"  && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
+      %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "bo-href"=>"hit.url"}
         %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       .item-title-and-infos
         %h2
-          %a{"ng-href"=>"{{hit.url}}", "ng-bind-html"=>"hit._highlightResult.title.value", "ng-if" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
-          %a{"ng-href"=>"{{hit.story_url}}", "ng-bind-html"=>"hit.story_title", "ng-if" => "hit._tags[0] === 'comment'"}
+          %a{"bo-href"=>"hit.url", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
+          %a{"bo-href"=>"hit.story_url", "bo-html"=>"hit.story_title", "bo-if" => "hit._tags[0] === 'comment'"}
         %ul.item-infos.list-inline
           %li
             %i.icon-head
-            %a{'ng-href' => 'https://news.ycombinator.com/user?id={{hit.author}}', title:'See {{hit.author}} profile'}
-              %span.author {{hit.author}}
-          %li{'ng-show' => 'hit.points'}
+            %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
+              %span.author {{ ::hit.author }}
+          %li{'bo-show' => 'hit.points'}
             %i.icon-heart
-            %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit.objectID}}', title:'See original post on HN'}
-              %span.date {{hit.points}} points
+            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
+              %span.date {{ ::hit.points }} points
           %li
             %i.icon-clock
-            %a{'ng-href' => 'https://news.ycombinator.com/item?id={{hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID}}', title:'{{hit.created_at}}'}
-              %span.date {{hit.created_at_i|moment}}
-          %li
-            %a.hit-link{"ng-if"=>"hit.url", "ng-href"=>"{{hit.url}}"}
-              {{hit.url|domain}}
-      .item-actions.pull-right{'ng-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
+            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
+              %span.date {{ ::hit.created_at_i | moment }}
+          %li{'bo-show' => 'hit.url'}
+            %a.hit-link{"bo-href"=>"hit.url"}
+              {{ ::hit.url | domain }}
+      .item-actions.pull-right{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
-          %li.action-toggle-comments{'ng-show' => 'state != "jobs"'}
+          %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}
             %i.icon-speech-bubble
-            %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'ng-if' => 'hit.num_comments > 0'}
-              %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
-            %span{'ng-if' => 'hit.num_comments == 0'} no comment
+            %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'bo-show' => 'hit.num_comments > 0'}
+              {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
+            %span{'bo-show' => 'hit.num_comments == 0'} no comment
           %li.action-share
             %a.placeholder
               %i.icon-share
             %a.dropwdown-share{href:'FIXME:THIS_PAGE_URL_WITH_FOCUS_ON_THIS_ITEM',"dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected, hit.objectID)"}
               %i.icon-share
-          %li.action-toggle-star
-            %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
+          %li.action-toggle-star{'bo-show' => 'state != "jobs"'}
+            %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'bo-class' => '{ "starred": isStarred(hit.objectID) }'}
               %i.icon-star
-      .text-container{"ng-bind-html"=>"hit._highlightResult.comment_text.value|cleanup", 'ng-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
-      .text-container{"ng-bind-html"=>"hit._highlightResult.story_text.value|cleanup", 'ng-show' => 'hit.story_text && hit._tags[0] === "story"'}
-    %ul.list-item-comments{"ng-show"=>"story[hit.objectID]"}
+      .text-container{"bo-html"=>"hit._highlightResult.comment_text.value|cleanup", 'bo-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
+      .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && hit._tags[0] === "story"'}
+    %ul.list-item-comments{"ng-if"=>"story[hit.objectID]"}
       %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
         %span.author
           %avatar{author:"comment.author"}
-          {{comment.author}} -
-        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}'} {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
+          {{ ::comment.author }} -
+        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" '}
@@ -57,12 +57,9 @@
       did not match any results.
     %p Suggestions:
     %ul
-      %li
-        %a{href:"#"} Try different keywords.
-      %li
-        %a{href:"#"} Try larger date range.
-      %li
-        %a{href:"#"} Try different Type/Category.
+      %li{'ng-show' => 'query'} Try different keywords.
+      %li{'ng-show' => 'settings.dateRange !== "all"'} Try larger date range.
+      %li{'ng-show' => 'settings.type !== "all"'} Try different Type/Category.
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
     %li
