@@ -35,7 +35,7 @@
             %a.dropwdown-share{'bo-href' => '"/story/" + hit.objectID',"dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected, hit.objectID)"}
               %i.icon-share
           %li.action-toggle-star{'bo-show' => 'state != "jobs"'}
-            %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'bo-class' => '{ "starred": isStarred(hit.objectID) }'}
+            %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
               %i.icon-star
       .text-container{"bo-html"=>"hit._highlightResult.comment_text.value|cleanup", 'bo-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
       .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && hit._tags[0] === "story"'}
@@ -47,8 +47,10 @@
         %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
-  .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" '}
+  .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange == "all" '}
     %p You don't have any starred items.
+  .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange != "all"'}
+    %p You don't have any starred items <strong>for this period</strong>.
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "user" '}
     %p No items for user <code>{{settings.login}}</code>.
   .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred" && state != "user"'}
