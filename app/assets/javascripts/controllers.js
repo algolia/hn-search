@@ -152,7 +152,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
 
     NProgress.start();
-    $http.get('https://hn.algolia.com/api/v1/items/' + id).success(function(data) {
+    $http.get($location.protocol() + '://hn.algolia.com/api/v1/items/' + id).success(function(data) {
       NProgress.done();
 
       $scope.story[id] = { comments: data };
@@ -332,7 +332,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   $scope.gotoMenu = function($event, path) {
     $event.preventDefault();
-
+    $scope.story = {};
     $location.path(path).search($location.search());
     window.scrollTo(0, 0);
   };
