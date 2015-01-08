@@ -109,6 +109,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.query = search.query;
 
     if ($scope.state === 'hot') {
+      $scope.results = null;
       hot.get().then(function(ids) {
         _search(ids);
       });
