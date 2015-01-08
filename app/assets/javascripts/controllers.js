@@ -337,7 +337,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       $scope.placeholder = 'Search comments';
     }
 
-    console.log('changed settings');
     search.applySettings(newSettings, $scope.state);
     $scope.getSearch();
   });
@@ -383,7 +382,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         $scope.savedQuery = null;
       }
     }
-    console.log('changed state');
     if (!first) {
       search.applySettings($scope.settings, $scope.state);
       $scope.getSearch();
