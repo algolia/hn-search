@@ -55,9 +55,12 @@
     %p No items for user <code>{{settings.login}}</code><span ng-if="query"> matching <strong>{{ query }}</strong></span>.
   .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred" && state != "user"'}
     %p
-      Your search
+      No
+      %span{'ng-show' => 'settings.type === "all"'} items
+      %span{'ng-show' => 'settings.type === "story"'} stories
+      %span{'ng-show' => 'settings.type === "comment"'} comments
       %span{'ng-show' => 'query'}
-        \-
+        matching
         %strong
           %span{'ng-show' => 'state === "ask-hn"'} Ask HN:
           %span{'ng-show' => 'state === "show-hn"'} Show HN:
@@ -65,8 +68,11 @@
           %span{'ng-show' => 'state === "polls"'} Polls:
           %span{'ng-show' => 'state === "hot"'} Hot:
           {{ query }}
-        \-
-      did not match any results.
+      %span{'ng-show' => 'settings.dateRange !== "all"'}
+        in the
+        %strong{'ng-show' => 'settings.dateRange === "last24h"'} last 24 hours
+        %strong{'ng-show' => 'settings.dateRange === "pastWeek"'} past week
+        %strong{'ng-show' => 'settings.dateRange === "pastMonth"'} past month
     %div{'ng-show' => 'query || settings.dateRange !== "all" || settings.type !== "all"'}
       %p Suggestions:
       %ul
