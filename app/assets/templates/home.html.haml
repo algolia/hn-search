@@ -11,7 +11,7 @@
           %li
             %i.icon-head
             %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
-              %span.author {{ ::hit.author }}
+              %span.author{'bo-html' => 'hit._highlightResult.author.value'}
           %li{'bo-show' => 'hit.points'}
             %i.icon-heart
             %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
@@ -21,8 +21,7 @@
             %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
               %span.date {{ ::hit.created_at_i | moment }}
           %li{'bo-show' => 'hit.url'}
-            %a.hit-link{"bo-href"=>"hit.url"}
-              {{ ::hit.url | domain }}
+            %a.hit-link{"bo-href"=>"hit.url", 'bo-html' => 'hit._highlightResult.url.value | domain'}
       .item-actions.pull-right{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}

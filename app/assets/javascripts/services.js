@@ -256,8 +256,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 .filter( 'domain', function () {
     return function ( input ) {
         var a = document.createElement('a');
-        a.href = input;
-        return a.hostname;
+        a.href = input.replace(/<em>/ig, '_B_EM_').replace(/<\/em>/ig, '_E_EM_');
+        return a.hostname.replace(/_B_EM_/gi, '<em>').replace(/_E_EM_/gi, '</em>');
     };
 })
 
