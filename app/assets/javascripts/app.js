@@ -105,6 +105,15 @@ var app = angular.module('HNSearch', [
       templateUrl: 'layout.html',
       controller: 'SearchCtrl'
     })
+    .state('search.story', {
+      url: '/story/:id',
+      views: {
+        'col-2@search': { templateUrl: '_home-col-2.html' },
+        'col-3@search': { templateUrl: '_home-col-3.html' },
+        'main-header@search': { templateUrl: '_home-header.html' },
+        'main-content@search': { templateUrl: 'home.html', controller: 'StoryCtrl' }
+      }
+    })
     .state('search.page', {
       url: '/:page',
       views: {

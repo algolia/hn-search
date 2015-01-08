@@ -114,13 +114,19 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       });
     } else if ($scope.state === 'starred') {
       _search(starred.all());
+    } else if (search.storyID) {
+      $scope.loadComments(search.storyID);
+      _search([ search.storyID ]);
+      search.storyID = null;
     } else {
       _search();
     }
   };
 
   $scope.loadComments = function(id, $event) {
-    $event.preventDefault();
+    if ($event) {
+      $event.preventDefault();
+    }
 
     $('.item-show-comments').removeClass('item-show-comments');
 
@@ -131,15 +137,17 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       return;
     }
 
-    var found = false;
-    for (var i = 0; i < $scope.results.hits.length; ++i) {
-      if ($scope.results.hits[i].objectID == id) {
-        found = true;
-        break;
+    if ($scope.results) {
+      var found = false;
+      for (var i = 0; i < $scope.results.hits.length; ++i) {
+        if ($scope.results.hits[i].objectID == id) {
+          found = true;
+          break;
+        }
       }
-    }
-    if (!found) {
-      return;
+      if (!found) {
+        return;
+      }
     }
 
     NProgress.start();
@@ -148,7 +156,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
       $scope.story[id] = { comments: data };
 
-      var item = $($event.currentTarget).closest('.item');
+      var item = $event ? $($event.currentTarget).closest('.item') : $('.item_' + id);
       item.addClass('item-show-comments');
       $(window).scrollTop(item.offset().top - $('.page-header').outerHeight() - $('.main > header').outerHeight());
     });
@@ -318,8 +326,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     if (newSettings.page == oldSettings.page) {
       $scope.settings.page = 0;
     }
-    search.applySettings(newSettings, $scope.state);
-    $scope.getSearch();
 
     if (newSettings.type === 'all') {
       $scope.placeholder = 'Stories, polls, jobs, comments';
@@ -328,6 +334,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     } else if (newSettings.type === 'comments') {
       $scope.placeholder = 'Search comments';
     }
+
+    console.log('changed settings');
+    search.applySettings(newSettings, $scope.state);
+    $scope.getSearch();
   });
 
   // Watch query
@@ -348,6 +358,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   //  -> if on "starred", backup the settings & use byDate/all/<empty>
   $scope.savedSettings = null;
   $scope.savedQuery = null;
+  var first = true;
   $scope.$watch('state', function() {
     if ($scope.state === 'starred') {
       if (!$scope.savedSettings) {
@@ -370,17 +381,21 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         $scope.savedQuery = null;
       }
     }
-    search.applySettings($scope.settings, $scope.state);
-    $scope.getSearch();
+    console.log('changed state');
+    if (!first) {
+      search.applySettings($scope.settings, $scope.state);
+      $scope.getSearch();
+    }
+    first = false;
   });
   $scope.$on("$stateChangeSuccess", function(event, toState, toParams) {
     $scope.state = toParams.page;
     window.scrollTo(0, 0);
   });
+}])
 
-  // run 1st query
-  search.applySettings($scope.settings, $scope.state);
-  $scope.getSearch();
+.controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {
+  search.storyID = $stateParams.id;
 }])
 
 .controller('SettingsCtrl', ['$scope', 'settings', function($scope, settings) {
