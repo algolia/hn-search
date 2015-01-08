@@ -157,6 +157,7 @@ dd.directive('dropdownMenu', ['$parse', '$compile', 'DropdownService', '$templat
 
         $element.bind('click', function (event) {
           event.stopPropagation();
+          event.preventDefault();
           DropdownService.toggleActive(tpl);
         });
 
