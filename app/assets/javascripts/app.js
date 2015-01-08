@@ -17,6 +17,41 @@ var app = angular.module('HNSearch', [
   // html 5 mode
   $locationProvider.html5Mode(true);
 
+  // backward compat
+  var hash = window.location.hash;
+  var backwardCompatParams;
+  if (hash.indexOf('#!/') === 0) {
+    var parts = hash.substring(3).split('/');
+    var type = parts.shift();
+    var created_at = parts.shift();
+    var v = parts.shift();
+    var prefixedSearch, page;
+    if (v === 'prefix') {
+      prefixedSearch = true;
+      page = parseInt(parts.shift());
+    } else {
+      prefixedSearch = false;
+      page = parseInt(v);
+    }
+    var q = decodeURIComponent(parts.join('/'));
+
+    var dateRange;
+    switch (created_at) {
+    case "last_24h": dateRange = "last24h"; break;
+    case "past_week": dateRange = "pastWeek"; break;
+    case "past_month": dateRange = "pastMonth"; break;
+    default: dateRange = "all"; break;
+    }
+
+    backwardCompatParams = {
+      query: q,
+      type: type,
+      dateRange: dateRange,
+      prefix: prefixedSearch,
+      page: page
+    };
+  }
+
   // routes
   $urlRouterProvider.otherwise('/');
   $stateProvider
@@ -77,50 +112,16 @@ var app = angular.module('HNSearch', [
         'col-3@search': { templateUrl: '_home-col-3.html' },
         'main-header@search': { templateUrl: '_home-header.html' },
         'main-content@search': { templateUrl: 'home.html' }
-      }
+      },
+      onEnter: ['$location', function($location) {
+        if (backwardCompatParams) {
+          $location.path('/').search(backwardCompatParams);
+          backwardCompatParams = null;
+        }
+      }]
     })
     ;
 }])
-
-.run(['$rootScope', '$location', function($rootScope, $location) {
-  $rootScope.$on('$routeChangeStart', function (event, next) {
-    // backward compatibility
-    if ($location.path().indexOf('!/') === 0 || $location.path().indexOf('/!/') === 0) {
-      var parts = $location.path().substring($location.path().indexOf('!/') === 0 ? 2 : 3).split('/');
-      var type = parts.shift();
-      var created_at = parts.shift();
-      var v = parts.shift();
-      var prefixedSearch, page;
-      if (v === 'prefix') {
-        prefixedSearch = true;
-        page = parseInt(parts.shift());
-      } else {
-        prefixedSearch = false;
-        page = parseInt(v);
-      }
-      var q = decodeURIComponent(parts.join('/'));
-
-      var dateRange;
-      switch (created_at) {
-      case "last_24h": dateRange = "last24h"; break;
-      case "past_week": dateRange = "pastWeek"; break;
-      case "past_month": dateRange = "pastMonth"; break;
-      default: dateRange = "all"; break;
-      }
-
-      event.preventDefault();
-      $rootScope.$evalAsync(function() {
-        $location.path('/').search({
-          query: encodeURIComponent(q),
-          type: type,
-          dateRange: dateRange,
-          prefix: prefixedSearch,
-          page: page
-        });
-      });
-    }
-  });
-}]);
 
 $(document).ready(function() {
   // sticky main
