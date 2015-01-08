@@ -261,10 +261,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
   ];
   // Share item
-  $scope.shareItem = function(selected, objectID){
-    console.log('share ' + objectID + ' on ' + selected.share);
-    var url = 'http://FIXME';
-    var title = 'FIXME as well';
+  $scope.shareItem = function(selected, hit){
+    var url = $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID;
+    var title = hit.title + ' - HNSearch';
     switch (selected.share){
       case 'twitter':
         window.open("https://twitter.com/share?url=" + escape(url) + "&text=" + title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
@@ -273,7 +272,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         window.open("https://www.facebook.com/sharer/sharer.php?u=" + escape(url) + "&t=" + title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
         break;
       case 'email':
-        console.log('FIXME email')
+        window.location.href = "mailto:?subject=" + title + "&body=" + url;
         break;
     }
   };
