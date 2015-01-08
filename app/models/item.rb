@@ -79,18 +79,23 @@ class Item < ActiveRecord::Base
   end
 
   def crawl_thumbnail!
-    return true if url.blank? || AWS::S3::S3Object.exists?("#{id}.png", 'hnsearch')
+    return true if url.blank? || (AWS::S3::S3Object.exists?("#{id}.png", 'hnsearch') && AWS::S3::S3Object.about("#{id}.png", 'hnsearch')['content-length'].to_i < 100*1024)
     begin
-      temp_file = "/tmp/#{id}.png"
-      `#{Rails.root}/crawl_thumbnail.sh "#{url}" "#{temp_file}" >/dev/null 2>&1`
+      `#{Rails.root}/crawl_thumbnail.sh "#{url}" #{id} >/dev/null 2>&1`
       begin
-        AWS::S3::S3Object.store("#{id}.png", open(temp_file), 'hnsearch', access: :public_read)
+        AWS::S3::S3Object.store("#{id}.png", open("/tmp/#{id}.png"), 'hnsearch', access: :public_read)
+        AWS::S3::S3Object.store("#{id}-600x315.png", open("/tmp/#{id}-600x315.png"), 'hnsearch', access: :public_read)
+        AWS::S3::S3Object.store("#{id}-240x180.png", open("/tmp/#{id}-240x180.png"), 'hnsearch', access: :public_read)
       ensure
-        FileUtils.rm_f temp_file
+        FileUtils.rm_f "/tmp/#{id}-orig.png"
+        FileUtils.rm_f "/tmp/#{id}-600x315.png"
+        FileUtils.rm_f "/tmp/#{id}-240x180.png"
+        FileUtils.rm_f "/tmp/#{id}.png"
       end
       puts "Crawled #{url} (#{id}.png)"
       return true
     rescue Exception => e
+      puts e
       return false
     end
   end
