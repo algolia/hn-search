@@ -1,0 +1,29 @@
+= content_for :head do
+  - url = request.url
+  - domain = request.domain
+  - title = description = image_url = ''
+  - if request.path.start_with?('/story/') && (id = request.path.split('/')[2].to_i) > 0
+    - item = Item.find(id)
+    - title = item.title
+    - description = item.text
+    - image_url = "http://drcs9k8uelb9s.cloudfront.net/#{item.id}.png"
+  - else
+    - title = 'HN Search powered by Algolia'
+    - description = 'Hacker News Search, millions articles and comments at your fingertips.'
+    - image_url = asset_url('yc-logo.png')
+
+  %meta{name: "twitter:card", content: "summary"}
+  %meta{name: "twitter:site", content: "@algolia"}
+  %meta{name: "twitter:title", content: title}
+  %meta{name: "twitter:description", content: description}
+  %meta{name: "twitter:image:src", content: image_url}
+  %meta{name: "twitter:domain", content: domain}
+
+  %meta{property: "st:title", content: title }
+  %meta{property: "og:url", content: url }
+  %meta{property: "og:site_name", content: 'HN Search' }
+  %meta{property: "og:title", content: title }
+  %meta{property: "og:description", content: description, }
+  %meta{property: "og:image", content: image_url }
+  %meta{property: "og:image:width", content: '100' }
+  %meta{property: "og:image:height", content: '100' }
