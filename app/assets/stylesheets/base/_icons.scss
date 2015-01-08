@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:url('/assets/icomoon.eot?z5x663');
-  src:url('/assets/icomoon.eot?#iefixz5x663') format('embedded-opentype'),
-    url('/assets/icomoon.woff?z5x663') format('woff'),
-    url('/assets/icomoon.ttf?z5x663') format('truetype'),
-    url('/assets/icomoon.svg?z5x663#icomoon') format('svg');
+  src:url('/assets/icomoon.eot?oyniom');
+  src:url('/assets/icomoon.eot?#iefixoyniom') format('embedded-opentype'),
+    url('/assets/icomoon.woff?oyniom') format('woff'),
+    url('/assets/icomoon.ttf?oyniom') format('truetype'),
+    url('/assets/icomoon.svg?oyniom#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -35,6 +35,18 @@
   content: "\f09a";
 }
 
+.icon-github:before {
+  content: "\f09b";
+}
+
+.icon-google-plus:before {
+  content: "\f0d5";
+}
+
+.icon-hacker-news:before {
+  content: "\f1d4";
+}
+
 .icon-delete:before {
   content: "\e602";
 }
@@ -51,8 +63,24 @@
   content: "\e024";
 }
 
+.icon-layers:before {
+  content: "\e031";
+}
+
 .icon-search:before {
   content: "\e036";
+}
+
+.icon-circle-cross:before {
+  content: "\e043";
+}
+
+.icon-rewind:before {
+  content: "\e051";
+}
+
+.icon-fast-forward:before {
+  content: "\e055";
 }
 
 .icon-repeat:before {
@@ -71,6 +99,14 @@
   content: "\e081";
 }
 
+.icon-marquee-plus:before {
+  content: "\e083";
+}
+
+.icon-marquee-minus:before {
+  content: "\e084";
+}
+
 .icon-maximize:before {
   content: "\e112";
 }
@@ -79,8 +115,24 @@
   content: "\e113";
 }
 
+.icon-open:before {
+  content: "\e128";
+}
+
+.icon-ellipsis:before {
+  content: "\e129";
+}
+
+.icon-home:before {
+  content: "\e900";
+}
+
 .icon-star:before {
   content: "\e600";
+}
+
+.icon-user:before {
+  content: "\e604";
 }
 
 .icon-settings:before {

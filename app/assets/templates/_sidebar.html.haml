@@ -23,7 +23,7 @@
     %li.divider
     %li{'ng-if' => 'settings.login'}
       %a{href:"/user", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/user")'}
-        %i.icon-envelope-o
+        %i.icon-user
         {{ settings.login }}
     %li
       %a{href:"/starred", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/starred")'}
