@@ -10,25 +10,25 @@
         %ul.item-infos.list-inline
           %li
             %i.icon-head
-            %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{hit.author}} profile'}
-              %span.author {{hit.author}}
+            %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
+              %span.author {{ ::hit.author }}
           %li{'bo-show' => 'hit.points'}
             %i.icon-heart
             %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
-              %span.date {{hit.points}} points
+              %span.date {{ ::hit.points }} points
           %li
             %i.icon-clock
-            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{hit.created_at}}'}
-              %span.date {{hit.created_at_i | moment}}
+            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
+              %span.date {{ ::hit.created_at_i | moment }}
           %li{'bo-show' => 'hit.url'}
             %a.hit-link{"bo-href"=>"hit.url"}
-              {{hit.url | domain}}
+              {{ ::hit.url | domain }}
       .item-actions.pull-right{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}
             %i.icon-speech-bubble
             %a{href:"#", "ng-click"=>"loadComments(hit.objectID, $event)", 'bo-show' => 'hit.num_comments > 0'}
-              {{ hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
+              {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
             %span{'bo-show' => 'hit.num_comments == 0'} no comment
           %li.action-share
             %a.dropwdown-share{href:'FIXME:THIS_PAGE_URL_WITH_FOCUS_ON_THIS_ITEM',"dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected, hit.objectID)"}
@@ -42,8 +42,8 @@
       %li.item-comments{"bo-repeat"=>"comment in story[hit.objectID].comments.children", "bo-if"=>"comment.author"}
         %span.author
           %avatar{author:"comment.author"}
-          {{comment.author}} -
-        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}'} {{comment.created_at_i | moment:'M/D/YYYY h:m A'}}
+          {{ ::comment.author }} -
+        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" '}
