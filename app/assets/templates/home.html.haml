@@ -56,7 +56,7 @@
   .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred" && state != "user"'}
     %p
       Your search
-      %span{'ng-show' => 'query'}- <strong>{{ query }}</strong> -
+      %span{'ng-show' => 'query'} - <strong>{{ query }}</strong> -
       did not match any results.
     %div{'ng-show' => 'query || settings.dateRange !== "all" || settings.type !== "all"'}
       %p Suggestions:
@@ -67,12 +67,15 @@
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
     %li
-      %button{'ng-click' => 'prevPage()', 'ng-hide' => 'settings.page == 0'} &laquo;
+      %button{'ng-click' => 'prevPage()', 'ng-hide' => 'settings.page == 0'}
+        %i.icon-rewind
     %li{'ng-repeat' => 'n in getPages(results) track by $index', 'ng-class' => '{ "active": (n == settings.page) }'}
       %button{'ng-click' => 'toPage(n)', 'ng-show' => 'n !== "..."'} {{ n + 1 }}
-      %button{disabled: true, 'ng-show' => 'n === "..."'} &hellip;
+      %button{disabled: true, 'ng-show' => 'n === "..."'}
+        %i.icon-ellipsis
     %li
-      %button{'ng-click' => 'nextPage()', 'ng-hide' => 'settings.page >= results.nbPages - 1'} &raquo;
+      %button{'ng-click' => 'nextPage()', 'ng-hide' => 'settings.page >= results.nbPages - 1'}
+        %i.icon-fast-forward
 
 %a.scroll-to-top.fade{title:'Back to top', href:'#'}
   %span.tooltip
