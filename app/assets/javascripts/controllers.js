@@ -7,6 +7,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.settings = settings.get();
   $scope.results = null;
   $scope.story = {};
+  $scope.placeholder = '';
 
   var getIndex = function(q) {
     if ($scope.settings.sort === 'byDate') {
@@ -319,6 +320,14 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
     search.applySettings(newSettings, $scope.state);
     $scope.getSearch();
+
+    if (newSettings.type === 'all') {
+      $scope.placeholder = 'Stories, polls, jobs, comments';
+    } else if (newSettings.type === 'story') {
+      $scope.placeholder = 'Search stories by title, url or author';
+    } else if (newSettings.type === 'comments') {
+      $scope.placeholder = 'Search comments';
+    }
   });
 
   // Watch query
@@ -459,7 +468,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     },
     template: '<div class="item-input-wrapper">' +
                 '<i ng-hide="query" class="icon-search"></i>' +
-                '<input type="search" placeholder="{{placeholder}}" ng-model="$parent.query" ng-model-options="{debounce: 100}" ng-blur="blurred()" ng-keyup="keyup($event)" autofocus>' +
+                '<input type="search" placeholder="{{ $parent.placeholder }}" ng-model="$parent.query" ng-model-options="{debounce: 100}" ng-blur="blurred()" ng-keyup="keyup($event)" autofocus>' +
               '</div>'
   };
 }])
