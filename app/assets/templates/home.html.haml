@@ -1,4 +1,4 @@
-%section.search-results{'sticky-list' => true}
+%section.search-results{"item-list"=>true,'sticky-list' => true}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID'}
     .item-main
       %a.item-thumbnail-link{'ng-if' => 'settings.showThumbnails && hit._tags[0] === "story"  && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
@@ -31,6 +31,8 @@
               %ng-pluralize{count:"hit.num_comments", when:"{'one': '1 comment','other': '{} comments'}"}
             %span{'ng-if' => 'hit.num_comments == 0'} no comment
           %li.action-share
+            %a.placeholder
+              %i.icon-share
             %a.dropwdown-share{href:'FIXME:THIS_PAGE_URL_WITH_FOCUS_ON_THIS_ITEM',"dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected, hit.objectID)"}
               %i.icon-share
           %li.action-toggle-star

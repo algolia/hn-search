@@ -566,6 +566,90 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns'])
       });
     }
   }
-});
+})
+
+.directive('stickyList', function() {
+  return {
+    link: function(scope, element, attrs) {
+      // Store list element.
+      var $list = $(element);
+
+      // When window scrolls.
+      var $pageHeader = $('.page-header');
+      var $mainHeader = $('.main > header');
+      $(window).scroll(function() {
+        // Unstick unselected headers which are are still sticky.
+        $('.item.item-fixed:not(.item-show-comments), .item.item-absolute-bottom:not(.item-show-comments)')
+          .removeClass('item-fixed')
+          .removeClass('item-absolute-bottom')
+          .data('stickyOriginalTop', '')
+          .css('padding-top', 0);
+
+        // Skip if no header is selected.
+        var $header = $('.item.item-show-comments', $list);
+        if ($header.length === 0) {
+          return;
+        }
+
+        // Store original header top.
+        if (!$header.data('stickyOriginalTop')) {
+          var stickyOriginalTop = $header.offset().top - $pageHeader.outerHeight() - $mainHeader.outerHeight();
+          $header.data('stickyOriginalTop', stickyOriginalTop);
+        }
+
+        // Get positions.
+        var scrollTop = $(this).scrollTop();
+        var headerTop = $header.data('stickyOriginalTop');
+        var bodyBottom = $header.next().offset().top - $header.find('.item-main').outerHeight() - $pageHeader.outerHeight() - $mainHeader.outerHeight();
+
+        // Stick/unstick header.
+        if (scrollTop > headerTop && scrollTop < bodyBottom && !$header.data('stickyStarted')) {
+          $header.addClass('item-fixed').removeClass('item-absolute-bottom').data('stickyStarted', 'yes');
+        }
+        if (scrollTop < headerTop && $header.data('stickyStarted')) {
+          $header.removeClass('item-fixed').data('stickyStarted', '');
+        }
+        if (scrollTop > bodyBottom && $header.data('stickyStarted')) {
+          $header.removeClass('item-fixed').addClass('item-absolute-bottom').data('stickyStarted', '');
+        }
+        if (!$header.hasClass('item-fixed') && !$header.hasClass('item-absolute-bottom')) {
+          $header.data('stickyOriginalTop', '').css('padding-top', 0);
+        } else {
+          $header.css('padding-top', $header.find('.item-main').outerHeight() + 'px');
+        }
+      });
+    }
+  }
+})
+
+.directive("itemList", function($compile) {
+  function compile(tElement, tAttributes) {
+    var tOverlay = tElement.find("a.dropwdown-share").remove();
+    var transcludeOverlay = $compile(tOverlay);
+    function link($scope, element, attributes) {
+      element.on("mouseover", "a.placeholder i.icon-share",
+        function(event) {
+          var item = $(this).closest('li');
+          $(this).remove();
+          var localScope = item.scope();
+          if (localScope.hasOwnProperty("__injected") ) {
+            return;
+          }
+          transcludeOverlay(
+            localScope,
+            function( overlayClone, $scope ) {
+              item.append(overlayClone);
+              $scope.__injected = true;
+            }
+          );
+          localScope.$apply();
+        }
+      );
+    }
+    return( link );
+  }
+  return({compile: compile});
+})
+
 
 ;
