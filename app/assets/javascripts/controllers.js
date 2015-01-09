@@ -1,5 +1,9 @@
 angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bindonce'])
 
+.run(['settings', function(settings) {
+  $('body').attr('rel', settings.get().style);
+}])
+
 .controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
   // Init search et params
   $scope.query = search.query;
@@ -170,7 +174,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   $scope.pageTitle = function() {
     switch ($scope.state) {
-    case undefined: case '': return 'All';
+    case undefined: case '': return $scope.settings.style === 'default' ? '' : 'All';
     case "ask-hn": return "Ask HN";
     case "show-hn": return "Show HN";
     case "jobs": return "Jobs";

@@ -1,0 +1,91 @@
+$orange: #FF6600
+$yellow: yellow
+$fontColor: #333333
+$itemFontColor: black
+$infosFontColor: #828282
+$headerHeight: 40px
+$pageHeaderHeight: 70px
+
+body[rel="default"]
+  color: $fontColor
+  font-family: Verdana !important
+  font-size: 10pt
+  .page-header
+    background: $orange
+    padding: 5px
+    height: $pageHeaderHeight
+    .logo-name
+      color: white
+    .navigation
+      li
+        padding-bottom: 0
+        &.active
+          border-color: $fontColor
+    .wrap-dd-select
+      color: $fontColor
+  .main
+    padding-left: 0
+    margin-top: $pageHeaderHeight
+    .sidebar
+      display: none
+    > header
+      background: #f6f6ef
+      width: 1200px
+      top: $pageHeaderHeight
+      margin-left: -600px
+      padding: 10px
+      height: auto
+      .date-range-filter
+        top: 10px
+    .main-content
+      background: #f6f6ef
+    .search-results
+      background: inherit
+      padding-top: $headerHeight + 10px
+      .item
+        @extend .clearfix
+        border: none
+        font-size: 12px !important
+        padding-left: 10px
+        h2
+          text-decoration: underline
+          font-size: 10pt !important
+          background: url(image_path('grayarrow.gif')) center left no-repeat
+          background-size: 10px
+          padding-left: 15px
+        h2, a, p
+          color: $itemFontColor !important
+        em
+          background: $yellow !important
+          color: $itemFontColor
+        .item-main
+          @extend .clearfix
+          min-height: 0px
+          width: auto
+          padding: 0 10px 10px 0
+          background: inherit
+          .item-thumbnail-link
+            display: none
+          .text-container
+            padding: 5px 0 0 15px !important
+        .item-actions
+          display: none
+        .item-infos
+          padding-left: 15px
+          color: $itemFontColor !important
+          font-size: 9px !important
+          li
+            margin-right: 5px
+          span, i, .hit-link
+            color: $itemFontColor !important
+            font-size: 9px !important
+    .search-pagination
+      padding: 20px 0
+      background: inherit
+  footer
+    margin-top: 10px
+    a
+      font-size: 12px
+      color: $fontColor
+  .edit-settings, .page
+    margin-top: $headerHeight

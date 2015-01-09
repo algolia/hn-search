@@ -7,7 +7,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     var storage = $localStorage.$default({
         showThumbnails: true,
         defaultSort: 'byPopularity',
-        defaultDateRange: 'last24h'
+        defaultDateRange: 'last24h',
+        style: 'default'
     });
 
     var _loadSettings = function() {
@@ -21,7 +22,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
             prefix: (queryParameters.prefix || true),
             page: (parseInt(queryParameters.page, 10) || 0),
             showThumbnails: storage.showThumbnails,
-            login: storage.login
+            login: storage.login,
+            style: storage.style
         };
     }
     var settings = _loadSettings();
@@ -49,6 +51,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     settingsService.save = function() {
         $localStorage.showThumbnails = settings.showThumbnails;
         $localStorage.login = settings.login;
+        $localStorage.style = settings.style;
+        $('body').attr('rel', settings.style);
 
         if ($localStorage.defaultSort != settings.defaultSort) {
             settings.sort = settings.defaultSort;
@@ -257,13 +261,17 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
     };
 })
 
-.filter( 'domain', function () {
+.filter( 'domain', ['settings', function (settings) {
+    var settings = settings.get();
     return function ( input ) {
+        if (settings.style === 'default') {
+            return '(' + input + ')';
+        }
         var a = document.createElement('a');
         a.href = input && input.replace(/<em>/ig, '_B_EM_').replace(/<\/em>/ig, '_E_EM_');
         return a.hostname && a.hostname.replace(/_B_EM_/gi, '<em>').replace(/_E_EM_/gi, '</em>');
     };
-})
+}])
 
 .filter('cleanup', function() {
     return function (input) {

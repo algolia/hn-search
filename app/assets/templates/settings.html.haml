@@ -4,6 +4,12 @@
     %label{for: 'showThumbnails'}
       %input{type: 'checkbox', id: 'showThumbnails', 'ng-model' => 'settings.showThumbnails'}
       Show thumbnails
+    .spacer2
+    %label{for: 'style'}
+      Style
+      %select{id: 'style', 'ng-model' => 'settings.style'}
+        %option{value: 'default'} Default
+        %option{value: 'experimental'} Experimental
 
   %h2 Ranking options
   %fieldset
