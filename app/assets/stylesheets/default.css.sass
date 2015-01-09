@@ -1,10 +1,11 @@
-$orange: #FF6600
+$orange: #FF742B
 $yellow: yellow
 $fontColor: #333333
 $itemFontColor: black
 $infosFontColor: #828282
 $headerHeight: 40px
 $pageHeaderHeight: 70px
+$fontFamily: Verdana, Geneva, sans-serif
 
 body[rel="default"]
   color: $fontColor
@@ -23,13 +24,19 @@ body[rel="default"]
           border-color: $fontColor
     .wrap-dd-select
       color: $fontColor
+    .search-wrapper
+      top: 3px
+      input[type=search]
+        border: none
+    .powered-by
+      top: 12px
   .main
     padding-left: 0
     margin-top: $pageHeaderHeight
     .sidebar
       display: none
     > header
-      background: #f6f6ef
+      background: white
       width: 1200px
       top: $pageHeaderHeight
       margin-left: -600px
@@ -48,8 +55,9 @@ body[rel="default"]
         font-size: 12px !important
         padding-left: 10px
         h2
-          text-decoration: underline
-          font-size: 10pt !important
+          font-family: Verdana !important
+          font-size: 13px !important
+          font-weight: normal
           background: url(image_path('grayarrow.gif')) center left no-repeat
           background-size: 10px
           padding-left: 15px
@@ -72,8 +80,8 @@ body[rel="default"]
           display: none
         .item-infos
           padding-left: 15px
-          color: $itemFontColor !important
-          font-size: 9px !important
+          color: $infosFontColor !important
+          font-size: 12px !important
           li
             margin-right: 5px
           span, i, .hit-link
@@ -89,3 +97,11 @@ body[rel="default"]
       color: $fontColor
   .edit-settings, .page
     margin-top: $headerHeight
+    h2
+      color: $darkGray
+      font-size: 16px
+      font-weight: normal
+    fieldset
+      background: transparent
+      border: none
+      border-top: solid 1px #858285

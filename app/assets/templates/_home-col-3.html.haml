@@ -3,5 +3,7 @@
   %hnsearch
 %span.powered-by
   powered by
-  %a{href: 'http://www.algolia.com/?utm_source=new-hn_search&utm_medium=link&utm_term=discover&utm_campaign=new-hn_algolia', title: 'Realtime Search Engine'}
+  %a{'ng-if'=>'settings.style == "experimental"', href: 'https://www.algolia.com/?utm_source=new-hn_search&utm_medium=link&utm_term=discover&utm_campaign=new-hn_algolia', title: 'Realtime Search Engine'}
     = image_tag "algolia.jpg"
+  %a{'ng-if'=>'settings.style == "default"', href: 'https://www.algolia.com/?utm_source=new-hn_search&utm_medium=link&utm_term=discover&utm_campaign=hn_algolia', title: 'Realtime Search Engine'}
+    = image_tag "algolia.png"
