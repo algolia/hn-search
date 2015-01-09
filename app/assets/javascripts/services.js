@@ -13,11 +13,20 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
 
     var _loadSettings = function() {
         var queryParameters = $location.search();
+        var defaultDateRange, defaultSort;
+        if (queryParameters.q) {
+            $location.search('query', queryParameters.q).search('q', null);
+            defaultDateRange = 'all';
+            defaultSort = 'byPopularity';
+        } else {
+            defaultDateRange = storage.defaultDateRange;
+            defaultSort = storage.defaultSort;
+        }
         return {
-            dateRange: (queryParameters.dateRange || storage.defaultDateRange),
+            dateRange: (queryParameters.dateRange || defaultDateRange),
             defaultDateRange: storage.defaultDateRange,
             type: (queryParameters.type || 'story'),
-            sort: (queryParameters.sort || storage.defaultSort),
+            sort: (queryParameters.sort || defaultSort),
             defaultSort: storage.defaultSort,
             prefix: (queryParameters.prefix || true),
             page: (parseInt(queryParameters.page, 10) || 0),
