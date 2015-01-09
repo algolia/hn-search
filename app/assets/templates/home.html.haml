@@ -1,7 +1,7 @@
 %section.search-results{'sticky-list' => true,"defer-share-dropdown"=>true,}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID', 'bindonce' => true}
     .item-main
-      %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
+      %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && settings.style !== "default" && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
         %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
       .item-title-and-infos
         %h2
