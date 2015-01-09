@@ -1,6 +1,7 @@
 %nav.navigation
   %ul.list-inline
+    %li Sort by:
     %li{'ng-class' => '{active: settings.sort === "byPopularity"}', 'ng-click' => 'sortBy("byPopularity")'}
-      Most Popular
+      Popularity
     %li{'ng-class' => '{active: settings.sort === "byDate"}', 'ng-click' => 'sortBy("byDate")'}
-      Most Recent
+      Date
