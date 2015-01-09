@@ -51,14 +51,13 @@
     %p You don't have any starred items.
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange != "all"'}
     %p You don't have any starred items <strong>for this period</strong>.
-  .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "user" '}
-    %p No items for user <code>{{settings.login}}</code><span ng-if="query"> matching <strong>{{ query }}</strong></span>.
-  .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred" && state != "user"'}
+  .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred"'}
     %p
       No
       %span{'ng-show' => 'settings.type === "all"'} items
       %span{'ng-show' => 'settings.type === "story"'} stories
       %span{'ng-show' => 'settings.type === "comment"'} comments
+      %span{'ng-show' => 'state == "user" '} by <strong><code>{{settings.login}}</code></strong>
       %span{'ng-show' => 'query'}
         matching
         %strong
