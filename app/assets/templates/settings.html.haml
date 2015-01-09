@@ -5,6 +5,12 @@
       %label.label-control{for:'showThumbnails'} Show thumbnails
       .form-control
         %input#showThumbnails.form-control{type:'checkbox', 'ng-model' => 'settings.showThumbnails'}
+    .form-group
+      %label.label-control{for: 'style'} Style
+      .form-control
+        %select#style{'ng-model' => 'settings.style'}
+          %option{value:'default'} Default
+          %option{value:'experimental'} Experimental
 
   %h2 Ranking options
   %fieldset

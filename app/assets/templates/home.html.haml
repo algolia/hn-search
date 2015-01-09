@@ -8,14 +8,14 @@
           %a{"ng-href"=>"{{hit.url}}", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
           %a{"bo-href"=>"hit.story_url", "bo-html"=>"hit.story_title", "bo-if" => "hit._tags[0] === 'comment'"}
         %ul.item-infos.list-inline
-          %li
-            %i.icon-head
-            %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
-              %span.author{'bo-html' => 'hit._highlightResult.author.value'}
           %li{'bo-show' => 'hit.points'}
             %i.icon-heart
             %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
               %span.date {{ ::hit.points }} points
+          %li
+            %i.icon-head
+            %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
+              %span.author{'bo-html' => 'hit._highlightResult.author.value'}
           %li
             %i.icon-clock
             %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}

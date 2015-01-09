@@ -12,11 +12,15 @@
   %section.main
     %div{'ng-include' => '"_sidebar.html"'}
     %header{'ui-view' => 'main-header'}
-    %section{'ui-view' => 'main-content'}
+    %section.main-content{'ui-view' => 'main-content'}
     %footer
       %ul.list-inline
         %li
           %a{href: '/about'} About
+        %li
+          •
+        %li
+          %a{href: '/settings'} Settings
         %li
           •
         %li

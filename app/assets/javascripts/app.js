@@ -138,6 +138,9 @@ $(document).ready(function() {
   var scrollTopBtn = $('.scroll-to-top');
   var doc = $(document)
   doc.on("scroll", function(e) {
+    if (body.attr('rel') === 'default') {
+      return;
+    }
     if (doc.scrollTop() > 100) {
       body.addClass('small-header');
       scrollTopBtn.addClass('in');
