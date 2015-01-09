@@ -568,7 +568,6 @@ footer
     visibility: visible
     top: 42px
 
-
 .dropdown-menu
   position: absolute
   float: left
@@ -601,3 +600,17 @@ footer
 @for $i from 1 through 10
   .spacer#{$i}
     height: #{$i}em
+
+.edit-settings
+  h2
+    color: $lightGray
+    margin-bottom: 10px
+  .form-group
+    margin-bottom: 1.6em
+    @include outer-container
+    &:last-child
+      margin-bottom: 0
+    .label-control
+      @include span-columns(3)
+    .form-control
+      @include span-columns(6)
