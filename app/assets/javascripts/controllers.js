@@ -467,7 +467,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       }
     },
     template: '<li>' +
-                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author}}</span> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#up_{{reply.id}}" title="{{ reply.created_at }}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a>' +
+                '<span class="author"><avatar author="reply.author"></avatar> {{reply.author || "deleted"}}</span><span ng-if="reply.created_at"> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#up_{{reply.id}}" title="{{ reply.created_at }}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a></span>' +
                 '<div class="reply-container" ng-bind-html="reply.text|cleanup"></div>' +
               '</li>'
   };
@@ -530,7 +530,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     scope: {
       author: "="
     },
-    template: '<span class="item-avatar" style="background-color:{{author|color}}">{{author|firstLetter}}</span>'
+    template: '<span>' +
+        '<span ng-if="!author" class="icon-circle-cross"></span>' +
+        '<span ng-if="author" class="item-avatar" style="background-color:{{author|color}}">{{author|firstLetter}}</span>' +
+      '</span>'
   };
 }])
 

@@ -43,8 +43,10 @@
       %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
         %span.author
           %avatar{author:"comment.author"}
-          {{ ::comment.author }} -
-        %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
+          {{ ::comment.author || "deleted" }}
+        %span{'ng-if' => 'comment.created_at'}
+          \-
+          %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange == "all" '}
