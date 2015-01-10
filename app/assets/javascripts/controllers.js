@@ -425,6 +425,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $http.get('/popular.json').then(function(results) {
     $scope.populars = results.data;
   });
+
+  // Handle history
+  $scope.$watch(function () { return $location.search(); }, function() {
+    $scope.settings = settings.reload();
+  });
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {

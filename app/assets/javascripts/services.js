@@ -57,6 +57,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
         return settings;
     };
 
+    settingsService.reload = function() {
+        settings = _loadSettings();
+        return settings;
+    }
+
     settingsService.save = function() {
         $localStorage.showThumbnails = settings.showThumbnails;
         $localStorage.login = settings.login;
