@@ -80,7 +80,11 @@
         %li{'ng-show' => 'settings.dateRange !== "all"'}
           %a{href:'#', 'ng-click' => 'widerDateRange($event)'} Try a wider date range.
         %li{'ng-show' => 'settings.type !== "all"'}
-          %a{href:'#', 'ng-click' => 'searchAllItems($event)'} Search for all items.
+          %a{href:'#', 'ng-click' => 'searchAllItems($event)'}
+            Search also for&nbsp;
+            %span{'ng-if' => 'settings.type === "story"'}> comments
+            %span{'ng-if' => 'settings.type === "comment"'}> stories
+            \.
       .spacer2
       %p
         Or try popular queries:
