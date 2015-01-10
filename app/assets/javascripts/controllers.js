@@ -306,7 +306,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
   };
   $scope.toPage = function(page) {
-    window.scrollTo(0, 0);
     $scope.settings.page = page;
   };
   $scope.getPages = function(results) {
@@ -359,6 +358,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       $scope.placeholder = 'Search comments';
     }
 
+    window.scrollTo(0, 0);
     search.applySettings(newSettings, $scope.state);
     $scope.getSearch();
   });
