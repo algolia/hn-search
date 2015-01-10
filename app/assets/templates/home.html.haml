@@ -54,9 +54,9 @@
   .no-results{'ng-show' => 'results.hits.length == 0 && state != "starred"'}
     %p
       No
-      %span{'ng-show' => 'settings.type === "all"'} items
-      %span{'ng-show' => 'settings.type === "story"'} stories
-      %span{'ng-show' => 'settings.type === "comment"'} comments
+      %strong{'ng-show' => 'settings.type === "all"'} items
+      %strong{'ng-show' => 'settings.type === "story"'} stories
+      %strong{'ng-show' => 'settings.type === "comment"'} comments
       %span{'ng-show' => 'state == "user" '} by <strong><code>{{settings.login}}</code></strong>
       %span{'ng-show' => 'query'}
         matching
