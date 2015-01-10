@@ -262,6 +262,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.searchAllItems = function($event) {
     $event.preventDefault();
     $scope.settings.type = 'all';
+    $scope.ddSelectSelected = angular.copy($scope.ddSelectOptions[0]);
   };
 
   $scope.ddMenuShare = [
