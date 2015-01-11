@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.0';
+var ALGOLIA_VERSION = '2.8.5';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -61,7 +61,7 @@ var AlgoliaSearch = function(applicationID, apiKey, methodOrOptions, resolveDNS,
     var self = this;
     this.applicationID = applicationID;
     this.apiKey = apiKey;
-    this.dsn = false;
+    this.dsn = true;
     this.dsnHost = null;
     this.hosts = [];
     this.currentHostIndex = 0;
@@ -474,13 +474,7 @@ AlgoliaSearch.prototype = {
      */
     sendQueriesBatch: function(callback, delay) {
         var as = this;
-        var params = {requests: [], apiKey: this.apiKey, appID: this.applicationID};
-        if (this.userToken) {
-            params['X-Algolia-UserToken'] = this.userToken;
-        }
-        if (this.tagFilters) {
-            params['X-Algolia-TagFilters'] = this.tagFilters;
-        }
+        var params = {requests: []};
         for (var i = 0; i < as.batch.length; ++i) {
             params.requests.push(as.batch[i]);
         }
@@ -528,7 +522,8 @@ AlgoliaSearch.prototype = {
     },
 
     _sendQueriesBatch: function(params, callback) {
-        if (this.jsonp === null) {
+
+       if (this.jsonp === null) {
             var self = this;
             return this._jsonRequest({ cache: this.cache,
                 method: 'POST',
@@ -551,24 +546,24 @@ AlgoliaSearch.prototype = {
                 var q = '/1/indexes/' + encodeURIComponent(params.requests[i].indexName) + '?' + params.requests[i].params;
                 jsonpParams += i + '=' + encodeURIComponent(q) + '&';
             }
+            var pObj = {params: jsonpParams};
             return this._jsonRequest({ cache: this.cache,
                                    method: 'GET',
                                    url: '/1/indexes/*',
-                                   body: { params: jsonpParams },
+                                   body: pObj,
                                    callback: callback });
         } else {
             return this._jsonRequest({ cache: this.cache,
                                    method: 'POST',
                                    url: '/1/indexes/*/queries',
                                    body: params,
-       	                           callback: callback});
+                                          callback: callback});
         }
     },
     /*
      * Wrapper that try all hosts to maximize the quality of service
      */
     _jsonRequest: function(opts) {
-        var successiveRetryCount = 0;
         var self = this;
         var callback = opts.callback;
         var cache = null;
@@ -587,7 +582,7 @@ AlgoliaSearch.prototype = {
         if (!this._isUndefined(opts.cache)) {
             cache = opts.cache;
             if (!this._isUndefined(cache[cacheID])) {
-                if (!this._isUndefined(callback)) {
+                if (!this._isUndefined(callback) && callback) {
                     setTimeout(function () { callback(true, cache[cacheID]); }, 1);
                 }
                 deferred && deferred.resolve(cache[cacheID]);
@@ -595,10 +590,11 @@ AlgoliaSearch.prototype = {
             }
         }
 
+        opts.successiveRetryCount = 0;
         var impl = function() {
-            if (successiveRetryCount >= self.hosts.length) {
-                if (!self._isUndefined(callback)) {
-                    successiveRetryCount = 0;
+            if (opts.successiveRetryCount >= self.hosts.length) {
+                if (!self._isUndefined(callback) && callback) {
+                    opts.successiveRetryCount = 0;
                     callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
                 }
                 deferred && deferred.reject();
@@ -613,12 +609,12 @@ AlgoliaSearch.prototype = {
                 }
                 if (!success && retry) {
                     self.currentHostIndex = ++self.currentHostIndex % self.hosts.length;
-                    successiveRetryCount += 1;
+                    opts.successiveRetryCount += 1;
                     impl();
                 } else {
-                    successiveRetryCount = 0;
+                    opts.successiveRetryCount = 0;
                     deferred && deferred.resolve(body);
-                    if (!self._isUndefined(callback)) {
+                    if (!self._isUndefined(callback) && callback) {
                         callback(success, body);
                     }
                 }
@@ -660,16 +656,22 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
-        var headers = {};
-        if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-            headers['X-Algolia-API-Key'] = this.apiKey;
-            headers['X-Algolia-Application-Id'] = this.applicationID;
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
         this.options.angular.$http({
             url: url,
             method: opts.method,
             data: body,
-            headers: headers,
+            cache: false,
             timeout: this.requestTimeoutInMs
         }).then(function(response) {
             opts.callback(false, true, null, response.data);
@@ -692,15 +694,20 @@ AlgoliaSearch.prototype = {
             body = JSON.stringify(opts.body);
         }
 
-        var headers = {};
-        if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-            headers['X-Algolia-API-Key'] = this.apiKey;
-            headers['X-Algolia-Application-Id'] = this.applicationID;
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
         }
         this.options.jQuery.$.ajax(url, {
             type: opts.method,
             timeout: this.requestTimeoutInMs,
-            headers: headers,
             dataType: 'json',
             data: body,
             error: function(xhr, textStatus, error) {
@@ -742,15 +749,19 @@ AlgoliaSearch.prototype = {
         };
 
         script.type = 'text/javascript';
-        script.src = url + '?callback=' + cb + ',' + this.applicationID + ',' + this.apiKey;
+        script.src = url + '?callback=' + cb + '&X-Algolia-Application-Id=' + this.applicationID + '&X-Algolia-API-Key=' + this.apiKey;
 
-        if (opts.body['X-Algolia-TagFilters']) {
-            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(opts.body['X-Algolia-TagFilters']);
+        if (this.tagFilters) {
+            script.src += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
         }
 
-        if (opts.body['X-Algolia-UserToken']) {
-            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(opts.body['X-Algolia-UserToken']);
+        if (this.userToken) {
+            script.src += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
         }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            script.src += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
+
 
         if (opts.body && opts.body.params) {
             script.src += '&' + opts.body.params;
@@ -815,19 +826,24 @@ AlgoliaSearch.prototype = {
         if (!this._isUndefined(opts.body)) {
             body = JSON.stringify(opts.body);
         }
-        
+
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 'X-Algolia-API-Key=' + this.apiKey;
+        url += '&X-Algolia-Application-Id=' + this.applicationID;
+        if (this.userToken) {
+            url += '&X-Algolia-UserToken=' + encodeURIComponent(this.userToken);
+        }
+        if (this.tagFilters) {
+            url += '&X-Algolia-TagFilters=' + encodeURIComponent(this.tagFilters);
+        }
+        for (var i = 0; i < this.extraHeaders.length; ++i) {
+            url += '&' + this.extraHeaders[i].key + '=' + this.extraHeaders[i].value;
+        }
         if ('withCredentials' in xmlHttp) {
-            xmlHttp.open(opts.method, url , true);
-            if (this._isUndefined(opts.removeCustomHTTPHeaders) || !opts.removeCustomHTTPHeaders) {
-                      xmlHttp.setRequestHeader('X-Algolia-API-Key', this.apiKey);
-                      xmlHttp.setRequestHeader('X-Algolia-Application-Id', this.applicationID);
-            }
-            xmlHttp.timeout = this.requestTimeoutInMs;
-            for (var i = 0; i < this.extraHeaders.length; ++i) {
-                xmlHttp.setRequestHeader(this.extraHeaders[i].key, this.extraHeaders[i].value);
-            }
+            xmlHttp.open(opts.method, url, true);
+            xmlHttp.timeout = this.requestTimeoutInMs * (opts.successiveRetryCount + 1);
             if (body !== null) {
-                xmlHttp.setRequestHeader('Content-type', 'application/json');
+                /* This content type is specified to follow CORS 'simple header' directive */
+                xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             }
         } else if (typeof XDomainRequest !== 'undefined') {
             // Handle IE8/IE9
@@ -852,7 +868,7 @@ AlgoliaSearch.prototype = {
             clearTimeout(ontimeout);
             ontimeout = null;
 
-        }, this.requestTimeoutInMs);
+        }, this.requestTimeoutInMs * (opts.successiveRetryCount + 1));
 
         xmlHttp.onload = function(event) {
             clearTimeout(ontimeout);
@@ -985,6 +1001,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param attributes (optional) if set, contains the array of attribute names to retrieve
          */
         getObject: function(objectID, callback, attributes) {
+            if (Object.prototype.toString.call(callback) === '[object Array]' && !attributes) {
+                attributes = callback;
+                callback = null;
+            }
             var indexObj = this;
             var params = '';
             if (!this.as._isUndefined(attributes)) {
@@ -996,9 +1016,17 @@ AlgoliaSearch.prototype.Index.prototype = {
                     params += attributes[i];
                 }
             }
-            return this.as._jsonRequest({ method: 'GET',
-                                   url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-                                   callback: callback });
+            if (this.as.jsonp === null) {
+                return this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+                                       callback: callback });
+            } else {
+                var pObj = {params: params};
+                return this.as._jsonRequest({ method: 'GET',
+                                       url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID),
+                                       callback: callback,
+                                       body: pObj});
+            }
         },
 
         /*
@@ -1163,6 +1191,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param delay (optional) if set, wait for this delay (in ms) and only send the query if there was no other in the meantime.
          */
         search: function(query, callback, args, delay) {
+            if (typeof callback === 'object' && (this.as._isUndefined(args) || !args)) {
+                args = callback;
+                callback = null;
+            }
             var indexObj = this;
             var params = 'query=' + encodeURIComponent(query);
             if (!this.as._isUndefined(args) && args !== null) {
@@ -1187,6 +1219,10 @@ AlgoliaSearch.prototype.Index.prototype = {
          * @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
          */
         browse: function(page, callback, hitsPerPage) {
+            if (+callback > 0 && (this.as._isUndefined(hitsPerPage) || !hitsPerPage)) {
+                hitsPerPage = callback;
+                callback = null;
+            }
             var indexObj = this;
             var params = '?page=' + page;
             if (!this.as._isUndefined(hitsPerPage)) {
@@ -1423,13 +1459,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         /// Internal methods only after this line
         ///
         _search: function(params, callback) {
-            var pObj = {params: params, apiKey: this.as.apiKey, appID: this.as.applicationID};
-            if (this.as.tagFilters) {
-                pObj['X-Algolia-TagFilters'] = this.as.tagFilters;
-            }
-            if (this.as.userToken) {
-                pObj['X-Algolia-UserToken'] = this.as.userToken;
-            }
+            var pObj = {params: params};
             if (this.as.jsonp === null) {
                 var self = this;
                 return this.as._jsonRequest({ cache: this.cache,
@@ -1743,8 +1773,18 @@ AlgoliaSearch.prototype.Index.prototype = {
     _search: function() {
       this.client.startQueriesBatch();
       this.client.addQueryInBatch(this.index, this.q, this._getHitsSearchParams());
+      var disjunctiveFacets = [];
+      var unusedDisjunctiveFacets = {};
       for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
-        this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(this.options.disjunctiveFacets[i]));
+        var facet = this.options.disjunctiveFacets[i];
+        if (this._hasDisjunctiveRefinements(facet)) {
+          disjunctiveFacets.push(facet);
+        } else {
+          unusedDisjunctiveFacets[facet] = true;
+        }
+      }
+      for (var i = 0; i < disjunctiveFacets.length; ++i) {
+        this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(disjunctiveFacets[i]));
       }
       for (var i = 0; i < this.extraQueries.length; ++i) {
         this.client.addQueryInBatch(this.extraQueries[i].index, this.extraQueries[i].query, this.extraQueries[i].params);
@@ -1756,9 +1796,19 @@ AlgoliaSearch.prototype.Index.prototype = {
           return;
         }
         var aggregatedAnswer = content.results[0];
-        aggregatedAnswer.disjunctiveFacets = {};
-        aggregatedAnswer.facetStats = {};
-        for (var i = 0; i < self.options.disjunctiveFacets.length; ++i) {
+        aggregatedAnswer.disjunctiveFacets = aggregatedAnswer.disjunctiveFacets || {};
+        aggregatedAnswer.facetStats = aggregatedAnswer.facetStats || {};
+        for (var facet in unusedDisjunctiveFacets) {
+          if (aggregatedAnswer.facets[facet] && !aggregatedAnswer.disjunctiveFacets[facet]) {
+            aggregatedAnswer.disjunctiveFacets[facet] = aggregatedAnswer.facets[facet];
+            try {
+              delete aggregatedAnswer.facets[facet];
+            } catch (e) {
+              aggregatedAnswer.facets[facet] = undefined; // IE compat
+            }
+          }
+        }
+        for (var i = 0; i < disjunctiveFacets.length; ++i) {
           for (var facet in content.results[i + 1].facets) {
             aggregatedAnswer.disjunctiveFacets[facet] = content.results[i + 1].facets[facet];
             if (self.disjunctiveRefinements[facet]) {
@@ -1778,7 +1828,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         } else {
           var c = { results: [ aggregatedAnswer ] };
           for (var i = 0; i < self.extraQueries.length; ++i) {
-            c.results.push(content.results[1 + self.options.disjunctiveFacets.length + i]);
+            c.results.push(content.results[1 + disjunctiveFacets.length + i]);
           }
           self.searchCallback(true, c);
         }
@@ -1790,10 +1840,20 @@ AlgoliaSearch.prototype.Index.prototype = {
      * @return {hash}
      */
     _getHitsSearchParams: function() {
+      var facets = [];
+      for (var i = 0; i < this.options.facets.length; ++i) {
+        facets.push(this.options.facets[i]);
+      }
+      for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
+        var facet = this.options.disjunctiveFacets[i];
+        if (!this._hasDisjunctiveRefinements(facet)) {
+          facets.push(facet);
+        }
+      }
       return extend({}, {
         hitsPerPage: this.options.hitsPerPage,
         page: this.page,
-        facets: this.options.facets,
+        facets: facets,
         facetFilters: this._getFacetFilters()
       }, this.searchParams);
     },
@@ -1813,6 +1873,18 @@ AlgoliaSearch.prototype.Index.prototype = {
         facets: facet,
         facetFilters: this._getFacetFilters(facet)
       });
+    },
+
+    /**
+     * Test if there are some disjunctive refinements on the facet
+     */
+    _hasDisjunctiveRefinements: function(facet) {
+      for (var value in this.disjunctiveRefinements[facet]) {
+        if (this.disjunctiveRefinements[facet][value]) {
+          return true;
+        }
+      }
+      return false;
     },
 
     /**
@@ -2406,7 +2478,7 @@ if (typeof JSON !== 'object') {
 
 /* global angular */
 angular.module('algoliasearch', [])
-  .service('algolia', ['$injector', function ($injector, $q) {
+  .service('algolia', ['$injector', function ($injector) {
     return {
       Client: function(applicationID, apiKey, options) {
         options = options || {};
