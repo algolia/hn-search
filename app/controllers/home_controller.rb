@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def index
     if Rails.env.production? && !request.ssl?
-      response.headers['Cache-Control'] = "public, max-age=86400"
+      response.headers['Cache-Control'] = "public, max-age=604800"
       redirect_to root_url(protocol: 'https'), status: :moved_permanently
     end
   end
