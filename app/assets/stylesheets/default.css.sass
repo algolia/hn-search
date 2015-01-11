@@ -37,10 +37,8 @@ body[rel="default"]
     .sidebar
       display: none
     > header
-      background: white
-      width: 1200px
       top: $pageHeaderHeight
-      margin-left: -600px
+      background: white
       padding: 10px
       height: auto
       .date-range-filter
@@ -75,6 +73,9 @@ body[rel="default"]
           width: auto
           padding: 0 10px 5px 0
           background: inherit
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
           .item-thumbnail-link
             display: none
           .text-container
@@ -109,3 +110,65 @@ body[rel="default"]
       background: transparent
       border: none
       border-top: solid 1px #858285
+
+
+  // FIXME WIP
+  @media (max-width: 980px)
+    .container
+      width: 100%
+      margin: 0
+      .page-header
+        .logo-name
+          display: none
+        .col-1
+          width: 10%
+        .col-2
+          display: none
+        .col-3
+          width: 90%
+          .search-wrapper
+            display: block
+          .powered-by
+            display: none
+      .main
+        > header
+          width: 100%
+          left: 0
+          margin-left: 0
+          .search-infos
+            display: none
+          .date-range-filter
+            left: 5px
+            li
+              width: auto
+              label
+                margin: 0
+  @media (min-width: 980px) and (max-width: $containerWidth)
+    .container
+      width: 980px
+      margin: 0 auto
+      .page-header
+        .col-3
+          .search-wrapper
+            display: block
+          .powered-by
+            display: none
+      .main
+        > header
+          width: 980px
+          left: 50%
+          margin-left: -(980px / 2)
+
+  @media (min-width: $containerWidth)
+    .container
+      width: containerWidth
+      margin: 0 auto
+      .page-header
+        .col-3
+          .search-wrapper
+            display: inline-block
+      .main
+        > header
+          width: $containerWidth
+          left: 50%
+          margin-left: -($containerWidth / 2)
