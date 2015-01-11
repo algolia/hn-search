@@ -1,10 +1,16 @@
 / %button.btn-refresh
 /   %i.icon-repeat
 %h1 {{ pageTitle() }}
-%small.search-infos{'ng-show' => 'results'}
-  %span{'ng-show' => 'settings.page > 0'} Page {{ settings.page + 1 }} of
-  %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
-  ({{ results.processingTimeMS / 1000.0 | number }} seconds)
+%ul.list-inline.search-infos{'ng-show' => 'results', "defer-share-dropdown"=>true}
+  %li
+    %span{'ng-show' => 'settings.page > 0'} Page {{ settings.page + 1 }} of
+    %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
+    ({{ results.processingTimeMS / 1000.0 | number }} seconds)
+  %li.action-share
+    %a.placeholder
+      %i.icon-share
+    %a.dropwdown-share{'ng-href' => '{{ getURL() }}', "dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected)"}
+      %i.icon-share
 .date-range-filter
   %ul.list-inline
     %li

@@ -281,9 +281,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
   ];
   // Share item
-  $scope.shareItem = function(selected, hit){
-    var url = $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID + "/" + $scope.friendly(hit.title);
-    var title = hit.title + ' - HNSearch';
+  $scope.shareItem = function(selected, hit) {
+    var url = hit ? $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID + "/" + $scope.friendly(hit.title) : window.location.href;
+    var title = (hit ? hit.title + ' - ' : ($scope.query ? 'I just searched for "' + $scope.query + '" on Hacker News - ' : '')) + 'Hacker News Search';
     switch (selected.share){
       case 'twitter':
         window.open("https://twitter.com/share?url=" + escape(url) + "&text=" + title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
@@ -344,6 +344,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.friendly = function(v) {
     return v && $.friendly_id(v);
   }
+
+  $scope.getURL = function() {
+    return location.href;
+  };
 
   // Watch settings
   $scope.$watchCollection('settings', function(newSettings, oldSettings) {
