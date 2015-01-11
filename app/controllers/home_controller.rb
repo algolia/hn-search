@@ -5,6 +5,10 @@ class HomeController < ApplicationController
   caches_action :popular, expires_in: 1.hour
 
   def index
+    if Rails.env.production? && !request.ssl?
+      response.headers['Cache-Control'] = "public, max-age=86400"
+      redirect_to root_url(protocol: 'https'), status: :moved_permanently
+    end
   end
 
   def popular

@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
 
   after_action :allow_algolia_iframe
 
-  force_ssl if Rails.env.production?
-
   private
   def allow_algolia_iframe
     response.headers.delete('X-Frame-Options')
