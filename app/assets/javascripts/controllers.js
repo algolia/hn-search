@@ -433,6 +433,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   // Handle history
   $scope.$watch(function () { return $location.search(); }, function() {
     $scope.settings = settings.reload();
+    $scope.settings.page = 0;
   });
 
   if ($location.search().experimental) {
