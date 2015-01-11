@@ -449,6 +449,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 .controller('SettingsCtrl', ['$scope', 'settings', function($scope, settings) {
   $scope.isSettings = true;
   $scope.settings = settings.get();
+  window.scrollTo(0, 0);
 
   $scope.$watchCollection('settings', function(oldSettings, newSettings) {
     settings.save();
