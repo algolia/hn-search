@@ -434,6 +434,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.$watch(function () { return $location.search(); }, function() {
     $scope.settings = settings.reload();
   });
+
+  if ($location.search().experimental) {
+    $scope.settings.style = 'experimental';
+    settings.save();
+  }
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {
