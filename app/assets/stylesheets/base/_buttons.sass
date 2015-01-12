@@ -1,0 +1,29 @@
+button, input[type="submit"]
+  @extend %button
+  @include appearance(none)
+  border: none
+  cursor: pointer
+  user-select: none
+  vertical-align: middle
+  white-space: nowrap
+
+.btn-refresh
+  width: 30px
+  height: 30px
+  line-height: 30px
+  text-align: center
+  padding: 0
+  background-color: white
+  border: solid 1px #eee
+  color: #ccc
+  position: relative
+  top: -5px
+  margin-right: 4px
+  &:hover
+    border-color: #ccc
+    color: $orange
+  &:active
+    border-color: $orange
+  &:focus
+    box-shadow: none
+    outline: 0

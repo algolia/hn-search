@@ -1,0 +1,80 @@
+//layout
+
+.container
+  width: $containerWidth
+  margin: 0 auto
+
+.page-header
+  position: fixed
+  z-index: 15
+  width: $containerWidth
+  height: $headerHeight
+  .small-header &
+    height: $headerSmallHeight
+    padding: 5px
+    @include transition(all 0.5s ease)
+  .col-1, .col-2, .col-3
+    float: left
+    min-height: 50px
+  .col-1
+    width: 22%
+  .col-2
+    width: 46%
+  .col-3
+    text-align: right
+    width: 30%
+
+
+.sidebar
+  position: absolute
+  top: 0
+  bottom: 30px
+  left: 0
+  width: $sidebarWidth
+
+
+.main
+  float: left
+  position: relative
+  width: 100%
+  margin-top: 100px
+  padding: 78px 0 50px 200px
+  header
+    position: absolute
+    z-index: 30
+    top: 0px
+    left: 200px
+    height: $titleHeight
+    width: $itemWidth
+    padding: 20px 30px
+    .date-range-filter
+      position: absolute
+      right: 15px
+      top: 28px
+  //sticky item
+  .main-fixed &
+    padding-top: 0
+    header
+      position: fixed
+      z-index: 5
+      top: $headerHeight
+      left: 50%
+      width: $itemWidth
+      margin-left: - $containerWidth/2 + $sidebarWidth
+    .sidebar
+      position: fixed
+      top: 100px
+      left: 50%
+      width: $sidebarWidth
+      margin-left: - $containerWidth/2
+    .search-results
+      padding-top: 78px
+  .small-header &
+    margin-top: $headerSmallHeight
+    header
+      top: $headerSmallHeight
+    .sidebar
+      top: $headerSmallHeight
+    .item-fixed
+      .item-main
+        top: $headerSmallHeight + $titleHeight

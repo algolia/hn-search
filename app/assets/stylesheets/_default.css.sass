@@ -127,57 +127,17 @@ body[rel="default"]
 
 //responsive WIP
 body[rel="default"]
-  @media (max-width: 980px)
+  //x-large
+  @include media(min-width $large-screen)
+    .container
+      width: $containerWidth
+  //medium
+  @include media($large-screen-up)
     .container
       width: 100%
-      margin: 0
-      .page-header
-        .logo-name
-          display: none
-        .col-1
-          width: 70px
-      .main
-        > header
-          width: 100%
-          left: 0
-          margin-left: 0
-          .search-infos
-            display: none
-          .date-range-filter
-            left: 5px
-            li
-              width: auto
-              label
-                margin: 0
-    .item-main
-      width: 30px
+  //medium
+  @include media($medium-screen)
+  
+  //small
+  @include media($small-screen)
 
-  @media (min-width: 980px) and (max-width: $containerWidth)
-    .container
-      width: 980px
-      margin: 0 auto
-      .page-header
-        .col-3
-          .search-wrapper
-            display: block
-          .powered-by
-            display: none
-      .main
-        > header
-          width: 980px
-          left: 50%
-          margin-left: -(980px / 2)
-
-  @media (min-width: $containerWidth)
-    .container
-      width: containerWidth
-      margin: 0 auto
-      .page-header
-        .col-2
-          .search-wrapper
-            display: inline-block
-      .main
-        > header
-          width: $containerWidth
-          left: 50%
-          margin-left: -($containerWidth / 2)
