@@ -1,6 +1,6 @@
-angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
+angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-google-analytics'])
 
-.factory('settings', ['$location', 'algolia', '$localStorage', function($location, algolia, $localStorage) {
+.factory('settings', ['$location', 'algolia', '$localStorage', 'Analytics', function($location, algolia, $localStorage, Analytics) {
     var settingsService = {};
 
     //default settings
@@ -77,6 +77,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage'])
             settings.dateRange = settings.defaultDateRange;
         }
         $localStorage.defaultDateRange = settings.defaultDateRange;
+
+        // GA
+        Analytics.trackEvent('settings', 'style', settings.style);
+        Analytics.trackEvent('settings', 'defaultSort', settings.defaultSort);
+        Analytics.trackEvent('settings', 'defaultDateRange', settings.defaultDateRange);
     };
 
     return settingsService;

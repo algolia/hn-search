@@ -3,10 +3,11 @@ var app = angular.module('HNSearch', [
   'ngRoute',
   'templates',
   'HNSearch.controllers',
-  'HNSearch.services'
+  'HNSearch.services',
+  'angular-google-analytics'
 ])
 
-.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', 'AnalyticsProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, AnalyticsProvider) {
   // setup CSRF token
   $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = $('meta[name="csrf-token"]').attr('content');
 
@@ -130,6 +131,13 @@ var app = angular.module('HNSearch', [
       }]
     })
     ;
+
+    // GA
+    AnalyticsProvider.setAccount('UA-32446386-3');
+    AnalyticsProvider.useCrossDomainLinker(true);
+    AnalyticsProvider.setCrossLinkDomains(['new-hn.algolia.com', 'hn.algolia.com']);
+    AnalyticsProvider.trackPages(true);
+    AnalyticsProvider.setPageEvent('$stateChangeSuccess');
 }])
 
 $(document).ready(function() {

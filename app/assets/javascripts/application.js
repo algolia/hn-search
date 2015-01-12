@@ -25,6 +25,7 @@
 //= require angular-dropdown
 //= require bindonce.min
 //= require jquery.friendly_id
+//= require angular-google-analytics.min
 
 //= require_tree ../templates
 
