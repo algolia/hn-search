@@ -9,9 +9,13 @@ html, body
   padding: 0
   color: $lightGray
   font-family: $fontBase
+  
+// force y-scroll so that there's no width change or window resize
+// between results and no results and no results
+body
+  overflow-y: scroll
 
 //layout
-
 .container
   width: $containerWidth
   margin: 0 auto
