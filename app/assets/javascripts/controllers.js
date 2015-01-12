@@ -4,7 +4,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $('body').attr('rel', settings.get().style);
 }])
 
-.controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred) {
+.controller('SearchCtrl', ['$scope', '$location', '$http', '$stateParams', '$sce', 'search', 'settings', 'hot', 'starred', 'Analytics', function($scope, $location, $http, $stateParams, $sce, search, settings, hot, starred, Analytics) {
   // Init search et params
   $scope.query = search.query;
   $scope.state = '';
@@ -366,6 +366,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     window.scrollTo(0, 0);
     search.applySettings(newSettings, $scope.state);
     $scope.getSearch();
+    Analytics.trackPage('/' + location.href.split('/').slice(3).join('/'));
   });
 
   // Watch query
