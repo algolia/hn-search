@@ -34,6 +34,6 @@
         %i.icon-star
         Starred
     %li.settings{'ng-show' => 'results || isSettings'}
-      %a{href:"/settings", 'active-link' => true}
+      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true}
         %i.icon-settings
         Settings

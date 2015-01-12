@@ -32,7 +32,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             page: (parseInt(queryParameters.page, 10) || 0),
             showThumbnails: storage.showThumbnails,
             login: storage.login,
-            style: storage.style
+            style: (queryParameters.experimental ? 'experimental' : storage.style)
         };
     }
     var settings = _loadSettings();
