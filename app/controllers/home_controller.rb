@@ -7,9 +7,9 @@ class HomeController < ApplicationController
   def index
     if Rails.env.production? && !request.ssl?
       response.headers['Cache-Control'] = "public, max-age=604800"
-      params = { protocol: 'https' }
-      params[:experimental] = true if params.has_key?(:experimental)
-      redirect_to root_url(params), status: :moved_permanently
+      new_params = { protocol: 'https' }
+      new_params[:experimental] = true if params.has_key?(:experimental)
+      redirect_to root_url(new_params), status: :moved_permanently
     end
   end
 
