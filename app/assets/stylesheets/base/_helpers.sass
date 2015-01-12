@@ -1,0 +1,18 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+  display: none !important
+
+.fade
+  opacity: 0
+  @include transition(opacity .15s linear)
+  &.in
+    opacity: 1
+
+.text-center
+  text-align: center
+
+.clearfix
+  @extend %clearfix
+
+@for $i from 1 through 10
+  .spacer#{$i}
+    height: #{$i}em

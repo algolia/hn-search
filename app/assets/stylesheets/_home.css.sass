@@ -1,26 +1,7 @@
-//common
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
-  display: none !important
-
-.clearfix
-  @extend %clearfix
-
-ul.list-inline
-  display: inline-block
-  li
-    display: inline-block
-
-.fade
-  opacity: 0
-  @include transition(opacity .15s linear)
-  &.in
-    opacity: 1
-
-.text-center
-  text-align: center
-
+//Typography
 h1, h2, h3, h4, h5
   font-weight: 200
+
 
 html, body
   height: 100%
@@ -28,6 +9,8 @@ html, body
   padding: 0
   color: $lightGray
   font-family: $fontBase
+
+//layout
 
 .container
   width: $containerWidth
@@ -154,7 +137,6 @@ html, body
         li
           width: 100px
           display: inline-block
-
       label
         margin-left: 20px
         font-size: 12px
@@ -191,47 +173,48 @@ html, body
     margin-top: 1em
     font-size: 20px
     color: $darkGray
-
-  .sidebar
-    position: absolute
-    top: 0
-    bottom: 30px
-    left: 0
-    width: $sidebarWidth
-    background-color: $sidebarColor
-    ul
-      position: relative
-      display: block
-      height: 100%
-      padding: 20px 0
-      li
-        float: left
-        width: 100%
-        a
-          display: block
-          width: 100%
-          padding: 10px 20px
-          color: $darkGray
-          &.active
-            background-color: #E4E3E5
-        i
-          margin-right: 10px
-        &.divider
-          margin: 10px 0
-          padding: 0
-          border-bottom: solid 1px #eee
-        &.settings
-          position: absolute
-          bottom: 0
-          right: 0
-          left: 0
-          text-align: center
-          background-color: darken($sidebarColor,3%)
-          i
-            margin-right: 5px
   .edit-settings
     margin-top: $titleHeight
     padding: 10px
+
+
+.sidebar
+  position: absolute
+  top: 0
+  bottom: 30px
+  left: 0
+  width: $sidebarWidth
+  background-color: $sidebarColor
+  ul
+    position: relative
+    display: block
+    height: 100%
+    padding: 20px 0
+    li
+      float: left
+      width: 100%
+      a
+        display: block
+        width: 100%
+        padding: 10px 20px
+        color: $darkGray
+        &.active
+          background-color: #E4E3E5
+      i
+        margin-right: 10px
+      &.divider
+        margin: 10px 0
+        padding: 0
+        border-bottom: solid 1px #eee
+      &.settings
+        position: absolute
+        bottom: 0
+        right: 0
+        left: 0
+        text-align: center
+        background-color: darken($sidebarColor,3%)
+        i
+          margin-right: 5px
 
 .main-fixed
   .main
@@ -522,73 +505,6 @@ footer
     top: -50px
     display: none
 
-.old_dropdown
-  .dropdown-text
-    cursor: pointer
-    position: absolute
-    text-indent: 10px
-    line-height: 32px
-    font-size: 15px
-    width: 100%
-    &:after
-      position: absolute
-      right: 15px
-      top: 15px
-      content: ''
-      width: 0px
-      height: 0px
-      border-style: solid
-      border-width: 5px 4px 0 4px
-      border-color: $darkGray transparent transparent transparent
-    .dropdown-content a
-      color: $lightGray
-  .dropdown-toggle
-    position: absolute
-    z-index: 500
-    font-size: 0
-    cursor: pointer
-    top: 0
-    border: none
-    padding: 0
-    margin: 0 0 0 1px
-    background: transparent
-    text-indent: -10px
-    height: 34px
-    width: 100%
-    box-shadow: none
-    &:focus
-      box-shadow: none
-      outline: 0
-    &:focus ~ .dropdown-text
-      z-index: 2
-    &:focus ~ .dropdown-text:after
-      border-width: 0 4px 5px 4px
-      border-color: transparent transparent $lightGray transparent
-  .dropdown-content
-    opacity: 0
-    visibility: hidden
-    position: absolute
-    width: 140px
-    top: 32px
-    padding: 0
-    margin: 0
-    border: 1px solid #ccc
-    text-indent: 10px
-    line-height: 32px
-    list-style-type: none
-    border-radius: 3px
-    background-color: white
-    @include transition(all .25s ease)
-    a
-      display: block
-      &:hover
-        background: $lightGray
-  .dropdown-content:hover,
-  .dropdown-toggle:focus ~ .dropdown-content
-    opacity: 1
-    visibility: visible
-    top: 42px
-
 .dropdown-menu
   position: absolute
   float: left
@@ -618,20 +534,3 @@ footer
       a
         color: white
 
-@for $i from 1 through 10
-  .spacer#{$i}
-    height: #{$i}em
-
-.edit-settings
-  h2
-    color: $lightGray
-    margin-bottom: 10px
-  .form-group
-    margin-bottom: 1.6em
-    @include outer-container
-    &:last-child
-      margin-bottom: 0
-    .label-control
-      @include span-columns(3)
-    .form-control
-      @include span-columns(6)
