@@ -68,10 +68,10 @@ $form-font-family: $base-font-family;
 $headerHeight: 100px;
 $headerSmallHeight: 60px;
 $itemHeight: 95px;
-$itemWidth: 1000px;
 $titleHeight: 77px;
 $containerWidth: 1200px;
 $sidebarWidth: 200px;
+$itemWidth: $containerWidth - $sidebarWidth;
 
 $fontBase: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 
