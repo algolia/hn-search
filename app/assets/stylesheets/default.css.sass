@@ -16,8 +16,17 @@ body[rel="default"]
     background: $orange
     padding: 5px
     height: $pageHeaderHeight
-    .logo-name
-      color: white
+    border: none
+    border-top: 3px solid white
+    .col-3
+      padding-top: 4px
+    .logo
+      position: absolute
+      top: 3px
+      img
+        margin-right: 0
+      .logo-name
+        color: white
     .navigation
       li
         padding-bottom: 0
@@ -40,7 +49,8 @@ body[rel="default"]
       top: $pageHeaderHeight
       background: white
       padding: 10px
-      height: auto
+      height: 43px
+      line-height: 20px
       .date-range-filter
         top: 10px
     .main-content
@@ -112,7 +122,8 @@ body[rel="default"]
       border-top: solid 1px #858285
 
 
-  // FIXME WIP
+//responsive WIP
+body[rel="default"]
   @media (max-width: 980px)
     .container
       width: 100%
@@ -121,15 +132,7 @@ body[rel="default"]
         .logo-name
           display: none
         .col-1
-          width: 10%
-        .col-2
-          display: none
-        .col-3
-          width: 90%
-          .search-wrapper
-            display: block
-          .powered-by
-            display: none
+          width: 70px
       .main
         > header
           width: 100%
@@ -143,6 +146,9 @@ body[rel="default"]
               width: auto
               label
                 margin: 0
+    .item-main
+      width: 30px
+
   @media (min-width: 980px) and (max-width: $containerWidth)
     .container
       width: 980px
@@ -164,7 +170,7 @@ body[rel="default"]
       width: containerWidth
       margin: 0 auto
       .page-header
-        .col-3
+        .col-2
           .search-wrapper
             display: inline-block
       .main

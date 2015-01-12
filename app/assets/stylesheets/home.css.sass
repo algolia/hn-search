@@ -1,3 +1,27 @@
+//common
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+  display: none !important
+
+.clearfix
+  @extend %clearfix
+
+ul.list-inline
+  display: inline-block
+  li
+    display: inline-block
+
+.fade
+  opacity: 0
+  @include transition(opacity .15s linear)
+  &.in
+    opacity: 1
+
+.text-center
+  text-align: center
+
+h1, h2, h3, h4, h5
+  font-weight: 200
+
 html, body
   height: 100%
   margin: 0
@@ -5,12 +29,10 @@ html, body
   color: $lightGray
   font-family: $fontBase
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
-  display: none !important
-
 .container
   width: $containerWidth
   margin: 0 auto
+
 .page-header
   position: fixed
   z-index: 15
@@ -21,16 +43,17 @@ html, body
   background-color: white
   .col-1, .col-2, .col-3
     float: left
+    min-height: 50px
     margin: 0
     padding: 0
   .col-1
     width: 22%
   .col-2
-    width: 23%
+    padding-top: 4px
+    width: 46%
   .col-3
-    width: 55%
-    padding-top: 5px
     text-align: right
+    width: 30%
   .logo
     color: $lightGray
     img
@@ -39,8 +62,8 @@ html, body
       margin-right: 10px
     .logo-name
       float: left
-      padding-top: 3px
-      line-height: 1.2em
+      padding-top: 6px
+      line-height: 1.1em
       font-size: 22px
       color: $lightGray
   .navigation
@@ -65,27 +88,6 @@ html, body
       position: relative
       top: 1px
       vertical-align: bottom
-
-//common
-.clearfix
-  @extend %clearfix
-
-ul.list-inline
-  display: inline-block
-  li
-    display: inline-block
-
-.fade
-  opacity: 0
-  @include transition(opacity .15s linear)
-  &.in
-    opacity: 1
-
-.text-center
-  text-align: center
-
-h1, h2, h3, h4, h5
-  font-weight: 200
 
 .main
   float: left
