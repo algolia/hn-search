@@ -439,7 +439,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   if ($location.search().experimental) {
     $scope.settings.style = 'experimental';
-    settings.save();
   }
 }])
 
@@ -452,8 +451,12 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.settings = settings.get();
   window.scrollTo(0, 0);
 
+  var first = true;
   $scope.$watchCollection('settings', function(oldSettings, newSettings) {
-    settings.save();
+    if (!first) {
+      settings.save();
+    }
+    first = false;
   });
 }])
 

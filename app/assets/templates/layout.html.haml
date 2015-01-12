@@ -1,7 +1,7 @@
 .container
   %header.page-header
     .col-1{'ui-view' => 'col-1'}
-      %a.logo{href: '/', 'ng-click' => 'reset()'}
+      %a.logo{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'ng-click' => 'reset()'}
         %img{src:"/assets/logo-hn-search.png"}
         .logo-name
           Search
