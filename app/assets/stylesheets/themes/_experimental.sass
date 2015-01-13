@@ -38,11 +38,15 @@
   @include media($medium-screen-down)
     display: none
   .main-fixed & //sticky item
+    width: $sidebarWidth
     position: fixed
     top: 100px
-    left: 50%
-    width: $sidebarWidth
-    margin-left: - $containerWidth/2
+    @include media($large-screen-up)
+      left: 50%
+      margin-left: - $containerWidth/2
+    @include media($large-screen-down)
+      left: 0
+      margin-left: 0
 
 .main
   float: left
@@ -53,30 +57,26 @@
   @include media($medium-screen-down)
     padding: 78px 0 50px
   header
-    position: absolute
-    z-index: 30
-    top: 0px
-    left: 200px
+    position: fixed
+    top: $headerHeight
+    z-index: 5
     height: $titleHeight
     padding: 20px 30px
     @include media($large-screen-up)
+      left: 50%
+      margin-left: - $containerWidth/2 + $sidebarWidth
       width: $itemWidth
     @include media($large-screen-down)
+      left: 0
+      margin-left: $sidebarWidth
+      width: calc( 100% - $sidebarWidth)
+    @include media($medium-screen-down)
       width: 100%
+      margin-left: 0
     .date-range-filter
       position: absolute
       right: 15px
       top: 28px
-  .main-fixed & //sticky item
-    padding-top: 0
-    header
-      position: fixed
-      z-index: 5
-      top: $headerHeight
-      left: 50%
-      margin-left: - $containerWidth/2 + $sidebarWidth
-    .search-results
-      padding-top: 78px
   .small-header & //small header
     margin-top: $headerSmallHeight
     header
