@@ -240,6 +240,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       value: 'comment'
     }
   ];
+  $scope.ddSelectSelected = angular.copy($scope.ddSelectOptions[0]);
   for (var i = 0; i < $scope.ddSelectOptions.length; ++i) {
     if ($scope.ddSelectOptions[i].value === $scope.settings.type) {
       $scope.ddSelectSelected = angular.copy($scope.ddSelectOptions[i]);
