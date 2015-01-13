@@ -30,23 +30,19 @@
     width: 30%
 
 .sidebar
-  position: absolute
-  top: 0
   bottom: 30px
   left: 0
   width: $sidebarWidth
+  position: fixed
+  top: 100px
   @include media($medium-screen-down)
     display: none
-  .main-fixed & //sticky item
-    width: $sidebarWidth
-    position: fixed
-    top: 100px
-    @include media($large-screen-up)
-      left: 50%
-      margin-left: - $containerWidth/2
-    @include media($large-screen-down)
-      left: 0
-      margin-left: 0
+  @include media($large-screen-up)
+    left: 50%
+    margin-left: - $containerWidth/2
+  @include media($large-screen-down)
+    left: 0
+    margin-left: 0
 
 .main
   float: left
@@ -69,7 +65,7 @@
     @include media($large-screen-down)
       left: 0
       margin-left: $sidebarWidth
-      width: calc( 100% - $sidebarWidth)
+      width: calc( 100% - #{$sidebarWidth})
     @include media($medium-screen-down)
       width: 100%
       margin-left: 0

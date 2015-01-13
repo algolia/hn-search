@@ -13,6 +13,6 @@
     = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})
     = auto_discovery_link_tag(:atom, {controller: "home", action: "latest", format: 'atom'}, { title: 'Latest HN items'})
     = yield(:head)
-  %body.main-fixed
+  %body
     #main{role: 'main', 'ui-view' => true, 'ng-cloak' => true}
       = yield
