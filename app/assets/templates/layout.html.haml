@@ -1,6 +1,6 @@
 .container
   %header.page-header
-    .col-1{'ui-view' => 'col-1'}
+    .col-1
       %a.logo{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'ng-click' => 'reset()'}
         %img{src:"/assets/logo-hn-search.png"}
         .logo-name
@@ -8,7 +8,9 @@
           %br
           Hacker News
     .col-2{'ui-view' => 'col-2'}
-    .col-3{'ui-view' => 'col-3'}
+    .nav-link-settings{'ng-show' => 'results || isSettings'}
+      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true}
+        %i.icon-settings
   %section.main
     %div{'ng-include' => '"_sidebar.html"'}
     %header{'ui-view' => 'main-header'}

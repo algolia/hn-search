@@ -5,11 +5,13 @@
     margin: 0 auto
   @include media($large-screen-down)
     width: 100%
+    min-width: $appMinWidth
 
 .page-header
   position: fixed
   z-index: 15
   height: $headerHeight
+  min-width: $appMinWidth
   @include media($large-screen-up)
     width: $containerWidth
   @include media($large-screen-down)
@@ -22,23 +24,17 @@
     float: left
     min-height: 50px
   .col-1
-    width: 22%
+    width: 230px
     @include media($medium-screen-down)
       width: 70px
   .col-2
-    width: 46%
-  .col-3
-    text-align: right
-    width: 30%
+    width: calc(90% - 230px)
+    @include media($medium-screen-down)
+      width: calc(100% - 80px)
 
 .sidebar
-  bottom: 30px
-  left: 0
   width: $sidebarWidth
-  position: fixed
-  top: 100px
-  @include media($medium-screen-down)
-    display: none
+  @include position(fixed, 100px null 0px 0px)
   @include media($large-screen-up)
     left: 50%
     margin-left: - $containerWidth/2
@@ -55,11 +51,11 @@
   @include media($medium-screen-down)
     padding: 78px 0 50px
   header
+    font-size: 13px
     position: fixed
     top: $headerHeight
     z-index: 5
     height: $titleHeight
-    padding: 20px 30px
     @include media($large-screen-up)
       left: 50%
       margin-left: - $containerWidth/2 + $sidebarWidth
@@ -70,6 +66,7 @@
       width: calc( 100% - #{$sidebarWidth})
     @include media($medium-screen-down)
       width: 100%
+      min-width: $appMinWidth
       margin-left: 0
     .date-range-filter
       position: absolute

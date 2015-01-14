@@ -14,25 +14,26 @@ body
   padding: 20px 5px 20px 20px
   border-bottom: solid 1px #eee
   background-color: white
-
 .logo
   color: $lightGray
   img
     float: left
     height: 60px
     margin-right: 10px
+    @include transition(all 0.5s ease)
   .logo-name
     float: left
-    padding-top: 6px
-    line-height: 1.1em
+    padding-top: 8px
+    line-height: 1em
     font-size: 22px
     color: $lightGray
   .small-header &
     img
-      @include transition(all 0.5s ease)
+      padding-top: 2px
       height: 45px
+      @include transition(all 0.5s ease)
     .logo-name
-      font-size: 18px
+      font-size: 17px
 
 .navigation
   ul
@@ -46,36 +47,28 @@ body
       font-weight: bold
       border-bottom: solid 2px $orange
 
-.powered-by
-  font-size: 12px
-  display: block
-  float: right
-  position: relative
-  top: 8px
-  img
-    width: 60px
-    position: relative
-    top: 1px
-    vertical-align: bottom
-
+//SEARCHBOX
 .search-wrapper
-  display: inline-block
   position: relative
-  margin-right: 10px
+  margin-top: 8px
+  .small-header &
+    margin-top: 3px
   .icon-search
     color: $orange
     position: absolute
     top: 8px
-    right: 14px
+    left: 14px
     font-size: 24px
+  .item-input-wrapper
+    display: inline-block
+    width: calc(100% - 100px)
+    margin-right: 5px
   input
-    width: 450px
     border-radius: 25px
     box-shadow: none
     line-height: 25px
-    padding: 0 15px 0 120px
+    padding: 0 15px 0 50px
     height: 42px
-    margin: 0
     border-color: lighten($lightGray, 10%)
     &:focus
       outline: 0
@@ -89,7 +82,16 @@ body
     position: absolute
     top: 5px
     left: 15px
-
+  .powered-by
+    width: 80px
+    font-size: 12px
+    display: inline-block
+    position: relative
+    img
+      width: 60px
+      position: relative
+      top: 1px
+      vertical-align: bottom
 
 //SIDEBAR
 .sidebar
@@ -114,15 +116,13 @@ body
         margin: 10px 0
         padding: 0
         border-bottom: solid 1px #eee
-      &.settings
-        position: absolute
-        bottom: 0
-        right: 0
-        left: 0
-        text-align: center
-        background-color: darken($sidebarColor,3%)
-        i
-          margin-right: 5px
+
+.nav-link-settings
+  float: right
+  margin-right: 10px
+  a
+    @include button(flat, white)
+    color: $lightGray
 
 //CONTENT
 .main
@@ -130,13 +130,19 @@ body
     color: $darkGray
   header
     border-bottom: solid 1px #eee
-    background-color: white
+    line-height: 77px
+    padding: 0 30px
+    background-color: lighten($sidebarColor,2%)
     h1
       display: inline-block
       margin-right: 10px
       font-size: 25px
+      position: relative
+      top: 3px
       color: $darkGray
   .search-infos
+    float: right
+    position: relative
     font-size: 13px
     .action-share
       margin-left: 10px
@@ -190,10 +196,8 @@ body
     margin-top: 1em
     font-size: 20px
     color: $darkGray
-  .edit-settings
-    margin-top: $titleHeight
-    padding: 10px
 
+//SEARCH RESULTS
 .search-results
   position: relative
   .item
@@ -225,6 +229,8 @@ body
       font-weight: bold
       font-style: normal
       color: $darkGray
+
+//ITEMS
 .item-main
   background-color: white
   h2
@@ -379,7 +385,6 @@ footer
   @include position(fixed, 0px auto 0px 0px)
   @include size(220px 100%)
   @include transform(translateX(-220px))
-  @include transition(all 0.25s linear)
   background: $sliding-menu-background
   z-index: 999999
   overflow-y: scroll
@@ -396,16 +401,6 @@ footer
   &.is-visible
     @include transform(translateX(0))
 
-.sliding-menu-fade-screen
-  @include position(fixed, 0px 0px 0px 0px)
-  @include transition
-  background: black
-  opacity: 0
-  visibility: hidden
-  z-index: 999998
-  &.is-visible
-    opacity: 0.4
-    visibility: visible
 
 .sliding-menu-button
   @include button(flat, #477DCA)
@@ -426,8 +421,6 @@ footer
   .item-actions
     display: none
   .navigation
-    display: none
-  .powered-by
     display: none
   .search-infos
     display: none !important

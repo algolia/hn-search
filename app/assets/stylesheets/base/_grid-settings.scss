@@ -11,8 +11,6 @@ $large-screen: 1200px;
 $medium-screen: 768px;
 $small-screen: 480px;
 
-
-
 $large-screen-up: new-breakpoint(min-width $large-screen 8);
 $medium-screen-up: new-breakpoint(min-width $medium-screen 4);
 $small-screen-up: new-breakpoint(min-width $small-screen 12);

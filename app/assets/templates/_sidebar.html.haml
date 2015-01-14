@@ -1,4 +1,4 @@
-%aside.sidebar.js-menu.sliding-menu-content
+%aside.sidebar
   %ul
     %li
       %a{href:"/", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/")'}
@@ -33,7 +33,3 @@
       %a{href:"/starred", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/starred")'}
         %i.icon-star
         Starred
-    %li.settings{'ng-show' => 'results || isSettings'}
-      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true}
-        %i.icon-settings
-        Settings

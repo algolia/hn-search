@@ -141,10 +141,9 @@ var app = angular.module('HNSearch', [
 }])
 
 $(document).ready(function() {
-  // sticky main
+  var doc = $(document);
   var body = $('body');
-  var scrollTopBtn = $('.scroll-to-top');
-  var doc = $(document)
+  // sticky main
   doc.on("scroll", function(e) {
     if (body.attr('rel') === 'default') {
       return;
@@ -158,7 +157,8 @@ $(document).ready(function() {
     }
   });
   //scroll top
-  $('.scroll-to-top').on('click', function(e){
+  var scrollTopBtn = $('.scroll-to-top');
+  scrollTopBtn.on('click', function(e){
     e.preventDefault();
     doc.scrollTop(0);
   });
@@ -171,4 +171,25 @@ $(document).ready(function() {
     $('.js-menu,.js-menu-screen').toggleClass('is-visible');
     e.preventDefault();
   });
+  //responsive states
+  var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
+  ssm.addState({
+    id: 'tablet',
+    maxWidth: mediumDevice,
+    onEnter: function(){
+      console.log('enter medium');
+      $('aside').addClass('js-menu sliding-menu-content').removeClass('sidebar');
+    }
+  });
+  ssm.addState({
+    id: 'desktop',
+    minWidth: mediumDevice,
+    maxWidth: largeDevice,
+    onEnter: function(){
+      console.log('enter large');
+      $('aside').removeClass('js-menu sliding-menu-content').addClass('sidebar');
+    }
+  });
+
+  ssm.ready();
 });

@@ -1,44 +1,47 @@
 /****** dropdown-select *******/
 
 .wrap-dd-select
+  display: inline-block
   position: relative
-  width: 100px
   font-size: 14px
   line-height: 32px
   text-align: left
-  @include user-select(none)
-  border-right: solid 1px lighten($lightGray, 10%)
+  padding: 0 30px 0 12px
+  margin: 0 8px 0 2px
+  border: solid 1px lighten($lightGray, 15%)
+  border-radius: 3px
   cursor: pointer
   outline: none
-  color: $lightGray
+  color: $darkGray
+  background-color: white
+  @include user-select(none)
+  &:after
+    content: ""
+    width: 0
+    height: 0
+    position: absolute
+    right: 10px
+    top: 50%
+    margin-top: -3px
+    border-width: 6px 6px 0 6px
+    border-style: solid
+    border-color: $lightGray transparent
 
-.wrap-dd-select:after
-  content: ""
-  width: 0
-  height: 0
-  position: absolute
-  right: 10px
-  top: 50%
-  margin-top: -3px
-  border-width: 6px 6px 0 6px
-  border-style: solid
-  border-color: $lightGray transparent
-
-.wrap-dd-select .dropdown
-  position: absolute
-  width: 150px
-  top: 30px
-  right: -6px
-  background: white
-  padding: 0
-  border-radius: 5px
-  border: 1px solid $lightGray
-  box-shadow: 0 0 5px rgba(0,0,0,0.1)
-  font-weight: normal
-  list-style: none
-  @include transition(all 0.2s ease-in)
-  opacity: 0
-  pointer-events: none
+  .dropdown
+    position: absolute
+    width: 150px
+    top: 30px
+    right: -6px
+    background: white
+    padding: 0
+    border-radius: 5px
+    border: 1px solid $lightGray
+    box-shadow: 0 0 5px rgba(black,.1)
+    font-weight: normal
+    list-style: none
+    opacity: 0
+    pointer-events: none
+    @include transition(all 0.2s ease-in)
 
 .wrap-dd-select .dropdown li.divider
   padding: 2px 0

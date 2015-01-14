@@ -26,6 +26,7 @@
 //= require bindonce.min
 //= require jquery.friendly_id
 //= require angular-google-analytics.min
+//= require ssm.js
 
 //= require_tree ../templates
 
