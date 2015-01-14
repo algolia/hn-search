@@ -66,7 +66,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         break;
       }
       if (matches.length > 0) {
-        console.log(params.numericFilters);
         params.numericFilters.push('num_comments' + matches[1] + matches[2]);
         query = query.replace('comments' + matches[1] + matches[2], '');
       }
