@@ -110,6 +110,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
     searchService.applySettings = function(settings, page) {
         this.params.tagFilters = [];
+        this.params.numericFilters = [];
 
         // query
         $location.search('query', this.query);
@@ -122,13 +123,12 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         $location.search('dateRange', settings.dateRange);
         if (settings.hasOwnProperty('dateRange')){
             if (settings.dateRange === 'all'){
-                this.params.numericFilters = '';
             } else if (settings.dateRange === 'last24h'){
-                this.params.numericFilters = 'created_at_i>' + last24h;
+                this.params.numericFilters.push('created_at_i>' + last24h);
             } else if (settings.dateRange === 'pastWeek'){
-                this.params.numericFilters = 'created_at_i>' + pastWeek;
+                this.params.numericFilters.push('created_at_i>' + pastWeek);
             } else if (settings.dateRange === 'pastMonth'){
-                this.params.numericFilters = 'created_at_i>' + pastMonth;
+                this.params.numericFilters.push('created_at_i>' + pastMonth);
             }
         }
 

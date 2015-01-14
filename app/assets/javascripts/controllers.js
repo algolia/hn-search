@@ -59,6 +59,19 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       }
     }
 
+    // comments>42 (ANDed)
+    while (true) {
+      var matches = query.match(/comments(=|:|<|>|<=|>=)([0-9]+)/);
+      if (!matches) {
+        break;
+      }
+      if (matches.length > 0) {
+        console.log(params.numericFilters);
+        params.numericFilters.push('num_comments' + matches[1] + matches[2]);
+        query = query.replace('comments' + matches[1] + matches[2], '');
+      }
+    }
+
     // date>1395440948 (ANDed)
     while (true) {
       var matches = query.match(/date(=|:|<|>|<=|>=)([0-9]+)/);
