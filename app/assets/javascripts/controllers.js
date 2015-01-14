@@ -172,6 +172,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.settings.sort = order;
   };
 
+  $scope.selectDate = function(date) {
+    $scope.settings.dateRange = date;
+  };
+
   $scope.pageTitle = function() {
     switch ($scope.state) {
     case undefined: case '': return $scope.settings.style === 'default' ? '' : 'All';
@@ -250,14 +254,15 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.ddSelectSort = [
     {
       text: 'Popularity',
-      value: 'popularity',
+      value: 'byPopularity',
     }, {
-      text: 'Date desc.',
-      value: 'date_desc'
-    }, {
-      text: 'Date asc.',
-      value: 'date_asc'
+      text: 'Date',
+      value: 'byDate'
     }
+    // , {
+    //   text: 'Date asc.',
+    //   value: 'date_asc'
+    // }
   ];
   $scope.ddSortSelected = angular.copy($scope.ddSelectSort[0]);
 
@@ -271,10 +276,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       value: 'last24h',
     }, {
       text: 'Past Week',
-      value: 'past_week'
+      value: 'pastWeek'
     }, {
       text: 'Past Month',
-      value: 'past_month'
+      value: 'pastMonth'
     }, {
       text: 'Custom range',
       value: 'custom'
@@ -481,6 +486,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   if ($location.search().experimental) {
     $scope.settings.style = 'experimental';
   }
+
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {

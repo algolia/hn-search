@@ -1,13 +1,13 @@
 .container
   %header.page-header
-    .col-1
+    .logo-wrapper
       %a.logo{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'ng-click' => 'reset()'}
         %img{src:"/assets/logo-hn-search.png"}
         .logo-name
           Search
           %br
           Hacker News
-    .col-2{'ui-view' => 'col-2'}
+    .search-wrapper{'ui-view' => 'col-2'}
     .nav-link-settings{'ng-show' => 'results || isSettings'}
       %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true}
         %i.icon-settings

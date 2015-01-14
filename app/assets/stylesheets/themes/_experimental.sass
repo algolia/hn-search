@@ -20,14 +20,13 @@
     height: $headerSmallHeight
     padding: 5px
     @include transition(all 0.5s ease)
-  .col-1, .col-2, .col-3
+  .logo-wrapper
     float: left
-    min-height: 50px
-  .col-1
     width: 230px
     @include media($medium-screen-down)
       width: 70px
-  .col-2
+  .search-wrapper
+    float: left
     width: calc(90% - 230px)
     @include media($medium-screen-down)
       width: calc(100% - 80px)

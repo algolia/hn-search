@@ -166,11 +166,7 @@ $(document).ready(function() {
     if (e.keyCode == 38)
       doc.scrollTop(0);
   });
-  //sliding menu
-  $('.js-menu-trigger, .js-menu-screen').on('click touchstart',function (e) {
-    $('.js-menu,.js-menu-screen').toggleClass('is-visible');
-    e.preventDefault();
-  });
+
   //responsive states
   var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
   ssm.addState({

@@ -1,14 +1,14 @@
-/ %button.btn-refresh
-/   %i.icon-repeat
+/ %button.js-menu-trigger.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'}
+/   %i.icon-settings
 
 %h1 {{ pageTitle() }}
 
 %span in
 .type-dropdown{"dropdown-select"=>"ddSelectType", "dropdown-model"=>"ddTypeSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectType(selected)"}
 %span by
-.type-dropdown{"dropdown-select"=>"ddSelectSort", "dropdown-model"=>"ddSortSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectSort(selected)"}
+.type-dropdown{"dropdown-select"=>"ddSelectSort", "dropdown-model"=>"ddSortSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "sortBy(selected.value)"}
 %span for
-.type-dropdown{"dropdown-select"=>"ddSelectDate", "dropdown-model"=>"ddDateSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectDate(selected)"}
+.type-dropdown{"dropdown-select"=>"ddSelectDate", "dropdown-model"=>"ddDateSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectDate(selected.value)"}
 
 %ul.list-inline.search-infos{'ng-show' => 'results', "defer-share-dropdown"=>true}
   %li
