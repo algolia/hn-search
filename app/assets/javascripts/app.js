@@ -174,7 +174,7 @@ $(document).ready(function() {
     maxWidth: mediumDevice,
     onEnter: function(){
       console.log('enter medium');
-      $('aside').addClass('js-menu sliding-menu-content').removeClass('sidebar');
+      //$('aside').addClass('js-menu sliding-menu-content').removeClass('sidebar');
     }
   });
   ssm.addState({
@@ -183,7 +183,7 @@ $(document).ready(function() {
     maxWidth: largeDevice,
     onEnter: function(){
       console.log('enter large');
-      $('aside').removeClass('js-menu sliding-menu-content').addClass('sidebar');
+      //$('aside').removeClass('js-menu sliding-menu-content').addClass('sidebar');
     }
   });
 

@@ -33,6 +33,7 @@
 
 .sidebar
   width: $sidebarWidth
+  @include transition(all 0.25s linear)
   @include position(fixed, 100px null 0px 0px)
   @include media($large-screen-up)
     left: 50%
@@ -40,6 +41,12 @@
   @include media($large-screen-down)
     left: 0
     margin-left: 0
+  @include media($medium-screen-down)
+    @include transform(translateX(-220px))
+  &.is-visible
+    @include transform(translateX(0))
+    z-index: 9999
+    @include position(fixed, null auto 0px 0px)
 
 .main
   float: left

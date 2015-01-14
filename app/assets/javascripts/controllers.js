@@ -487,6 +487,12 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.settings.style = 'experimental';
   }
 
+  //navigation
+  $scope.toggleNav = function(){
+    //sliding menu
+    $('.sidebar').toggleClass('is-visible');
+  }
+
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {
