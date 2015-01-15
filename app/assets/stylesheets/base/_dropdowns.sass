@@ -25,7 +25,11 @@
     margin-top: -3px
     border-width: 6px 6px 0 6px
     border-style: solid
-    border-color: $lightGray transparent
+    border-color: lighten($lightGray,10%) transparent
+  &:hover
+    box-shadow: inset 0 -2px 0 rgba(black,.05), 0 0 5px rgba(black,.06)
+    &:after
+      border-color: $lightGray transparent
   .dropdown
     position: absolute
     z-index: 10
