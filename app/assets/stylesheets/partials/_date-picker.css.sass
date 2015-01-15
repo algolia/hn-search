@@ -4,9 +4,6 @@ $color-calendar-outrange: #ccc
 $color-calendar-day-selected: $color-calendar
 $color-calendar-range: lighten($color-calendar,32%)
 
-#date-start.input-selected, #date-end.input-selected,
-  border: solid 3px $color-calendar-day-selected
-
 #datepicker
   +position(absolute, $titleHeight 0px null 0px)
   z-index: 4
@@ -133,8 +130,26 @@ $color-calendar-range: lighten($color-calendar,32%)
     margin: 0 auto
   label
     text-align: left
+  input
+    padding: 15px 8px
+    background: none
+    &:focus
+      box-shadow: none
+      outline: 0
+  button
+    background: white
+    color: $lightGray
+    border: solid 1px lighten($lightGray,10%)
+    &:hover
+      border: solid 1px $lightGray
+    &:focus
+      box-shadow: none
+      outline: 0
   +media($medium-screen-down)
     display: none
+
+#date-start.input-selected, #date-end.input-selected,
+  border: solid 2px $color-calendar-day-selected
 
 
 .input-complete

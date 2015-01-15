@@ -429,13 +429,15 @@ footer
     font-size: 14px
 
 .sliding-menu-button
-  +button(flat, $lightGray)
+  +button(flat, white)
+  border: solid 1px lighten($lightGray,15%)
+  padding: 2px 10px
+  margin-right: 8px
   display: inline-block
   cursor: pointer
   position: relative
   outline: none
-  img
-    height: 1.3em
+  line-height: 2em
 
 .sliding-menu-fade-screen
   +position(fixed, 0px 0px 0px 0px)
