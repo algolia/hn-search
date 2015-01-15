@@ -679,12 +679,18 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         $(element).find('#date-start').on('change', function(e) {
           var v = $(this).val();
           $scope.$apply(function() {
+            if (!$('#date-end').val()) {
+              settings.get().dateEnd = null;
+            }
             settings.get().dateStart = Date.parse(v) / 1000;
           });
         });
         $(element).find('#date-end').on('change', function(e) {
           var v = $(this).val();
           $scope.$apply(function() {
+            if (!$('#date-start').val()) {
+              settings.get().dateStart = null;
+            }
             settings.get().dateEnd = Date.parse(v) / 1000 + 60*60*24;
           });
         });

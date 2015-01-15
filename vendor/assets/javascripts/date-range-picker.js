@@ -530,19 +530,19 @@
 
           if (start && over < start) {
             end = start;
-            $("#date-end").val(DPGlobal.formatDate(new Date(start), DPGlobal.parseFormat('Y-m-d'))).removeClass("input-selected");
-            $('#date-end').trigger('change');
             $("#date-start").val(null).focus().addClass("input-selected");
             $("#datepicker .start-selected").removeClass("start-selected").addClass("end-selected");
+            $("#date-end").val(DPGlobal.formatDate(new Date(start), DPGlobal.parseFormat('Y-m-d'))).removeClass("input-selected");
+            $('#date-end').trigger('change');
             start = null;
             switched = true;
           }
           else if (end && over > end) {
             start = end;
-            $("#date-start").val(DPGlobal.formatDate(new Date(end), DPGlobal.parseFormat('Y-m-d'))).removeClass("input-selected");
-            $('#date-start').trigger('change');
             $("#date-end").val(null).focus().addClass("input-selected");
             $("#datepicker .end-selected").removeClass("end-selected").addClass("start-selected");
+            $("#date-start").val(DPGlobal.formatDate(new Date(end), DPGlobal.parseFormat('Y-m-d'))).removeClass("input-selected");
+            $('#date-start').trigger('change');
             end = null;
             switched = false;
           }
