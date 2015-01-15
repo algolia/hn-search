@@ -1,9 +1,10 @@
 %button.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'}
   %i.icon-home
 
-%h1 {{ pageTitle() }}
-
-%span in
+%span{'ng-show' => 'state'}
+  %h1 {{ pageTitle() }}
+  %span in
+%span{'ng-show' => '!state'} Filter by
 .type-dropdown{"dropdown-select"=>"ddSelectType", "dropdown-model"=>"ddTypeSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectType(selected)"}
 %span by
 .type-dropdown{"dropdown-select"=>"ddSelectSort", "dropdown-model"=>"ddSortSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "sortBy(selected.value)"}
