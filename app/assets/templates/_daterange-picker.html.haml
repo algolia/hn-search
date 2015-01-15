@@ -3,9 +3,9 @@
     .datepicker1{"data-date" => Date.today.to_s, "data-date-format" => "Y-mm-dd"}
 
     #datepicker-form
-      #date-range.form-date-group
-        .form-date-heading
-          %span.title Date range
+      .form-date-group
+        %h2
+          %span.title Custom Date Range
         .form-date-body
           %label From
           %input#date-start.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_from", :placeholder => "Start", :type => "text", :value => Date.today.beginning_of_month.to_s}

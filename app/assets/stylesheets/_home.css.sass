@@ -166,8 +166,7 @@ body
       top: 3px
       color: $darkGray
   .search-infos
-    float: right
-    position: relative
+    +position(absolute, 0 20px null null)
     font-size: 13px
     .action-share
       margin-left: 10px
@@ -228,6 +227,7 @@ body
     &.item-fixed .item-main // sticked item
       position: fixed
       z-index: 10
+      top: $headerHeight + $titleHeight
       box-shadow:  0 1px 0 rgba(black,.2), 0 4px 0 rgba(black,.05)
     &.item-absolute-bottom .item-main //end of stick transition state
       position: absolute
@@ -465,6 +465,18 @@ footer
   100%
     +transform(none)
 
+//Animation
++keyframes(top)
+  0%, 100%
+    +transition-timing-function(ease-in)
+  0%
+    opacity: 0
+    +transform(translate3d(0, -20px, 0))
+  100%
+    opacity: 1
+    +transform(none)
+
+
 //responsive stuff
 +media($medium-screen-down)
   .logo-name
@@ -475,6 +487,7 @@ footer
     display: none
   .search-infos
     display: none !important
+
 +media($medium-screen-up)
   .sliding-menu-button
     display: none
