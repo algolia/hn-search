@@ -232,6 +232,14 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   //Dropdowns
   //https://github.com/jseppi/angular-dropdowns
+  var getSelectOption = function(options, selected) {
+    for (var i = 0; i < options.length; ++i) {
+      if (options[i].value === selected) {
+        return angular.copy(options[i]);
+      }
+    }
+    return null;
+  };
   $scope.ddSelectType = [
     {
       text: 'All',
@@ -244,13 +252,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       value: 'comment'
     }
   ];
-  $scope.ddTypeSelected = angular.copy($scope.ddSelectType[0]);
-  for (var i = 0; i < $scope.ddSelectType.length; ++i) {
-    if ($scope.ddSelectType[i].value === $scope.settings.type) {
-      $scope.ddTypeSelected = angular.copy($scope.ddSelectType[i]);
-    }
-  }
-
   $scope.ddSelectSort = [
     {
       text: 'Popularity',
@@ -260,13 +261,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       value: 'byDate'
     }
   ];
-  $scope.ddSortSelected = angular.copy($scope.ddSelectSort[0]);
-  for (var i = 0; i < $scope.ddSelectSort.length; ++i) {
-    if ($scope.ddSelectSort[i].value === $scope.settings.sort) {
-      $scope.ddSortSelected = angular.copy($scope.ddSelectSort[i]);
-    }
-  }
-
   $scope.ddSelectDate = [
     {
       text: 'All time',
@@ -286,12 +280,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       value: 'custom'
     }
   ];
-  $scope.ddDateSelected = angular.copy($scope.ddSelectDate[0]);
-  for (var i = 0; i < $scope.ddSelectDate.length; ++i) {
-    if ($scope.ddSelectDate[i].value === $scope.settings.dateRange) {
-      $scope.ddDateSelected = angular.copy($scope.ddSelectDate[i]);
-    }
-  }
+
+  $scope.ddDateSelected = getSelectOption($scope.ddSelectDate, $scope.settings.dateRange) || getSelectOption($scope.ddSelectDate, 'all');
+  $scope.ddSortSelected = getSelectOption($scope.ddSelectSort, $scope.settings.sort) || getSelectOption($scope.ddSelectSort, 'byPopularity');
+  $scope.ddTypeSelected = getSelectOption($scope.ddSelectType, $scope.settings.type) || getSelectOption($scope.ddSelectType, 'all');
 
   $scope.selectType = function(selected) {
     $scope.settings.type = selected.value;
@@ -313,6 +305,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.ddTypeSelected = angular.copy($scope.ddSelectType[0]);
   };
 
+  // Share item
   $scope.ddMenuShare = [
     {
       text: 'Share on Twitter',
@@ -328,10 +321,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       share: 'email'
     }
   ];
-
-
-
-  // Share item
   $scope.shareItem = function(selected, hit) {
     var url = hit ? $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID + "/" + $scope.friendly(hit.title) : window.location.href;
     var title = (hit ? hit.title + ' - ' : ($scope.query ? 'I just searched for "' + $scope.query + '" on Hacker News - ' : '')) + 'Hacker News Search';
@@ -413,6 +402,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     } else if (newSettings.type === 'comment') {
       $scope.placeholder = 'Search comments';
     }
+
+    $scope.ddDateSelected = getSelectOption($scope.ddSelectDate, newSettings.dateRange);
+    $scope.ddSortSelected = getSelectOption($scope.ddSelectSort, newSettings.sort);
+    $scope.ddTypeSelected = getSelectOption($scope.ddSelectType, newSettings.type);
 
     window.scrollTo(0, 0);
     search.applySettings(newSettings, $scope.state);
