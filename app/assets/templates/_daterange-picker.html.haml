@@ -1,15 +1,13 @@
 #datepicker{'date-range-picker' => true}
   .daterangepicker-days
-    .row
-      .col-sm-6.col-lg-8
-        .datepicker1{"data-date" => Date.today.to_s, "data-date-format" => "Y-mm-dd"}
-      .col-xs-12.col-sm-6.col-lg-4.pull-right
-        #datepicker-form.form-inline
-          #date-range.form-date-group
-            .form-date-heading
-              %span.title Date range
-            .form-date-body
-              %label From
-              %input#date-start.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_from", :placeholder => "Start", :type => "text", :value => Date.today.beginning_of_month.to_s}
-              %label to
-              %input#date-end.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_to", :placeholder => "End", :type => "text", :value => Date.today.to_s}
+    .datepicker1{"data-date" => Date.today.to_s, "data-date-format" => "Y-mm-dd"}
+
+    #datepicker-form.hide
+      #date-range.form-date-group
+        .form-date-heading
+          %span.title Date range
+        .form-date-body
+          %label From
+          %input#date-start.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_from", :placeholder => "Start", :type => "text", :value => Date.today.beginning_of_month.to_s}
+          %label to
+          %input#date-end.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_to", :placeholder => "End", :type => "text", :value => Date.today.to_s}

@@ -714,9 +714,9 @@
     },
     headTemplate: '<thead>'+
               '<tr>'+
-                '<th class="prev"><i class="icon-angle-left"></i></th>'+
+                '<th class="prev"><i class="icon-rewind"></i></th>'+
                 '<th colspan="5" class="month-switch"></th>'+
-                '<th class="next"><i class="icon-angle-right"</th>'+
+                '<th class="next"><i class="icon-fast-forward"</th>'+
               '</tr>'+
             '</thead>',
     contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
