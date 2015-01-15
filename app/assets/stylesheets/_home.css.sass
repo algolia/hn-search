@@ -79,12 +79,28 @@ body
       font-size: 14px
       font-weight: 300
     &::-webkit-search-cancel-button
+      @extend .fade
+      @extend .in
       -webkit-appearance: none
+      text-align: center
       height: 20px
       width: 20px
-      color: black
       background: #ccc
       border-radius: 50%
+      position: relative
+      &:hover
+        background-color: $lightGray
+        cursor: pointer
+      &:after
+        height: 20px
+        width: 20px
+        display: block
+        position: absolute
+        color: white
+        font-size: 14px
+        line-height: 18px
+        text-align: center
+        content: "×"
   .type-dropdown
     position: absolute
     top: 5px
