@@ -5,7 +5,8 @@
     #datepicker-form
       .form-date-group
         %h2
-          %span.title Custom Date Range
+          %i.icon-calendar
+          Custom Date Range
         .form-date-body
           %label From
           %input#date-start.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_from", :placeholder => "Start", :type => "text", :value => Date.today.beginning_of_month.to_s}
@@ -13,4 +14,5 @@
           %input#date-end.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_to", :placeholder => "End", :type => "text", :value => Date.today.to_s}
         %br
         %button{type:'button', 'ng-click' => 'cancel()'}
+          %i.icon-circle-cross
           Cancel
