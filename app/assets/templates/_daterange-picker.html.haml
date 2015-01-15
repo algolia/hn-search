@@ -12,7 +12,5 @@
           %label to
           %input#date-end.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_to", :placeholder => "End", :type => "text", :value => Date.today.to_s}
         %br
-        %button{type:'button'}
+        %button{type:'button', 'ng-click' => 'cancel()'}
           Cancel
-        %button{type:'button'}
-          OK

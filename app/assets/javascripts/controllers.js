@@ -174,6 +174,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   $scope.selectDate = function(date) {
     $scope.settings.dateRange = date;
+    if (date === 'custom') {
+      $scope.settings.dateStart = $scope.settings.dateEnd = null;
+    }
   };
 
   $scope.pageTitle = function() {
@@ -403,9 +406,12 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       $scope.placeholder = 'Search comments';
     }
 
-    $scope.ddDateSelected = getSelectOption($scope.ddSelectDate, newSettings.dateRange);
-    $scope.ddSortSelected = getSelectOption($scope.ddSelectSort, newSettings.sort);
     $scope.ddTypeSelected = getSelectOption($scope.ddSelectType, newSettings.type);
+    $scope.ddSortSelected = getSelectOption($scope.ddSelectSort, newSettings.sort);
+    $scope.ddDateSelected = getSelectOption($scope.ddSelectDate, newSettings.dateRange);
+    if (newSettings.dateRange === 'custom' && newSettings.dateStart && newSettings.dateEnd) {
+      $scope.ddDateSelected.text = moment(newSettings.dateStart * 1000).format("MMM Do YYYY") + ' » ' + moment(newSettings.dateEnd * 1000).format("MMM Do YYYY");
+    }
 
     window.scrollTo(0, 0);
     search.applySettings(newSettings, $scope.state);
@@ -660,6 +666,12 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 .directive('dateRangePicker', ['$timeout', 'settings', function($timeout, settings) {
   return {
     link: function ($scope, element, attrs) {
+      $scope.cancel = function() {
+        var s = settings.get();
+        s.dateRange = 'all';
+        s.dateStart = s.dateEnd = null;
+      };
+
       $timeout(function () {
         $(element).find('#date-start').on('change', function(e) {
           var v = $(this).val();

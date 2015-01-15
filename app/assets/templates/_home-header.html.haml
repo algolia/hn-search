@@ -22,4 +22,4 @@
     %a.dropwdown-share{'ng-href' => '{{ getURL() }}', "dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected)"}
       %i.icon-share
 
-%div{'ng-include' => '"_daterange-picker.html"', 'ng-if' => 'settings.dateRange === "custom" '}
+%div{'ng-include' => '"_daterange-picker.html"', 'ng-if' => 'settings.dateRange === "custom" && (!settings.dateStart || !settings.dateEnd)'}
