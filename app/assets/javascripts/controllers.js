@@ -259,12 +259,13 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       text: 'Date',
       value: 'byDate'
     }
-    // , {
-    //   text: 'Date asc.',
-    //   value: 'date_asc'
-    // }
   ];
   $scope.ddSortSelected = angular.copy($scope.ddSelectSort[0]);
+  for (var i = 0; i < $scope.ddSelectSort.length; ++i) {
+    if ($scope.ddSelectSort[i].value === $scope.settings.sort) {
+      $scope.ddSortSelected = angular.copy($scope.ddSelectSort[i]);
+    }
+  }
 
   $scope.ddSelectDate = [
     {
@@ -286,7 +287,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
   ];
   $scope.ddDateSelected = angular.copy($scope.ddSelectDate[0]);
-
+  for (var i = 0; i < $scope.ddSelectDate.length; ++i) {
+    if ($scope.ddSelectDate[i].value === $scope.settings.dateRange) {
+      $scope.ddDateSelected = angular.copy($scope.ddSelectDate[i]);
+    }
+  }
 
   $scope.selectType = function(selected) {
     $scope.settings.type = selected.value;
@@ -493,6 +498,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $('.sidebar, .sliding-menu-fade-screen').toggleClass('is-visible');
   }
 
+
+  // calendar
+  $('.daterangepicker-days').daterangepicker();
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {
@@ -648,6 +656,30 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
           element.addClass('fade')
         }
       }, 10); // is 10ms to detect the image was in the cache?
+    }
+  };
+}])
+
+.directive('dateRangePicker', ['$timeout', 'settings', function($timeout, settings) {
+  return {
+    link: function ($scope, element, attrs) {
+      $timeout(function () {
+        $(element).find('#date-start').on('change', function(e) {
+          var v = $(this).val();
+          $scope.$apply(function() {
+            settings.get().dateStart = Date.parse(v) / 1000;
+          });
+        });
+        $(element).find('#date-end').on('change', function(e) {
+          var v = $(this).val();
+          $scope.$apply(function() {
+            settings.get().dateEnd = Date.parse(v) / 1000 + 60*60*24;
+          });
+        });
+        $(element).find('.datepicker1').daterangepicker({
+          weekStart: 1
+        });
+      }, 0, false);
     }
   };
 }])

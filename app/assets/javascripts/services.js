@@ -32,7 +32,9 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             page: (parseInt(queryParameters.page, 10) || 0),
             showThumbnails: storage.showThumbnails,
             login: storage.login,
-            style: (queryParameters.experimental ? 'experimental' : storage.style)
+            style: (queryParameters.experimental ? 'experimental' : storage.style),
+            dateStart: queryParameters.dateStart,
+            dateEnd: queryParameters.dateEnd
         };
     }
     var settings = _loadSettings();
@@ -120,15 +122,21 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
         // date range
         $location.search('dateRange', settings.dateRange);
+        $location.search('dateStart', null);
+        $location.search('dateEnd', null);
         if (settings.hasOwnProperty('dateRange')){
-            if (settings.dateRange === 'all'){
+            if (settings.dateRange === 'all') {
                 this.params.numericFilters = '';
-            } else if (settings.dateRange === 'last24h'){
+            } else if (settings.dateRange === 'last24h') {
                 this.params.numericFilters = 'created_at_i>' + last24h;
-            } else if (settings.dateRange === 'pastWeek'){
+            } else if (settings.dateRange === 'pastWeek') {
                 this.params.numericFilters = 'created_at_i>' + pastWeek;
-            } else if (settings.dateRange === 'pastMonth'){
+            } else if (settings.dateRange === 'pastMonth') {
                 this.params.numericFilters = 'created_at_i>' + pastMonth;
+            } else if (settings.dateRange === 'custom' && settings.dateStart && settings.dateEnd) {
+                $location.search('dateStart', settings.dateStart);
+                $location.search('dateEnd', settings.dateEnd);
+                this.params.numericFilters = 'created_at_i>' + settings.dateStart + ',created_at_i<' + settings.dateEnd;
             }
         }
 
