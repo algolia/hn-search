@@ -1,6 +1,6 @@
 !!!
 %html{'ng-app' => 'HNSearch'}
-  %head
+  %head{'ng-controller' => 'HeadCtrl'}
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui", :name => "viewport"}
     %title HN Search powered by Algolia
     %meta{:content => "Hacker News Search, millions articles and comments at your fingertips.", :name => "description"}
@@ -8,6 +8,8 @@
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}
     %link{:href => '/opensearch.xml', :rel => 'search', :title => 'HN Search', :type => 'application/opensearchdescription+xml'}
     = stylesheet_link_tag "application", :media => "all"
+    %link{href: stylesheet_path('themes/default.css'), media: 'all', 'ng-if' => 'settings.style === "default"', rel: 'stylesheet'}
+    %link{href: stylesheet_path('themes/experimental.css'), media: 'all', 'ng-if' => 'settings.style === "experimental"', rel: 'stylesheet'}
     = javascript_include_tag "application"
     / = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})
