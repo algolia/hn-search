@@ -36,7 +36,6 @@
   z-index: 5
   overflow-y: scroll
   -webkit-overflow-scrolling: touch
-  //@include transition(all 0.25s linear)
   @include position(fixed, 100px null 0px 0px)
   @include media($large-screen-up)
     left: 50%
@@ -48,7 +47,6 @@
     @include transform(translateX(-220px))
   &.is-visible
     width: 100%
-    padding-top: 25px
     @include transform(translateX(0))
     @include animation-name(bounceInDown)
     @include animation-duration(.5s)

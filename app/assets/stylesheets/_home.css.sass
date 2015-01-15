@@ -78,6 +78,13 @@ body
       color: #ccc
       font-size: 14px
       font-weight: 300
+    &::-webkit-search-cancel-button
+      -webkit-appearance: none
+      height: 20px
+      width: 20px
+      color: black
+      background: #ccc
+      border-radius: 50%
   .type-dropdown
     position: absolute
     top: 5px
@@ -87,16 +94,20 @@ body
     font-size: 12px
     display: inline-block
     position: relative
+    @include media($medium-screen-down)
+      display: none
     img
       width: 60px
       position: relative
       top: 1px
       vertical-align: bottom
 
+
 //SIDEBAR
 .sidebar
   background-color: $sidebarColor
   ul
+    @extend %clearfix
     display: block
     height: 100%
     padding: 20px 0
@@ -118,10 +129,13 @@ body
         border-bottom: solid 1px #eee
 
 .nav-link-settings
-  float: right
-  margin-right: 10px
+  position: absolute
+  top: 35px
+  right: 20px
+  .small-header &
+    top: 17px
   a
-    @include button(flat, white)
+    font-size: 20px
     color: $lightGray
 
 //CONTENT
@@ -133,6 +147,7 @@ body
     line-height: 77px
     padding: 0 30px
     background-color: lighten($sidebarColor,2%)
+    white-space: nowrap
     h1
       display: inline-block
       margin-right: 10px
@@ -267,9 +282,11 @@ body
   border: solid 1px #eee
   border-radius: 3px
   a[href].item-thumbnail-link:hover &
+    float: left
     border-color: lighten($lightGray,10%)
 .item-title-and-infos
   float: left
+  width: 70%
 .text-container
   clear: both
   font-size: 12px

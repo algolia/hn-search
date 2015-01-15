@@ -180,7 +180,7 @@ $(document).ready(function() {
     minWidth: mediumDevice,
     onEnter: function(){
       console.log('enter large');
-      $('aside.sidebar').removeClass('is-visible');
+      $('aside.sidebar, .sliding-menu-fade-screen').removeClass('is-visible');
     }
   });
 
