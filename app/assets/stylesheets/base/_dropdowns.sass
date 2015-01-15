@@ -26,9 +26,9 @@
     border-width: 6px 6px 0 6px
     border-style: solid
     border-color: $lightGray transparent
-
   .dropdown
     position: absolute
+    z-index: 10
     width: 150px
     top: 30px
     right: -6px
@@ -41,30 +41,26 @@
     list-style: none
     opacity: 0
     pointer-events: none
-    @include transition(all 0.2s ease-in)
-
-.wrap-dd-select .dropdown li.divider
-  padding: 2px 0
-  background: #e6e8ea
-
-.wrap-dd-select .dropdown li a
-  display: block
-  padding: 4px 12px
-  text-decoration: none
-  color: $lightGray
-  border-bottom: 1px solid #e6e8ea
-  @include transition(all 0.3s ease-out)
-
-.wrap-dd-select .dropdown li i
-  float: right
-  color: inherit
-
-.wrap-dd-select .dropdown li:first-of-type a
-  border-radius: 7px 7px 0 0
-
-.wrap-dd-select .dropdown li:last-of-type a
-  border-radius: 0 0 7px 7px
-  border: none
+    @include transition(all .1s ease-in)
+    li
+      &.divider
+        padding: 2px 0
+        background: #e6e8ea
+      a
+        display: block
+        padding: 4px 12px
+        text-decoration: none
+        color: $lightGray
+        border-bottom: 1px solid #e6e8ea
+        @include transition(all 0.3s ease-out)
+      i
+        float: right
+        color: inherit
+      &:first-of-type a
+        border-radius: 7px 7px 0 0
+      &:last-of-type a
+        border-radius: 0 0 7px 7px
+        border: none
 
 /* Hover state */
 .wrap-dd-select .dropdown li:hover a

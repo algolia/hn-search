@@ -12,10 +12,13 @@ $color-calendar-range: lighten($color-calendar,32%)
   top: $titleHeight
   left: 0
   right: 0
-  z-index: 20
+  z-index: 4
   line-height: 2em
   background-color: white
   border-bottom: solid 1px #eee
+  @include animation-name(bounceInDown)
+  @include animation-duration(.5s)
+  @include animation-timing-function(ease)
 
 .daterangepicker
   position: relative

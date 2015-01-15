@@ -47,13 +47,14 @@
   @include media($medium-screen-down)
     @include transform(translateX(-220px))
   &.is-visible
+    width: 100%
+    padding-top: 25px
     @include transform(translateX(0))
     @include animation-name(bounceInDown)
     @include animation-duration(.5s)
     @include animation-timing-function(ease)
-    width: 100%
     @include position(fixed, ($headerHeight + $titleHeight - 25px) 0px auto 0px)
-    padding-top: 25px
+
 .small-header .main .sidebar.is-visible //small header
   @include position(fixed, ($headerSmallHeight + $titleHeight - 25px) 0px auto 0px)
 
