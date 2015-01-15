@@ -11,3 +11,8 @@
           %input#date-start.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_from", :placeholder => "Start", :type => "text", :value => Date.today.beginning_of_month.to_s}
           %label to
           %input#date-end.date-input.form-control{"data-date-format" => "Y-mm-dd", :name => "date_to", :placeholder => "End", :type => "text", :value => Date.today.to_s}
+        %br
+        %button{type:'button'}
+          Cancel
+        %button{type:'button'}
+          OK

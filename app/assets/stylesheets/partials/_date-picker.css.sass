@@ -22,7 +22,7 @@ $color-calendar-range: lighten($color-calendar,32%)
   width: 100%
   max-width: 480px
   font-size: 14px
-  //border: solid 1px $lightGray
+  float: left
   table
     width: 100%
     border-collapse: separate
@@ -121,7 +121,13 @@ $color-calendar-range: lighten($color-calendar,32%)
     cursor: pointer
 
 #datepicker-form
-  display: none
+  //display: none
+  width: calc(100% - 480px)
+  float: right
+  padding-top: 50px
+  .form-date-group
+    width: 200px
+    margin: 0 auto
 
 
 .input-complete
