@@ -382,6 +382,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.story = {};
     $location.path(path).search($location.search());
     window.scrollTo(0, 0);
+    if( $('.sidebar').hasClass('is-visible')){
+      $scope.toggleNav();
+    }
   };
 
   $scope.friendly = function(v) {
