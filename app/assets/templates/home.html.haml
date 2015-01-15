@@ -1,31 +1,32 @@
 %section.search-results{'sticky-list' => true,"defer-share-dropdown"=>true}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID', 'bindonce' => true}
     .item-main
-      %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && settings.style !== "default" && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
-        %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
-      .item-title-and-infos
-        %h2
-          %a{"ng-href"=>"{{hit.url}}", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
-          %a{"bo-href"=>"hit.story_url", "bo-html"=>"hit.story_title", "bo-if" => "hit._tags[0] === 'comment'"}
-        %ul.item-infos.list-inline
-          %li{'bo-show' => 'hit.points'}
-            %i.icon-heart
-            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
-              %span.date {{ ::hit.points }} points
-          %li
-            %i.icon-head
-            %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
-              %span.author{'bo-html' => 'hit._highlightResult.author.value'}
-          %li
-            %i.icon-clock
-            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
-              %span.date {{ ::hit.created_at_i | moment }}
-          %li{'bo-show' => 'settings.style === "default"'}
-            %i.icon-speech-bubble
-            %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
-              %span.comments {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
-          %li{'bo-show' => 'hit.url'}
-            %a.hit-link{"bo-href"=>"hit.url", 'bo-html' => 'hit._highlightResult.url.value | domain'}
+      .item-content-wrapper
+        %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && settings.style !== "default" && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
+          %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+        .item-title-and-infos
+          %h2
+            %a{"ng-href"=>"{{hit.url}}", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
+            %a{"bo-href"=>"hit.story_url", "bo-html"=>"hit.story_title", "bo-if" => "hit._tags[0] === 'comment'"}
+          %ul.item-infos.list-inline
+            %li{'bo-show' => 'hit.points'}
+              %i.icon-heart
+              %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
+                %span.date {{ ::hit.points }} points
+            %li
+              %i.icon-head
+              %a{'bo-href' => '"https://news.ycombinator.com/user?id=" + hit.author', title:'See {{ ::hit.author }} profile'}
+                %span.author{'bo-html' => 'hit._highlightResult.author.value'}
+            %li
+              %i.icon-clock
+              %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
+                %span.date {{ ::hit.created_at_i | moment }}
+            %li{'bo-show' => 'settings.style === "default"'}
+              %i.icon-speech-bubble
+              %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + hit.objectID', title:'See original post on HN'}
+                %span.comments {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
+            %li{'bo-show' => 'hit.url'}
+              %a.hit-link{"bo-href"=>"hit.url", 'bo-html' => 'hit._highlightResult.url.value | domain'}
       .item-actions{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}

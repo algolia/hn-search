@@ -299,6 +299,8 @@ body
     li
       line-height: 2em
 
+.item-content-wrapper
+  width: calc(100% - 120px)
 .item-thumbnail
   float: left
   width: 55px
@@ -311,7 +313,9 @@ body
     border-color: lighten($lightGray,10%)
 .item-title-and-infos
   float: left
-  width: 70%
+  width: calc(100% - 70px)
+  @include media($medium-screen-down)
+    width: 100%
 .text-container
   clear: both
   font-size: 12px
