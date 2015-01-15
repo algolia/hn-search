@@ -166,20 +166,10 @@ $(document).ready(function() {
   });
 
   //responsive states
-  var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
-  ssm.addState({
-    id: 'tablet',
-    maxWidth: mediumDevice,
-    onEnter: function(){
-      console.log('enter medium');
-      //$('aside').addClass('js-menu sliding-menu-content').removeClass('sidebar');
-    }
-  });
   ssm.addState({
     id: 'desktop',
     minWidth: mediumDevice,
     onEnter: function(){
-      console.log('enter large');
       $('aside.sidebar, .sliding-menu-fade-screen').removeClass('is-visible');
     }
   });
