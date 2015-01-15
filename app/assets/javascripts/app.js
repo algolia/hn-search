@@ -166,6 +166,7 @@ $(document).ready(function() {
   });
 
   //responsive states
+  var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
   ssm.addState({
     id: 'desktop',
     minWidth: mediumDevice,
