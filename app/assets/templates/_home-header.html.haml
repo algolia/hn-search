@@ -20,27 +20,3 @@
       %i.icon-share
     %a.dropwdown-share{'ng-href' => '{{ getURL() }}', "dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected)"}
       %i.icon-share
-
-
-/ %nav.navigation
-/   %ul.list-inline
-/     %li Sort by:
-/     %li{'ng-class' => '{active: settings.sort === "byPopularity"}', 'ng-click' => 'sortBy("byPopularity")'}
-/       Popularity
-/     %li{'ng-class' => '{active: settings.sort === "byDate"}', 'ng-click' => 'sortBy("byDate")'}
-/       Date
-
-/ .date-range-filter
-/   %ul.list-inline
-/     %li
-/       %input#range-1.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"last24h"}
-/       %label{for:"range-1"} Last 24h
-/     %li
-/       %input#range-2.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"pastWeek"}
-/       %label{for:"range-2"} Past week
-/     %li{'ng-show' => 'state !== "hot"'}
-/       %input#range-3.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"pastMonth"}
-/       %label{for:"range-3"} Past month
-/     %li{'ng-show' => 'state !== "hot"'}
-/       %input#range-4.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"all"}
-/       %label{for:"range-4"} Forever
