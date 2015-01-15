@@ -54,10 +54,8 @@ body
   .small-header &
     margin-top: 3px
   .icon-search
+    +position(absolute, 8px null null 14px)
     color: $orange
-    position: absolute
-    top: 8px
-    left: 14px
     font-size: 24px
   .item-input-wrapper
     display: inline-block
@@ -83,8 +81,7 @@ body
       @extend .in
       -webkit-appearance: none
       text-align: center
-      height: 20px
-      width: 20px
+      +size(20px)
       background: #ccc
       border-radius: 50%
       position: relative
@@ -92,9 +89,8 @@ body
         background-color: $lightGray
         cursor: pointer
       &:after
-        height: 20px
-        width: 20px
         display: block
+        +size(20px)
         position: absolute
         color: white
         font-size: 14px
@@ -102,9 +98,7 @@ body
         text-align: center
         content: "×"
   .type-dropdown
-    position: absolute
-    top: 5px
-    left: 15px
+    +position(absolute, 5px null null 15px)
   .powered-by
     width: 80px
     font-size: 12px
@@ -207,14 +201,10 @@ body
         cursor: pointer
         +user-select(none)
       &.radio:empty ~ label:before
-        position: absolute
+        +position(absolute, 0 null 0 0)
+        +size(20px)
         display: block
-        top: 0
-        bottom: 0
-        left: 0
         content: ''
-        height: 20px
-        width: 20px
         border: solid 1px #ccc
         line-height: 20px
         border-radius: 50%
@@ -369,7 +359,7 @@ body
       background-color: lighten(lightGray,5%)
       &:before
         +triangle(18px, lighten(lightGray,5%), left)
-    &:hover
+    &:hover:not(.no-comments)
       background-color: lighten($orange,5%)
       &:before
         +triangle(18px, lighten($orange,5%), left)
