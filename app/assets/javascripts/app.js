@@ -110,7 +110,6 @@ var app = angular.module('HNSearch', [
       url: '/story/:id',
       views: {
         'col-2@search': { templateUrl: '_home-col-2.html' },
-        'col-3@search': { templateUrl: '_home-col-3.html' },
         'main-header@search': { templateUrl: '_home-header.html' },
         'main-content@search': { templateUrl: 'home.html', controller: 'StoryCtrl' }
       }
@@ -119,7 +118,6 @@ var app = angular.module('HNSearch', [
       url: '/:page',
       views: {
         'col-2@search': { templateUrl: '_home-col-2.html' },
-        'col-3@search': { templateUrl: '_home-col-3.html' },
         'main-header@search': { templateUrl: '_home-header.html' },
         'main-content@search': { templateUrl: 'home.html' }
       },
@@ -180,10 +178,9 @@ $(document).ready(function() {
   ssm.addState({
     id: 'desktop',
     minWidth: mediumDevice,
-    maxWidth: largeDevice,
     onEnter: function(){
       console.log('enter large');
-      //$('aside').removeClass('js-menu sliding-menu-content').addClass('sidebar');
+      $('aside.sidebar').removeClass('is-visible');
     }
   });
 

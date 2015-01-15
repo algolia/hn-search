@@ -31,9 +31,30 @@
     @include media($medium-screen-down)
       width: calc(100% - 80px)
 
+
+//Animation
+@include keyframes(bounceInDown)
+  0%, 60%, 75%, 90%, 100%
+    @include transition-timing-function(cubic-bezier(0.215, 0.610, 0.355, 1.000))
+  0%
+    opacity: 0
+    @include transform(translate3d(0, -3000px, 0))
+  60%
+    opacity: 1
+    @include transform(translate3d(0, 25px, 0))
+  75%
+    @include transform(translate3d(0, -10px, 0))
+  90%
+    @include transform(translate3d(0, 5px, 0))
+  100%
+    @include transform(none)
+
 .sidebar
   width: $sidebarWidth
-  @include transition(all 0.25s linear)
+  z-index: 5
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
+  //@include transition(all 0.25s linear)
   @include position(fixed, 100px null 0px 0px)
   @include media($large-screen-up)
     left: 50%
@@ -45,8 +66,16 @@
     @include transform(translateX(-220px))
   &.is-visible
     @include transform(translateX(0))
-    z-index: 9999
-    @include position(fixed, null auto 0px 0px)
+    @include animation-name(bounceInDown)
+    @include animation-duration(.5s)
+    @include animation-timing-function(ease)
+    width: 100%
+    @include position(fixed, ($headerHeight + $titleHeight - 25px) 0px auto 0px)
+    padding-top: 25px
+.small-header .main .sidebar.is-visible //small header
+  @include position(fixed, ($headerSmallHeight + $titleHeight - 25px) 0px auto 0px)
+
+
 
 .main
   float: left

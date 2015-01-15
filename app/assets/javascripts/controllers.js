@@ -490,7 +490,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   //navigation
   $scope.toggleNav = function(){
     //sliding menu
-    $('.sidebar').toggleClass('is-visible');
+    $('.sidebar, .sliding-menu-fade-screen').toggleClass('is-visible');
   }
 
 }])
