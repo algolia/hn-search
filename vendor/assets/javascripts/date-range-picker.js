@@ -723,7 +723,7 @@
   };
   DPGlobal.template = '<div class="daterangepicker">'+
               '<div class="daterangepicker-days">'+
-                '<table class=" table-condensed">'+
+                '<table>'+
                   DPGlobal.headTemplate+
                   '<tbody></tbody>'+
                 '</table>'+
@@ -735,7 +735,7 @@
                 '</table>'+
               '</div>'+
               '<div class="daterangepicker-years">'+
-                '<table class="table-condensed">'+
+                '<table>'+
                   DPGlobal.headTemplate+
                   DPGlobal.contTemplate+
                 '</table>'+

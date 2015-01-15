@@ -1,0 +1,111 @@
+//LAYOUT
+.container
+  @include media($large-screen-up)
+    width: $containerWidth
+    margin: 0 auto
+  @include media($large-screen-down)
+    width: 100%
+    min-width: $appMinWidth
+
+.page-header
+  position: fixed
+  z-index: 15
+  height: $headerHeight
+  min-width: $appMinWidth
+  @include media($large-screen-up)
+    width: $containerWidth
+  @include media($large-screen-down)
+    width: 100%
+  .small-header &
+    height: $headerSmallHeight
+    padding: 5px
+    @include transition(all 0.5s ease)
+  .logo-wrapper
+    float: left
+    width: 230px
+    @include media($medium-screen-down)
+      width: 70px
+  .search-wrapper
+    float: left
+    width: calc(90% - 230px)
+    @include media($medium-screen-down)
+      width: calc(100% - 80px)
+
+.sidebar
+  width: $sidebarWidth
+  z-index: 5
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
+  //@include transition(all 0.25s linear)
+  @include position(fixed, 100px null 0px 0px)
+  @include media($large-screen-up)
+    left: 50%
+    margin-left: - $containerWidth/2
+  @include media($large-screen-down)
+    left: 0
+    margin-left: 0
+  @include media($medium-screen-down)
+    @include transform(translateX(-220px))
+  &.is-visible
+    @include transform(translateX(0))
+    @include animation-name(bounceInDown)
+    @include animation-duration(.5s)
+    @include animation-timing-function(ease)
+    width: 100%
+    @include position(fixed, ($headerHeight + $titleHeight - 25px) 0px auto 0px)
+    padding-top: 25px
+.small-header .main .sidebar.is-visible //small header
+  @include position(fixed, ($headerSmallHeight + $titleHeight - 25px) 0px auto 0px)
+
+
+.main
+  float: left
+  position: relative
+  width: 100%
+  margin-top: 100px
+  padding: 78px 0 50px 200px
+  @include media($medium-screen-down)
+    padding: 78px 0 50px
+  header
+    font-size: 13px
+    position: fixed
+    top: $headerHeight
+    z-index: 5
+    height: $titleHeight
+    @include media($large-screen-up)
+      left: 50%
+      margin-left: - $containerWidth/2 + $sidebarWidth
+      width: $itemWidth
+    @include media($large-screen-down)
+      left: 0
+      margin-left: $sidebarWidth
+      width: calc( 100% - #{$sidebarWidth})
+    @include media($medium-screen-down)
+      width: 100%
+      min-width: $appMinWidth
+      margin-left: 0
+    .date-range-filter
+      position: absolute
+      right: 15px
+      top: 28px
+  .small-header & //small header
+    margin-top: $headerSmallHeight
+    header
+      top: $headerSmallHeight
+    .sidebar
+      top: $headerSmallHeight
+    .item-fixed
+      .item-main
+        top: $headerSmallHeight + $titleHeight
+
+
+.item-main
+  display: block
+  min-height: $itemHeight
+  padding: 20px 30px 0
+  @include media($large-screen-up)
+    width: $itemWidth
+  @include media($large-screen-down)
+    width: 100%
+
+

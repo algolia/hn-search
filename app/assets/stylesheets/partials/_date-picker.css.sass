@@ -7,16 +7,27 @@ $color-calendar-range: lighten($color-calendar,32%)
 #date-start.input-selected, #date-end.input-selected,
   border: solid 3px $color-calendar-day-selected
 
+#datepicker
+  position: absolute
+  top: $titleHeight
+  left: 0
+  right: 0
+  z-index: 20
+  line-height: 2em
+  background-color: white
+  border-bottom: solid 1px #eee
+
 .daterangepicker
   position: relative
   width: 100%
   max-width: 480px
   font-size: 14px
-  border: solid 1px $lightGray
+  //border: solid 1px $lightGray
   table
     width: 100%
     border-collapse: separate
     border-spacing: 2px 2px
+    margin: 0
   thead
     tr th
       background-color: $lightGray
@@ -41,7 +52,7 @@ $color-calendar-range: lighten($color-calendar,32%)
     padding: 0 8px
     //box-shadow: inset 0 0 0 4px white
     border: none
-    @include transition-property(all)
+    @include transition-property(background)
     @include transition-duration(0.2s)
     @include transition-timing-function(ease-out)
     &.day:after
@@ -108,6 +119,9 @@ $color-calendar-range: lighten($color-calendar,32%)
         color: $darkGray
   thead tr:first-child th
     cursor: pointer
+
+#datepicker-form
+  display: none
 
 
 .input-complete

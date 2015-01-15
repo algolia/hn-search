@@ -1,5 +1,3 @@
-%div{'ng-include' => '"_daterange-picker.html"'}
-
 %section.search-results{'sticky-list' => true,"defer-share-dropdown"=>true}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID', 'bindonce' => true}
     .item-main
