@@ -521,6 +521,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   });
 }])
 
+.controller('HeadCtrl', ['$scope', 'settings', function($scope, settings) {
+  $scope.settings = settings.get();
+}])
+
 .directive('collection', function() {
   return {
     restrict: 'E',
