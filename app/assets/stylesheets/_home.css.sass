@@ -20,7 +20,7 @@ body
     float: left
     height: 60px
     margin-right: 10px
-    @include transition(all 0.5s ease)
+    +transition(all 0.5s ease)
   .logo-name
     float: left
     padding-top: 8px
@@ -31,7 +31,7 @@ body
     img
       padding-top: 2px
       height: 45px
-      @include transition(all 0.5s ease)
+      +transition(all 0.5s ease)
     .logo-name
       font-size: 17px
 
@@ -74,7 +74,7 @@ body
       outline: 0
       box-shadow: none
       border-color: $blue
-    @include placeholder
+    +placeholder
       color: #ccc
       font-size: 14px
       font-weight: 300
@@ -110,7 +110,7 @@ body
     font-size: 12px
     display: inline-block
     position: relative
-    @include media($medium-screen-down)
+    +media($medium-screen-down)
       display: none
     img
       width: 60px
@@ -150,7 +150,7 @@ body
   right: 20px
   .small-header &
     top: 17px
-  a
+  a:link, a:visited
     font-size: 20px
     color: $lightGray
 
@@ -205,7 +205,7 @@ body
         line-height: 23px
         text-indent: 30px
         cursor: pointer
-        @include user-select(none)
+        +user-select(none)
       &.radio:empty ~ label:before
         position: absolute
         display: block
@@ -289,6 +289,15 @@ body
   [class^="icon-"], [class*=" icon-"]
     color: $lightGray
 
+.no-results
+  width: $itemWidth / 2
+  margin: 0 auto
+  padding: 50px
+  ul
+    padding: 0 0 0 20px
+    text-align: left
+    li
+      line-height: 2em
 
 .item-thumbnail
   float: left
@@ -338,14 +347,34 @@ body
   font-size: 12px
   border-radius: 3px
 .item-actions
-  position: absolute
-  top: 35px
-  right: 20px
   font-size: 12px
+  +position(absolute, 35px 20px null null)
+  .comments-bubble
+    display: block
+    padding: 0 7px
+    background-color: $lightGray
+    border-radius: 2px
+    color: white
+    +position(relative, -4px null null null)
+    &:before
+      content: ""
+      +triangle(18px, $lightGray, left)
+      +size(0)
+      +position(absolute, null 4px -50% null)
+    &.no-comments
+      background-color: lighten(lightGray,5%)
+      &:before
+        +triangle(18px, lighten(lightGray,5%), left)
+    &:hover
+      background-color: lighten($orange,5%)
+      &:before
+        +triangle(18px, lighten($orange,5%), left)
   a
-    color: $orange
+    color: white
+    display: block
+    width: 100%
     i
-      margin-left: 20px
+      margin-left: 15px
       font-size: 18px
     &:hover
       i
@@ -405,7 +434,7 @@ footer
     font-size: 14px
 
 .sliding-menu-button
-  @include button(flat, $lightGray)
+  +button(flat, $lightGray)
   display: inline-block
   cursor: pointer
   position: relative
@@ -414,8 +443,8 @@ footer
     height: 1.3em
 
 .sliding-menu-fade-screen
-  @include position(fixed, 0px 0px 0px 0px)
-  @include transition
+  +position(fixed, 0px 0px 0px 0px)
+  +transition
   background: black
   opacity: 0
   visibility: hidden
@@ -425,24 +454,24 @@ footer
     visibility: visible
 
 //Animation
-@include keyframes(bounceInDown)
++keyframes(bounceInDown)
   0%, 60%, 75%, 90%, 100%
-    @include transition-timing-function(cubic-bezier(0.215, 0.610, 0.355, 1.000))
+    +transition-timing-function(cubic-bezier(0.215, 0.610, 0.355, 1.000))
   0%
     opacity: 0
-    @include transform(translate3d(0, -3000px, 0))
+    +transform(translate3d(0, -3000px, 0))
   60%
     opacity: 1
-    @include transform(translate3d(0, 25px, 0))
+    +transform(translate3d(0, 25px, 0))
   75%
-    @include transform(translate3d(0, -10px, 0))
+    +transform(translate3d(0, -10px, 0))
   90%
-    @include transform(translate3d(0, 5px, 0))
+    +transform(translate3d(0, 5px, 0))
   100%
-    @include transform(none)
+    +transform(none)
 
 //responsive stuff
-@include media($medium-screen-down)
++media($medium-screen-down)
   .logo-name
     display: none
   .item-thumbnail
@@ -453,7 +482,7 @@ footer
     display: none
   .search-infos
     display: none !important
-@include media($medium-screen-up)
++media($medium-screen-up)
   .sliding-menu-button
     display: none
 

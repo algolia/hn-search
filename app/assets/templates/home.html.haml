@@ -26,13 +26,15 @@
               %span.comments {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
           %li{'bo-show' => 'hit.url'}
             %a.hit-link{"bo-href"=>"hit.url", 'bo-html' => 'hit._highlightResult.url.value | domain'}
-      .item-actions.pull-right{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
+      .item-actions{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}
-            %i.icon-speech-bubble
-            %a{'bo-href' => '"/story/" + hit.objectID + "/" + friendly(hit.title)', "ng-click"=>"loadComments(hit.objectID, $event)", 'bo-show' => 'hit.num_comments > 0'}
-              {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
-            %span{'bo-show' => 'hit.num_comments == 0'} no comment
+            /%i.icon-speech-bubble
+            %a.comments-bubble{'bo-href' => '"/story/" + hit.objectID + "/" + friendly(hit.title)', "ng-click"=>"loadComments(hit.objectID, $event)", 'bo-show' => 'hit.num_comments > 0'}
+              /{{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
+              {{ ::hit.num_comments }}
+            /%span{'bo-show' => 'hit.num_comments == 0'} no comment
+            %span.comments-bubble.no-comments{'bo-show' => 'hit.num_comments == 0'} 0
           %li.action-share
             %a.placeholder
               %i.icon-share

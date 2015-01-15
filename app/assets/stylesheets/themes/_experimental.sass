@@ -1,9 +1,9 @@
 //LAYOUT
 .container
-  @include media($large-screen-up)
+  +media($large-screen-up)
     width: $containerWidth
     margin: 0 auto
-  @include media($large-screen-down)
+  +media($large-screen-down)
     width: 100%
     min-width: $appMinWidth
 
@@ -12,23 +12,23 @@
   z-index: 15
   height: $headerHeight
   min-width: $appMinWidth
-  @include media($large-screen-up)
+  +media($large-screen-up)
     width: $containerWidth
-  @include media($large-screen-down)
+  +media($large-screen-down)
     width: 100%
   .small-header &
     height: $headerSmallHeight
     padding: 5px
-    @include transition(all 0.5s ease)
+    +transition(all 0.5s ease)
   .logo-wrapper
     float: left
     width: 230px
-    @include media($medium-screen-down)
+    +media($medium-screen-down)
       width: 70px
   .search-wrapper
     float: left
     width: calc(90% - 230px)
-    @include media($medium-screen-down)
+    +media($medium-screen-down)
       width: calc(100% - 80px)
 
 .sidebar
@@ -36,25 +36,25 @@
   z-index: 5
   overflow-y: scroll
   -webkit-overflow-scrolling: touch
-  @include position(fixed, 100px null 0px 0px)
-  @include media($large-screen-up)
+  +position(fixed, 100px null 0px 0px)
+  +media($large-screen-up)
     left: 50%
     margin-left: - $containerWidth/2
-  @include media($large-screen-down)
+  +media($large-screen-down)
     left: 0
     margin-left: 0
-  @include media($medium-screen-down)
-    @include transform(translateX(-220px))
+  +media($medium-screen-down)
+    +transform(translateX(-220px))
   &.is-visible
     width: 100%
-    @include transform(translateX(0))
-    @include animation-name(bounceInDown)
-    @include animation-duration(.5s)
-    @include animation-timing-function(ease)
-    @include position(fixed, ($headerHeight + $titleHeight - 25px) 0px auto 0px)
+    +transform(translateX(0))
+    +animation-name(bounceInDown)
+    +animation-duration(.5s)
+    +animation-timing-function(ease)
+    +position(fixed, ($headerHeight + $titleHeight - 25px) 0px auto 0px)
 
 .small-header .main .sidebar.is-visible //small header
-  @include position(fixed, ($headerSmallHeight + $titleHeight - 25px) 0px auto 0px)
+  +position(fixed, ($headerSmallHeight + $titleHeight - 25px) 0px auto 0px)
 
 
 .main
@@ -63,7 +63,7 @@
   width: 100%
   margin-top: 100px
   padding: 78px 0 50px 200px
-  @include media($medium-screen-down)
+  +media($medium-screen-down)
     padding: 78px 0 50px
   header
     font-size: 13px
@@ -71,15 +71,15 @@
     top: $headerHeight
     z-index: 5
     height: $titleHeight
-    @include media($large-screen-up)
+    +media($large-screen-up)
       left: 50%
       margin-left: - $containerWidth/2 + $sidebarWidth
       width: $itemWidth
-    @include media($large-screen-down)
+    +media($large-screen-down)
       left: 0
       margin-left: $sidebarWidth
       width: calc( 100% - #{$sidebarWidth})
-    @include media($medium-screen-down)
+    +media($medium-screen-down)
       width: 100%
       min-width: $appMinWidth
       margin-left: 0
@@ -102,9 +102,9 @@
   display: block
   min-height: $itemHeight
   padding: 20px 30px 0
-  @include media($large-screen-up)
+  +media($large-screen-up)
     width: $itemWidth
-  @include media($large-screen-down)
+  +media($large-screen-down)
     width: 100%
 
 
