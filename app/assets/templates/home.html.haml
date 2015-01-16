@@ -47,10 +47,11 @@
             %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
               %i.icon-star
     %ul.list-item-comments{"ng-if"=>"story[hit.objectID]"}
-      %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
+      %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children"}
         %span.author
           %avatar{author:"comment.author"}
-          {{ ::comment.author || "deleted" }}
+          %a{'ng-href' => 'https://news.ycombinator.com/user?id={{ comment.author }}', 'ng-title' => 'See {{ reply.author }} profile'}
+            {{comment.author || "deleted"}}
         %span{'ng-if' => 'comment.created_at'}
           \-
           %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
