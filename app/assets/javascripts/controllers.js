@@ -184,6 +184,13 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.settings.sort = order;
   };
 
+  $scope.selectDate = function(date) {
+    $scope.settings.dateRange = date;
+    if (date === 'custom') {
+      $scope.settings.dateStart = $scope.settings.dateEnd = null;
+    }
+  };
+
   $scope.pageTitle = function() {
     switch ($scope.state) {
     case undefined: case '': return $scope.settings.style === 'default' ? '' : 'All';
@@ -240,7 +247,15 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   //Dropdowns
   //https://github.com/jseppi/angular-dropdowns
-  $scope.ddSelectOptions = [
+  var getSelectOption = function(options, selected) {
+    for (var i = 0; i < options.length; ++i) {
+      if (options[i].value === selected) {
+        return angular.copy(options[i]);
+      }
+    }
+    return null;
+  };
+  $scope.ddSelectType = [
     {
       text: 'All',
       value: 'all',
@@ -252,11 +267,39 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       value: 'comment'
     }
   ];
-  for (var i = 0; i < $scope.ddSelectOptions.length; ++i) {
-    if ($scope.ddSelectOptions[i].value === $scope.settings.type) {
-      $scope.ddSelectSelected = angular.copy($scope.ddSelectOptions[i]);
+  $scope.ddSelectSort = [
+    {
+      text: 'Popularity',
+      value: 'byPopularity',
+    }, {
+      text: 'Date',
+      value: 'byDate'
     }
-  }
+  ];
+  $scope.ddSelectDate = [
+    {
+      text: 'All time',
+      value: 'all'
+    },
+    {
+      text: 'Last 24h',
+      value: 'last24h',
+    }, {
+      text: 'Past Week',
+      value: 'pastWeek'
+    }, {
+      text: 'Past Month',
+      value: 'pastMonth'
+    }, {
+      text: 'Custom range',
+      value: 'custom'
+    }
+  ];
+
+  $scope.ddDateSelected = getSelectOption($scope.ddSelectDate, $scope.settings.dateRange) || getSelectOption($scope.ddSelectDate, 'all');
+  $scope.ddSortSelected = getSelectOption($scope.ddSelectSort, $scope.settings.sort) || getSelectOption($scope.ddSelectSort, 'byPopularity');
+  $scope.ddTypeSelected = getSelectOption($scope.ddSelectType, $scope.settings.type) || getSelectOption($scope.ddSelectType, 'all');
+
   $scope.selectType = function(selected) {
     $scope.settings.type = selected.value;
   };
@@ -274,9 +317,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.searchAllItems = function($event) {
     $event.preventDefault();
     $scope.settings.type = 'all';
-    $scope.ddSelectSelected = angular.copy($scope.ddSelectOptions[0]);
+    $scope.ddTypeSelected = angular.copy($scope.ddSelectType[0]);
   };
 
+  // Share item
   $scope.ddMenuShare = [
     {
       text: 'Share on Twitter',
@@ -292,7 +336,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       share: 'email'
     }
   ];
-  // Share item
   $scope.shareItem = function(selected, hit) {
     var url = hit ? $location.protocol() + '://' + $location.host() + "/story/" + hit.objectID + "/" + $scope.friendly(hit.title) : window.location.href;
     var title = (hit ? hit.title + ' - ' : ($scope.query ? 'I just searched for "' + $scope.query + '" on Hacker News - ' : '')) + 'Hacker News Search';
@@ -351,6 +394,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     $scope.story = {};
     $location.path(path).search($location.search());
     window.scrollTo(0, 0);
+    if( $('.sidebar').hasClass('is-visible')){
+      $scope.toggleNav();
+    }
   };
 
   $scope.friendly = function(v) {
@@ -373,6 +419,13 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       $scope.placeholder = 'Search stories by title, url or author';
     } else if (newSettings.type === 'comment') {
       $scope.placeholder = 'Search comments';
+    }
+
+    $scope.ddTypeSelected = getSelectOption($scope.ddSelectType, newSettings.type);
+    $scope.ddSortSelected = getSelectOption($scope.ddSelectSort, newSettings.sort);
+    $scope.ddDateSelected = getSelectOption($scope.ddSelectDate, newSettings.dateRange);
+    if (newSettings.dateRange === 'custom' && newSettings.dateStart && newSettings.dateEnd) {
+      $scope.ddDateSelected.text = moment(newSettings.dateStart * 1000).format("MMM Do YYYY") + ' » ' + moment(newSettings.dateEnd * 1000).format("MMM Do YYYY");
     }
 
     window.scrollTo(0, 0);
@@ -452,6 +505,16 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   if ($location.search().experimental) {
     $scope.settings.style = 'experimental';
   }
+
+  //navigation
+  $scope.toggleNav = function(){
+    //sliding menu
+    $('.sidebar, .sliding-menu-fade-screen').toggleClass('is-visible');
+  }
+
+
+  // calendar
+  $('.daterangepicker-days').daterangepicker();
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {
@@ -472,6 +535,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
     first = false;
   });
+}])
+
+.controller('HeadCtrl', ['$scope', 'settings', function($scope, settings) {
+  $scope.settings = settings.get();
 }])
 
 .directive('collection', function() {
@@ -551,7 +618,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       });
     },
     template: '<div class="item-input-wrapper">' +
-                '<i ng-hide="query" class="icon-search"></i>' +
+                '<i class="icon-search"></i>' +
                 '<input type="search" placeholder="{{ $parent.placeholder }}" ng-model="$parent.query" ng-model-options="{debounce: 100}" ng-blur="blurred()" ng-keyup="keyup($event)" autofocus>' +
               '</div>'
   };
@@ -609,6 +676,42 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
           element.addClass('fade')
         }
       }, 10); // is 10ms to detect the image was in the cache?
+    }
+  };
+}])
+
+.directive('dateRangePicker', ['$timeout', 'settings', function($timeout, settings) {
+  return {
+    link: function ($scope, element, attrs) {
+      $scope.cancel = function() {
+        var s = settings.get();
+        s.dateRange = 'all';
+        s.dateStart = s.dateEnd = null;
+      };
+
+      $timeout(function () {
+        $(element).find('#date-start').on('change', function(e) {
+          var v = $(this).val();
+          $scope.$apply(function() {
+            if (!$('#date-end').val()) {
+              settings.get().dateEnd = null;
+            }
+            settings.get().dateStart = Date.parse(v) / 1000;
+          });
+        });
+        $(element).find('#date-end').on('change', function(e) {
+          var v = $(this).val();
+          $scope.$apply(function() {
+            if (!$('#date-start').val()) {
+              settings.get().dateStart = null;
+            }
+            settings.get().dateEnd = Date.parse(v) / 1000 + 60*60*24;
+          });
+        });
+        $(element).find('.datepicker1').daterangepicker({
+          weekStart: 1
+        });
+      }, 0, false);
     }
   };
 }])

@@ -110,7 +110,6 @@ var app = angular.module('HNSearch', [
       url: '/story/{id}{title:(?:/[^/]+)?}',
       views: {
         'col-2@search': { templateUrl: '_home-col-2.html' },
-        'col-3@search': { templateUrl: '_home-col-3.html' },
         'main-header@search': { templateUrl: '_home-header.html' },
         'main-content@search': { templateUrl: 'home.html', controller: 'StoryCtrl' }
       }
@@ -119,7 +118,6 @@ var app = angular.module('HNSearch', [
       url: '/:page',
       views: {
         'col-2@search': { templateUrl: '_home-col-2.html' },
-        'col-3@search': { templateUrl: '_home-col-3.html' },
         'main-header@search': { templateUrl: '_home-header.html' },
         'main-content@search': { templateUrl: 'home.html' }
       },
@@ -141,10 +139,9 @@ var app = angular.module('HNSearch', [
 }])
 
 $(document).ready(function() {
-  // sticky main
+  var doc = $(document);
   var body = $('body');
-  var scrollTopBtn = $('.scroll-to-top');
-  var doc = $(document)
+  // sticky main
   doc.on("scroll", function(e) {
     if (body.attr('rel') === 'default') {
       return;
@@ -158,7 +155,8 @@ $(document).ready(function() {
     }
   });
   //scroll top
-  $('.scroll-to-top').on('click', function(e){
+  var scrollTopBtn = $('.scroll-to-top');
+  scrollTopBtn.on('click', function(e){
     e.preventDefault();
     doc.scrollTop(0);
   });
@@ -166,4 +164,16 @@ $(document).ready(function() {
     if (e.keyCode == 38)
       doc.scrollTop(0);
   });
+
+  //responsive states
+  var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
+  ssm.addState({
+    id: 'desktop',
+    minWidth: mediumDevice,
+    onEnter: function(){
+      $('aside.sidebar, .sliding-menu-fade-screen').removeClass('is-visible');
+    }
+  });
+
+  ssm.ready();
 });

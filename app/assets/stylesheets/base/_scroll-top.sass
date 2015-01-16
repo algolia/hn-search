@@ -1,0 +1,29 @@
+.scroll-to-top
+  position: fixed
+  height: 30px
+  width: 30px
+  right: 35px
+  bottom: 20px
+  background: rgba(black, .1)
+  z-index: 4000
+  &:after
+    opacity: .6
+    position: absolute
+    right: 11px
+    top: 11px
+    content: ''
+    width: 0px
+    height: 0px
+    border-style: solid
+    border-width: 0 4px 8px 4px
+    border-color: transparent transparent $darkGray transparent
+  &:hover
+    background-color: $orange
+    color: white
+    &:after
+      border-color: transparent transparent white transparent
+  .tooltip
+    position: absolute
+    left: 50%
+    top: -50px
+    display: none

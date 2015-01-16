@@ -4,10 +4,11 @@
  * MIT License */
 
 // Variables
+@import "normalize";
 @import "variables";
 
 // Neat Settings -- uncomment if using Neat -- must be imported before Neat
-// @import "grid-settings";
+@import "grid-settings";
 
 // Extends
 @import "extends/button";
@@ -27,3 +28,4 @@
 @import "dropdowns";
 @import "progress";
 @import "icons";
+@import "scroll-top"

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:url('/assets/icomoon.eot?oyniom');
-  src:url('/assets/icomoon.eot?#iefixoyniom') format('embedded-opentype'),
-    url('/assets/icomoon.woff?oyniom') format('woff'),
-    url('/assets/icomoon.ttf?oyniom') format('truetype'),
-    url('/assets/icomoon.svg?oyniom#icomoon') format('svg');
+  src:url('/assets/icomoon.eot?-p3idmi');
+  src:url('/assets/icomoon.eot?#iefix-p3idmi') format('embedded-opentype'),
+    url('/assets/icomoon.woff?-p3idmi') format('woff'),
+    url('/assets/icomoon.ttf?-p3idmi') format('truetype'),
+    url('/assets/icomoon.svg?-p3idmi#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,6 +27,10 @@
   content: "\f003";
 }
 
+.icon-calendar:before {
+  content: "\f073";
+}
+
 .icon-twitter:before {
   content: "\f099";
 }
@@ -39,8 +43,8 @@
   content: "\f09b";
 }
 
-.icon-google-plus:before {
-  content: "\f0d5";
+.icon-bars:before {
+  content: "\f0c9";
 }
 
 .icon-hacker-news:before {
@@ -63,12 +67,12 @@
   content: "\e024";
 }
 
-.icon-layers:before {
-  content: "\e031";
-}
-
 .icon-search:before {
   content: "\e036";
+}
+
+.icon-reply:before {
+  content: "\e039";
 }
 
 .icon-circle-cross:before {
@@ -91,10 +95,6 @@
   content: "\e074";
 }
 
-.icon-speech-bubble:before {
-  content: "\e076";
-}
-
 .icon-share:before {
   content: "\e081";
 }
@@ -107,16 +107,8 @@
   content: "\e084";
 }
 
-.icon-maximize:before {
-  content: "\e112";
-}
-
-.icon-minimize:before {
-  content: "\e113";
-}
-
-.icon-open:before {
-  content: "\e128";
+.icon-arrow-up:before {
+  content: "\e096";
 }
 
 .icon-ellipsis:before {
@@ -149,6 +141,10 @@
 
 .icon-news:before {
   content: "\e607";
+}
+
+.icon-params:before {
+  content: "\e608";
 }
 
 .icon-banknote:before {

@@ -1,199 +1,118 @@
-//Typography
-h1, h2, h3, h4, h5
-  font-weight: 200
-
-
-html, body
-  height: 100%
-  margin: 0
-  padding: 0
-  color: $lightGray
-  font-family: $fontBase
-  
-// force y-scroll so that there's no width change or window resize
-// between results and no results
 body
   overflow-y: scroll
 
-//layout
-.container
-  width: $containerWidth
-  margin: 0 auto
-
+//HEADER
 .page-header
-  position: fixed
-  z-index: 15
-  width: $containerWidth
-  height: $headerHeight
   padding: 20px 5px 20px 20px
   border-bottom: solid 1px #eee
   background-color: white
-  .col-1, .col-2, .col-3
+.logo
+  color: $lightGray
+  img
     float: left
-    min-height: 50px
-    margin: 0
-    padding: 0
-  .col-1
-    width: 22%
-  .col-2
-    padding-top: 4px
-    width: 46%
-  .col-3
-    text-align: right
-    width: 30%
-  .logo
+    height: 60px
+    margin-right: 10px
+    +transition(all 0.5s ease)
+  .logo-name
+    float: left
+    padding-top: 8px
+    line-height: 1em
+    font-size: 22px
     color: $lightGray
+  .small-header &
     img
-      float: left
-      height: 60px
-      margin-right: 10px
+      padding-top: 2px
+      height: 45px
+      +transition(all 0.5s ease)
     .logo-name
-      float: left
-      padding-top: 6px
-      line-height: 1.1em
-      font-size: 22px
-      color: $lightGray
-  .navigation
-    ul
-      position: relative
-      top: 15px
-    li
-      margin-right: 20px
-      padding-bottom: 5px
-      cursor: pointer
-      &.active
-        font-weight: bold
-        border-bottom: solid 2px $orange
-  .powered-by
-    font-size: 12px
-    display: block
-    float: right
+      font-size: 17px
+
+.navigation
+  ul
     position: relative
-    top: 8px
+    top: 15px
+  li
+    margin-right: 20px
+    padding-bottom: 5px
+    cursor: pointer
+    &.active
+      font-weight: bold
+      border-bottom: solid 2px $orange
+
+//SEARCHBOX
+.search-wrapper
+  position: relative
+  margin-top: 8px
+  .small-header &
+    margin-top: 3px
+  .icon-search
+    +position(absolute, 8px null null 14px)
+    color: $orange
+    font-size: 24px
+  .item-input-wrapper
+    display: inline-block
+    width: calc(100% - 100px)
+    margin-right: 5px
+  input
+    border-radius: 25px
+    box-shadow: none
+    line-height: 25px
+    padding: 0 15px 0 50px
+    height: 42px
+    border-color: lighten($lightGray, 10%)
+    &:focus
+      outline: 0
+      box-shadow: none
+      border-color: $blue
+    +placeholder
+      color: #ccc
+      font-size: 14px
+      font-weight: 300
+    &::-webkit-search-cancel-button
+      @extend .fade
+      @extend .in
+      -webkit-appearance: none
+      text-align: center
+      +size(20px)
+      background: #ccc
+      border-radius: 50%
+      position: relative
+      &:hover
+        background-color: $lightGray
+        cursor: pointer
+      &:after
+        display: block
+        +size(20px)
+        position: absolute
+        color: white
+        font-size: 14px
+        line-height: 18px
+        text-align: center
+        content: "×"
+  .type-dropdown
+    +position(absolute, 5px null null 15px)
+  .powered-by
+    width: 80px
+    font-size: 12px
+    display: inline-block
+    position: relative
+    +media($medium-screen-down)
+      display: none
     img
       width: 60px
       position: relative
       top: 1px
       vertical-align: bottom
 
-.main
-  float: left
-  position: relative
-  width: 100%
-  margin-top: 100px
-  padding: 78px 0 50px 200px
-  strong
-    color: $darkGray
-  header
-    position: absolute
-    z-index: 30
-    top: 0px
-    left: 200px
-    height: $titleHeight
-    width: $itemWidth
-    padding: 20px 30px
-    border-bottom: solid 1px #eee
-    background-color: white
-    h1
-      display: inline-block
-      margin-right: 10px
-      font-size: 25px
-      color: $darkGray
-    .search-infos
-      font-size: 13px
-      .action-share
-        margin-left: 10px
-        a
-          font-size: 18px
-          color: $lightGray
-          &:hover
-            color: $orange
-      .wrap-dd-menu
-        li
-          a
-            font-size: 13px
-    .btn-refresh
-      width: 30px
-      height: 30px
-      line-height: 30px
-      text-align: center
-      padding: 0
-      background-color: white
-      border: solid 1px #eee
-      color: #ccc
-      position: relative
-      top: -5px
-      margin-right: 4px
-      &:hover
-        border-color: #ccc
-        color: $orange
-      &:active
-        border-color: $orange
-      &:focus
-        box-shadow: none
-        outline: 0
-    .date-range-filter
-      position: absolute
-      right: 15px
-      top: 28px
-      ul
-        display: inline-block
-        li
-          width: 100px
-          display: inline-block
-      label
-        margin-left: 20px
-        font-size: 12px
-        font-weight: normal
-        white-space: nowrap
-      input
-        &.radio:empty
-          margin-left: -9999px
-        &.radio:empty ~ label
-          float: left
-          position: relative
-          line-height: 23px
-          text-indent: 30px
-          cursor: pointer
-          @include user-select(none)
-        &.radio:empty ~ label:before
-          position: absolute
-          display: block
-          top: 0
-          bottom: 0
-          left: 0
-          content: ''
-          height: 20px
-          width: 20px
-          border: solid 1px #ccc
-          line-height: 20px
-          border-radius: 50%
-        &.radio:checked ~ label:before
-          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
-        &.radio:focus ~ label:before
-          box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
-  h2
-    display: inline-block
-    margin-top: 1em
-    font-size: 20px
-    color: $darkGray
-  .edit-settings
-    margin-top: $titleHeight
-    padding: 10px
 
-
+//SIDEBAR
 .sidebar
-  position: absolute
-  top: 0
-  bottom: 30px
-  left: 0
-  width: $sidebarWidth
   background-color: $sidebarColor
   ul
-    position: relative
+    @extend %clearfix
     display: block
     height: 100%
-    padding: 20px 0
+    padding: 30px 0 10px
     li
       float: left
       width: 100%
@@ -210,331 +129,357 @@ body
         margin: 10px 0
         padding: 0
         border-bottom: solid 1px #eee
-      &.settings
-        position: absolute
-        bottom: 0
-        right: 0
-        left: 0
-        text-align: center
-        background-color: darken($sidebarColor,3%)
-        i
-          margin-right: 5px
 
-.main-fixed
-  .main
-    padding-top: 0
-    header
-      position: fixed
-      z-index: 5
-      top: $headerHeight
-      left: 50%
-      width: $itemWidth
-      margin-left: - $containerWidth/2 + $sidebarWidth
-    .sidebar
-      position: fixed
-      top: 100px
-      left: 50%
-      width: $sidebarWidth
-      margin-left: - $containerWidth/2
-    .search-results
-      padding-top: 78px
+//CONTENT
+.main
+  strong
+    color: $darkGray
+  header
+    border-bottom: solid 1px #eee
+    line-height: 77px
+    padding: 0 30px
+    background-color: lighten($sidebarColor,2%)
+    white-space: nowrap
+    h1
+      display: inline-block
+      margin-right: 10px
+      font-size: 25px
+      position: relative
+      top: 3px
+      color: $darkGray
+  .search-infos
+    +position(absolute, 0 20px null null)
+    font-size: 13px
+    .action-share
+      margin-left: 10px
+      a i
+        font-size: 18px
+        color: $lightGray
+        &:hover
+          color: $orange
+  .wrap-dd-menu
+    li a
+      font-size: 13px
+  .date-range-filter
+    ul
+      display: inline-block
+      li
+        width: 100px
+        display: inline-block
+    label
+      margin-left: 20px
+      font-size: 12px
+      font-weight: normal
+      white-space: nowrap
+    input
+      &.radio:empty
+        margin-left: -9999px
+      &.radio:empty ~ label
+        float: left
+        position: relative
+        line-height: 23px
+        text-indent: 30px
+        cursor: pointer
+        +user-select(none)
+      &.radio:empty ~ label:before
+        +position(absolute, 0 null 0 0)
+        +size(20px)
+        display: block
+        content: ''
+        border: solid 1px #ccc
+        line-height: 20px
+        border-radius: 50%
+      &.radio:checked ~ label:before
+        box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
+      &.radio:focus ~ label:before
+        box-shadow: inset 0 0 0 6px white, inset 0 0 0 10px $orange
+  h2
+    display: inline-block
+    margin-top: 1em
+    font-size: 20px
+    color: $darkGray
 
-.search-wrapper
-  display: inline-block
-  position: relative
-  margin-right: 10px
-  .icon-search
-    color: $orange
-    position: absolute
-    top: 8px
-    right: 14px
-    font-size: 24px
-  input
-    width: 450px
-    border-radius: 25px
-    box-shadow: none
-    line-height: 25px
-    padding: 0 15px 0 120px
-    height: 42px
-    margin: 0
-    border-color: lighten($lightGray, 10%)
-    &:focus
-      outline: 0
-      box-shadow: none
-      border-color: $blue
-    @include placeholder
-      color: #ccc
-      font-size: 14px
-      font-weight: 300
-  .type-dropdown
-    position: absolute
-    top: 5px
-    left: 15px
-
+//SEARCH RESULTS
 .search-results
   position: relative
-  background: white
   .item
     border-bottom: solid 1px #eee
     position: relative
     padding: 0
-    a[href].item-thumbnail-link:hover
-      img.item-thumbnail
-        border-color: lighten($lightGray,10%)
-    .item-main
-      display: block
-      width: $itemWidth
-      min-height: $itemHeight
-      padding: 20px 30px 0
-      background-color: white
-    &.item-fixed // sticked item
-      .item-main
-        position: fixed
-        z-index: 10
-        top: $headerHeight + $titleHeight
-        width: $itemWidth
-        box-shadow:  0 1px 0 rgba(0,0,0,.2), 0 4px 0 rgba(0,0,0,.05)
+    &.item-fixed .item-main // sticked item
+      position: fixed
+      z-index: 4
+      top: $headerHeight + $titleHeight
+      box-shadow:  0 1px 0 rgba(black,.2), 0 4px 0 rgba(black,.05)
+    &.item-absolute-bottom .item-main //end of stick transition state
+      position: absolute
+      left: 0
+      bottom: 0
     &.item-show-comments
-      //border-left: solid 2px $lightGray
-    &.item-absolute-bottom //end of stick transition state
-      .item-main
-        position: absolute
-        left: 0
-        bottom: 0
-        width: $itemWidth
-    h2
-      float: left
-      margin-top: 5px
-      font-size: 16px
-      font-weight: normal
-      a
-        color: $darkGray
-        &[href]:hover
-          color: darken($darkGray,25%)
-        &[href]:visited
-          color: lighten($darkGray,25%)
-      em
-        font-style: normal
-        font-weight: bold
-    .item-thumbnail
-      float: left
-      width: 55px
-      padding: 3px
-      margin-right: 15px
-      border: solid 1px #eee
-      border-radius: 3px
-    .item-title-and-infos
-      float: left
-    .text-container
-      clear: both
-      font-size: 12px
-      padding: 15px 20px
-      color: lighten($darkGray, 10%)
-      p
-        margin-bottom: 5px
-      em
-        font-weight: bold
-        font-style: normal
-        color: $darkGray
-    .item-infos
-      float: left
-      clear: both
-      li
-        margin-right: 12px
-      i
-        position: relative
-        top: 2px
-        font-size: 14px
-      a:hover
-        border-bottom: dotted 1px #ccc
-    .item-avatar
-      display: inline-block
-      width: 16px
-      height: 16px
-      margin-right: 2px
-      text-align: center
-      line-height: 16px
-      color: white
-      text-transform: capitalize
-      font-weight: 500
-      font-size: 12px
-      border-radius: 3px
-    .item-actions
-      float: right
-      font-size: 12px
-      position: relative
-      top: 14px
-      a
-        color: $orange
-        i
-          margin-left: 20px
-          font-size: 18px
-        &:hover
-          i
-            color: $orange
-    a.hit-link
-      font-size: 12px
-      color: $linkColor
-      em
-        font-weight: bold
-        font-style: normal
-    .author
-      display: inline-block
-      font-size: 13px
-      margin-bottom: 0
-      color: $lightGray
-      em
-        font-weight: bold
-        font-style: normal
-        color: $darkGray
-    .date, .comments
-      font-size: 12px
-      color: $lightGray
-    .item-comments
-      font-size: 12px
-    .starred
-      i
-        color: $orange
-    [class^="icon-"], [class*=" icon-"]
-      color: $lightGray
-  ul.list-item-comments
-    padding: 0 50px 20px
-    color: $darkGray
-    > li
-      padding: 15px 0 10px 0
-      border-bottom: solid 1px #EEEEEE
-      &:last-child
-        border: none
-    .replies-list
-      margin-bottom: 15px
-    ul
-      display: block
-      margin: 0
-      padding: 8px 0 0 15px
-      border-left: solid 1px #ccc
-      li
-        margin-bottom: 15px
-    .reply-container
-      padding-left: 0
-      p
-        margin-bottom: 4px
-      a
-        color: #517B91
-  .search-pagination
-    margin-top: 20px
-    text-align: center
-    background-color: white
-    li
-      display: inline-block
-      button
-        margin: 3px
-        padding: 5px 10px
-        font-size: 12px
-        text-align: center
-        background: transparent
-        color: $lightGray
-        font-weight: normal
-        border: 1px solid $lightGray
-        outline: none
-      &.active
-        button
-          border-color: $orange
-          color: $orange
+      //
+  a.hit-link
+    font-size: 12px
+    color: $linkColor
+  em
+    font-weight: bold
+    font-style: normal
+  .author
+    display: inline-block
+    font-size: 13px
+    margin-bottom: 0
+    color: $lightGray
+    em
+      font-weight: bold
+      font-style: normal
+      color: $darkGray
+
+//ITEMS
+.item-main
+  display: table
+  h2
+    float: left
+    margin-top: 5px
+    font-size: 16px
+    font-weight: normal
+    a
+      color: $darkGray
+      &[href]:visited
+        color: lighten($darkGray,25%)
+      &[href]:hover
+        color: darken($darkGray,25%)
+    em
+      font-style: normal
+      font-weight: bold
+  .item-comments
+    font-size: 12px
+  .starred
+    i
+      color: $orange
+  [class^="icon-"], [class*=" icon-"]
+    color: $lightGray
+.date, .comments
+  font-size: 12px
+  color: $lightGray
+a.date
+  color: $lightGray
+  &:hover
+    border-bottom: dotted 1px #ccc
 
 .no-results
-  width: $itemWidth / 1.3
+  width: $itemWidth / 2
   margin: 0 auto
-  padding: 50px 0
+  padding: 50px
   ul
     padding: 0 0 0 20px
     text-align: left
     li
       line-height: 2em
 
-.small-header
-  .page-header
-    height: $headerSmallHeight
-    padding: 5px
-    @include transition(all 0.5s ease)
-    .logo
-      img
-        @include transition(all 0.5s ease)
-        height: 45px
-      .logo-name
-        font-size: 18px
-  .main
-    margin-top: $headerSmallHeight
-    header
-      top: $headerSmallHeight
-    .sidebar
-      top: $headerSmallHeight
-    .item-fixed
-      .item-main
-        top: $headerSmallHeight + $titleHeight
+.item-content-wrapper
+  width: 100%
+  display: table-cell
+  vertical-align: middle
+.item-thumbnail
+  float: left
+  width: 55px
+  padding: 3px
+  margin-right: 15px
+  border: solid 1px #eee
+  border-radius: 3px
+  a[href].item-thumbnail-link:hover &
+    float: left
+    border-color: lighten($lightGray,10%)
+.item-title-and-infos
+  float: left
+  width: calc(100% - 70px)
+  @include media($medium-screen-down)
+    width: 100%
+.text-container
+  overflow: hidden
+  clear: both
+  font-size: 12px
+  padding: 15px 20px
+  color: lighten($darkGray, 10%)
+  p
+    margin-bottom: 5px
+  em
+    font-weight: bold
+    font-style: normal
+    color: $darkGray
+.item-infos
+  float: left
+  clear: both
+  li
+    margin-right: 12px
+  i
+    position: relative
+    top: 2px
+    font-size: 14px
+  a:hover
+    border-bottom: dotted 1px #ccc
+.item-avatar
+  display: inline-block
+  width: 16px
+  height: 16px
+  margin-right: 2px
+  text-align: center
+  line-height: 16px
+  color: white
+  text-transform: capitalize
+  font-weight: 500
+  font-size: 12px
+  border-radius: 3px
+.item-actions
+  font-size: 12px
+  +position(absolute, 25px 20px null null)
+  .comments-bubble
+    display: block
+    padding: 0 7px
+    background-color: $lightGray
+    border-radius: 2px
+    color: white
+    +position(relative, -4px null null null)
+    &:before
+      content: ""
+      +triangle(18px, $lightGray, left)
+      +size(0)
+      +position(absolute, null 4px -50% null)
+    &.no-comments
+      background-color: lighten(lightGray,5%)
+      &:before
+        +triangle(18px, lighten(lightGray,5%), left)
+    &:hover:not(.no-comments)
+      background-color: lighten($orange,5%)
+      &:before
+        +triangle(18px, lighten($orange,5%), left)
+  a
+    color: white
+    display: block
+    width: 100%
+    i
+      margin-left: 15px
+      font-size: 18px
+    &:hover
+      i
+        color: $orange
+ul.list-item-comments
+  padding: 0 50px 20px
+  color: $darkGray
+  font-size: 12px
+  box-shadow: inset 0 -4px 0 rgba(black,.03)
+  > li
+    padding: 15px 0 10px 0
+    border-bottom: solid 1px #EEEEEE
+    &:last-child
+      border: none
+  .replies-list
+    margin-bottom: 15px
+  ul
+    display: block
+    margin: 0
+    padding: 8px 0 0 15px
+    border-left: solid 1px #ccc
+    li
+      margin-bottom: 15px
+  .reply-container
+    padding-left: 0
+    p
+      margin-bottom: 4px
+    a
+      color: #517B91
 
+.search-pagination
+  padding: 20px 0 20px 0
+  text-align: center
+  li
+    display: inline-block
+    button
+      margin: 3px
+      padding: 5px 10px
+      font-size: 12px
+      text-align: center
+      background: transparent
+      color: $lightGray
+      font-weight: normal
+      border: 1px solid $lightGray
+      outline: none
+    &.active
+      button
+        border-color: $orange
+        color: $orange
+
+//FOOTER
 footer
-  margin-top: 50px
   text-align: center
   a
     color: $lightGray
     font-size: 14px
 
-.scroll-to-top
-  position: fixed
-  height: 30px
-  width: 30px
-  right: 35px
-  bottom: 20px
-  background: rgba(black, .1)
-  z-index: 4000
-  &:after
-    opacity: .6
-    position: absolute
-    right: 11px
-    top: 11px
-    content: ''
-    width: 0px
-    height: 0px
-    border-style: solid
-    border-width: 0 4px 8px 4px
-    border-color: transparent transparent $darkGray transparent
-  &:hover
-    background-color: $orange
-    color: white
-    &:after
-      border-color: transparent transparent white transparent
-  .tooltip
-    position: absolute
-    left: 50%
-    top: -50px
+.sliding-menu-button
+  +button(flat, white)
+  border: solid 1px lighten($lightGray,15%)
+  padding: 2px 10px
+  margin-right: 8px
+  display: inline-block
+  cursor: pointer
+  position: relative
+  outline: none
+  line-height: 2em
+
+.sliding-menu-fade-screen
+  +position(fixed, 0px 0px 0px 0px)
+  +transition
+  background: black
+  opacity: 0
+  visibility: hidden
+  z-index: 4
+  &.is-visible
+    opacity: .4
+    visibility: visible
+
+//Animation
++keyframes(bounceInDown)
+  0%, 60%, 75%, 90%, 100%
+    +transition-timing-function(cubic-bezier(0.215, 0.610, 0.355, 1.000))
+  0%
+    opacity: 0
+    +transform(translate3d(0, -3000px, 0))
+  60%
+    opacity: 1
+    +transform(translate3d(0, 25px, 0))
+  75%
+    +transform(translate3d(0, -10px, 0))
+  90%
+    +transform(translate3d(0, 5px, 0))
+  100%
+    +transform(none)
+
+//Animation
++keyframes(top)
+  0%, 100%
+    +transition-timing-function(ease-in)
+  0%
+    opacity: 0
+    +transform(translate3d(0, -20px, 0))
+  100%
+    opacity: 1
+    +transform(none)
+
+
+//responsive stuff
++media($medium-screen-down)
+  .logo-name
+    display: none
+  .item-thumbnail
+    display: none
+  .navigation
+    display: none
+  .search-infos
+    display: none !important
+
++media($medium-screen-up)
+  .sliding-menu-button
     display: none
 
-.dropdown-menu
-  position: absolute
-  float: left
-  top: 100%
-  left: 0
-  margin-left: 120px
-  z-index: 1000
-  display: none
-  min-width: 160px
-  padding: 0
-  list-style: none
-  font-size: 14px
-  text-align: left
-  background-color: white
-  border: 1px solid rgba(black, 0.2)
-  border-radius: 4px
-  box-shadow: 0 6px 12px rgba(black, .2)
-  > li
-    padding: 2px 5px
-    a
-      color: $darkGray
-    em
-      font-weight: bold
-      font-style: normal
-    &.active
-      background: $orange
-      a
-        color: white
+
 

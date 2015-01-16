@@ -1,6 +1,16 @@
-/ %button.btn-refresh
-/   %i.icon-repeat
-%h1 {{ pageTitle() }}
+%a.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'}
+  %i.icon-bars
+
+%span{'ng-show' => 'state'}
+  %h1 {{ pageTitle() }}
+  %span in
+%span{'ng-show' => '!state'} Search
+.type-dropdown{"dropdown-select"=>"ddSelectType", "dropdown-model"=>"ddTypeSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectType(selected)"}
+%span by
+.type-dropdown{"dropdown-select"=>"ddSelectSort", "dropdown-model"=>"ddSortSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "sortBy(selected.value)"}
+%span for
+.type-dropdown{"dropdown-select"=>"ddSelectDate", "dropdown-model"=>"ddDateSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectDate(selected.value)"}
+
 %ul.list-inline.search-infos{'ng-show' => 'results', "defer-share-dropdown"=>true}
   %li
     %span{'ng-show' => 'settings.page > 0'} Page {{ settings.page + 1 }} of
@@ -11,17 +21,5 @@
       %i.icon-share
     %a.dropwdown-share{'ng-href' => '{{ getURL() }}', "dropdown-menu"=>"ddMenuShare", "dropdown-onchange"=>"shareItem(selected)"}
       %i.icon-share
-.date-range-filter
-  %ul.list-inline
-    %li
-      %input#range-1.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"last24h"}
-      %label{for:"range-1"} Last 24h
-    %li
-      %input#range-2.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"pastWeek"}
-      %label{for:"range-2"} Past week
-    %li{'ng-show' => 'state !== "hot"'}
-      %input#range-3.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"pastMonth"}
-      %label{for:"range-3"} Past month
-    %li{'ng-show' => 'state !== "hot"'}
-      %input#range-4.radio{"ng-model"=>"settings.dateRange", name:"date-range", type:"radio", value:"all"}
-      %label{for:"range-4"} Forever
+
+%div{'ng-include' => '"_daterange-picker.html"', 'ng-if' => 'settings.dateRange === "custom" && (!settings.dateStart || !settings.dateEnd)'}

@@ -16,6 +16,7 @@ Hnsearch::Application.routes.draw do
 
   get 'rss', controller: 'home', action: 'front_page'
   get 'latest', controller: 'home', action: 'latest'
+  get 'opensearch' => 'pages#opensearch'
   get 'userfeed/:username', controller: 'home', action: 'userfeed'
   get 'popular', controller: 'home', action: 'popular'
 

@@ -1,0 +1,200 @@
+/****** dropdown-select *******/
+
+.wrap-dd-select
+  display: inline-block
+  position: relative
+  font-size: 13px
+  line-height: 32px
+  text-align: left
+  padding: 0 20px 0 8px
+  margin: 0 8px 0 2px
+  border: solid 1px lighten($lightGray, 15%)
+  border-radius: 3px
+  cursor: pointer
+  outline: none
+  color: $darkGray
+  background-color: white
+  @include user-select(none)
+  &:after
+    content: ""
+    +size(0)
+    +position(absolute, 48% 6px null null)
+    +triangle(10px, $lightGray, down)
+  &:hover
+    box-shadow: inset 0 -2px 0 rgba(black,.05), 0 0 5px rgba(black,.06)
+    &:after
+      border-color: $lightGray transparent
+  .dropdown
+    @include position(absolute, 30px -10px null null)
+    z-index: 10
+    width: 150px
+    background: white
+    padding: 0
+    border-radius: 5px
+    border: 1px solid $lightGray
+    box-shadow: 0 0 5px rgba(black,.1)
+    font-weight: normal
+    list-style: none
+    opacity: 0
+    pointer-events: none
+    @include transition(all .1s ease-in)
+    li
+      &.divider
+        padding: 2px 0
+        background: #e6e8ea
+      a
+        display: block
+        padding: 4px 12px
+        text-decoration: none
+        color: $lightGray
+        border-bottom: 1px solid #e6e8ea
+        @include transition(all 0.3s ease-out)
+      i
+        float: right
+        color: inherit
+      &:first-of-type a
+        border-radius: 5px 5px 0 0
+      &:last-of-type a
+        border-radius: 0 0 5px 5px
+        border: none
+      &:hover a
+        background: transparent
+        color: $darkGray
+    &:after
+      content: ""
+      width: 0
+      height: 0
+      position: absolute
+      bottom: 100%
+      right: 15px
+      border-width: 0 6px 6px 6px
+      border-style: solid
+      border-color: #fff transparent
+    &:before
+      content: ""
+      width: 0
+      height: 0
+      position: absolute
+      bottom: 100%
+      right: 13px
+      border-width: 0 8px 8px 8px
+      border-style: solid
+      border-color: $lightGray transparent
+  &.active .dropdown
+    opacity: 1
+    pointer-events: auto
+
+
+/****** dropdown-menu *******/
+.wrap-dd-menu
+  position: relative
+  line-height: 1.8em
+
+.wrap-dd-menu .dropdown
+  width: 170px
+  position: absolute
+  z-index: 1
+  top: 30px
+  right: -45px
+  background: white
+  padding: 0
+  border-radius: 7px
+  border: 1px solid $lightGray
+  box-shadow: 0 0 5px rgba(black,.1)
+  font-weight: normal
+  transition: all 0.2s ease-in
+  list-style: none
+  opacity: 0
+  pointer-events: none
+
+.wrap-dd-menu .dropdown li.divider
+  padding: 2px 0
+  background: #e6e8ea
+
+.wrap-dd-menu .dropdown li
+  display: block
+  width: 100%
+
+.wrap-dd-menu .dropdown li a
+  display: block
+  width: 100%
+  padding: 8px
+  text-decoration: none
+  cursor: pointer
+  color: $lightGray !important
+  border-bottom: 1px solid #e6e8ea
+  @include transition(all 0.3s ease-out)
+
+.wrap-dd-menu .dropdown li i
+  float: right
+  color: inherit
+  width: 20px
+  text-align: center
+
+.wrap-dd-menu .dropdown li:first-of-type a
+  border-radius: 7px 7px 0 0
+
+.wrap-dd-menu .dropdown li:last-of-type a
+  border-radius: 0 0 7px 7px
+  border: none
+
+/* Hover state */
+.wrap-dd-menu .dropdown li:hover a
+  color: $orange !important
+
+.wrap-dd-menu .dropdown:after
+  content: ""
+  width: 0
+  height: 0
+  position: absolute
+  bottom: 100%
+  right: 47px
+  border-width: 0 6px 6px 6px
+  border-style: solid
+  border-color: #fff transparent
+
+.wrap-dd-menu .dropdown:before
+  content: ""
+  width: 0
+  height: 0
+  position: absolute
+  bottom: 100%
+  right: 45px
+  border-width: 0 8px 8px 8px
+  border-style: solid
+  border-color: $lightGray transparent
+
+.wrap-dd-menu .dropdown.active
+  opacity: 1
+  pointer-events: auto
+
+
+/****** autocomplete-select *******/
+.dropdown-menu
+  position: absolute
+  float: left
+  top: 100%
+  left: 0
+  margin-left: 120px
+  z-index: 1000
+  display: none
+  min-width: 160px
+  padding: 0
+  list-style: none
+  font-size: 14px
+  text-align: left
+  background-color: white
+  border: 1px solid rgba(black, 0.2)
+  border-radius: 4px
+  box-shadow: 0 6px 12px rgba(black, .2)
+  > li
+    padding: 2px 5px
+    a
+      color: $darkGray
+    em
+      font-weight: bold
+      font-style: normal
+    &.active
+      background: $orange
+      a
+        color: white

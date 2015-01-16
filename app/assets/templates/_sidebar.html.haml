@@ -33,7 +33,5 @@
       %a{href:"/starred", 'active-link' => true, 'ng-click' => 'gotoMenu($event, "/starred")'}
         %i.icon-star
         Starred
-    %li.settings{'ng-show' => 'results || isSettings'}
-      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true}
-        %i.icon-settings
-        Settings
+
+.sliding-menu-fade-screen{'ng-click'=>'toggleNav()'}

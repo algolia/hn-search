@@ -26,6 +26,8 @@
 //= require bindonce.min
 //= require jquery.friendly_id
 //= require angular-google-analytics.min
+//= require ssm.js
+//= require date-range-picker
 
 //= require_tree ../templates
 
