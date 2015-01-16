@@ -28,7 +28,7 @@
             %li{'bo-show' => 'hit.url'}
               %a.hit-link{"bo-href"=>"hit.url", 'bo-html' => 'hit._highlightResult.url.value | domain'}
         .text-container{"bo-html"=>"hit._highlightResult.comment_text.value|cleanup", 'bo-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
-        .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && hit._tags[0] === "story"'}
+        .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && (hit._tags[0] === "story" || hit._tags[0] === "job")'}
       .item-actions{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}
