@@ -44,6 +44,15 @@ html, body
     width: calc(90% - 230px)
     +media($medium-screen-down)
       width: calc(100% - 80px)
+  .nav-link-settings
+    position: absolute
+    top: 35px
+    right: 20px
+    .small-header &
+      top: 17px
+    a:link, a:visited
+      font-size: 20px
+      color: $lightGray
 
 .sidebar
   width: $sidebarWidth
