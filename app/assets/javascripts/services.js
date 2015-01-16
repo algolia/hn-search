@@ -60,7 +60,10 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
     };
 
     settingsService.reload = function() {
-        settings = _loadSettings();
+        var s = _loadSettings();
+        for (var v in s) {
+            settings[v] = s[v];
+        }
         return settings;
     }
 
