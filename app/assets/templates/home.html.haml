@@ -56,6 +56,7 @@
           %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
+    .item-clearfix
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange == "all" '}
     %p You don't have any starred items.
   .no-results.text-center{'ng-show' => 'results.hits.length == 0 && state == "starred" && settings.dateRange != "all"'}

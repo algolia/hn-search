@@ -1,7 +1,7 @@
 %section.edit-settings
   %h2 Display options
   %fieldset
-    .form-group
+    .form-group{'ng-if' => 'settings.style === "experimental"'}
       %label.label-control{for:'showThumbnails'} Show thumbnails
       .form-control
         %input#showThumbnails.form-control{type:'checkbox', 'ng-model' => 'settings.showThumbnails'}

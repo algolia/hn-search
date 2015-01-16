@@ -8,8 +8,8 @@
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}
     %link{:href => '/opensearch.xml', :rel => 'search', :title => 'HN Search', :type => 'application/opensearchdescription+xml'}
     = stylesheet_link_tag "application", :media => "all"
-    %link{href: stylesheet_path('themes/default.css'), media: 'all', 'ng-if' => 'settings.style === "default"', rel: 'stylesheet'}
-    %link{href: stylesheet_path('themes/experimental.css'), media: 'all', 'ng-if' => 'settings.style === "experimental"', rel: 'stylesheet'}
+    = stylesheet_link_tag "themes/default", :media => "all", 'ng-if' => 'settings.style !== "experimental"'
+    = stylesheet_link_tag "themes/experimental", :media => "all", 'ng-if' => 'settings.style === "experimental"'
     = javascript_include_tag "application"
     / = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})

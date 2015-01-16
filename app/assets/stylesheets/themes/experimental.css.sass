@@ -3,6 +3,15 @@
 @import "../base/grid-settings"
 @import "../base/variables"
 
+//Typography
+h1, h2, h3, h4, h5
+  font-weight: 200
+
+html, body
+  height: 100%
+  color: $lightGray
+  font-family: $fontBase
+
 //LAYOUT
 .container
   +media($large-screen-up)
@@ -67,7 +76,7 @@
   position: relative
   width: 100%
   margin-top: 100px
-  padding: 78px 0 50px 200px
+  padding: 78px 0 0 200px
   +media($medium-screen-down)
     padding: 78px 0 50px
   header
