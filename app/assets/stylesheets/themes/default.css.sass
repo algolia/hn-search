@@ -4,7 +4,7 @@
 @import "../base/variables"
 
 $titleHeight: 50px
-$headerHeight: 80px
+$headerHeight: 60px
 
 //Typography
 h1, h2, h3, h4, h5
@@ -35,10 +35,6 @@ html, body
     width: 80%
   +media($large-screen-down)
     width: 100%
-  .small-header &
-    height: $headerSmallHeight
-    padding: 5px
-    +transition(all 0.5s ease)
   .logo-wrapper
     float: left
     width: 230px
@@ -46,9 +42,15 @@ html, body
       width: 70px
     .logo-name
       color: white
+      padding-top: 2px
+    .logo
+      img
+        width: 50px
+        height: 50px
   .search-wrapper
     float: left
     width: calc(90% - 230px)
+    margin-top: 3px
     +media($medium-screen-down)
       width: calc(100% - 80px)
     input
@@ -58,7 +60,7 @@ html, body
     color: white
   .nav-link-settings
     position: absolute
-    top: 20px
+    top: 15px
     right: 20px
     a:link, a:visited
       font-size: 20px
@@ -68,6 +70,7 @@ html, body
   display: none
 
 .main
+  font-size: 13px
   position: relative
   padding: $headerHeight 0 0 0
   background: #f6f6ef
@@ -136,7 +139,12 @@ html, body
         left: 0
     .item-clearfix
       @extend %clearfix
+    .no-results
+      width: auto
 
 footer
   background: white
-  padding: 20px 0 20px 0
+  padding: 10px 0 10px 0
+  &, a
+    font-size: 13px
+    color: black
