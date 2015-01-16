@@ -254,6 +254,7 @@ body
 //ITEMS
 .item-main
   background-color: white
+  display: table
   h2
     float: left
     margin-top: 5px
@@ -268,9 +269,6 @@ body
     em
       font-style: normal
       font-weight: bold
-  .date, .comments
-    font-size: 12px
-    color: $lightGray
   .item-comments
     font-size: 12px
   .starred
@@ -278,6 +276,13 @@ body
       color: $orange
   [class^="icon-"], [class*=" icon-"]
     color: $lightGray
+.date, .comments
+  font-size: 12px
+  color: $lightGray
+a.date
+  color: $lightGray
+  &:hover
+    border-bottom: dotted 1px #ccc
 
 .no-results
   width: $itemWidth / 2
@@ -290,7 +295,10 @@ body
       line-height: 2em
 
 .item-content-wrapper
-  width: calc(100% - 120px)
+  width: 100%
+  display: table-cell
+  padding: 10px 120px 10px 0
+  vertical-align: middle
 .item-thumbnail
   float: left
   width: 55px

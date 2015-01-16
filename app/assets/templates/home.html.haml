@@ -27,6 +27,8 @@
                 %span.comments {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span>
             %li{'bo-show' => 'hit.url'}
               %a.hit-link{"bo-href"=>"hit.url", 'bo-html' => 'hit._highlightResult.url.value | domain'}
+        .text-container{"bo-html"=>"hit._highlightResult.comment_text.value|cleanup", 'bo-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
+        .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && hit._tags[0] === "story"'}
       .item-actions{'bo-show' => 'hit._tags[0] === "story" || hit._tags[0] === "poll" || hit._tags[0] === "job"'}
         %ul.list-inline
           %li.action-toggle-comments{'bo-show' => 'state != "jobs"'}
@@ -44,8 +46,6 @@
           %li.action-toggle-star{'bo-show' => 'state != "jobs"'}
             %a{href: '#', 'ng-click' => 'toggleStar($event, hit.objectID)', 'ng-class' => '{ "starred": isStarred(hit.objectID) }'}
               %i.icon-star
-      .text-container{"bo-html"=>"hit._highlightResult.comment_text.value|cleanup", 'bo-show' => 'hit.comment_text && hit._tags[0] === "comment"'}
-      .text-container{"bo-html"=>"hit._highlightResult.story_text.value|cleanup", 'bo-show' => 'hit.story_text && hit._tags[0] === "story"'}
     %ul.list-item-comments{"ng-if"=>"story[hit.objectID]"}
       %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children", "ng-if"=>"comment.author"}
         %span.author
