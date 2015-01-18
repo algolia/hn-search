@@ -29,9 +29,10 @@
           %option{value: 'pastMonth'} Past Month
           %option{value: 'all'} Forever
 
-  %h2 Your options
-  %fieldset
-    .form-group
-      %label.label-control{for: 'login'} Your HN login
-      .form-control
-        %input#login.form-control{type: 'text','ng-model' => 'settings.login'}
+  %div{'ng-if' => 'settings.style === "experimental"'}
+    %h2 Your options
+    %fieldset
+      .form-group
+        %label.label-control{for: 'login'} Your HN login
+        .form-control
+          %input#login.form-control{type: 'text','ng-model' => 'settings.login'}
