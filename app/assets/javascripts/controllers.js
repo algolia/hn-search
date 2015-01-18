@@ -749,7 +749,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         // Get positions.
         var scrollTop = $(this).scrollTop();
         var headerTop = $header.data('stickyOriginalTop');
-        var bodyBottom = $header.next().offset().top - $header.find('.item-main').outerHeight() - $pageHeader.outerHeight() - $mainHeader.outerHeight();
+        var bodyBottom = $header.offset().top + $header.outerHeight() - $header.find('.item-main').outerHeight() - $pageHeader.outerHeight() - $mainHeader.outerHeight();
 
         // Stick/unstick header.
         if (scrollTop > headerTop && scrollTop < bodyBottom && !$header.data('stickyStarted')) {
