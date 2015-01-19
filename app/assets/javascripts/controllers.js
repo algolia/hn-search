@@ -500,6 +500,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.$watch(function () { return $location.search(); }, function() {
     $scope.settings = settings.reload();
     $scope.settings.page = 0;
+    $scope.query = search.query = $location.search().query;
   });
 
   if ($location.search().experimental) {
