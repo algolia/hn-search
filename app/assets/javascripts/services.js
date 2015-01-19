@@ -15,7 +15,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         var queryParameters = $location.search();
         var defaultDateRange, defaultSort;
         if (queryParameters.q) {
-            $location.search('query', queryParameters.q).search('q', null);
+            $location.search('query', queryParameters.q).search('q', null).replace();
             defaultDateRange = 'all';
             defaultSort = 'byPopularity';
         } else {
@@ -113,6 +113,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
     pastWeek = pastWeek.setDate(pastWeek.getDate() - 7) / 1000;
     pastMonth = pastMonth.setDate(pastMonth.getDate() - 31) / 1000;
 
+    var first = true;
     searchService.applySettings = function(settings, page) {
         this.params.tagFilters = [];
         this.params.numericFilters = [];
@@ -181,6 +182,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
         // prefix
         this.params.queryType = settings.prefix ? 'prefixLast' : 'prefixNone';
+
+        if (first) {
+            $location.replace();
+            first = false;
+        }
 
         return this.params;
     };

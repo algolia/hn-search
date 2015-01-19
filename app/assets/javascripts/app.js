@@ -123,7 +123,7 @@ var app = angular.module('HNSearch', [
       },
       onEnter: ['$location', function($location) {
         if (backwardCompatParams) {
-          $location.path('/').search(backwardCompatParams);
+          $location.path('/').search(backwardCompatParams).replace();
           backwardCompatParams = null;
         }
       }]
