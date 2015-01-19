@@ -619,7 +619,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     },
     template: '<div class="item-input-wrapper">' +
                 '<i class="icon-search"></i>' +
-                '<input type="search" placeholder="{{ $parent.placeholder }}" ng-model="$parent.query" ng-model-options="{debounce: 100}" ng-blur="blurred()" ng-keyup="keyup($event)" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus>' +
+                '<input type="search" placeholder="{{ $parent.placeholder }}" ng-model="$parent.query" ng-model-options="{debounce: 100}" ng-blur="blurred()" ng-keyup="keyup($event)" autocomplete="off" autocapitalize="off" spellcheck="false" autocorrect="off" autofocus>' +
               '</div>'
   };
 }])
