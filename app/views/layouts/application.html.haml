@@ -2,7 +2,7 @@
 %html{'ng-app' => 'HNSearch'}
   %head{'ng-controller' => 'HeadCtrl'}
     %meta{:content => "width=device-width, initial-scale=0.6, maximum-scale=0.6, user-scalable=0, minimal-ui", :name => "viewport"}
-    %title HN Search powered by Algolia
+    %title= content_for(:title) ? yield(:title) : 'HN Search powered by Algolia'
     %meta{:content => "Hacker News Search, millions articles and comments at your fingertips.", :name => "description"}
     %base{:href=> root_url}
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}

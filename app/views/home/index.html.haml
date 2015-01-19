@@ -1,22 +1,25 @@
-= content_for :head do
-  - url = request.url
-  - domain = request.domain
-  - title = description = twitter_url = facebook_url = ''
-  - if request.path.start_with?('/story/') && (id = request.path.split('/')[2].to_i) > 0
-    - item = Item.find(id)
-    - if item.text.blank?
-      - title = 'HN Search powered by Algolia'
-      - description = item.title
-    - else
-      - title = item.title
-      - description = item.text
-    - facebook_url = "http://drcs9k8uelb9s.cloudfront.net/#{item.id}-600x315.png"
-    - twitter_url = "http://drcs9k8uelb9s.cloudfront.net/#{item.id}-240x180.png"
-  - else
+- url = request.url
+- domain = request.domain
+- site_title = title = description = twitter_url = facebook_url = ''
+- if request.path.start_with?('/story/') && (id = request.path.split('/')[2].to_i) > 0
+  - item = Item.find(id)
+  - site_title = "#{item.title} - HN Search powered by Algolia"
+  - if item.text.blank?
     - title = 'HN Search powered by Algolia'
-    - description = 'Hacker News Search, millions articles and comments at your fingertips.'
-    - twitter_url = facebook_url = asset_url('yc-logo.png')
+    - description = item.title
+  - else
+    - title = item.title
+    - description = item.text
+  - facebook_url = "http://drcs9k8uelb9s.cloudfront.net/#{item.id}-600x315.png"
+  - twitter_url = "http://drcs9k8uelb9s.cloudfront.net/#{item.id}-240x180.png"
+- else
+  - site_title = title = 'HN Search powered by Algolia'
+  - description = 'Hacker News Search, millions articles and comments at your fingertips.'
+  - twitter_url = facebook_url = asset_url('yc-logo.png')
 
+= content_for :title, site_title
+
+= content_for :head do
   %meta{name: "twitter:card", content: "summary"}
   %meta{name: "twitter:site", content: "@algolia"}
   %meta{name: "twitter:title", content: title}
