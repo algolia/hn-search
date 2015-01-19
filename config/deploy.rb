@@ -22,7 +22,7 @@ set :local_repository, "."
 set :repository, "git@github.com:algolia/hn-search.git"
 set :scm, :git
 set :deploy_via, :remote_cache
-set :branch, "angular"
+set :branch, "master"
 set :git_shallow_clone, 1
 
 # keep 5 last releases
