@@ -11,11 +11,26 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require bootstrap
-//= require algolia/algoliasearch.min
-//= require jquery.timeago
-//= require hogan
-//= require jquery.cookie
+//= require moment
+//= require angular
+//= require angular-route
+//= require angular-sanitize
+//= require angular-rails-templates
+//= require angular-ui-router.min
+//= require ngStorage.min
+//= require algoliasearch.angular
+//= require nprogress
 //= require bootstrap-typeahead
 //= require tagautocomplete
+//= require angular-dropdown
+//= require bindonce.min
+//= require jquery.friendly_id
+//= require angular-google-analytics.min
+//= require ssm.js
+//= require date-range-picker
+
+//= require_tree ../templates
+
+//= require app
+//= require controllers
+//= require services

@@ -1,10 +1,46 @@
 HN Search powered by Algolia
 ==================
 
-This is the Rails 4 application providing [HN Search](http://hn.algolia.com). It's based on [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl thumbnails.
+This is the Rails 4 application providing [HN Search](http://hn.algolia.com). It's mainly based on [angular.js](https://github.com/angular/angular.js), [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl+render thumbnails.
 
-Configuration
+Development/Contributions
+-------------
+
+We *love* pull-requests :)
+
+### Setup
+
+```sh
+# clone the repository
+git clone https://github.com/algolia/hn-search
+cd hn-search
+
+# install dependencies
+bundle install
+
+# setup credentials
+cp config/database.example.yml config/database.yml # feel free to edit, default configuration is OK for search-only
+cp config/application.example.yml config/application.yml # feel free to edit, default configuration is OK for search-only
+
+# setup your (sqlite3) database
+rake db:migrate
+
+# start contributing enjoying Guard (watchers, livereload, notifications, ...)
+guard
+
+# done!
+open http://localhost:3000
+```
+
+### Code
+
+If you want to contribute to the UI, the only directory you need to look at is `app/assets`. This directory contains all the JS, HTML & CSS code.
+
+
+Indexing Configuration
 --------------
+
+The indexing is configured using the following `algoliasearch` block:
 
 ```ruby
 class Item < ActiveRecord::Base
@@ -64,18 +100,8 @@ end
 
 Credits
 --------
-    
-* [HackerNews](https://news.ycombinator.com) for the real-time export API
-* [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to back the thumbnails' crawl
+* [HackerNews](https://news.ycombinator.com)
+* [Firebase](https://www.firebase.com) for the real-time crawling API
+* [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to back the thumbnails' crawl+rendering
 
-Contribution
--------------
 
- * ```git clone https://github.com/algolia/hn-search```
- * `bundle`
- * `cp config/database.example.yml config/database.yml` (feel free to edit, default configuration is OK)
- * create your database: `bundle exec rake db:migrate`
- * `cp config/application.example.yml config/application.yml` (feel free to edit, default configuration is OK)
- * populate your DB using 2 fake items and 1 user: `bundle exec rake db:seed`
- * `bundle exec rails server`
- * open http://localhost:3000

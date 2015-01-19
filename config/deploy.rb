@@ -4,7 +4,7 @@ set :default_environment, {
   'GIT_SSH' => '/home/prod/ssh-hnsearch.sh'
 }
 
-default_run_options[:pty] = true 
+default_run_options[:pty] = true
 
 # servers
 server 'c3-use-1.algolia.io', :app, :web, :db, :cron, primary: true
@@ -22,7 +22,7 @@ set :local_repository, "."
 set :repository, "git@github.com:algolia/hn-search.git"
 set :scm, :git
 set :deploy_via, :remote_cache
-set :branch, "master"
+set :branch, "angular"
 set :git_shallow_clone, 1
 
 # keep 5 last releases
@@ -30,7 +30,7 @@ set :keep_releases, 5
 after "deploy:update", "deploy:cleanup"
 
 # configuration
-desc "Copy in server specific configuration files" 
+desc "Copy in server specific configuration files"
 task :copy_shared do
   run "cp #{deploy_to}/shared/config/database.yml #{release_path}/config/"
   run "cp #{deploy_to}/shared/config/application.yml #{release_path}/config/"

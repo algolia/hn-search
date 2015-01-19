@@ -1,0 +1,167 @@
+$color-calendar: $orange
+$color-calendar-day: white
+$color-calendar-outrange: #ccc
+$color-calendar-day-selected: $color-calendar
+$color-calendar-range: lighten($color-calendar,32%)
+
+#datepicker
+  +position(absolute, $titleHeight 0px null 0px)
+  z-index: 4
+  line-height: 2em
+  background-color: #eee
+  +animation-name(top)
+  +animation-duration(.4s)
+
+.daterangepicker
+  position: relative
+  width: 460px
+  margin: 10px
+  font-size: 14px
+  float: left
+  background-color: white
+  +media($medium-screen-down)
+    float: none
+    margin: 10px auto
+  table
+    width: 100%
+    border-collapse: separate
+    border-spacing: 2px 2px
+    margin: 0
+  thead
+    tr th
+      background-color: $lightGray
+      border: none
+      color: white
+      font-size: 12px
+      text-transform: uppercase
+    tr:first-child th
+      background-color: white
+      font-weight: 200
+      font-size: 1.4em
+      color: $color-calendar-day-selected
+  td, th
+    text-align: center
+    padding: 0
+    position: relative
+  tr
+    border-bottom: solid 1px white
+  td
+    color: $darkGray
+    height: 2.4em
+    padding: 0 8px
+    border: none
+    +transition-property(background)
+    +transition-duration(0.2s)
+    +transition-timing-function(ease-out)
+    &.day:after
+      content: ""
+      position: absolute
+      display: block
+      top: 0
+      width: 100%
+      z-index: 0
+      background-color: transparent
+      left: 0
+    &.day:hover
+      cursor: pointer
+    &.day.disabled
+      color: $color-calendar-outrange
+    &.old, &.new
+      color: $color-calendar-outrange
+    &.start-selected:not(.old):not(.new):not(.end-selected)
+      color: white
+      font-weight: 700
+      background-color: $color-calendar-day-selected
+    &.end-selected:not(.old):not(.new):not(.start-selected)
+      color: white
+      font-weight: 700
+      background-color: $color-calendar-day-selected
+    &.end-selected.start-selected
+      color: white
+      font-weight: 700
+      background-color: $color-calendar-day-selected
+    &.range
+      color: $darkGray
+      background-color: $color-calendar-range
+    &.today
+      background-color: white
+    span
+      display: block
+      width: 33.333%
+      height: 3em
+      line-height: 3em
+      font-weight: 400
+      float: left
+      text-transform: uppercase
+      cursor: pointer
+      &:hover
+        color: white
+        background-color: $color-calendar-day-selected
+      &.active
+        background-color: $color-calendar-day-selected
+        color: #fff
+      &.old
+        color: $color-calendar-outrange
+  th
+    &.next
+      text-align: right
+      padding: 0 10px 0 0
+    &.prev
+      text-align: left
+      padding: 0 0 0 10px
+    &.next, &.prev, &.month-switch
+      font-size: 1.3em
+      line-height: 2em
+      height: 2em
+      &:hover
+        color: $darkGray
+  thead tr:first-child th
+    cursor: pointer
+
+#datepicker-form
+  background: white
+  width: calc(100% - 490px)
+  height: 290px
+  float: right
+  margin: 10px 10px 10px 0
+  padding: 20px
+  h2 i
+    font-size: 14px
+    color: $lightGray
+  .form-date-group
+    width: 200px
+    margin: 0 auto
+  label
+    text-align: left
+  input
+    padding: 15px 8px
+    background: none
+    &:focus
+      box-shadow: none
+      outline: 0
+  button
+    background: white
+    color: $lightGray
+    border: solid 1px lighten($lightGray,10%)
+    &:hover
+      border: solid 1px $lightGray
+    &:focus
+      box-shadow: none
+      outline: 0
+  +media($medium-screen-down)
+    display: none
+
+#date-start.input-selected, #date-end.input-selected,
+  border: solid 2px $color-calendar-day-selected
+
+
+.input-complete
+  +animation(one 0.2s ease-in-out)
+
+@-webkit-keyframes one
+  0%
+    background-color: $color-calendar
+  100%
+    background-color: white
+
+

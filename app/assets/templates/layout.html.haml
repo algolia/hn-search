@@ -1,0 +1,51 @@
+.container
+  %header.page-header
+    .logo-wrapper
+      %a.logo{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'ng-click' => 'reset()'}
+        %img{src:"/assets/logo-hn-search.png"}
+        .logo-name
+          Search
+          %br
+          Hacker News
+    .search-wrapper{'ui-view' => 'col-2'}
+    .nav-link-settings
+      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'results'}
+        %i.icon-params
+      %a{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'isSettings'}
+        %i.icon-rewind
+  %section.main
+    %div{'ng-include' => '"_sidebar.html"'}
+    %header{'ui-view' => 'main-header'}
+    %section.main-content{'ui-view' => 'main-content'}
+    %footer
+      %ul.list-inline
+        %li
+          %a{href: '/about'} About
+        %li
+          •
+        %li
+          %a{href: '/settings'} Settings
+        %li
+          •
+        %li
+          %a{href: '/help'} Help
+        %li
+          •
+        %li
+          %a{href: '/api'} API
+        %li
+          •
+        %li
+          %a{href: 'https://news.ycombinator.com'} Hacker News
+        %li
+          •
+        %li
+          %a{href: 'https://github.com/algolia/hn-search'} Fork/Contribute
+        %li
+          •
+        %li
+          %a{href: 'http://status.algolia.com/hn'} Status
+        %li
+          •
+        %li
+          %a{href: '/cool_apps'} Cool apps

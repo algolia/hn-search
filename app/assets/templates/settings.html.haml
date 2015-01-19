@@ -1,0 +1,38 @@
+%section.edit-settings
+  %h2 Display options
+  %fieldset
+    .form-group{'ng-if' => 'settings.style === "experimental"'}
+      %label.label-control{for:'showThumbnails'} Show thumbnails
+      .form-control
+        %input#showThumbnails.form-control{type:'checkbox', 'ng-model' => 'settings.showThumbnails'}
+    .form-group
+      %label.label-control{for: 'style'} Style
+      .form-control
+        %select#style{'ng-model' => 'settings.style'}
+          %option{value:'default'} Default
+          %option{value:'experimental'} Experimental
+
+  %h2 Ranking options
+  %fieldset
+    .form-group
+      %label.label-control{for:'sortOrder'} Default sort order
+      .form-control
+        %select#sortOrder{'ng-model' => 'settings.defaultSort'}
+          %option{value: 'byDate'} Most Recent First
+          %option{value: 'byPopularity'} Most Popular First
+    .form-group
+      %label.label-control{for:'dateRange'} Default date range
+      .form-control
+        %select#dateRange{'ng-model' => 'settings.defaultDateRange'}
+          %option{value: 'last24h'} Last 24h
+          %option{value: 'pastWeek'} Past Week
+          %option{value: 'pastMonth'} Past Month
+          %option{value: 'all'} Forever
+
+  %div{'ng-if' => 'settings.style === "experimental"'}
+    %h2 Your options
+    %fieldset
+      .form-group
+        %label.label-control{for: 'login'} Your HN login
+        .form-control
+          %input#login.form-control{type: 'text','ng-model' => 'settings.login'}

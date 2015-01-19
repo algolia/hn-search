@@ -1,15 +1,20 @@
 require 'net/http'
 
 class HomeController < ApplicationController
+
+  caches_action :popular, expires_in: 1.hour
+
   def index
+    if Rails.env.production? && !request.ssl?
+      response.headers['Cache-Control'] = "public, max-age=604800"
+      params[:protocol] = 'https'
+      redirect_to root_url(params), status: :moved_permanently
+    end
   end
 
-  def legacy
-    render action: 'index'
-  end
-
-  def follow
-    @story = Item.where(item_type_cd: Item.story).where(deleted: false).find(params[:story_id])
+  def popular
+    body = RestClient.get("https://analytics.algolia.com/1/searches/Item_production/popular?startAt=#{DateTime.now.utc.to_i - 24*60*60}&size=10", { 'X-Algolia-API-Key' => ENV['ALGOLIASEARCH_API_KEY'], 'X-Algolia-Application-Id' => ENV['ALGOLIASEARCH_APPLICATION_ID'] })
+    render json: JSON.parse(body)['topSearches'], root: false
   end
 
   def front_page

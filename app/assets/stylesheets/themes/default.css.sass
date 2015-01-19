@@ -1,0 +1,160 @@
+@import "../bourbon/bourbon"
+@import "../neat/grid/media"
+@import "../base/grid-settings"
+@import "../base/variables"
+
+$titleHeight: 50px
+$headerHeight: 60px
+
+//Typography
+h1, h2, h3, h4, h5
+  font-weight: 200
+  font-family: Verdana, Geneva, sans-serif !important
+
+html, body
+  height: 100%
+  color: black
+  font-family: Verdana, Geneva, sans-serif !important
+
+//LAYOUT
+.container
+  +media($large-screen-up)
+    width: 80%
+    margin: 0 auto
+  +media($large-screen-down)
+    width: 100%
+    min-width: $appMinWidth
+
+.page-header
+  position: fixed
+  z-index: 15
+  height: $headerHeight
+  padding: 5px
+  background: $orange
+  +media($large-screen-up)
+    width: 80%
+  +media($large-screen-down)
+    width: 100%
+  .logo-wrapper
+    float: left
+    width: 230px
+    +media($medium-screen-down)
+      width: 70px
+    .logo-name
+      color: white
+      padding-top: 2px
+    .logo
+      img
+        width: 50px
+        height: 50px
+  .search-wrapper
+    float: left
+    width: calc(90% - 230px)
+    margin-top: 3px
+    +media($medium-screen-down)
+      width: calc(100% - 80px)
+    input
+      border-radius: 0
+      border-color: transparent
+  a, a:visited
+    color: white
+  .nav-link-settings
+    position: absolute
+    top: 15px
+    right: 20px
+    a:link, a:visited
+      font-size: 20px
+      color: white
+
+.sidebar
+  display: none
+.sliding-menu-button
+  display: none
+
+.main
+  font-size: 13px
+  position: relative
+  padding: $headerHeight 0 0 0
+  background: #f6f6ef
+  header
+    padding-left: 10px
+    font-size: 13px
+    position: fixed
+    line-height: $titleHeight
+    top: $headerHeight
+    +media($large-screen-up)
+      left: 10%
+      right: 10%
+    +media($large-screen-down)
+      width: 100%
+      left: 0
+    z-index: 5
+    height: $titleHeight
+    .date-range-filter
+      +position(absolute, 28px 15px null null)
+  .search-results
+    margin-top: $titleHeight
+    em
+      background: yellow !important
+      color: black !important
+    .item
+      position: relative
+      padding: 5px
+      .item-main
+        width: 100%
+        .item-title-and-infos
+          float: inherit
+          h2
+            font-size: 13px
+            a
+              color: black
+              text-decoration: underline
+          .item-infos
+            line-height: 14px
+            > li
+              margin-right: 0
+            a
+              line-height: 14px
+            i, span, a
+              font-size: 7pt
+              color: #828282
+          h2, .item-infos
+            float: inherit
+            display: block
+        .item-actions
+          display: none
+        .text-container
+          padding: 10px 0 0 10px
+          max-width: 800px
+          color: black
+    .item-fixed
+      .item-main
+        background: #f6f6ef
+        top: $headerHeight + $titleHeight
+        right: 10%
+        left: 10%
+    .item-absolute-bottom
+      .item-main
+        background: #f6f6ef
+        right: 0
+        left: 0
+    .item-clearfix
+      @extend %clearfix
+    .list-item-comments
+      padding-left: 10px
+      .item-comments
+        span, a
+          color: black
+    .no-results
+      width: auto
+
+.page
+  h3
+    color: black
+
+footer
+  background: white
+  padding: 10px 0 10px 0
+  &, a
+    font-size: 13px
+    color: black
