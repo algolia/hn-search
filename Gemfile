@@ -28,7 +28,7 @@ gem 'bluepill'
 gem 'groupdate', git: 'https://github.com/mieko/groupdate.git', branch: 'sqlite3'
 gem 'simple-rss'
 gem 'rest-client'
-gem 'angularjs-rails'
+gem 'angularjs-rails', '1.3.9'
 gem 'angular-rails-templates'
 gem 'actionpack-action_caching'
 
