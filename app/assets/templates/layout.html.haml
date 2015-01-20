@@ -11,8 +11,9 @@
     .nav-link-settings
       %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'results'}
         %i.icon-params
-      %a{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'isSettings'}
+      %a.back{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'isSettings'}
         %i.icon-rewind
+        Back
   %section.main
     %div{'ng-include' => '"_sidebar.html"'}
     %header{'ui-view' => 'main-header'}

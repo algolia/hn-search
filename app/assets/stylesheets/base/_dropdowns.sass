@@ -14,6 +14,7 @@
   outline: none
   color: $darkGray
   background-color: white
+  z-index: 3
   @include user-select(none)
   &:after
     content: ""
@@ -27,7 +28,6 @@
   .dropdown
     @include position(absolute, 30px -10px null null)
     z-index: 10
-    width: 150px
     background: white
     padding: 0
     border-radius: 5px
@@ -46,7 +46,7 @@
         display: block
         padding: 4px 12px
         text-decoration: none
-        color: $lightGray
+        color: $darkGray
         border-bottom: 1px solid #e6e8ea
         @include transition(all 0.3s ease-out)
       i
@@ -59,7 +59,7 @@
         border: none
       &:hover a
         background: transparent
-        color: $darkGray
+        color: $orange
     &:after
       content: ""
       width: 0

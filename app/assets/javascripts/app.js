@@ -141,6 +141,26 @@ var app = angular.module('HNSearch', [
 $(document).ready(function() {
   var doc = $(document);
   var body = $('body');
+
+  //responsive states
+  var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
+  ssm.addState({
+    id: 'desktop',
+    minWidth: mediumDevice,
+    onEnter: function(){
+      $('aside.sidebar, .sliding-menu-fade-screen').removeClass('is-visible');
+    }
+  });
+
+  ssm.addState({
+    id: 'mobile',
+    maxWidth: smallDevice,
+    onEnter: function(){
+      $('body').addClass('small-header');
+    }
+  });
+  ssm.ready();
+
   // sticky main
   doc.on("scroll", function(e) {
     if (body.attr('rel') === 'default') {
@@ -149,7 +169,7 @@ $(document).ready(function() {
     if (doc.scrollTop() > 100) {
       body.addClass('small-header');
       scrollTopBtn.addClass('in');
-    } else {
+    } else if(!ssm.isActive('mobile')){
       body.removeClass('small-header');
       scrollTopBtn.removeClass('in');
     }
@@ -165,15 +185,5 @@ $(document).ready(function() {
       doc.scrollTop(0);
   });
 
-  //responsive states
-  var smallDevice = 480, mediumDevice = 768, largeDevice = 1200;
-  ssm.addState({
-    id: 'desktop',
-    minWidth: mediumDevice,
-    onEnter: function(){
-      $('aside.sidebar, .sliding-menu-fade-screen').removeClass('is-visible');
-    }
-  });
-
-  ssm.ready();
+  
 });

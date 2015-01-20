@@ -19,13 +19,13 @@ html, body
     margin: 0 auto
   +media($large-screen-down)
     width: 100%
-    min-width: $appMinWidth
+  +media($small-screen-down)
+    width: 100%
 
 .page-header
   position: fixed
   z-index: 15
   height: $headerHeight
-  min-width: $appMinWidth
   +media($large-screen-up)
     width: $containerWidth
   +media($large-screen-down)
@@ -39,20 +39,21 @@ html, body
     width: 230px
     +media($medium-screen-down)
       width: 70px
+      .small-header &
+        width: 60px
   .search-wrapper
     float: left
     width: calc(90% - 230px)
     +media($medium-screen-down)
-      width: calc(100% - 80px)
+      width: calc(100% - 100px)
+    +media($small-screen-down)
+      width: calc(100% - 70px)
   .nav-link-settings
     position: absolute
     top: 35px
     right: 20px
     .small-header &
       top: 17px
-    a:link, a:visited
-      font-size: 20px
-      color: $lightGray
 
 .sidebar
   width: $sidebarWidth
@@ -104,7 +105,6 @@ html, body
       width: calc( 100% - #{$sidebarWidth})
     +media($medium-screen-down)
       width: 100%
-      min-width: $appMinWidth
       margin-left: 0
     .date-range-filter
       +position(absolute, 28px 15px null null)
@@ -128,5 +128,5 @@ html, body
   +media($large-screen-down)
     width: 100%
   .item-content-wrapper
-    padding: 10px 120px 10px 0
+    padding: 10px 100px 10px 0
 

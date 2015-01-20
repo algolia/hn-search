@@ -1,14 +1,13 @@
-%a.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'}
-  %i.icon-bars
+%a.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'} {{ pageTitle() }}
 
-%span{'ng-show' => 'state'}
+%span.state-title{'ng-show' => 'state'}
   %h1 {{ pageTitle() }}
-  %span in
-%span{'ng-show' => '!state'} Search
+  %span.filter-label in
+%span.filter-label{'ng-show' => '!state'} Search
 .type-dropdown{"dropdown-select"=>"ddSelectType", "dropdown-model"=>"ddTypeSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectType(selected)"}
-%span by
+%span.filter-label by
 .type-dropdown{"dropdown-select"=>"ddSelectSort", "dropdown-model"=>"ddSortSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "sortBy(selected.value)"}
-%span for
+%span.filter-label for
 .type-dropdown{"dropdown-select"=>"ddSelectDate", "dropdown-model"=>"ddDateSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectDate(selected.value)"}
 
 %ul.list-inline.search-infos{'ng-show' => 'results', "defer-share-dropdown"=>true}

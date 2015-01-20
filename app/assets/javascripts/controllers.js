@@ -389,6 +389,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     return pages;
   };
 
+  // menu
   $scope.gotoMenu = function($event, path) {
     $event.preventDefault();
     $scope.story = {};
@@ -511,11 +512,20 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   $scope.toggleNav = function(){
     //sliding menu
     $('.sidebar, .sliding-menu-fade-screen').toggleClass('is-visible');
+    $scope.closeCalendar();
+  }
+  // calendar
+  $('.daterangepicker-days').daterangepicker();
+
+  $scope.closeCalendar = function() {
+    var s = settings.get();
+    if( s.dateRange === 'custom' && s.dateStart === null && s.dateEnd === null ){
+      s.dateRange = 'all';
+      s.dateStart = s.dateEnd = null;
+    }
   }
 
 
-  // calendar
-  $('.daterangepicker-days').daterangepicker();
 }])
 
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {

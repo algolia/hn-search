@@ -6,6 +6,16 @@ body
   padding: 20px 5px 20px 20px
   border-bottom: solid 1px #eee
   background-color: white
+
+.nav-link-settings
+  font-size: 14px
+  a:link, a:visited
+    color: $lightGray
+    i
+      font-size: 20px
+      position: relative
+      top: 3px
+
 .logo
   color: $lightGray
   img
@@ -96,7 +106,7 @@ body
     font-size: 12px
     display: inline-block
     position: relative
-    +media($medium-screen-down)
+    +media($small-screen-down)
       display: none
     img
       width: 60px
@@ -150,6 +160,7 @@ body
   .search-infos
     +position(absolute, 0px 20px null null)
     font-size: 13px
+    z-index: 1
     .action-share
       margin-left: 10px
       a i
@@ -242,7 +253,7 @@ body
   display: table
   h2
     float: left
-    margin-top: 5px
+    margin-top: 0
     font-size: 16px
     font-weight: normal
     a
@@ -285,9 +296,9 @@ a.date
   vertical-align: middle
 .item-thumbnail
   float: left
-  width: 55px
-  padding: 3px
-  margin-right: 15px
+  +size(50px)
+  padding: 2px
+  margin: 0 15px 0 0
   border: solid 1px #eee
   border-radius: 3px
   a[href].item-thumbnail-link:hover &
@@ -295,6 +306,7 @@ a.date
     border-color: lighten($lightGray,10%)
 .item-title-and-infos
   float: left
+  padding-top: 5px
   width: calc(100% - 70px)
   @include media($medium-screen-down)
     width: 100%
@@ -314,11 +326,12 @@ a.date
   float: left
   clear: both
   li
-    margin-right: 12px
+    margin-right: 8px
   i
     position: relative
-    top: 2px
-    font-size: 14px
+    top: 1px
+    color: lighten($lightGray,20%) !important
+    font-size: 13px
   a:hover
     border-bottom: dotted 1px #ccc
 .item-avatar
@@ -339,13 +352,14 @@ a.date
   .comments-bubble
     display: block
     padding: 0 7px
-    background-color: $lightGray
-    border-radius: 2px
+    background-color: darken(lightGray,25%)
+    border-radius: 3px
     color: white
+    font-weight: bold
     +position(relative, -4px null null null)
     &:before
       content: ""
-      +triangle(18px, $lightGray, left)
+      +triangle(18px, darken(lightGray,25%), left)
       +size(0)
       +position(absolute, null 4px -50% null)
     &.no-comments
@@ -393,7 +407,7 @@ ul.list-item-comments
       color: #517B91
 
 .search-pagination
-  padding: 20px 0 20px 0
+  padding: 20px 0 0
   text-align: center
   background: transparent
   li
@@ -415,6 +429,7 @@ ul.list-item-comments
 
 //FOOTER
 footer
+  padding: 20px 0
   text-align: center
   a
     color: $lightGray
@@ -429,7 +444,14 @@ footer
   cursor: pointer
   position: relative
   outline: none
-  line-height: 2em
+  line-height: 28px
+  position: absolute
+  left: 10px
+  bottom: calc(50% - 17px)
+  z-index: 5
+  color: $darkGray
+  &:hover
+    color: $darkGray
 
 .sliding-menu-fade-screen
   +position(fixed, 0px 0px 0px 0px)
@@ -481,10 +503,52 @@ footer
     display: none
   .search-infos
     display: none !important
+  .main
+    header
+      padding: 0 10px 0 60px!important
++media($small-screen-down)
+  #datepicker
+    top: 45px !important
+  .item-actions
+    display: none
+  .item-main
+    padding: 0 !important
+  .item-content-wrapper
+    padding: 10px 20px !important
+  .item-input-wrapper
+    width: calc(100% - 40px) !important
+  .main
+    padding-top: 50px !important
+    header
+      height: $headerSmallHeight !important
+      padding: 0 10px!important
+      line-height: 45px
+      height: auto !important
+      text-align: right
+      h1
+        font-size: 16px
+      .filter-label
+        display: none
+  .sidebar
+    margin-top: -30px !important
+  .wrap-dd-select
+    font-size: 12px
+    max-width: 80px
+    margin-right: 0
+    .selected
+      line-height: 20px
+      vertical-align: middle
+      text-overflow: ellipsis
+      width: 100%
+      display: inline-block
+      white-space: nowrap
+      overflow: hidden
+
 
 +media($medium-screen-up)
   .sliding-menu-button
     display: none
 
-
-
++media($medium-screen-down)
+  .state-title
+    visibility: hidden

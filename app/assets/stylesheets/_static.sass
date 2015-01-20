@@ -71,15 +71,19 @@
 
 .edit-settings
   padding: 30px 50px
+  +media($small-screen-down)
+    padding: 0 10px
   h2
     color: $lightGray
     margin-bottom: 10px
   .form-group
+    +media($small-screen-down)
+      font-size: 13px
     margin-bottom: 1em
     @include outer-container
     &:last-child
       margin-bottom: 0
     .label-control
-      @include span-columns(5)
+      @include span-columns(6)
     .form-control
       @include span-columns(6)
