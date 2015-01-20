@@ -150,6 +150,7 @@ body
   .search-infos
     +position(absolute, 0px 20px null null)
     font-size: 13px
+    z-index: 1
     .action-share
       margin-left: 10px
       a i
@@ -429,7 +430,11 @@ footer
   cursor: pointer
   position: relative
   outline: none
-  line-height: 2em
+  line-height: 28px
+  position: absolute
+  left: 10px
+  bottom: calc(50% - 17px)
+  z-index: 5
 
 .sliding-menu-fade-screen
   +position(fixed, 0px 0px 0px 0px)
@@ -481,6 +486,9 @@ footer
     display: none
   .search-infos
     display: none !important
+  .main
+    header
+      padding: 0 10px 0 60px!important
 +media($small-screen-down)
   .item-actions
     display: none
@@ -493,9 +501,11 @@ footer
   .main
     padding-top: 50px !important
     header
+      height: $headerSmallHeight !important
       padding: 0 10px!important
       line-height: 45px
       height: auto !important
+      text-align: right
       h1
         font-size: 16px
       .filter-label
@@ -505,6 +515,7 @@ footer
   .wrap-dd-select
     font-size: 12px
     max-width: 80px
+    margin-right: 0
     .selected
       line-height: 20px
       vertical-align: middle

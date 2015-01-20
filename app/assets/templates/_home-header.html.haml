@@ -3,8 +3,8 @@
 
 %span{'ng-show' => 'state'}
   %h1 {{ pageTitle() }}
-%span.filter-label in
-%span{'ng-show' => '!state'} Search
+  %span.filter-label in
+%span.filter-label{'ng-show' => '!state'} Search
 .type-dropdown{"dropdown-select"=>"ddSelectType", "dropdown-model"=>"ddTypeSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "selectType(selected)"}
 %span.filter-label by
 .type-dropdown{"dropdown-select"=>"ddSelectSort", "dropdown-model"=>"ddSortSelected", "dropdown-item-label"=>"text", "dropdown-onchange" => "sortBy(selected.value)"}

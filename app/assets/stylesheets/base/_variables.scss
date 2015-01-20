@@ -76,7 +76,7 @@ $itemWidth: $containerWidth - $sidebarWidth;
 
 $fontBase: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 
-$lightGray: #B6B6B6;
+$lightGray: darken(#B6B6B6,10%);
 $darkGray: #5C5C5C;
 $orange: #FF742B;
 $blue: #2A9ED9;
