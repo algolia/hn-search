@@ -253,7 +253,7 @@ body
   display: table
   h2
     float: left
-    margin-top: 5px
+    margin-top: 0
     font-size: 16px
     font-weight: normal
     a
@@ -296,9 +296,9 @@ a.date
   vertical-align: middle
 .item-thumbnail
   float: left
-  width: 55px
-  padding: 3px
-  margin-right: 15px
+  +size(50px)
+  padding: 2px
+  margin: 0 15px 0 0
   border: solid 1px #eee
   border-radius: 3px
   a[href].item-thumbnail-link:hover &
@@ -306,6 +306,7 @@ a.date
     border-color: lighten($lightGray,10%)
 .item-title-and-infos
   float: left
+  padding-top: 5px
   width: calc(100% - 70px)
   @include media($medium-screen-down)
     width: 100%
@@ -406,7 +407,7 @@ ul.list-item-comments
       color: #517B91
 
 .search-pagination
-  padding: 20px 0 20px 0
+  padding: 20px 0 0
   text-align: center
   background: transparent
   li
@@ -428,6 +429,7 @@ ul.list-item-comments
 
 //FOOTER
 footer
+  padding-top: 20px
   text-align: center
   a
     color: $lightGray
