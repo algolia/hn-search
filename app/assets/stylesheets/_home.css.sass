@@ -6,6 +6,16 @@ body
   padding: 20px 5px 20px 20px
   border-bottom: solid 1px #eee
   background-color: white
+
+.nav-link-settings
+  font-size: 14px
+  a:link, a:visited
+    color: $lightGray
+    i
+      font-size: 20px
+      position: relative
+      top: 3px
+
 .logo
   color: $lightGray
   img
@@ -315,11 +325,12 @@ a.date
   float: left
   clear: both
   li
-    margin-right: 12px
+    margin-right: 8px
   i
     position: relative
-    top: 2px
-    font-size: 14px
+    top: 1px
+    color: lighten($lightGray,20%) !important
+    font-size: 13px
   a:hover
     border-bottom: dotted 1px #ccc
 .item-avatar
@@ -340,13 +351,14 @@ a.date
   .comments-bubble
     display: block
     padding: 0 7px
-    background-color: $lightGray
-    border-radius: 2px
+    background-color: darken(lightGray,25%)
+    border-radius: 3px
     color: white
+    font-weight: bold
     +position(relative, -4px null null null)
     &:before
       content: ""
-      +triangle(18px, $lightGray, left)
+      +triangle(18px, darken(lightGray,25%), left)
       +size(0)
       +position(absolute, null 4px -50% null)
     &.no-comments
