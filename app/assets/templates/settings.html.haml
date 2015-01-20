@@ -28,6 +28,10 @@
           %option{value: 'pastWeek'} Past Week
           %option{value: 'pastMonth'} Past Month
           %option{value: 'all'} Forever
+    .form-group
+      %label.label-control{for:'typoTolerance'} Typo-tolerance
+      .form-control
+        %input#typoTolerance.form-control{type:'checkbox', 'ng-model' => 'settings.typoTolerance'}
 
   %div{'ng-if' => 'settings.style === "experimental"'}
     %h2 Your options
