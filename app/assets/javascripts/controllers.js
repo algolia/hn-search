@@ -29,7 +29,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
     // authors:pg (ORed)
     var authors = [];
-    while (true) {
+    while (query) {
       var matches = query.match(/(author|by):([^ ]+)/);
       if (!matches) {
         break;
@@ -48,7 +48,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
 
     // points>42 (ANDed)
-    while (true) {
+    while (query) {
       var matches = query.match(/points(=|:|<|>|<=|>=)([0-9]+)/);
       if (!matches) {
         break;
@@ -60,7 +60,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
 
     // comments>42 (ANDed)
-    while (true) {
+    while (query) {
       var matches = query.match(/comments(=|:|<|>|<=|>=)([0-9]+)/);
       if (!matches) {
         break;
@@ -72,7 +72,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
 
     // date>1395440948 (ANDed)
-    while (true) {
+    while (query) {
       var matches = query.match(/date(=|:|<|>|<=|>=)([0-9]+)/);
       if (!matches) {
         break;
@@ -85,7 +85,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
     // story:ID (ORed)
     var stories = [];
-    while (true) {
+    while (query) {
       var matches = query.match('story:([0-9]+)');
       if (!matches) {
         break;
@@ -103,7 +103,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       params.tagFilters.push(tags);
     }
 
-    return { query: query, params: params };
+    return { query: (query || ''), params: params };
   };
 
   //Search scope
