@@ -23,7 +23,6 @@ html, body
     margin: 0 auto
   +media($large-screen-down)
     width: 100%
-    min-width: $appMinWidth
   +media($small-screen-down)
     min-width: 0px
 
@@ -121,6 +120,7 @@ html, body
     .item
       position: relative
       padding: 3px 15px 10px
+      overflow: hidden
       .item-main
         width: 100%
         .item-content-wrapper
