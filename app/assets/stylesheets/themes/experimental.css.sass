@@ -39,11 +39,15 @@ html, body
     width: 230px
     +media($medium-screen-down)
       width: 70px
+      .small-header &
+        width: 60px
   .search-wrapper
     float: left
     width: calc(90% - 230px)
     +media($medium-screen-down)
-      width: calc(100% - 80px)
+      width: calc(100% - 100px)
+    +media($small-screen-down)
+      width: calc(100% - 70px)
   .nav-link-settings
     position: absolute
     top: 35px
