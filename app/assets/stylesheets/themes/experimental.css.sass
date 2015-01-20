@@ -19,7 +19,6 @@ html, body
     margin: 0 auto
   +media($large-screen-down)
     width: 100%
-    //min-width: $appMinWidth
   +media($small-screen-down)
     width: 100%
 
@@ -27,7 +26,6 @@ html, body
   position: fixed
   z-index: 15
   height: $headerHeight
-  //min-width: $appMinWidth
   +media($large-screen-up)
     width: $containerWidth
   +media($large-screen-down)
@@ -106,7 +104,6 @@ html, body
       width: calc( 100% - #{$sidebarWidth})
     +media($medium-screen-down)
       width: 100%
-      //min-width: $appMinWidth
       margin-left: 0
     .date-range-filter
       +position(absolute, 28px 15px null null)

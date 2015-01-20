@@ -6,7 +6,7 @@ $color-calendar-range: lighten($color-calendar,32%)
 
 #datepicker
   +position(absolute, $titleHeight 0px null 0px)
-  z-index: 4
+  z-index: 2
   line-height: 2em
   background-color: #eee
   +animation-name(top)
@@ -14,7 +14,7 @@ $color-calendar-range: lighten($color-calendar,32%)
 
 .daterangepicker
   position: relative
-  width: 460px
+  max-width: 460px
   margin: 10px
   font-size: 14px
   float: left
