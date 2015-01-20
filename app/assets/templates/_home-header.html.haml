@@ -1,7 +1,6 @@
-%a.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'}
-  %i.icon-bars
+%a.sliding-menu-button{type:'button', 'ng-click'=>'toggleNav()'} {{ pageTitle() }}
 
-%span{'ng-show' => 'state'}
+%span.state-title{'ng-show' => 'state'}
   %h1 {{ pageTitle() }}
   %span.filter-label in
 %span.filter-label{'ng-show' => '!state'} Search

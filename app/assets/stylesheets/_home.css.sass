@@ -449,6 +449,9 @@ footer
   left: 10px
   bottom: calc(50% - 17px)
   z-index: 5
+  color: $darkGray
+  &:hover
+    color: $darkGray
 
 .sliding-menu-fade-screen
   +position(fixed, 0px 0px 0px 0px)
@@ -546,5 +549,6 @@ footer
   .sliding-menu-button
     display: none
 
-
-
++media($medium-screen-down)
+  .state-title
+    visibility: hidden
