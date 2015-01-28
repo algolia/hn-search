@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-var ALGOLIA_VERSION = '2.8.5';
+var ALGOLIA_VERSION = '2.9.0';
 
 /*
  * Copyright (c) 2013 Algolia
@@ -593,17 +593,15 @@ AlgoliaSearch.prototype = {
         opts.successiveRetryCount = 0;
         var impl = function() {
             if (opts.successiveRetryCount >= self.hosts.length) {
+                var error = { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' };
                 if (!self._isUndefined(callback) && callback) {
                     opts.successiveRetryCount = 0;
-                    callback(false, { message: 'Cannot connect the Algolia\'s Search API. Please send an email to support@algolia.com to report the issue.' });
+                    callback(false, error);
                 }
-                deferred && deferred.reject();
+                deferred && deferred.reject(error);
                 return;
             }
             opts.callback = function(retry, success, obj, body) {
-                if (!success && !self._isUndefined(body)) {
-                    window.console && console.log('Error: ' + body.message);
-                }
                 if (success && !self._isUndefined(opts.cache)) {
                     cache[cacheID] = body;
                 }
@@ -613,7 +611,7 @@ AlgoliaSearch.prototype = {
                     impl();
                 } else {
                     opts.successiveRetryCount = 0;
-                    deferred && deferred.resolve(body);
+                    deferred && (success ? deferred.resolve(body) : deferred.reject(body));
                     if (!self._isUndefined(callback) && callback) {
                         callback(success, body);
                     }
@@ -672,11 +670,19 @@ AlgoliaSearch.prototype = {
             method: opts.method,
             data: body,
             cache: false,
-            timeout: this.requestTimeoutInMs
+            timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1))
         }).then(function(response) {
             opts.callback(false, true, null, response.data);
-        }, function(err) {
-            opts.callback(true, false, null, { 'message': err.data } );
+        }, function(response) {
+            if (response.status === 0) {
+                // xhr.timeout is not handled by Angular.js right now
+                // let's retry
+                opts.callback(true, false, null, response.data);
+            } else if (response.status == 400 || response.status === 403 || response.status === 404) {
+                opts.callback(false, false, null, response.data);
+            } else {
+                opts.callback(true, false, null, response.data);
+            }
         });
     },
 
@@ -707,12 +713,14 @@ AlgoliaSearch.prototype = {
         }
         this.options.jQuery.$.ajax(url, {
             type: opts.method,
-            timeout: this.requestTimeoutInMs,
+            timeout: (this.requestTimeoutInMs * (opts.successiveRetryCount + 1)),
             dataType: 'json',
             data: body,
             error: function(xhr, textStatus, error) {
                 if (textStatus === 'timeout') {
                     opts.callback(true, false, null, { 'message': 'Timeout - Could not connect to endpoint ' + url } );
+                } else if (xhr.status === 400 || xhr.status === 403 || xhr.status === 404) {
+                    opts.callback(false, false, null, xhr.responseJSON );
                 } else {
                     opts.callback(true, false, null, { 'message': error } );
                 }
@@ -875,7 +883,6 @@ AlgoliaSearch.prototype = {
             ontimeout = null;
 
             if (!self._isUndefined(event) && event.target !== null) {
-                var retry = (event.target.status === 0 || event.target.status === 503);
                 var success = false;
                 var response = null;
 
@@ -883,12 +890,12 @@ AlgoliaSearch.prototype = {
                     // Handle CORS requests IE8/IE9
                     response = event.target.responseText;
                     success = (response && response.length > 0);
-                }
-                else {
+                } else {
                     response = event.target.response;
                     success = (event.target.status === 200 || event.target.status === 201);
                 }
 
+                var retry = !success && event.target.status !== 400 && event.target.status !== 403 && event.target.status !== 404;
                 opts.callback(retry, success, event.target, response ? JSON.parse(response) : null);
             } else {
                 opts.callback(false, true, event, JSON.parse(xmlHttp.responseText));
@@ -1544,14 +1551,15 @@ AlgoliaSearch.prototype.Index.prototype = {
    * Algolia Search Helper providing faceting and disjunctive faceting
    * @param {AlgoliaSearch} client an AlgoliaSearch client
    * @param {string} index the index name to query
-   * @param {hash} options an associative array defining the hitsPerPage, list of facets and list of disjunctive facets
+   * @param {hash} options an associative array defining the hitsPerPage, list of facets, the list of disjunctive facets and the default facet filters
    */
   window.AlgoliaSearchHelper = function(client, index, options) {
     /// Default options
     var defaults = {
       facets: [],            // list of facets to compute
       disjunctiveFacets: [], // list of disjunctive facets to compute
-      hitsPerPage: 20        // number of hits per page
+      hitsPerPage: 20,       // number of hits per page
+      defaultFacetFilters: [] // the default list of facetFilters
     };
 
     this.init(client, index, extend({}, defaults, options));
@@ -1571,6 +1579,7 @@ AlgoliaSearch.prototype.Index.prototype = {
       this.options = options;
       this.page = 0;
       this.refinements = {};
+      this.excludes = {};
       this.disjunctiveRefinements = {};
       this.extraQueries = [];
     },
@@ -1649,6 +1658,47 @@ AlgoliaSearch.prototype.Index.prototype = {
     },
 
     /**
+     * Ensure a facet exclude exists
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    addExclude: function(facet, value) {
+      var refinement = facet + ':-' + value;
+      this.excludes = this.excludes || {};
+      this.excludes[refinement] = true;
+    },
+
+    /**
+     * Ensure a facet exclude does not exist
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     */
+    removeExclude: function(facet, value) {
+      var refinement = facet + ':-' + value;
+      this.excludes = this.excludes || {};
+      this.excludes[refinement] = false;
+    },
+
+    /**
+     * Toggle refinement state of an exclude
+     * @param  {string} facet the facet to refine
+     * @param  {string} value the associated value
+     * @return {boolean} true if the facet has been found
+     */
+    toggleExclude: function(facet, value) {
+      for (var i = 0; i < this.options.facets.length; ++i) {
+        if (this.options.facets[i] == facet) {
+          var refinement = facet + ':-' + value;
+          this.excludes[refinement] = !this.excludes[refinement];
+          this.page = 0;
+          this._search();
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /**
      * Toggle refinement state of a facet
      * @param  {string} facet the facet to refine
      * @param  {string} value the associated value
@@ -1688,6 +1738,20 @@ AlgoliaSearch.prototype.Index.prototype = {
         return true;
       }
       if (this.disjunctiveRefinements[facet] && this.disjunctiveRefinements[facet][value]) {
+        return true;
+      }
+      return false;
+    },
+
+    /**
+     * Check the exclude state of a facet
+     * @param  {string}  facet the facet
+     * @param  {string}  value the associated value
+     * @return {boolean} true if refined
+     */
+    isExcluded: function(facet, value) {
+      var refinement = facet + ':-' + value;
+      if (this.excludes[refinement]) {
         return true;
       }
       return false;
@@ -1775,7 +1839,8 @@ AlgoliaSearch.prototype.Index.prototype = {
       this.client.addQueryInBatch(this.index, this.q, this._getHitsSearchParams());
       var disjunctiveFacets = [];
       var unusedDisjunctiveFacets = {};
-      for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
+      var i = 0;
+      for (i = 0; i < this.options.disjunctiveFacets.length; ++i) {
         var facet = this.options.disjunctiveFacets[i];
         if (this._hasDisjunctiveRefinements(facet)) {
           disjunctiveFacets.push(facet);
@@ -1783,10 +1848,10 @@ AlgoliaSearch.prototype.Index.prototype = {
           unusedDisjunctiveFacets[facet] = true;
         }
       }
-      for (var i = 0; i < disjunctiveFacets.length; ++i) {
+      for (i = 0; i < disjunctiveFacets.length; ++i) {
         this.client.addQueryInBatch(this.index, this.q, this._getDisjunctiveFacetSearchParams(disjunctiveFacets[i]));
       }
-      for (var i = 0; i < this.extraQueries.length; ++i) {
+      for (i = 0; i < this.extraQueries.length; ++i) {
         this.client.addQueryInBatch(this.extraQueries[i].index, this.extraQueries[i].query, this.extraQueries[i].params);
       }
       var self = this;
@@ -1798,6 +1863,7 @@ AlgoliaSearch.prototype.Index.prototype = {
         var aggregatedAnswer = content.results[0];
         aggregatedAnswer.disjunctiveFacets = aggregatedAnswer.disjunctiveFacets || {};
         aggregatedAnswer.facetStats = aggregatedAnswer.facetStats || {};
+        // create disjunctive facets from facets (disjunctive facets without refinements)
         for (var facet in unusedDisjunctiveFacets) {
           if (aggregatedAnswer.facets[facet] && !aggregatedAnswer.disjunctiveFacets[facet]) {
             aggregatedAnswer.disjunctiveFacets[facet] = aggregatedAnswer.facets[facet];
@@ -1808,26 +1874,43 @@ AlgoliaSearch.prototype.Index.prototype = {
             }
           }
         }
-        for (var i = 0; i < disjunctiveFacets.length; ++i) {
-          for (var facet in content.results[i + 1].facets) {
-            aggregatedAnswer.disjunctiveFacets[facet] = content.results[i + 1].facets[facet];
-            if (self.disjunctiveRefinements[facet]) {
-              for (var value in self.disjunctiveRefinements[facet]) {
-                if (!aggregatedAnswer.disjunctiveFacets[facet][value] && self.disjunctiveRefinements[facet][value]) {
-                  aggregatedAnswer.disjunctiveFacets[facet][value] = 0;
+        // aggregate the disjunctive facets
+        for (i = 0; i < disjunctiveFacets.length; ++i) {
+          for (var dfacet in content.results[i + 1].facets) {
+            aggregatedAnswer.disjunctiveFacets[dfacet] = content.results[i + 1].facets[dfacet];
+            if (self.disjunctiveRefinements[dfacet]) {
+              for (var value in self.disjunctiveRefinements[dfacet]) {
+                // add the disjunctive reginements if it is no more retrieved
+                if (!aggregatedAnswer.disjunctiveFacets[dfacet][value] && self.disjunctiveRefinements[dfacet][value]) {
+                  aggregatedAnswer.disjunctiveFacets[dfacet][value] = 0;
                 }
               }
             }
           }
+          // aggregate the disjunctive facets stats
           for (var stats in content.results[i + 1].facets_stats) {
             aggregatedAnswer.facetStats[stats] = content.results[i + 1].facets_stats[stats];
           }
         }
+        // add the excludes
+        for (var exclude in self.excludes) {
+          if (self.excludes[exclude]) {
+            var e = exclude.indexOf(':-');
+            var facet = exclude.slice(0, e);
+            var value = exclude.slice(e + 2);
+            aggregatedAnswer.facets[facet] = aggregatedAnswer.facets[facet] || {};
+            if (!aggregatedAnswer.facets[facet][value]) {
+              aggregatedAnswer.facets[facet][value] = 0;
+            }
+          }
+        }
+        // call the actual callback
         if (self.extraQueries.length === 0) {
           self.searchCallback(true, aggregatedAnswer);
         } else {
+          // append the extra queries
           var c = { results: [ aggregatedAnswer ] };
-          for (var i = 0; i < self.extraQueries.length; ++i) {
+          for (i = 0; i < self.extraQueries.length; ++i) {
             c.results.push(content.results[1 + disjunctiveFacets.length + i]);
           }
           self.searchCallback(true, c);
@@ -1841,10 +1924,11 @@ AlgoliaSearch.prototype.Index.prototype = {
      */
     _getHitsSearchParams: function() {
       var facets = [];
-      for (var i = 0; i < this.options.facets.length; ++i) {
+      var i = 0;
+      for (i = 0; i < this.options.facets.length; ++i) {
         facets.push(this.options.facets[i]);
       }
-      for (var i = 0; i < this.options.disjunctiveFacets.length; ++i) {
+      for (i = 0; i < this.options.disjunctiveFacets.length; ++i) {
         var facet = this.options.disjunctiveFacets[i];
         if (!this._hasDisjunctiveRefinements(facet)) {
           facets.push(facet);
@@ -1894,8 +1978,18 @@ AlgoliaSearch.prototype.Index.prototype = {
      */
     _getFacetFilters: function(facet) {
       var facetFilters = [];
+      if (this.options.defaultFacetFilters) {
+        for (var i = 0; i < this.options.defaultFacetFilters.length; ++i) {
+          facetFilters.push(this.options.defaultFacetFilters[i]);
+        }
+      }
       for (var refinement in this.refinements) {
         if (this.refinements[refinement]) {
+          facetFilters.push(refinement);
+        }
+      }
+      for (var refinement in this.excludes) {
+        if (this.excludes[refinement]) {
           facetFilters.push(refinement);
         }
       }
@@ -2484,7 +2578,7 @@ angular.module('algoliasearch', [])
         options = options || {};
         options.angular = {
           '$injector': $injector
-        }
+        };
         return new AlgoliaSearch(applicationID, apiKey, options);
       }
     };
