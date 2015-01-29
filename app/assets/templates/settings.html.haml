@@ -15,6 +15,14 @@
   %h2 Ranking options
   %fieldset
     .form-group
+      %label.label-control{for:'hitsPerPage'} Hits per page
+      .form-control
+        %select#hitsPerPage{'ng-model' => 'settings.hitsPerPage'}
+          %option{value: 10} 10
+          %option{value: 20} 20
+          %option{value: 30} 30
+          %option{value: 50} 50
+    .form-group
       %label.label-control{for:'sortOrder'} Default sort order
       .form-control
         %select#sortOrder{'ng-model' => 'settings.defaultSort'}

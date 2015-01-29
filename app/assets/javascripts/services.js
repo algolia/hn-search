@@ -9,7 +9,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         defaultSort: 'byPopularity',
         defaultDateRange: 'last24h',
         style: 'default',
-        typoTolerance: true
+        typoTolerance: true,
+        hitsPerPage: 20
     });
 
     var _loadSettings = function() {
@@ -36,7 +37,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             style: (queryParameters.experimental ? 'experimental' : storage.style),
             dateStart: queryParameters.dateStart,
             dateEnd: queryParameters.dateEnd,
-            typoTolerance: storage.typoTolerance
+            typoTolerance: storage.typoTolerance,
+            hitsPerPage: storage.hitsPerPage
         };
     }
     var settings = _loadSettings();
@@ -74,6 +76,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         $localStorage.login = settings.login;
         $localStorage.style = settings.style;
         $localStorage.typoTolerance = settings.typoTolerance;
+        $localStorage.hitsPerPage = settings.hitsPerPage;
         $('body').attr('rel', settings.style);
 
         if ($localStorage.defaultSort != settings.defaultSort) {
@@ -188,6 +191,9 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
         // typo tolerance
         this.params.typoTolerance = settings.typoTolerance;
+
+        // hits per page
+        this.params.hitsPerPage = settings.hitsPerPage;
 
         if (first) {
             $location.replace();
