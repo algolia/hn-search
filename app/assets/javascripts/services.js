@@ -190,7 +190,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         this.params.queryType = settings.prefix ? 'prefixLast' : 'prefixNone';
 
         // typo tolerance
-        this.params.typoTolerance = settings.typoTolerance;
+        this.params.typoTolerance = settings.sort === 'byPopularity' && settings.typoTolerance;
 
         // hits per page
         this.params.hitsPerPage = settings.hitsPerPage;
