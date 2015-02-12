@@ -165,8 +165,14 @@ html, body
       .item-main
         background: #f6f6ef
         top: $headerHeight + $titleHeight
-        right: 10%
-        left: 10%
+        +media($large-screen-up)
+          width: 80%
+          right: 10%
+          left: 10%
+        +media($large-screen-down)
+          width: 100%
+          right: 0
+          left: 0
     .item-absolute-bottom
       .item-main
         background: #f6f6ef
