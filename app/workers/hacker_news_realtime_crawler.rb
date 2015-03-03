@@ -41,10 +41,10 @@ class HackerNewsRealtimeCrawler
     end
 
     # brute force just to ensure we're not missing an item
-    id = last_ids.last + 1
+    id = last_ids.max + 1
     loop do
       begin
-        Item.from_api!(id)
+        break if !Item.from_api!(id)
         id += 1
       rescue
         break
