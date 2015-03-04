@@ -62,6 +62,7 @@ class HackerNewsRealtimeCrawler
 
   def refresh(data = {})
     (data['items'] || []).each do |id|
+      next if id.to_i < 9000000 # temporary to work-around https://github.com/algolia/hn-search/issues/56
       puts "[#{DateTime.now}] Refreshing item=#{id}"
       Item.delay.from_api!(id)
     end
