@@ -18,9 +18,7 @@ class HomeController < ApplicationController
   end
 
   def front_page
-    @stories = SimpleRSS.parse(Net::HTTP.get(URI.parse('https://news.ycombinator.com/rss'))).items.map do |item|
-      Item.find(item[:comments].split('=').last) rescue nil
-    end.compact
+    @stories = Item.where(front_page: true).all
     @updated_at = DateTime.now
     @title = "HN's home page"
     feed

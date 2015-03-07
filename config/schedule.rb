@@ -5,6 +5,7 @@ job_type :runner, "source ${HOME}/.rvm/scripts/rvm && cd :path && bundle exec ra
 
 every 1.minute, roles: [:cron] do
   runner "HackerNewsRealtimeCrawler.new.sanity_check(100)"
+  runner "HackerNewsRealtimeCrawler.refresh_home_page!"
   runner "User.where('updated_at >= ?', 5.minute.ago).reindex!"
   runner "Item.where('updated_at >= ?', 5.minute.ago).reindex!"
 end

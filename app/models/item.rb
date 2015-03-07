@@ -38,6 +38,7 @@ class Item < ActiveRecord::Base
           t << 'ask_hn'
         end
       end
+      t << 'front_page' if front_page
       t
     end
     queryType 'prefixLast'

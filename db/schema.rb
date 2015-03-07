@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009182754) do
+ActiveRecord::Schema.define(version: 20150307103111) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -42,11 +42,13 @@ ActiveRecord::Schema.define(version: 20141009182754) do
     t.integer  "parent_id"
     t.integer  "story_id"
     t.datetime "updated_at"
+    t.boolean  "front_page"
   end
 
   add_index "items", ["author"], name: "index_items_on_author"
   add_index "items", ["dead"], name: "index_items_on_dead"
   add_index "items", ["deleted"], name: "index_items_on_deleted"
+  add_index "items", ["front_page"], name: "index_items_on_front_page"
   add_index "items", ["item_type_cd"], name: "index_items_on_item_type_cd"
   add_index "items", ["parent_id"], name: "index_items_on_parent_id"
   add_index "items", ["story_id"], name: "index_items_on_story_id"

@@ -59,6 +59,7 @@
             %li <code>pollopt</code>
             %li <code>show_hn</code>
             %li <code>ask_hn</code>
+            %li <code>front_page</code>
             %li <code>author_:USERNAME</code>
             %li <code>story_:ID</code>
         %td
@@ -95,6 +96,8 @@
       %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=bar&tags=comment</code>
       %dt All URLs matching <code>bar</code>
       %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?query=bar&restrictSearchableAttributes=url</code>
+      %dt All stories that are on the front/home page right now
+      %dd <code>#{api_v1_search_url(host: 'hn.algolia.com')}?tags=front_page</code>
       %dt Last stories
       %dd <code>#{api_v1_search_by_date_url(host: 'hn.algolia.com')}?tags=story</code>
       %dt Last stories OR polls
