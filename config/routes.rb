@@ -24,7 +24,9 @@ Hnsearch::Application.routes.draw do
   get '/legacy' => redirect('/')
   get '/status' => redirect('http://status.algolia.com/hn')
 
-  root 'home#index'
-  match '*path' => 'home#index', via: :all
+  ['about', 'settings', 'help', 'api', 'cool_apps', 'hot', 'show-hn', 'ask-hn', 'polls', 'jobs', 'starred', 'user'].each do |path|
+    get "/#{path}", controller: 'home', action: 'index'
+  end
 
+  root 'home#index'
 end
