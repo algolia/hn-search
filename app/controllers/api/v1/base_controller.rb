@@ -95,6 +95,7 @@ module Api
             when :DELETE
               @client.delete(url, header: headers)
             end
+            raise ActiveRecord::RecordNotFound.new(JSON.parse(answer.content)['message']) if answer.code == 404
             if answer.code >= 400 || answer.code < 200
               raise "#{method} #{url} (#{answer.code}): #{answer.content}"
             end
