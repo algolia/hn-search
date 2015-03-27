@@ -27,6 +27,7 @@ Hnsearch::Application.routes.draw do
   ['about', 'settings', 'help', 'api', 'cool_apps', 'hot', 'show-hn', 'ask-hn', 'polls', 'jobs', 'starred', 'user'].each do |path|
     get "/#{path}", controller: 'home', action: 'index'
   end
+  get "/story/:id/:title", controller: 'home', action: 'index'
 
   root 'home#index'
 end
