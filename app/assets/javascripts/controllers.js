@@ -113,7 +113,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     }
     var _search = function(ids) {
       var parsedQuery = parseQuery(search.query || '', search.getParams(ids));
-      getIndex(parsedQuery.query).search(parsedQuery.query, undefined, parsedQuery.params).then(function(results) {
+      getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
         if (parsedQuery.query === results.query) {
           $scope.results = results;
         }

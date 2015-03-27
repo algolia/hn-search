@@ -10,7 +10,6 @@
     = stylesheet_link_tag "application", :media => "all"
     = stylesheet_link_tag "themes/default", :media => "all", 'ng-if' => 'settings.style !== "experimental"'
     = stylesheet_link_tag "themes/experimental", :media => "all", 'ng-if' => 'settings.style === "experimental"'
-    = javascript_include_tag "application"
     / = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})
     = auto_discovery_link_tag(:atom, {controller: "home", action: "latest", format: 'atom'}, { title: 'Latest HN items'})
@@ -18,3 +17,5 @@
   %body
     #main{role: 'main', 'ui-view' => true, 'ng-cloak' => true}
       = yield
+    = javascript_include_tag "application"
+    = javascript_include_tag "//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.angular.min.js"

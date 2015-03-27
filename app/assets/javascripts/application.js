@@ -18,7 +18,6 @@
 //= require angular-rails-templates
 //= require angular-ui-router.min
 //= require ngStorage.min
-//= require algolia/algoliasearch.angular
 //= require nprogress
 //= require bootstrap-typeahead
 //= require tagautocomplete
