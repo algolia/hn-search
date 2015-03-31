@@ -17,6 +17,7 @@
 //= require angular-sanitize
 //= require angular-rails-templates
 //= require angular-ui-router.min
+//= require algolia/v3/algoliasearch.angular
 //= require ngStorage.min
 //= require nprogress
 //= require bootstrap-typeahead
