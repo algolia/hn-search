@@ -31,6 +31,7 @@ gem 'rest-client'
 gem 'angularjs-rails', '1.3.9'
 gem 'angular-rails-templates'
 gem 'actionpack-action_caching'
+gem 'turnout'
 
 gem 'firebase'
 gem "eventmachine", "~> 1.0.3"
