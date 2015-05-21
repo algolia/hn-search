@@ -339,6 +339,9 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         // work-around =\\" escaping bug (6c92ae092359647c04804876139516163d0567de)
         str = str.replace(/=\\"/g, '="');
 
+        // XSS (seems HN is not stripping all of them)
+        str = str.replace(/<\/?script>/g, '');
+
         return '<p>' +  str.replace(/<p>/g, '</p><p>') + '</p>';
     };
 })
