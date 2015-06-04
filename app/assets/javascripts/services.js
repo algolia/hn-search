@@ -340,7 +340,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         str = str.replace(/=\\"/g, '="');
 
         // XSS (seems HN is not stripping all of them)
-        str = str.replace(/<\/?script>/g, '');
+        str = $('<div />').text(str).html()
+            // keep some tags like <p>, <pre>, <em>, <strong>, <code> & <i>
+            .replace(/&lt;(\/?)(p|pre|code|em|strong|i)&gt;/g, '<$1$2>')
+            // restore links as well
+            .replace(/&lt;a href="([^"]+?)" rel="nofollow"&gt;(.+?)&lt;\/a&gt;/g, '<a href="$1" rel="nofollow">$2</a>');
 
         return '<p>' +  str.replace(/<p>/g, '</p><p>') + '</p>';
     };
