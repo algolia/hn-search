@@ -343,6 +343,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         str = $('<div />').text(str).html()
             // keep some tags like <p>, <pre>, <em>, <strong>, <code> & <i>
             .replace(/&lt;(\/?)(p|pre|code|em|strong|i)&gt;/g, '<$1$2>')
+            // restore predefined XML entities (quotes, apos & amps)
+            .replace(/&quot;/g, '"').replace(/&apos;/g, '\'').replace(/&amp;/g, '&')
             // restore links as well
             .replace(/&lt;a href="([^"]+?)" rel="nofollow"&gt;(.+?)&lt;\/a&gt;/g, '<a href="$1" rel="nofollow">$2</a>');
 
