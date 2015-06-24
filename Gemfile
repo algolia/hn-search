@@ -40,7 +40,7 @@ gem "httparty", "~> 0.12.0"
 
 group :development do
   gem 'capistrano', '< 3.0.0'
-  gem 'rvm-capistrano'
+  gem 'rvm-capistrano', require: false
   gem 'sqlite3'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :mri_21, :rbx]
