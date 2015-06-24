@@ -115,9 +115,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
     var last24h = new Date();
     var pastWeek = new Date();
     var pastMonth = new Date();
+    var pastYear = new Date();
     last24h = last24h.setDate(last24h.getDate() - 1) / 1000;
     pastWeek = pastWeek.setDate(pastWeek.getDate() - 7) / 1000;
     pastMonth = pastMonth.setDate(pastMonth.getDate() - 31) / 1000;
+    pastYear = pastYear.setDate(pastYear.getDate() - 365) / 1000;
 
     var first = true;
     searchService.applySettings = function(settings, page) {
@@ -143,6 +145,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
                 this.params.numericFilters.push('created_at_i>' + pastWeek);
             } else if (settings.dateRange === 'pastMonth'){
                 this.params.numericFilters.push('created_at_i>' + pastMonth);
+            } else if (settings.dateRange === 'pastYear'){
+                this.params.numericFilters.push('created_at_i>' + pastYear);
             } else if (settings.dateRange === 'custom' && settings.dateStart && settings.dateEnd) {
                 $location.search('dateStart', settings.dateStart);
                 $location.search('dateEnd', settings.dateEnd);

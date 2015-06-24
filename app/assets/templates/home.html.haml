@@ -83,6 +83,7 @@
         %strong{'ng-show' => 'settings.dateRange === "last24h"'} last 24 hours
         %strong{'ng-show' => 'settings.dateRange === "pastWeek"'} past week
         %strong{'ng-show' => 'settings.dateRange === "pastMonth"'} past month
+        %strong{'ng-show' => 'settings.dateRange === "pastYear"'} past year
     %div{'ng-show' => 'query || settings.dateRange !== "all" || settings.type !== "all"'}
       %p Suggestions:
       %ul

@@ -291,6 +291,9 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       text: 'Past Month',
       value: 'pastMonth'
     }, {
+      text: 'Past Year',
+      value: 'pastYear'
+    }, {
       text: 'Custom range',
       value: 'custom'
     }
