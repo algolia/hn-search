@@ -13,8 +13,12 @@ class HomeController < ApplicationController
   end
 
   def popular
-    body = RestClient.get("https://analytics.algolia.com/1/searches/Item_production/popular?startAt=#{DateTime.now.utc.to_i - 24*60*60}&size=10", { 'X-Algolia-API-Key' => ENV['ALGOLIASEARCH_API_KEY'], 'X-Algolia-Application-Id' => ENV['ALGOLIASEARCH_APPLICATION_ID'] })
-    render json: JSON.parse(body)['topSearches'], root: false
+    body = RestClient::Request.execute(method: :get,
+      url: "https://analytics.algolia.com/1/searches/Item_production/popular?startAt=#{DateTime.now.utc.to_i - 24*60*60}&size=10",
+      headers: { 'X-Algolia-API-Key' => ENV['ALGOLIASEARCH_API_KEY'], 'X-Algolia-Application-Id' => ENV['ALGOLIASEARCH_APPLICATION_ID'] },
+      timeout: 0.1, open_timeout: 0.05) rescue nil
+    searches = body ? JSON.parse(body)['topSearches'] : []
+    render json: searches, root: false
   end
 
   def front_page
