@@ -534,7 +534,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 .controller('StoryCtrl', ['$scope', '$stateParams', 'search', function($scope, $stateParams, search) {
   search.storyID = $stateParams.id;
   $scope.settings.dateRange = 'all';
-  $scope.settings.type = 'story';
+  $scope.settings.type = 'all';
 }])
 
 .controller('SettingsCtrl', ['$scope', 'settings', function($scope, settings) {

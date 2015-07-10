@@ -218,6 +218,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
                 var stories = [];
                 for (var i = 0; i < storyIDs.length; ++i) {
                     stories.push('story_' + storyIDs[i]);
+                    stories.push('job_' + storyIDs[i]);
                 }
                 res.tagFilters.push(stories);
             }
