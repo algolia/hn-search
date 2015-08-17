@@ -429,7 +429,7 @@ ul.list-item-comments
 
 //FOOTER
 footer
-  padding: 20px 0
+  padding: 30px 0
   text-align: center
   a
     color: $lightGray
@@ -552,3 +552,14 @@ footer
 +media($medium-screen-down)
   .state-title
     visibility: hidden
+
+.flash-alert
+  @extend %flash-alert
+  font-size: 0.8em
+  padding: 0.1em
+  margin: 0
+  position: fixed
+  bottom: 0
+  right: 0
+  left: 0
+  z-index: 100000

@@ -21,6 +21,9 @@ module Hnsearch
     # config.i18n.default_locale = :de
     config.assets.precompile += %w(themes/default.css themes/experimental.css)
 
+    config.active_record.migration_error = false
+
     config.middleware.use ActionDispatch::Flash
+    config.middleware.delete ActiveRecord::QueryCache
   end
 end

@@ -15,6 +15,10 @@
     = auto_discovery_link_tag(:atom, {controller: "home", action: "latest", format: 'atom'}, { title: 'Latest HN items'})
     = yield(:head)
   %body
+    - if !(Item.connection rescue nil)
+      .flash-alert.text-center
+        Read-only mode:
+        %em cannot connect to the MySQL database.
     #main{role: 'main', 'ui-view' => true, 'ng-cloak' => true}
       = yield
     = javascript_include_tag "application"
