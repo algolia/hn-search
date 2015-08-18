@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.2.2'
 
 gem 'rails', '~> 4.0.10'
 gem 'sass-rails', '~> 4.0.0'
@@ -34,9 +34,9 @@ gem 'actionpack-action_caching'
 gem 'turnout'
 
 gem 'firebase'
-gem "eventmachine", "~> 1.0.3"
-gem "em-http-request", "~> 1.1.1"
-gem "httparty", "~> 0.12.0"
+gem "eventmachine", "~> 1.0.8"
+gem "em-http-request", "~> 1.1.2"
+gem "httparty", "~> 0.13.5"
 
 group :development do
   gem 'capistrano', '< 3.0.0'
