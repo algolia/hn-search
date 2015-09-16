@@ -6,6 +6,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
     //default settings
     var storage = $localStorage.$default({
         showThumbnails: true,
+        defaultType: 'story',
         defaultSort: 'byPopularity',
         defaultDateRange: 'last24h',
         style: 'default',
@@ -15,20 +16,23 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
     var _loadSettings = function() {
         var queryParameters = $location.search();
-        var defaultDateRange, defaultSort;
+        var defaultDateRange, defaultSort, defaultType;
         if (queryParameters.q) {
             $location.search('query', queryParameters.q).search('q', null).replace();
             defaultDateRange = 'all';
             defaultSort = 'byPopularity';
+            defaultType = 'story';
         } else {
             defaultDateRange = storage.defaultDateRange;
             defaultSort = storage.defaultSort;
+            defaultType = storage.defaultType;
         }
         return {
             dateRange: (queryParameters.dateRange || defaultDateRange),
             defaultDateRange: storage.defaultDateRange,
-            type: (queryParameters.type || 'story'),
+            type: (queryParameters.type || defaultType),
             sort: (queryParameters.sort || defaultSort),
+            defaultType: storage.defaultType,
             defaultSort: storage.defaultSort,
             prefix: (queryParameters.prefix || true),
             page: (parseInt(queryParameters.page, 10) || 0),
@@ -55,7 +59,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
     settingsService.reset = function() {
         settings.dateRange = settings.defaultDateRange;
         settings.sort = settings.defaultSort;
-        settings.type = 'story';
+        settings.type = settings.defaultType;
         settings.page = 0;
     };
 
@@ -79,6 +83,11 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         $localStorage.hitsPerPage = settings.hitsPerPage;
         $('body').attr('rel', settings.style);
 
+        if ($localStorage.defaultType != settings.defaultType) {
+            settings.type = settings.defaultType;
+        }
+        $localStorage.defaultType = settings.defaultType;
+
         if ($localStorage.defaultSort != settings.defaultSort) {
             settings.sort = settings.defaultSort;
         }
@@ -91,6 +100,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
         // GA
         Analytics.trackEvent('settings', 'style', settings.style);
+        Analytics.trackEvent('settings', 'defaultType', settings.defaultType);
         Analytics.trackEvent('settings', 'defaultSort', settings.defaultSort);
         Analytics.trackEvent('settings', 'defaultDateRange', settings.defaultDateRange);
     };

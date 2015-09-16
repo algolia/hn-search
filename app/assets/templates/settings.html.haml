@@ -23,6 +23,13 @@
           %option{value: 30} 30
           %option{value: 50} 50
     .form-group
+      %label.label-control{for:'sortOrder'} Default type
+      .form-control
+        %select#sortOrder{'ng-model' => 'settings.defaultType'}
+          %option{value: 'all'} All
+          %option{value: 'story'} Stories
+          %option{value: 'comment'} Comments
+    .form-group
       %label.label-control{for:'sortOrder'} Default sort order
       .form-control
         %select#sortOrder{'ng-model' => 'settings.defaultSort'}
