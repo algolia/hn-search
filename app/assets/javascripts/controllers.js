@@ -413,7 +413,8 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   // Watch settings
   $scope.$watchCollection('settings', function(newSettings, oldSettings) {
-    if (newSettings.page == oldSettings.page) {
+    if (newSettings != oldSettings && newSettings.page == oldSettings.page) {
+      // settings changed and it's not the page, reset the page to 0
       $scope.settings.page = 0;
     }
 
@@ -503,7 +504,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   // Handle history
   $scope.$watch(function () { return $location.search(); }, function() {
     $scope.settings = settings.reload();
-    $scope.settings.page = 0;
     $scope.query = search.query = $location.search().query;
   });
 
