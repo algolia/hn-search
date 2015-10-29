@@ -11,6 +11,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         defaultDateRange: 'last24h',
         style: 'default',
         typoTolerance: true,
+        storyText: true,
         hitsPerPage: 20
     });
 
@@ -42,6 +43,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             dateStart: queryParameters.dateStart,
             dateEnd: queryParameters.dateEnd,
             typoTolerance: storage.typoTolerance,
+            storyText: storage.storyText,
             hitsPerPage: storage.hitsPerPage
         };
     }
@@ -80,6 +82,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         $localStorage.login = settings.login;
         $localStorage.style = settings.style;
         $localStorage.typoTolerance = settings.typoTolerance;
+        $localStorage.storyText = settings.storyText;
         $localStorage.hitsPerPage = settings.hitsPerPage;
         $('body').attr('rel', settings.style);
 
@@ -205,6 +208,13 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
         // typo tolerance
         this.params.typoTolerance = settings.sort === 'byPopularity' && settings.typoTolerance;
+
+        // story text
+        if (!settings.storyText) {
+            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'author'];
+        } else {
+            this.params.restrictSearchableAttributes = [];
+        }
 
         // hits per page
         this.params.hitsPerPage = settings.hitsPerPage;

@@ -11,9 +11,6 @@
         %select#style{'ng-model' => 'settings.style'}
           %option{value:'default'} Default
           %option{value:'experimental'} Experimental
-
-  %h2 Ranking options
-  %fieldset
     .form-group
       %label.label-control{for:'hitsPerPage'} Hits per page
       .form-control
@@ -22,6 +19,9 @@
           %option{value: 20} 20
           %option{value: 30} 30
           %option{value: 50} 50
+
+  %h2 Ranking options
+  %fieldset
     .form-group
       %label.label-control{for:'sortOrder'} Default type
       .form-control
@@ -44,6 +44,10 @@
           %option{value: 'pastMonth'} Past Month
           %option{value: 'pastYear'} Past Year
           %option{value: 'all'} Forever
+    .form-group
+      %label.label-control{for:'storyText'} Use the story text for the search
+      .form-control
+        %input#storyText.form-control{type:'checkbox', 'ng-model' => 'settings.storyText'}
     .form-group
       %label.label-control{for:'typoTolerance'} Typo-tolerance
       .form-control
