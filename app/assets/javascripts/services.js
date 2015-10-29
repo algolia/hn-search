@@ -43,7 +43,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             dateStart: queryParameters.dateStart,
             dateEnd: queryParameters.dateEnd,
             typoTolerance: storage.typoTolerance,
-            storyText: storage.storyText,
+            storyText: (typeof queryParameters.storyText === 'undefined' ? storage.storyText : (queryParameters.storyText === 'true')),
             hitsPerPage: storage.hitsPerPage
         };
     }
@@ -211,6 +211,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
 
         // story text
         if (!settings.storyText) {
+            $location.search('storyText', false);
             this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'author'];
         } else {
             this.params.restrictSearchableAttributes = [];
