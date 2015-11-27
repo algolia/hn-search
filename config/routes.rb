@@ -30,4 +30,6 @@ Hnsearch::Application.routes.draw do
   get "/story/:id/:title", controller: 'home', action: 'index'
 
   root 'home#index'
+
+  get '*unmatched_route', :to => 'application#raise_not_found!'
 end
