@@ -8,7 +8,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         showThumbnails: true,
         defaultType: 'story',
         defaultSort: 'byPopularity',
-        defaultDateRange: 'last24h',
+        defaultDateRange: 'all',
         style: 'default',
         typoTolerance: true,
         storyText: true,
