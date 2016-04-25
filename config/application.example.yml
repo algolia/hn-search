@@ -8,3 +8,4 @@ AMAZON_SECRET_ACCESS_KEY: s3secretaccesskey
 RATE_LIMIT_WHITE_LIST:
   - 127.0.0.1
 HN_API_URL: https://hacker-news.firebaseio.com
+SECRET_TOKEN: 7c595a8c9befb8205d9cefc9ccbe7827fa8d48e2b75ed497cfc61b7940fef908c255ff087498dc176e952211cf896dd3ff2f5b88a9da65da83cc7a2f57c1b45d

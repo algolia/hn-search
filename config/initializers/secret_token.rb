@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Hnsearch::Application.config.secret_key_base = '7c595a8c9befb8205d9cefc9ccbe7827fa8d48e2b75ed497cfc61b7940fef908c255ff087498dc176e952211cf896dd3ff2f5b88a9da65da83cc7a2f57c1b45d'
+Hnsearch::Application.config.secret_key_base = ENV['SECRET_TOKEN']
