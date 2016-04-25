@@ -111,10 +111,13 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     if (!noProgres) {
       NProgress.start();
     }
+
     var _search = function(ids) {
-      var parsedQuery = parseQuery(search.query || '', search.getParams(ids));
+      var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
       getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
+        parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
         if (parsedQuery.query === results.query) {
+          // only take the results into account if the query matches the we have currently
           $scope.results = results;
         }
         if (!noProgres) {
@@ -122,7 +125,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         }
       });
     };
-    $scope.query = search.query;
 
     if ($scope.state === 'hot') {
       $scope.results = null;
