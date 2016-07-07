@@ -19,7 +19,7 @@
                 %span.author{'bo-html' => 'hit._highlightResult.author.value'}
             %li
               %i.icon-clock
-              %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#up_" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
+              %a{'bo-href' => '"https://news.ycombinator.com/item?id=" + (hit._tags[0] === "comment" ? hit.story_id + "#" + hit.objectID : hit.objectID)', title:'{{ ::hit.created_at }}'}
                 %span.date {{ ::hit.created_at_i | moment }}
             %li{'bo-show' => 'settings.style === "default"'}
               %i.icon-speech-bubble
@@ -54,7 +54,7 @@
             {{comment.author || "deleted"}}
         %span{'ng-if' => 'comment.created_at'}
           \-
-          %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#up_{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
+          %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#{{comment.id}}', title: '{{ comment.created_at }}'} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
     .item-clearfix

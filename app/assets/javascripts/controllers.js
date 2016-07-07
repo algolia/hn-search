@@ -584,7 +584,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       }
     },
     template: '<li>' +
-                '<span class="author"><avatar author="reply.author"></avatar> <a ng-href="https://news.ycombinator.com/user?id={{ reply.author }}" ng-title="See {{ reply.author }} profile">{{reply.author || "deleted"}}</a></span><span ng-if="reply.created_at"> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#up_{{reply.id}}" title="{{ reply.created_at }}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a></span>' +
+                '<span class="author"><avatar author="reply.author"></avatar> <a ng-href="https://news.ycombinator.com/user?id={{ reply.author }}" ng-title="See {{ reply.author }} profile">{{reply.author || "deleted"}}</a></span><span ng-if="reply.created_at"> - <a class="date" ng-href="https://news.ycombinator.com/item?id={{reply.story_id}}#{{reply.id}}" title="{{ reply.created_at }}">{{reply.created_at_i | moment:"M/D/YYYY h:m A"}}</a></span>' +
                 '<div class="reply-container" ng-bind-html="reply.text|cleanup"></div>' +
               '</li>'
   };
