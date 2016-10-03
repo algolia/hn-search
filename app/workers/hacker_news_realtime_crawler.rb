@@ -6,6 +6,10 @@ require "em-http-request"
 
 class HackerNewsRealtimeCrawler
 
+  def initialize
+    @statsd = Statsd.new(ENV['STATSD_HOST'] || 'localhost', ENV['STATSD_PORT'] || 8125)
+  end
+
   def crawler
     EM.run do
       @source = EventMachine::EventSource.new("#{ENV['HN_API_URL']}/v0/updates.json", headers = {"Accept" => "text/event-stream"})
@@ -54,8 +58,9 @@ class HackerNewsRealtimeCrawler
 
   def indexing_check
     last_hit_at = DateTime.parse(Algolia::Index.new("Item_#{Rails.env}_sort_date").search('', hitsPerPage: 1)['hits'].first['created_at']) rescue nil
-    status = last_hit_at.nil? || last_hit_at < 1.hour.ago ? 'degraded_performance' : 'operational'
-    RestClient.post(ENV['HN_STATUS_API'], status: status, name: 'Indexing') rescue nil # not fatal
+    status = last_hit_at.nil? || last_hit_at < 1.hour.ago ? '0' : '1'
+
+    @statsd.set('hn-search.indexing', status) rescue nil # not fatal
   end
 
   def self.refresh_home_page!
@@ -80,7 +85,7 @@ class HackerNewsRealtimeCrawler
       puts "[#{DateTime.now}] Refreshing user=#{id}"
       User.delay.from_api!(id)
     end
-    RestClient.post(ENV['HN_STATUS_API'], status: 'operational', name: 'Crawling') rescue nil # not fatal
+    @statsd.set('hn-search.crawling', 1) rescue nil # not fatal
   end
 
 end
