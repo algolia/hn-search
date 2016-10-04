@@ -12,7 +12,7 @@ gem 'haml-rails'
 gem 'bitters'
 gem 'bourbon'
 gem 'neat'
-gem 'therubyracer'
+gem 'therubyracer', '0.12.2'
 gem 'hogan_assets'
 gem 'jquery-cookie-rails'
 gem 'algoliasearch-rails', '~> 1.14.1'
@@ -37,6 +37,7 @@ gem 'firebase'
 gem "eventmachine", "~> 1.0.8"
 gem "em-http-request", "~> 1.1.2"
 gem "httparty", "~> 0.13.5"
+gem 'statsd-ruby'
 
 group :development do
   gem 'capistrano', '< 3.0.0'
