@@ -48,10 +48,12 @@ class Item < ActiveRecord::Base
 
     add_slave "Item_#{Rails.env}_ordered" do # backward compatibility naming
       attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
+      separatorsToIndex '+#$'
     end
 
     add_slave "Item_#{Rails.env}_sort_date" do # backward compatibility naming
       customRanking ['desc(created_at_i)']
+      separatorsToIndex '+#$'
     end
   end
 
