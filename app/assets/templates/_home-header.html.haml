@@ -13,7 +13,7 @@
 %ul.list-inline.search-infos{'ng-show' => 'results', "defer-share-dropdown"=>true}
   %li
     %span{'ng-show' => 'settings.page > 0'} Page {{ settings.page + 1 }} of
-    %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'}
+    %ng-pluralize{count: 'results.nbHits', when: '{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'.html_safe}
     ({{ results.processingTimeMS / 1000.0 | number }} seconds)
   %li.action-share
     %a.placeholder
