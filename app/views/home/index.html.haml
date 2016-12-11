@@ -4,6 +4,8 @@
 - if request.path.start_with?('/story/') && (id = request.path.split('/')[2].to_i) > 0
   - item = Item.find(id)
   - site_title = "#{item.title} - HN Search powered by Algolia"
+  = content_for :head do
+    %meta{name: "robots", content: "noindex,follow"}
   - if item.text.blank?
     - title = 'HN Search powered by Algolia'
     - description = item.title
