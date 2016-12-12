@@ -3,7 +3,7 @@
     .item-main
       .item-content-wrapper
         %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && settings.style !== "default" && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
-          %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png"}
+          %img.item-thumbnail{"img-preload"=>true, "ng-src"=>"https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png".html_safe}
         .item-title-and-infos
           %h2
             %a{"bo-href"=>"hit.url || ('https://news.ycombinator.com/item?id=' + hit.objectID)", "bo-html"=>"hit._highlightResult.title.value", "bo-show" => "hit._tags[0] === 'story' || hit._tags[0] === 'poll' || hit._tags[0] === 'job'"}
