@@ -174,6 +174,12 @@ $(document).ready(function() {
       scrollTopBtn.removeClass('in');
     }
   });
+
+  var relevancyClass = new window.attributedRelevance({
+    hitsContainer: 'search-results',
+    inputSelector: '.page-header .search-wrapper input'
+  })
+
   //scroll top
   var scrollTopBtn = $('.scroll-to-top');
   scrollTopBtn.on('click', function(e){
