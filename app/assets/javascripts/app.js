@@ -175,7 +175,7 @@ $(document).ready(function() {
     }
   });
 
-  new window.attributedRelevance({
+  var relevancyClass = new window.attributedRelevance({
     hitsContainer: 'search-results',
     inputSelector: '.page-header .search-wrapper input'
   })
