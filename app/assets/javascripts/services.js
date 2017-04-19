@@ -117,8 +117,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         query: (queryParameters.query || queryParameters.q || ''),
         params: {
             hitsPerPage: 20,
-            minWordSizefor1Typo: 5,
-            minWordSizefor2Typos: 9,
+            minWordSizefor1Typo: 4,
+            minWordSizefor2Typos: 8,
             advancedSyntax: true,
             ignorePlurals: false
         }
