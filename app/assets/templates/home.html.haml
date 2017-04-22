@@ -1,5 +1,5 @@
 %section.search-results{'sticky-list' => true,"defer-share-dropdown"=>true}
-  .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID + (story[hit.objectID] ? " item-show-comments" : "")', 'bindonce' => true}
+  .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID + (story[hit.objectID] ? " item-show-comments" : "")', "algolia-object-id"=>"{{hit.objectID}}".html_safe, 'bindonce' => true}
     .item-main
       .item-content-wrapper
         %a.item-thumbnail-link{'bo-if' => 'settings.showThumbnails && settings.style !== "default" && hit._tags[0] === "story" && state !== "ask-hn" && state !== "polls"', "ng-href"=>"{{hit.url}}"}
