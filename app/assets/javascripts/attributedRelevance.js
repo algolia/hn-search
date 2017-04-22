@@ -723,6 +723,12 @@ function sendReport() {
     reportData.query = this.previousQuery;
   }
 
+  // If report has position but no objectID it means means
+  // that click was detected on wrong element thus don't send
+  if (reportData.position !== null && reportData.objectID === null) {
+    return false;
+  }
+
   // Set last report for query
   this.lastSentReportForQuery = reportData.query;
 
