@@ -216,18 +216,18 @@ Object.defineProperty(exports, "__esModule", {
  */
 function checkUserIdCookie() {
     // Check for existing cookie
-    var UUID = getCookie("__alr_UUID") || null;
+    // const UUID = getCookie("__alr_UUID") || null;
 
     // Return existing UUID
-    if (UUID) return UUID;
+    // if(UUID) return UUID;
 
     // User has no previous UUID.
     // generate new
-    if (!UUID) {
-        var newUUID = createUUID();
-        setCookie("__alr_UUID", newUUID, 365);
-        return newUUID;
-    }
+    // if(!UUID){
+    var newUUID = createUUID();
+    // setCookie("__alr_UUID", newUUID ,365);
+    return newUUID;
+    // }
 }
 
 /**
@@ -298,7 +298,9 @@ var _cookieUtils = __webpack_require__(24);
  * Binds settings to context
  * @return {[type]} [description]
  */
-function bindSettings(options) {
+function bindSettings() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
   // Get UUID
   this.UUID = (0, _cookieUtils.checkUserIdCookie)();
   // Array of search results
@@ -311,6 +313,10 @@ function bindSettings(options) {
   this.previousQuery = "";
   // Clicked object ID
   this.clickedObjectID = null;
+  // Application ID
+  this.applicationID = options.applicationID || "";
+  // IndexName
+  this.indexName = options.indexName || "";
 
   /**
    * Set of options to determine if
@@ -701,7 +707,9 @@ function sendReport() {
     totalPosition: paginationOffset.totalPosition,
     page: paginationOffset.page,
     objectID: clickedResult.objectID,
-    UUID: this.UUID
+    UUID: this.UUID,
+    applicationID: this.applicationID,
+    indexName: this.indexName
   };
 
   // Abort if data for this query was already sent
