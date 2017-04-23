@@ -742,6 +742,7 @@ function sendReport() {
   // Open request
   var report = new XMLHttpRequest();
   report.open('GET', reportingQuery, false);
+  report.timeout = 2000;
   report.send();
 
   // Reset data
