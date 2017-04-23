@@ -676,6 +676,8 @@ function resetData() {
   this.navigatedWithoutClicking = false;
   // Final bool before sending results if query was irrelevant 
   this.queryWasNonRelevant = null;
+  // Clear objectID
+  this.clickedObjectID = null;
 }
 
 exports.resetData = resetData;
