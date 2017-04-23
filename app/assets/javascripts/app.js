@@ -177,7 +177,10 @@ $(document).ready(function() {
 
   var relevancyClass = new window.attributedRelevance({
     hitsContainer: 'search-results',
-    inputSelector: '.page-header .search-wrapper input'
+    inputSelector: '.page-header .search-wrapper input',
+    options: {
+      applicationID: 'UJ5WYC0L7X'
+    }
   })
 
   //scroll top
