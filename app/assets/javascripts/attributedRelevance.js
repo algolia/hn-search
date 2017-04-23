@@ -735,7 +735,7 @@ function sendReport() {
   var reportingQuery = 'https://relevancy-experiment.algolia.com/1/store' + serializedReportData;
   // Open request
   var report = new XMLHttpRequest();
-  report.open('GET', reportingQuery);
+  report.open('GET', reportingQuery, false);
   report.send();
 
   // Reset data
