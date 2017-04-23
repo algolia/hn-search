@@ -676,6 +676,8 @@ function resetData() {
   this.navigatedWithoutClicking = false;
   // Final bool before sending results if query was irrelevant 
   this.queryWasNonRelevant = null;
+  // Clear objectID
+  this.clickedObjectID = null;
 }
 
 exports.resetData = resetData;
@@ -721,6 +723,12 @@ function sendReport() {
   if (reportData.position === null) {
     // user didn't click - send previous query!
     reportData.query = this.previousQuery;
+  }
+
+  // If report has position but no objectID it means means
+  // that click was detected on wrong element thus don't send
+  if (reportData.position !== null && reportData.objectID === null) {
+    return false;
   }
 
   // Set last report for query
