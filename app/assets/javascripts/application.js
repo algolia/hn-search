@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require attributedRelevance
+//= require relevance
 //= require moment
 //= require angular
 //= require angular-route
