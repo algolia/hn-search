@@ -106,33 +106,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     return { query: (query || ''), params: params };
   };
 
-  function getQueryForRelevance() {
-    var ids;
-
-    if ($scope.state === 'hot') {
-      hot.get().then(function(id) {
-        ids = id;
-      });
-    }
-
-    var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
-
-    if(parsedQuery.params) {
-      return JSON.stringify(parsedQuery.params)
-    }
-    return {}
-  }
-
-  // Wrap in setTimeout to execute after render
-  setTimeout(function(){
-    var relevancy = new algoliaRelevance.algoliaRelevance({
-      indexName: "Item_production_ordered",
-      searchState: getQueryForRelevance
-    })
-
-    relevancy.initSearch('.page-header .search-wrapper input')
-  },100)
-
   //Search scope
   $scope.getSearch = function(noProgres) {
     if (!noProgres) {
