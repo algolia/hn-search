@@ -125,12 +125,13 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   // Wrap in setTimeout to execute after render
   setTimeout(function(){
-    var relevancy = new algoliaRelevance.algoliaRelevance({
-      indexName: "Item_production_ordered",
-      searchState: getQueryForRelevance
+    var relevancy = harvest({
+      indexName: function(){
+        return getIndex($scope.query).indexName
+      }
     })
 
-    relevancy.initSearch('.page-header .search-wrapper input')
+    relevancy.initSearch('.page-header .search-wrapper input', getQueryForRelevance)
   },100)
 
   //Search scope
