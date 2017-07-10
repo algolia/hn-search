@@ -38,10 +38,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.6)
-    algoliasearch (1.12.6)
+    algoliasearch (1.12.7)
       httpclient (~> 2.8.3)
       json (>= 1.5.1)
-    algoliasearch-rails (1.17.0)
+    algoliasearch-rails (1.19.1)
       algoliasearch (~> 1.12.4)
       json (>= 1.5.1)
     angular-rails-templates (0.1.3)
@@ -344,7 +344,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (= 0.9.0.alpha1)
-  algoliasearch-rails (~> 1.17.0)
+  algoliasearch-rails (~> 1.19.1)
   angular-rails-templates
   angular_xss
   angularjs-rails (= 1.5.8)
