@@ -124,14 +124,15 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   }
 
   // Wrap in setTimeout to execute after render
+  // 
   setTimeout(function(){
-    var relevancy = harvest({
+    aa('initSearch',{
+      inputSelector: '.page-header .search-wrapper input',
       indexName: function(){
         return getIndex($scope.query).indexName
-      }
+      },
+      searchState: getQueryForRelevance
     })
-
-    relevancy.initSearch('.page-header .search-wrapper input', getQueryForRelevance)
   },100)
 
   //Search scope
