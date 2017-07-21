@@ -124,14 +124,17 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
   }
 
   // Wrap in setTimeout to execute after render
-  // 
+  function getQueryForAlgolia() {
+    return JSON.parse(getQueryForRelevance())
+  }
+  
   setTimeout(function(){
     aa('initSearch',{
       inputSelector: '.page-header .search-wrapper input',
       indexName: function(){
         return getIndex($scope.query).indexName
       },
-      searchState: getQueryForRelevance
+      searchState: getQueryForAlgolia
     })
   },100)
 
