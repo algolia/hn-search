@@ -1,20 +1,18 @@
 require "bundler/capistrano"
 
 set :default_environment, {
-  'GIT_SSH' => '/home/prod/ssh-hnsearch.sh'
+  'GIT_SSH' => '/home/hnsearch/.ssh/hn_git_ssh.sh'
 }
 
 default_run_options[:pty] = true
 
 # servers
-server 'c3-use-1.algolia.io', :app, :web, :db, :cron, primary: true
-server 'c3-use-2.algolia.io', :app, :web
-server 'c3-use-3.algolia.io', :app, :web
+server 'hnsearch-1.algolia.net', :app, :web, :db, :cron, primary: true
 
 # application
 set :application, "HNSearch"
 set :deploy_to, "/var/www/hnsearch"
-set :user, "prod"
+set :user, 'hnsearch'
 set :use_sudo, false
 
 # repository
@@ -51,7 +49,7 @@ before "deploy:assets:precompile", "bundle:install"
 
 # rvm
 require "rvm/capistrano"
-set :rvm_ruby_string, '2.2.2'
+set :rvm_ruby_string, '2.2.7'
 
 # cron
 set :whenever_command, "bundle exec whenever"
