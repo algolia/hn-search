@@ -41,6 +41,11 @@ gem "httparty", "~> 0.13.5"
 gem 'statsd-ruby'
 
 group :development do
+  # for ed25519 keys
+  gem 'rbnacl', '>= 3.2', '< 5.0'
+  gem 'rbnacl-libsodium'
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+
   gem 'capistrano', '< 3.0.0'
   gem 'rvm-capistrano', require: false
   gem 'sqlite3'
