@@ -57,6 +57,7 @@ GEM
       builder
       mime-types
       xml-simple
+    bcrypt_pbkdf (1.0.0)
     better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -76,7 +77,7 @@ GEM
       sass (~> 3.2)
       thor
     builder (3.1.4)
-    capistrano (2.15.5)
+    capistrano (2.15.9)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -160,7 +161,7 @@ GEM
       activesupport (>= 4.0.1)
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
-    highline (1.6.21)
+    highline (1.7.10)
     hike (1.2.3)
     hitimes (1.2.2)
     hogan_assets (1.6.0)
@@ -221,9 +222,9 @@ GEM
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.1)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
+    net-ssh (4.2.0)
+    net-ssh-gateway (2.0.0)
+      net-ssh (>= 4.0.0)
     netrc (0.8.0)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -264,6 +265,10 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    rbnacl (4.0.2)
+      ffi
+    rbnacl-libsodium (1.0.16)
+      rbnacl (>= 3.0.1)
     ref (2.0.0)
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
@@ -349,6 +354,7 @@ DEPENDENCIES
   angular_xss
   angularjs-rails (= 1.5.8)
   aws-s3
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   better_errors
   binding_of_caller
   bitters
@@ -390,6 +396,8 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent
   rb-inotify
+  rbnacl (>= 3.2, < 5.0)
+  rbnacl-libsodium
   rest-client
   rvm-capistrano
   sass-rails (~> 4.0.0)
@@ -406,7 +414,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 2.2.2p95
+   ruby 2.2.7p470
 
 BUNDLED WITH
-   1.14.3
+   1.16.0
