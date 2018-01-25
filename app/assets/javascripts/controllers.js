@@ -123,21 +123,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     return {}
   }
 
-  // Wrap in setTimeout to execute after render
-  function getQueryForAlgolia() {
-    return JSON.parse(getQueryForRelevance())
-  }
-  
-  setTimeout(function(){
-    aa('initSearch',{
-      inputSelector: '.page-header .search-wrapper input',
-      indexName: function(){
-        return getIndex($scope.query).indexName
-      },
-      searchState: getQueryForAlgolia
-    })
-  },100)
-
   //Search scope
   $scope.getSearch = function(noProgres) {
     if (!noProgres) {
@@ -147,6 +132,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     var _search = function(ids) {
       var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
       getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
+        aa && aa('initSearch', { getQueryID: () => results.queryID });
         parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
         if (parsedQuery.query === results.query) {
           // only take the results into account if the query matches the we have currently
@@ -172,6 +158,18 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     } else {
       _search();
     }
+  };
+
+  $scope.clickHit = function(objectID, position) {
+    aa && aa('click', {
+      objectID: objectID, position: position
+    });
+  };
+
+  $scope.gotoHit = function(objectID) {
+    aa && aa('conversion', {
+      objectID: objectID
+    });
   };
 
   $scope.loadComments = function(id, $event) {

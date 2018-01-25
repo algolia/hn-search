@@ -120,7 +120,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             minWordSizefor1Typo: 4,
             minWordSizefor2Typos: 8,
             advancedSyntax: true,
-            ignorePlurals: false
+            ignorePlurals: false,
+            clickAnalytics: true
         }
     };
 
