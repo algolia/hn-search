@@ -1,5 +1,5 @@
-Rails.application.assets.context_class.class_eval do
-  include ApplicationHelper
-  include ActionView::Helpers
-  include Rails.application.routes.url_helpers
+Rails.application.config.assets.configure do |env|
+  env.context_class.send :include, ApplicationHelper
+  env.context_class.send :include, ActionView::Helpers
+  env.context_class.send :include, Rails.application.routes.url_helpers
 end
