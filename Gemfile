@@ -77,5 +77,4 @@ end
 group :test do
   gem 'capybara'
   gem 'minitest-spec-rails'
-  gem 'minitest-wscolor'
 end

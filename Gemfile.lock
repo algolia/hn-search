@@ -787,8 +787,6 @@ GEM
     minitest-spec-rails (5.4.0)
       minitest (~> 5.0)
       rails (>= 4.1)
-    minitest-wscolor (0.0.3)
-      minitest (>= 2.3.1)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -993,7 +991,6 @@ DEPENDENCIES
   jquery-rails
   lograge
   minitest-spec-rails
-  minitest-wscolor
   mysql2
   neat
   open_uri_redirections
