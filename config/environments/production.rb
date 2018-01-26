@@ -24,7 +24,7 @@ Hnsearch::Application.configure do
   config.action_controller.asset_host = "d3nb9u6x572n0.cloudfront.net"
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
