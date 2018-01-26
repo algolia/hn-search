@@ -34,7 +34,7 @@ gem 'angular-rails-templates'
 gem 'actionpack-action_caching'
 gem 'turnout'
 
-gem 'firebase'
+gem 'firebase', '0.2.2'
 gem "eventmachine", "~> 1.0.8"
 gem "em-http-request", "~> 1.1.2"
 gem "httparty", "~> 0.13.5"
