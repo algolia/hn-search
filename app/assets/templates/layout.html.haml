@@ -1,7 +1,7 @@
 .container
   %header.page-header
     .logo-wrapper
-      %a.logo{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'ng-click' => 'reset()'}
+      %a.logo{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}'.html_safe, 'ng-click' => 'reset()'}
         %img{src:"/assets/logo-hn-search.png"}
         .logo-name
           Search
@@ -9,9 +9,9 @@
           Hacker News
     .search-wrapper{'ui-view' => 'col-2'}
     .nav-link-settings
-      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'results'}
+      %a{'ng-href' => '/settings?{{ settings.style === "experimental" ? "experimental" : "" }}'.html_safe, 'active-link' => true, 'ng-if' => 'results'}
         %i.icon-params
-      %a.back{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}', 'active-link' => true, 'ng-if' => 'isSettings'}
+      %a.back{'ng-href' => '/?{{ settings.style === "experimental" ? "experimental" : "" }}'.html_safe, 'active-link' => true, 'ng-if' => 'isSettings'}
         %i.icon-rewind
         Back
   %section.main
