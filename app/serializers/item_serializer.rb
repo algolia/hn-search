@@ -9,7 +9,7 @@ class ItemSerializer < ActiveModel::Serializer
   end
 
   def created_at_i
-    created_at.to_i
+    object.created_at.to_i
   end
 
   def text
