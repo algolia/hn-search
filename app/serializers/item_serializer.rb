@@ -1,7 +1,7 @@
 class ItemSerializer < ActiveModel::Serializer
   attributes :id, :created_at, :created_at_i, :type, :author, :title, :url, :text, :points, :parent_id, :story_id
 
-  has_many :children
+  has_many :children, serializer: ItemSerializer
   has_many :options
 
   def type
