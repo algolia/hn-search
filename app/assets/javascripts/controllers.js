@@ -132,7 +132,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     var _search = function(ids) {
       var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
       getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
-        aa && aa('initSearch', { getQueryID: () => results.queryID });
+        aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
         parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
         if (parsedQuery.query === results.query) {
           // only take the results into account if the query matches the we have currently
