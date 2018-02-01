@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/redox/bluepill
-  revision: 86b08e6d24e748f70369847bba746fd7e620ae1b
+  revision: 0d1ed822d399d07c1681d5ae6723fd44bcbe05bf
   branch: master
   specs:
     bluepill (0.1.3)
