@@ -49,6 +49,10 @@
       .form-control
         %input#storyText.form-control{type:'checkbox', 'ng-model' => 'settings.storyText'}
     .form-group
+      %label.label-control{for:'authorText'} Use the author's username for the search
+      .form-control
+        %input#authorText.form-control{type:'checkbox', 'ng-model' => 'settings.authorText'}
+    .form-group
       %label.label-control{for:'typoTolerance'} Typo-tolerance
       .form-control
         %input#typoTolerance.form-control{type:'checkbox', 'ng-model' => 'settings.typoTolerance'}

@@ -12,6 +12,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         style: 'default',
         typoTolerance: true,
         storyText: true,
+        authorText: true,
         hitsPerPage: 20
     });
 
@@ -44,6 +45,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
             dateEnd: queryParameters.dateEnd,
             typoTolerance: storage.typoTolerance,
             storyText: (typeof queryParameters.storyText === 'undefined' ? storage.storyText : (queryParameters.storyText === 'true')),
+            authorText: (typeof queryParameters.authorText === 'undefined' ? storage.authorText : (queryParameters.authorText === 'true')),
             hitsPerPage: storage.hitsPerPage
         };
     }
@@ -83,6 +85,7 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         $localStorage.style = settings.style;
         $localStorage.typoTolerance = settings.typoTolerance;
         $localStorage.storyText = settings.storyText;
+        $localStorage.authorText = settings.authorText;
         $localStorage.hitsPerPage = settings.hitsPerPage;
         $('body').attr('rel', settings.style);
 
@@ -210,12 +213,17 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         // typo tolerance
         this.params.typoTolerance = settings.sort === 'byPopularity' && settings.typoTolerance;
 
-        // story text
-        if (!settings.storyText) {
+        // restrict attributes to search on, based on storyText and authorText settings
+        this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url'];
+        if (settings.storyText) {
+            this.params.restrictSearchableAttributes.push('story_text');
+        } else{
             $location.search('storyText', false);
-            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'author'];
+        }
+        if (settings.authorText) {
+            this.params.restrictSearchableAttributes.push('author');
         } else {
-            this.params.restrictSearchableAttributes = [];
+            $location.search('authorText', false);
         }
 
         // hits per page
