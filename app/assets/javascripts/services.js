@@ -214,17 +214,22 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
         this.params.typoTolerance = settings.sort === 'byPopularity' && settings.typoTolerance;
 
         // restrict attributes to search on, based on storyText and authorText settings
-        this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url'];
-        if (settings.storyText) {
-            this.params.restrictSearchableAttributes.push('story_text');
-        } else{
+        if (!settings.storyText && !settings.authorText) {
+            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url'];
+        } else if (settings.storyText && !settings.authorText) {
+            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'story_text'];
+        } else if (!settings.storyText && settings.authorText) {
+            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'author'];
+        } else {
+            this.params.restrictSearchableAttributes = [];
+        }
+        if (!settings.storyText) {
             $location.search('storyText', false);
         }
-        if (settings.authorText) {
-            this.params.restrictSearchableAttributes.push('author');
-        } else {
+        if (!settings.authorText) {
             $location.search('authorText', false);
         }
+
 
         // hits per page
         this.params.hitsPerPage = settings.hitsPerPage;
