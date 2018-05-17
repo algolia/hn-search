@@ -50,11 +50,11 @@
       %li.item-comments{"ng-repeat"=>"comment in story[hit.objectID].comments.children"}
         %span.author
           %avatar{author:"comment.author"}
-          %a{'ng-href' => 'https://news.ycombinator.com/user?id={{ comment.author }}', 'ng-title' => 'See {{ reply.author }} profile'}
+          %a{'ng-href' => 'https://news.ycombinator.com/user?id={{ comment.author }}'.html_safe, 'ng-title' => 'See {{ reply.author }} profile'.html_safe}
             {{comment.author || "deleted"}}
         %span{'ng-if' => 'comment.created_at'}
           \-
-          %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#{{comment.id}}', title: '{{ comment.created_at }}'.html_safe} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
+          %a.date{'ng-href' => 'https://news.ycombinator.com/item?id={{comment.story_id}}#{{comment.id}}'.html_safe, title: '{{ comment.created_at }}'.html_safe} {{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}
         .reply-container{"ng-bind-html"=>"comment.text|cleanup"}
         %collection{collection:"comment.children"}
     .item-clearfix
