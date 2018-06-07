@@ -185,6 +185,19 @@ $(document).ready(function() {
     if (e.keyCode == 38)
       doc.scrollTop(0);
   });
-
-  
 });
+
+window.trackResource = function(queryid){
+  if (performance === undefined) {
+    return false
+  }
+  var resources = performance.getEntriesByType("resource");
+
+  if (resources === undefined || resources.length <= 0) {
+    return false
+  }
+  
+  var lastAlgoliaRequest = resources.reverse().find(function(resource){
+    return resource.initiatorType === 'xmlhttprequest' && resource.name.indexOf('x-algolia-agent') > -1
+  })
+}
