@@ -13,29 +13,29 @@
 
 ActiveRecord::Schema.define(version: 20150307103111) do
 
-  create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",               default: 0, null: false
-    t.integer  "attempts",               default: 0, null: false
-    t.text     "handler",                            null: false
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by",  limit: 255
-    t.string   "queue",      limit: 255
+    t.string   "locked_by"
+    t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
-  create_table "items", force: :cascade do |t|
-    t.integer  "item_type_cd",                             null: false
-    t.datetime "created_at",                               null: false
-    t.boolean  "deleted",                  default: false, null: false
-    t.boolean  "dead",                     default: false, null: false
-    t.string   "author",       limit: 255
-    t.string   "title",        limit: 255
+  create_table "items", force: true do |t|
+    t.integer  "item_type_cd",                 null: false
+    t.datetime "created_at",                   null: false
+    t.boolean  "deleted",      default: false, null: false
+    t.boolean  "dead",         default: false, null: false
+    t.string   "author"
+    t.string   "title"
     t.text     "url"
     t.text     "text"
     t.integer  "points"
@@ -54,14 +54,14 @@ ActiveRecord::Schema.define(version: 20150307103111) do
   add_index "items", ["story_id"], name: "index_items_on_story_id"
   add_index "items", ["updated_at"], name: "index_items_on_updated_at"
 
-  create_table "users", force: :cascade do |t|
-    t.string   "username",   limit: 255,             null: false
+  create_table "users", force: true do |t|
+    t.string   "username",               null: false
     t.text     "about"
     t.integer  "karma"
-    t.datetime "created_at",                         null: false
+    t.datetime "created_at",             null: false
     t.float    "avg"
     t.integer  "delay"
-    t.integer  "submitted",              default: 0, null: false
+    t.integer  "submitted",  default: 0, null: false
     t.datetime "updated_at"
   end
 
