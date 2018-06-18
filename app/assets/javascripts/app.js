@@ -187,7 +187,7 @@ $(document).ready(function() {
   });
 });
 
-window.trackResource = function(queryId){
+window.trackResource = function(query){
   try {
     if (performance === undefined) {
       return false
@@ -224,6 +224,8 @@ window.trackResource = function(queryId){
     var encodedBodySize = lastAlgoliaRequest.encodedBodySize
     // transferSize
     var transferSize = lastAlgoliaRequest.transferSize
+    // Engine processing time
+    var engineProcessingTime = query.processingTimeMS
 
     var supportsNavigator = navigator && typeof navigator.sendBeacon === 'function';
     
@@ -239,6 +241,7 @@ window.trackResource = function(queryId){
       decodedBodySize,
       encodedBodySize,
       transferSize,
+      engineProcessingTime,
       nextHopProtocol: lastAlgoliaRequest.nextHopProtocol,
       domain: lastAlgoliaRequest.name.match(/(.*)\:\/\/(.*?)\//)[2]
     }

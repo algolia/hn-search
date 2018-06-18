@@ -132,7 +132,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     var _search = function(ids) {
       var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
       getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
-        typeof window.trackResource === 'function' && window.trackResource(results.queryID);
+        typeof window.trackResource === 'function' && window.trackResource(results);
 
         aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
         parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
