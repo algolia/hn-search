@@ -247,10 +247,18 @@ window.trackResource = function(query){
     }
 
     if (navigator.connection) {
-      data.effectiveType = navigator.connection.effectiveType;
-      data.downLink = navigator.connection.downLink;
-      data.downlinkMax = navigator.connection.downlinkMax;
-      data.type = navigator.connection.type;
+      if(data.effectiveType) {
+        data.effectiveType = navigator.connection.effectiveType;
+      }
+      if(data.downLink) {
+        data.downLink = navigator.connection.downLink === Infinity ? -1 : navigator.connection.downLink;
+      }
+      if(data.downLinkMax) {
+        data.downlinkMax = navigator.connection.downlinkMax === Infinity ? -1 : navigator.connection.downlinkMax;
+      }
+      if(data.type) {
+        data.type = navigator.connection.type;
+      }
     }
 
     var url = "https://telemetry.algolia.com/dev/v1/measure"
