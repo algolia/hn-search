@@ -246,6 +246,13 @@ window.trackResource = function(query){
       domain: lastAlgoliaRequest.name.match(/(.*)\:\/\/(.*?)\//)[2]
     }
 
+    if (navigator.connection) {
+      data.effectiveType = navigator.connection.effectiveType;
+      data.downLink = navigator.connection.downLink;
+      data.downlinkMax = navigator.connection.downlinkMax;
+      data.type = navigator.connection.type;
+    }
+
     var url = "https://telemetry.algolia.com/dev/v1/measure"
 
     if(supportsNavigator){
