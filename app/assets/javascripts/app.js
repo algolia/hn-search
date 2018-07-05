@@ -247,7 +247,7 @@ window.trackResource = function(query){
     }
 
     if (navigator.connection) {
-      data.connectionType = navigator.connection.effectiveType;
+      data.effectiveType = navigator.connection.effectiveType;
       data.downLink = navigator.connection.downLink;
       data.downlinkMax = navigator.connection.downlinkMax;
       data.type = navigator.connection.type;
