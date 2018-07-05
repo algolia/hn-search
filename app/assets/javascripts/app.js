@@ -247,16 +247,16 @@ window.trackResource = function(query){
     }
 
     if (navigator.connection) {
-      if(data.effectiveType) {
+      if(navigator.connection.effectiveType) {
         data.effectiveType = navigator.connection.effectiveType;
       }
-      if(data.downLink) {
-        data.downLink = navigator.connection.downLink === Infinity ? -1 : navigator.connection.downLink;
+      if(navigator.connection.downlink) {
+        data.downLink = navigator.connection.downLink === Infinity ? -1 : navigator.connection.downlink;
       }
-      if(data.downLinkMax) {
+      if(navigator.connection.downlinkMax) {
         data.downlinkMax = navigator.connection.downlinkMax === Infinity ? -1 : navigator.connection.downlinkMax;
       }
-      if(data.type) {
+      if(navigator.connection.type) {
         data.type = navigator.connection.type;
       }
     }
