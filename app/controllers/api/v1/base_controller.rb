@@ -23,7 +23,7 @@ module Api
           render json: json, root: false
         end
       rescue Algolia::AlgoliaProtocolError => e
-        render text: e.message, status: e.code
+        render json: { message: e.message}, status: e.code
       end
 
       private
@@ -97,11 +97,11 @@ module Api
             end
             raise ActiveRecord::RecordNotFound.new(JSON.parse(answer.content)['message']) if answer.code == 404
             if answer.code >= 400 || answer.code < 200
-              raise "#{method} #{url} (#{answer.code}): #{answer.content}"
+              raise Algolia::AlgoliaProtocolError.new(answer.code, "Cannot #{method} to #{url}: #{answer.content} (#{answer.code})")
             end
             return json ? JSON.parse(answer.content) : answer.content
           rescue Algolia::AlgoliaProtocolError => e
-            raise if e.code == Algolia::Protocol::ERROR_FORBIDDEN || e.code == Algolia::Protocol::ERROR_BAD_REQUEST
+            raise if e.code / 100 == 4
           end
         end
         raise Algolia::AlgoliaProtocolError.new(500, "Cannot reach any hosts")
