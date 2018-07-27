@@ -97,7 +97,7 @@ module Api
             end
             raise ActiveRecord::RecordNotFound.new(JSON.parse(answer.content)['message']) if answer.code == 404
             if answer.code >= 400 || answer.code < 200
-              raise Algolia::AlgoliaProtocolError.new(answer.code, "Cannot #{method} to #{url}: #{answer.content} (#{answer.code})")
+              raise Algolia::AlgoliaProtocolError.new(answer.code, JSON.parse(answer.content)['message'])
             end
             return json ? JSON.parse(answer.content) : answer.content
           rescue Algolia::AlgoliaProtocolError => e
