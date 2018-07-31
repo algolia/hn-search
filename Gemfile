@@ -68,7 +68,7 @@ group :development do
   gem 'terminal-notifier-guard'
 end
 group :production do
-  gem 'mysql2'
+  gem 'mysql2', '< 0.5'
   gem "lograge"
 end
 group :development, :test do
