@@ -136,7 +136,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
 
-  var THROTTLING_TIMEOUT = 5000;
+  var THROTTLING_TIMEOUT = 50;
   var THROTTLING_COOKIE_KEY = 'search_throttle';
 
   //Search scope
@@ -147,24 +147,23 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
     var _search = function(ids) {
       var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
-      var previousThrottlingTimeout = getCookie(THROTTLING_COOKIE_KEY)
-
-      // When we update the timeout, clear cookie cache
-      if(previousThrottlingTimeout && parseInt(previousThrottlingTimeout) !== THROTTLING_TIMEOUT) {
-        setCookie(THROTTLING_COOKIE_KEY, THROTTLING_TIMEOUT, 30)
-      }
+      var previousThrottlingTimeoutCookie = getCookie(THROTTLING_COOKIE_KEY)
+      var previousThrottlingTimeout =  previousThrottlingTimeoutCookie ? parseInt(previousThrottlingTimeoutCookie) : 0
 
       setTimeout(function() {
         getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
           typeof window.trackResource === 'function' && window.trackResource(results);
           aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
 
-          if(results.indexUsed && results.indexUsed.indexOf('telemetry' > -1) && !getCookie(THROTTLING_COOKIE_KEY)){
+          if(results.indexUsed && results.indexUsed.indexOf('telemetry' > -1) && getCookie(THROTTLING_COOKIE_KEY) !== THROTTLING_TIMEOUT){
             setCookie(THROTTLING_COOKIE_KEY, THROTTLING_TIMEOUT, 30)
           } else {
             // external stop of the A/B test and throttling
             setCookie(THROTTLING_COOKIE_KEY, 0, 30)
           }
+          
+          Analytics.set('dimension1', previousThrottlingTimeout);
+          Analytics.trackEvent('search', 'results', parsedQuery.query)
 
           parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
           if (parsedQuery.query === results.query) {
@@ -175,7 +174,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
             NProgress.done();
           }
         });
-      }, previousThrottlingTimeout ? parseInt(previousThrottlingTimeout) : 0)
+      }, previousThrottlingTimeout)
     };
 
     if ($scope.state === 'hot') {
