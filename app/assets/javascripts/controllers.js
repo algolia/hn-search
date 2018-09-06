@@ -136,7 +136,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
 
-  var THROTTLING_TIMEOUT = 50;
+  var THROTTLING_TIMEOUT = 100;
   var THROTTLING_COOKIE_KEY = 'search_throttle';
 
   //Search scope
