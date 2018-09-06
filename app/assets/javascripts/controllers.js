@@ -150,6 +150,8 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       var previousThrottlingTimeoutCookie = getCookie(THROTTLING_COOKIE_KEY)
       var previousThrottlingTimeout =  previousThrottlingTimeoutCookie ? parseInt(previousThrottlingTimeoutCookie) : 0
 
+      parsedQuery.params.getRankingInfo = true;
+
       setTimeout(function() {
         getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
           typeof window.trackResource === 'function' && window.trackResource(results);
