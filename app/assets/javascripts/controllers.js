@@ -123,6 +123,22 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     return {}
   }
 
+  function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  var THROTTLING_TIMEOUT = 100;
+  var THROTTLING_COOKIE_KEY = 'search_throttle';
+
   //Search scope
   $scope.getSearch = function(noProgres) {
     if (!noProgres) {
@@ -131,19 +147,34 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
     var _search = function(ids) {
       var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
-      getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
-        typeof window.trackResource === 'function' && window.trackResource(results);
+      var previousThrottlingTimeoutCookie = getCookie(THROTTLING_COOKIE_KEY)
+      var previousThrottlingTimeout =  previousThrottlingTimeoutCookie ? parseInt(previousThrottlingTimeoutCookie) : 0
 
-        aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
-        parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
-        if (parsedQuery.query === results.query) {
-          // only take the results into account if the query matches the we have currently
-          $scope.results = results;
-        }
-        if (!noProgres) {
-          NProgress.done();
-        }
-      });
+      setTimeout(function() {
+        getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
+          typeof window.trackResource === 'function' && window.trackResource(results);
+          aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
+
+          if(results.indexUsed && results.indexUsed.indexOf('telemetry' > -1) && getCookie(THROTTLING_COOKIE_KEY) !== THROTTLING_TIMEOUT){
+            setCookie(THROTTLING_COOKIE_KEY, THROTTLING_TIMEOUT, 30)
+          } else {
+            // external stop of the A/B test and throttling
+            setCookie(THROTTLING_COOKIE_KEY, 0, 30)
+          }
+          
+          Analytics.set('dimension1', previousThrottlingTimeout);
+          Analytics.trackEvent('search', 'results', parsedQuery.query)
+
+          parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
+          if (parsedQuery.query === results.query) {
+            // only take the results into account if the query matches the we have currently
+            $scope.results = results;
+          }
+          if (!noProgres) {
+            NProgress.done();
+          }
+        });
+      }, previousThrottlingTimeout)
     };
 
     if ($scope.state === 'hot') {
