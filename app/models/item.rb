@@ -54,6 +54,15 @@ class Item < ActiveRecord::Base
       customRanking ['desc(created_at_i)']
       ranking ['custom']
     end
+
+    add_slave "telemetry_Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming
+      attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
+    end
+
+    add_slave "telemetry_Item_#{Rails.env}_sort_date", inherit: true do # backward compatibility naming
+      customRanking ['desc(created_at_i)']
+      ranking ['custom']
+    end
   end
 
   def story_text
