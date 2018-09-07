@@ -55,6 +55,10 @@ class Item < ActiveRecord::Base
       ranking ['custom']
     end
 
+    add_slave "telemetry_Item_#{Rails.env}", inherit: true do
+      # just copy from primary
+    end
+
     add_slave "telemetry_Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming
       attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
     end
