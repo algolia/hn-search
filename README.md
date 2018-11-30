@@ -36,6 +36,20 @@ open http://localhost:3000
 
 If you want to contribute to the UI, the only directory you need to look at is `app/assets`. This directory contains all the JS, HTML & CSS code.
 
+### Deployment
+
+To deploy, we're using capistrano and therefore you need SSH access to the underlying machines and run from your own computer:
+
+```shell
+bundle exec cap deploy
+```
+
+There is currently (December 2018) a bug with `bluepill` stopping the deployment. To workaround it, you need to force a restart with the following command instead:
+
+```shell
+bundle exec cap deploy:restart
+```
+
 
 Indexing Configuration
 --------------
