@@ -26,6 +26,12 @@ set :git_shallow_clone, 1
 
 # keep 5 last releases
 set :keep_releases, 5
+
+task :install_javascript_dependencies do
+  run "yarn install"
+end
+
+before "deploy:starting", "install_javascript_dependencies"
 after "deploy:update", "deploy:cleanup"
 
 # configuration
