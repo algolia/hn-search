@@ -54,10 +54,10 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
     // Algolia settings
     settingsService.client = algoliasearch('UJ5WYC0L7X', '8ece23f8eb07cd25d40262a1764599b1');
 
-    settingsService.indexSortedByPopularity = settingsService.client.initIndex('Item_production');
-    settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
-    settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
     settingsService.indexUser = settingsService.client.initIndex('User_production');
+    settingsService.indexSortedByPopularity = settingsService.client.initIndex('Item_production');
+    settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
+    settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
 
     settingsService.reset = function() {
         settings.dateRange = settings.defaultDateRange;
