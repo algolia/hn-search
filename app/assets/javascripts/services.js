@@ -1,6 +1,6 @@
-angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-google-analytics'])
+angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
 
-.factory('settings', ['$location', 'algolia', '$localStorage', 'Analytics', function($location, algolia, $localStorage, Analytics) {
+.factory('settings', ['$location', '$localStorage', 'Analytics', function($location, $localStorage, Analytics) {
     var settingsService = {};
 
     //default settings
@@ -52,9 +52,8 @@ angular.module('HNSearch.services', ['algoliasearch', 'ngStorage', 'angular-goog
     var settings = _loadSettings();
 
     // Algolia settings
-    var algoliaConfig = { appID: 'UJ5WYC0L7X', apiKey: '8ece23f8eb07cd25d40262a1764599b1' }; // FIXME
+    settingsService.client = algoliasearch('UJ5WYC0L7X', '8ece23f8eb07cd25d40262a1764599b1');
 
-    settingsService.client = algolia.Client(algoliaConfig.appID, algoliaConfig.apiKey);
     settingsService.indexSortedByPopularity = settingsService.client.initIndex('Item_production');
     settingsService.indexSortedByPopularityOrdered = settingsService.client.initIndex('Item_production_ordered');
     settingsService.indexSortedByDate = settingsService.client.initIndex('Item_production_sort_date');
