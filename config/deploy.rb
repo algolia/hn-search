@@ -34,7 +34,6 @@ task :install_javascript_dependencies do
   run "source /home/prod/.nvm/nvm.sh && nvm use #{node_version} && yarn install"
 end
 
-before "deploy:starting", "install_javascript_dependencies"
 after "deploy:update", "deploy:cleanup"
 
 # configuration
@@ -55,6 +54,7 @@ namespace :deploy do
 end
 
 # ugly workaround for bug https://github.com/capistrano/capistrano/issues/81
+before "deploy:assets:precompile", "install_javascript_dependencies"
 before "deploy:assets:precompile", "bundle:install"
 
 # rvm
