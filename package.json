@@ -1,0 +1,11 @@
+{
+  "name": "hn-search",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/algolia/hn-search",
+  "author": "Jonas Badalic <jonas.badalic@algolia.com>",
+  "license": "MIT",
+  "dependencies": {
+    "algoliasearch": "JonasBa/algoliasearch-client-javascript#20c9466"
+  }
+}

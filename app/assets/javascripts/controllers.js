@@ -170,8 +170,10 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
           parsedQuery = parseQuery($scope.query || '', search.getParams(ids)); // reparse the query once the promise is resolved
           if (parsedQuery.query === results.query) {
             // only take the results into account if the query matches the we have currently
-            $scope.results = results;
-          }
+            $scope.$apply(function () {
+              $scope.results = results;
+            })
+          } 
           if (!noProgres) {
             NProgress.done();
           }

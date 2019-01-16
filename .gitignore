@@ -10,6 +10,9 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
+# JS dependencies
+/node_modules/
+
 # bundler state
 /.bundle
 /vendor/bundle/
