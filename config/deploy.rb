@@ -27,8 +27,11 @@ set :git_shallow_clone, 1
 # keep 5 last releases
 set :keep_releases, 5
 
+set :node_version, "v8.4.0"
+set :yarn_version, "1.7.0"
+
 task :install_javascript_dependencies do
-  run "yarn install"
+  run "source /home/prod/.nvm/nvm.sh && nvm use #{node_version} && yarn install"
 end
 
 before "deploy:starting", "install_javascript_dependencies"
