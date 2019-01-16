@@ -1,0 +1,78 @@
+<div class='container'>
+<header class='page-header'>
+<div class='logo-wrapper'>
+<a class='logo' ng-click='reset()' ng-href='/?{{ settings.style === "experimental" ? "experimental" : "" }}'>
+<img src='/assets/logo-hn-search.png'>
+<div class='logo-name'>
+Search
+<br>
+Hacker News
+</div>
+</a>
+</div>
+<div class='search-wrapper' ui-view='col-2'></div>
+<div class='nav-link-settings'>
+<a active-link ng-href='/settings?{{ settings.style === "experimental" ? "experimental" : "" }}' ng-if='results'>
+<i class='icon-params'></i>
+</a>
+<a active-link class='back' ng-href='/?{{ settings.style === "experimental" ? "experimental" : "" }}' ng-if='isSettings'>
+<i class='icon-rewind'></i>
+Back
+</a>
+</div>
+</header>
+<section class='main'>
+<div ng-include='&quot;_sidebar.html&quot;'></div>
+<header ui-view='main-header'></header>
+<section class='main-content' ui-view='main-content'></section>
+<footer>
+<ul class='list-inline'>
+<li>
+<a href='/about'>About</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='/settings'>Settings</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='/help'>Help</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='/api'>API</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='https://news.ycombinator.com'>Hacker News</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='https://github.com/algolia/hn-search'>Fork/Contribute</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='http://status.algolia.com/hn'>Status</a>
+</li>
+<li>
+•
+</li>
+<li>
+<a href='/cool_apps'>Cool apps</a>
+</li>
+</ul>
+</footer>
+</section>
+</div>

@@ -1,0 +1,169 @@
+<section class='search-results' defer-share-dropdown sticky-list>
+<div bindonce class='item' ng-class='&quot;item_&quot; + hit.objectID + (story[hit.objectID] ? &quot; item-show-comments&quot; : &quot;&quot;)' ng-click='clickHit(hit.objectID, $index + 1)' ng-repeat='hit in results.hits'>
+<div class='item-main'>
+<div class='item-content-wrapper'>
+<a bo-if='settings.showThumbnails &amp;&amp; settings.style !== &quot;default&quot; &amp;&amp; hit._tags[0] === &quot;story&quot; &amp;&amp; state !== &quot;ask-hn&quot; &amp;&amp; state !== &quot;polls&quot;' class='item-thumbnail-link' ng-href='{{ $root.DOUBLE_LEFT_CURLY_BRACE }}hit.url}}'>
+<img class='item-thumbnail' img-preload ng-src='https://drcs9k8uelb9s.cloudfront.net/{{hit.objectID}}.png'>
+</a>
+<div class='item-title-and-infos'>
+<h2>
+<a bo-href='hit.url || (&#39;https://news.ycombinator.com/item?id=&#39; + hit.objectID)' bo-html='hit._highlightResult.title.value' bo-show='hit._tags[0] === &#39;story&#39; || hit._tags[0] === &#39;poll&#39; || hit._tags[0] === &#39;job&#39;' ng-click='gotoHit(hit.objectID)'></a>
+<a bo-href='hit.story_url' bo-html='hit.story_title' bo-if='hit._tags[0] === &#39;comment&#39;'></a>
+</h2>
+<ul class='item-infos list-inline'>
+<li bo-show='hit.points'>
+<i class='icon-heart'></i>
+<a bo-href='&quot;https://news.ycombinator.com/item?id=&quot; + hit.objectID' title='See original post on HN'>
+<span class='date'>{{ ::hit.points }} points</span>
+</a>
+</li>
+<li>
+<i class='icon-head'></i>
+<a bo-href='&quot;https://news.ycombinator.com/user?id=&quot; + hit.author' title='See {{ ::hit.author }} profile'>
+<span bo-html='hit._highlightResult.author.value' class='author'></span>
+</a>
+</li>
+<li>
+<i class='icon-clock'></i>
+<a bo-href='&quot;https://news.ycombinator.com/item?id=&quot; + (hit._tags[0] === &quot;comment&quot; ? hit.story_id + &quot;#&quot; + hit.objectID : hit.objectID)' title='{{ ::hit.created_at }}'>
+<span class='date'>{{ ::hit.created_at_i | moment }}</span>
+</a>
+</li>
+<li bo-show='settings.style === &quot;default&quot;'>
+<i class='icon-speech-bubble'></i>
+<a bo-href='&quot;https://news.ycombinator.com/item?id=&quot; + hit.objectID' title='See original post on HN'>
+<span class='comments'>{{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span></span>
+</a>
+</li>
+<li bo-show='hit.url'>
+<a bo-href='hit.url' bo-html='hit._highlightResult.url.value | domain' class='hit-link'></a>
+</li>
+</ul>
+</div>
+<div bo-html='hit._highlightResult.comment_text.value|cleanup' bo-show='hit.comment_text &amp;&amp; hit._tags[0] === &quot;comment&quot;' class='text-container'></div>
+<div bo-html='hit._highlightResult.story_text.value|cleanup' bo-show='hit.story_text &amp;&amp; (hit._tags[0] === &quot;story&quot; || hit._tags[0] === &quot;job&quot;)' class='text-container'></div>
+</div>
+<div bo-show='hit._tags[0] === &quot;story&quot; || hit._tags[0] === &quot;poll&quot; || hit._tags[0] === &quot;job&quot;' class='item-actions'>
+<ul class='list-inline'>
+<li bo-show='state != &quot;jobs&quot;' class='action-toggle-comments'>
+<!-- %i.icon-speech-bubble -->
+<a bo-href='&quot;/story/&quot; + hit.objectID + &quot;/&quot; + friendly(hit.title)' bo-show='hit.num_comments &gt; 0' class='comments-bubble' ng-click='loadComments(hit.objectID, $event)'>
+<!-- {{ ::hit.num_comments }} comment<span bo-show="hit.num_comments != 1">s</span> -->
+{{ ::hit.num_comments }}
+</a>
+<!-- %span{'bo-show' => 'hit.num_comments == 0'} no comment -->
+<span bo-show='hit.num_comments == 0' class='comments-bubble no-comments'>0</span>
+</li>
+<li class='action-share'>
+<a class='placeholder'>
+<i class='icon-share'></i>
+</a>
+<a bo-href='&quot;/story/&quot; + hit.objectID + &quot;/&quot; + friendly(hit.title)' class='dropwdown-share' dropdown-menu='ddMenuShare' dropdown-onchange='shareItem(selected, hit)'>
+<i class='icon-share'></i>
+</a>
+</li>
+<li bo-show='state != &quot;jobs&quot;' class='action-toggle-star'>
+<a href='#' ng-class='{ &quot;starred&quot;: isStarred(hit.objectID) }' ng-click='toggleStar($event, hit.objectID)'>
+<i class='icon-star'></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<ul class='list-item-comments' ng-if='story[hit.objectID]'>
+<li class='item-comments' ng-repeat='comment in story[hit.objectID].comments.children'>
+<span class='author'>
+<avatar author='comment.author'></avatar>
+<a ng-href='https://news.ycombinator.com/user?id={{ comment.author }}' ng-title='See {{ reply.author }} profile'>
+{{comment.author || "deleted"}}
+</a>
+</span>
+<span ng-if='comment.created_at'>
+-
+<a class='date' ng-href='https://news.ycombinator.com/item?id={{comment.story_id}}#{{comment.id}}' title='{{ comment.created_at }}'>{{ ::comment.created_at_i | moment:'M/D/YYYY h:m A' }}</a>
+</span>
+<div class='reply-container' ng-bind-html='comment.text|cleanup'></div>
+<collection collection='comment.children'></collection>
+</li>
+</ul>
+<div class='item-clearfix'></div>
+</div>
+<div class='no-results text-center' ng-show='results.hits.length == 0 &amp;&amp; state == &quot;starred&quot; &amp;&amp; settings.dateRange == &quot;all&quot; '>
+<p>You don't have any starred items.</p>
+</div>
+<div class='no-results text-center' ng-show='results.hits.length == 0 &amp;&amp; state == &quot;starred&quot; &amp;&amp; settings.dateRange != &quot;all&quot;'>
+<p>You don't have any starred items <strong>for this period</strong>.</p>
+</div>
+<div class='no-results' ng-show='results.hits.length == 0 &amp;&amp; state != &quot;starred&quot;'>
+<p>
+No
+<strong ng-show='settings.type === &quot;all&quot;'>items</strong>
+<strong ng-show='settings.type === &quot;story&quot;'>stories</strong>
+<strong ng-show='settings.type === &quot;comment&quot;'>comments</strong>
+<span ng-show='state == &quot;user&quot; '>by <strong><code>{{settings.login}}</code></strong></span>
+<span ng-show='query'>
+matching
+<strong>
+<span ng-show='state === &quot;ask-hn&quot;'>Ask HN:</span>
+<span ng-show='state === &quot;show-hn&quot;'>Show HN:</span>
+<span ng-show='state === &quot;jobs&quot;'>Jobs:</span>
+<span ng-show='state === &quot;polls&quot;'>Polls:</span>
+<span ng-show='state === &quot;hot&quot;'>Hot:</span>
+{{ query }}
+</strong>
+</span>
+<span ng-show='settings.dateRange !== &quot;all&quot;'>
+in the
+<strong ng-show='settings.dateRange === &quot;last24h&quot;'>last 24 hours</strong>
+<strong ng-show='settings.dateRange === &quot;pastWeek&quot;'>past week</strong>
+<strong ng-show='settings.dateRange === &quot;pastMonth&quot;'>past month</strong>
+<strong ng-show='settings.dateRange === &quot;pastYear&quot;'>past year</strong>
+</span>
+</p>
+<div ng-show='query || settings.dateRange !== &quot;all&quot; || settings.type !== &quot;all&quot;'>
+<p>Suggestions:</p>
+<ul>
+<li ng-show='query'>
+<a href='#' ng-click='selectInput($event)'>Try different keywords.</a>
+</li>
+<li ng-show='settings.dateRange !== &quot;all&quot;'>
+<a href='#' ng-click='widerDateRange($event)'>Try a wider date range.</a>
+</li>
+<li ng-show='settings.type !== &quot;all&quot;'>
+<a href='#' ng-click='searchAllItems($event)'>
+Search also for&nbsp;<span ng-if='settings.type === &quot;story&quot;'>comments</span><span ng-if='settings.type === &quot;comment&quot;'>stories</span>.
+</a>
+</li>
+</ul>
+<div class='spacer2'></div>
+<p>
+Or try popular queries:
+<br>
+<span bindonce ng-repeat='p in populars'><span ng-show='$index !== 0'>,&nbsp;</span><a href='#' ng-click='setQuery($event, p.query)'>{{ p.query }}</a></span>
+</p>
+</div>
+</div>
+<ul class='search-pagination' ng-if='results &amp;&amp; results.nbPages &gt; 1'>
+<li>
+<button ng-click='prevPage()' ng-hide='settings.page == 0'>
+<i class='icon-rewind'></i>
+</button>
+</li>
+<li ng-class='{ &quot;active&quot;: (n == settings.page) }' ng-repeat='n in getPages(results) track by $index'>
+<button ng-click='toPage(n)' ng-show='n !== &quot;...&quot;'>{{ n + 1 }}</button>
+<button disabled ng-show='n === &quot;...&quot;'>
+<i class='icon-ellipsis'></i>
+</button>
+</li>
+<li>
+<button ng-click='nextPage()' ng-hide='settings.page &gt;= results.nbPages - 1'>
+<i class='icon-fast-forward'></i>
+</button>
+</li>
+</ul>
+</section>
+<a class='scroll-to-top fade' href='#' title='Back to top'>
+<span class='tooltip'>
+<span>Top [↑]</span>
+</span>
+</a>

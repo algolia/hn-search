@@ -1,0 +1,94 @@
+<section class='edit-settings'>
+<h2>Display options</h2>
+<fieldset>
+<div class='form-group' ng-if='settings.style === &quot;experimental&quot;'>
+<label class='label-control' for='showThumbnails'>Show thumbnails</label>
+<div class='form-control'>
+<input class='form-control' id='showThumbnails' ng-model='settings.showThumbnails' type='checkbox'>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='style'>Style</label>
+<div class='form-control'>
+<select id='style' ng-model='settings.style'>
+<option value='default'>Default</option>
+<option value='experimental'>Experimental</option>
+</select>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='hitsPerPage'>Hits per page</label>
+<div class='form-control'>
+<select id='hitsPerPage' ng-model='settings.hitsPerPage'>
+<option value='10'>10</option>
+<option value='20'>20</option>
+<option value='30'>30</option>
+<option value='50'>50</option>
+</select>
+</div>
+</div>
+</fieldset>
+<h2>Ranking options</h2>
+<fieldset>
+<div class='form-group'>
+<label class='label-control' for='sortOrder'>Default type</label>
+<div class='form-control'>
+<select id='sortOrder' ng-model='settings.defaultType'>
+<option value='all'>All</option>
+<option value='story'>Stories</option>
+<option value='comment'>Comments</option>
+</select>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='sortOrder'>Default sort order</label>
+<div class='form-control'>
+<select id='sortOrder' ng-model='settings.defaultSort'>
+<option value='byDate'>Most Recent First</option>
+<option value='byPopularity'>Most Popular First</option>
+</select>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='dateRange'>Default date range</label>
+<div class='form-control'>
+<select id='dateRange' ng-model='settings.defaultDateRange'>
+<option value='last24h'>Last 24h</option>
+<option value='pastWeek'>Past Week</option>
+<option value='pastMonth'>Past Month</option>
+<option value='pastYear'>Past Year</option>
+<option value='all'>Forever</option>
+</select>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='storyText'>Use the story text for the search</label>
+<div class='form-control'>
+<input class='form-control' id='storyText' ng-model='settings.storyText' type='checkbox'>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='authorText'>Use the author's username for the search</label>
+<div class='form-control'>
+<input class='form-control' id='authorText' ng-model='settings.authorText' type='checkbox'>
+</div>
+</div>
+<div class='form-group'>
+<label class='label-control' for='typoTolerance'>Typo-tolerance</label>
+<div class='form-control'>
+<input class='form-control' id='typoTolerance' ng-model='settings.typoTolerance' type='checkbox'>
+</div>
+</div>
+</fieldset>
+<div ng-if='settings.style === &quot;experimental&quot;'>
+<h2>Your options</h2>
+<fieldset>
+<div class='form-group'>
+<label class='label-control' for='login'>Your HN login</label>
+<div class='form-control'>
+<input class='form-control' id='login' ng-model='settings.login' type='text'>
+</div>
+</div>
+</fieldset>
+</div>
+</section>

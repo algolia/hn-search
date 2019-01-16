@@ -1,0 +1,27 @@
+<a class='sliding-menu-button' ng-click='toggleNav()' type='button'>{{ pageTitle() }}</a>
+<span class='state-title' ng-show='state'>
+<h1>{{ pageTitle() }}</h1>
+<span class='filter-label'>in</span>
+</span>
+<span class='filter-label' ng-show='!state'>Search</span>
+<div class='type-dropdown' dropdown-item-label='text' dropdown-model='ddTypeSelected' dropdown-onchange='selectType(selected)' dropdown-select='ddSelectType'></div>
+<span class='filter-label'>by</span>
+<div class='type-dropdown' dropdown-item-label='text' dropdown-model='ddSortSelected' dropdown-onchange='sortBy(selected.value)' dropdown-select='ddSelectSort'></div>
+<span class='filter-label'>for</span>
+<div class='type-dropdown' dropdown-item-label='text' dropdown-model='ddDateSelected' dropdown-onchange='selectDate(selected.value)' dropdown-select='ddSelectDate'></div>
+<ul class='list-inline search-infos' defer-share-dropdown ng-show='results'>
+<li>
+<span ng-show='settings.page &gt; 0'>Page {{ settings.page + 1 }} of</span>
+<ng-pluralize count='results.nbHits' when='{"0": "No results", "one": "1 result", "other": "{{ results.nbHits | number }} results"}'></ng-pluralize>
+({{ results.processingTimeMS / 1000.0 | number }} seconds)
+</li>
+<li class='action-share'>
+<a class='placeholder'>
+<i class='icon-share'></i>
+</a>
+<a class='dropwdown-share' dropdown-menu='ddMenuShare' dropdown-onchange='shareItem(selected)' ng-href='{{ getURL() }}'>
+<i class='icon-share'></i>
+</a>
+</li>
+</ul>
+<div ng-if='settings.dateRange === &quot;custom&quot; &amp;&amp; (!settings.dateStart || !settings.dateEnd)' ng-include='&quot;_daterange-picker.html&quot;'></div>
