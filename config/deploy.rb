@@ -43,6 +43,8 @@ task :copy_shared do
   run "cp #{deploy_to}/shared/config/application.yml #{release_path}/config/"
   run "paxctl -C #{release_path}/wkhtmltoimage-amd64"
   run "paxctl -prmsx #{release_path}/wkhtmltoimage-amd64"
+  run "mkdir -p #{deploy_to}/shared/node_modules"
+  run "ln -sf #{deploy_to}/shared/node_modules #{release_path}/node_modules"
 end
 before "bundle:install", "copy_shared"
 
