@@ -50,7 +50,7 @@ class Item < ActiveRecord::Base
       t
     end
     queryType 'prefixLast'
-    customRanking ['desc(points)', 'desc(num_comments)']
+    customRanking ['desc(relevancy_score)', 'desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
     separatorsToIndex '+#$'
 
