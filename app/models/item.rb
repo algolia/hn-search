@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
 
   SHOW_HN_RX = /^show hn\b/i
   ASK_HN_RX = /^ask hn\b/i
-  OLDEST_ARTICLE = Time.at(1160418111).to_datetime
+  OLDEST_ARTICLE = Time.at(1160418111)
 
   algoliasearch per_environment: true, auto_index: false, if: :live? do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
@@ -29,9 +29,10 @@ class Item < ActiveRecord::Base
       self.created_at.to_i
     end
 
-    attribute :hot_score do
+    attribute :relevancy_score do
       self.relevant_score
     end
+
     attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
     attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
 
