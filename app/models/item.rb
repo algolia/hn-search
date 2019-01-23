@@ -2,6 +2,8 @@ require 'rubygems/package'
 require 'zlib'
 
 class Item < ActiveRecord::Base
+  
+  include AlgoliaSearch
 
   as_enum :item_type, %w{story comment poll pollopt unknown job}
 
@@ -19,15 +21,20 @@ class Item < ActiveRecord::Base
 
   SHOW_HN_RX = /^show hn\b/i
   ASK_HN_RX = /^ask hn\b/i
+  OLDEST_ARTICLE = Time.at(1160418111).to_datetime
 
-  include AlgoliaSearch
   algoliasearch per_environment: true, auto_index: false, if: :live? do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
     attribute :created_at_i do
-      created_at.to_i
+      self.created_at.to_i
+    end
+
+    attribute :hot_score do
+      self.relevant_score
     end
     attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
     attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
+
     tags do
       t = [item_type, "author_#{author}", "story_#{story_id || id}"]
       if item_type_cd == Item.story
@@ -202,7 +209,26 @@ class Item < ActiveRecord::Base
     per_hour_since(Item.comment, ago)
   end
 
+  # Formula provided by Michael Sokol and Julien Paroche
+  # https://gist.github.com/JonasBa/8ebed8b9e69bd1e8366577af7dcf8f2c 
+  def bucket_date
+    self.created_at.beginning_of_week.beginning_of_day
+  end
+
+  def epoch_seconds_difference
+    self.bucket_date - DateTime.new(1970, 1, 1)
+  end
+
+  def relevant_score
+    order = Math.log(self.points || 0, 10)
+    order = 0 if order < 0
+
+    seconds = epoch_seconds_difference.to_i - OLDEST_ARTICLE.to_i
+    return (order + seconds / 45000).round(7)
+  end
+
   private
+
   def after_create_tasks
     self.delay(priority: 0).resolve_parent! # 0 = top priority
     self.delay(priority: 1).crawl_thumbnail! if !url.blank?
