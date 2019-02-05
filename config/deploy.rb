@@ -31,7 +31,8 @@ set :node_version, "v8.4.0"
 set :yarn_version, "1.7.0"
 
 task :install_javascript_dependencies do
-  run "source /home/prod/.nvm/nvm.sh && nvm use #{node_version} && yarn install"
+  run "echo "
+  run "source /home/prod/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install"
 end
 
 after "deploy:update", "deploy:cleanup"

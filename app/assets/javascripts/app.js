@@ -189,10 +189,10 @@ $(document).ready(function() {
 
 window.trackResource = function(query){
   try {
-    if (performance === undefined) {
+    if (window.performance === undefined) {
       return false
     }
-    var resources = performance.getEntriesByType("resource");
+    var resources = window.performance.getEntriesByType("resource");
 
     if (resources === undefined || resources.length <= 0) {
       return false
