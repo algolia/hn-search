@@ -225,7 +225,7 @@ class Item < ActiveRecord::Base
     order = 0 if order < 0
 
     seconds = epoch_seconds_difference.to_i - OLDEST_ARTICLE.to_i
-    return (order + seconds / 45000).round(7)
+    return (order + seconds / 45000).round
   end
 
   private
