@@ -27,6 +27,22 @@ html, body
   +media($small-screen-down)
     min-width: 0px
 
+.slow-connection
+  padding: 24px 12px 0 12px
+  margin-top: $titleHeight
+  text-align: center
+  display: flex
+  align-items: center
+  justify-content: center
+
+  p
+    margin-left: 16px
+    font-weight: bold
+    opacity: .7
+
+  + .search_results
+    margin-top: 0 !important
+
 .page-header
   position: fixed
   z-index: 15

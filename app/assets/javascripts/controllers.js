@@ -153,7 +153,14 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
       parsedQuery.params.getRankingInfo = true;
 
       setTimeout(function() {
-        getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params).then(function(results) {
+        var searchPromise = getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params)
+        
+        $scope.$apply(function () {
+          $scope.isSlowConnection = settings.client.isSlowNetwork
+          console.log('Before search:', settings.client.isSlowNetwork)
+        })
+
+        searchPromise.then(function(results) {
           typeof window.trackResource === 'function' && window.trackResource(results);
           aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
 
@@ -163,6 +170,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
             // external stop of the A/B test and throttling
             setCookie(THROTTLING_COOKIE_KEY, 0, 30)
           }
+
+          $scope.$apply(function () {
+            $scope.isSlowConnection = false
+            console.log('After search:', settings.client.isSlowNetwork)
+          })
           
           Analytics.set('dimension1', previousThrottlingTimeout);
           Analytics.trackEvent('search', 'results', parsedQuery.query)
@@ -172,6 +184,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
             // only take the results into account if the query matches the we have currently
             $scope.$apply(function () {
               $scope.results = results;
+              $scope.isSlowConnection = false;
             })
           } 
           if (!noProgres) {

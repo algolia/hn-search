@@ -1,3 +1,22 @@
+%div.slow-connection{"ng-if"=>"isSlowConnection"}
+  %svg{:height => "38", :viewbox => "0 0 38 38", :width => "38", :xmlns => "http://www.w3.org/2000/svg"}
+    %defs
+      %lineargradient#a{:x1 => "8.042%", :x2 => "65.682%", :y1 => "0%", :y2 => "23.865%"}
+        %stop{:offset => "0%", "stop-color" => "#FF742B", "stop-opacity" => "0"}
+        %stop{:offset => "63.146%", "stop-color" => "#FF742B", "stop-opacity" => ".631"}
+        %stop{:offset => "100%", "stop-color" => "#FF742B"}
+    %g{:fill => "none", "fill-rule" => "evenodd"}
+      %g{:transform => "translate(1 1)"}
+        %path#Oval-2{:d => "M36 18c0-9.94-8.06-18-18-18", :stroke => "url(#a)", "stroke-width" => "2", :transform => "rotate(246.705 18 18)"}
+          %animatetransform{:attributename => "transform", :dur => "0.9s", :from => "0 18 18", :repeatcount => "indefinite", :to => "360 18 18", :type => "rotate"}
+        %circle{:cx => "36", :cy => "18", :fill => "#FF742B", :r => "1", :transform => "rotate(246.705 18 18)"}
+          %animatetransform{:attributename => "transform", :dur => "0.9s", :from => "0 18 18", :repeatcount => "indefinite", :to => "360 18 18", :type => "rotate"}
+  %p 
+    You are on a slow connection,
+    %br
+    this might take a while.
+  
+
 %section.search-results{'sticky-list' => true,"defer-share-dropdown"=>true}
   .item{"ng-repeat"=>"hit in results.hits", 'ng-class' => '"item_" + hit.objectID + (story[hit.objectID] ? " item-show-comments" : "")', 'bindonce' => true, 'ng-click' => 'clickHit(hit.objectID, $index + 1)'}
     .item-main
