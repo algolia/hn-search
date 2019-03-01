@@ -141,6 +141,7 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
     searchService.applySettings = function(settings, page) {
         this.params.tagFilters = [];
         this.params.numericFilters = [];
+        delete this.params.minProximity;
 
         // query
         $location.search('query', this.query);
@@ -200,6 +201,8 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
                   this.params.tagFilters.push(['story', 'comment', 'poll', 'job']);
                   break;
                 case 'story':
+                  this.params.minProximity = 8;
+                  // fall-through next case to add the tagFilter
                 case 'comment':
                   this.params.tagFilters.push(settings.type);
                   break;
