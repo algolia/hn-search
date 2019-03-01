@@ -221,7 +221,7 @@ class Item < ActiveRecord::Base
   end
 
   def relevant_score
-    order = Math.log(self.points || 0, 10)
+    order = Math.log([self.points.to_i, 0].max, 10)
     order = 0 if order < 0
 
     seconds = epoch_seconds_difference.to_i - OLDEST_ARTICLE.to_i
