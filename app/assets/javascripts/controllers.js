@@ -156,8 +156,11 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         var searchPromise = getIndex(parsedQuery.query).search(parsedQuery.query, parsedQuery.params)
         
         $scope.$apply(function () {
+          if(settings.client.isSlowNetwork) {
+            Analytics.trackEvent('slow-connection-indicator', 'show')
+          }
+
           $scope.isSlowConnection = settings.client.isSlowNetwork
-          console.log('Before search:', settings.client.isSlowNetwork)
         })
 
         searchPromise.then(function(results) {
@@ -173,7 +176,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
           $scope.$apply(function () {
             $scope.isSlowConnection = false
-            console.log('After search:', settings.client.isSlowNetwork)
           })
           
           Analytics.set('dimension1', previousThrottlingTimeout);
