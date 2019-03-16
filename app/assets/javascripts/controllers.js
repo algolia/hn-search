@@ -158,7 +158,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         $scope.$apply(function () {
           $scope.isSlowConnection = settings.client.isSlowNetwork
 
-          if($scope.isSlowConnection) {
+          if(settings.client.isSlowNetwork) {
             Analytics.trackEvent('slow-connection-indicator', 'show')
           }
         })
@@ -173,10 +173,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
             // external stop of the A/B test and throttling
             setCookie(THROTTLING_COOKIE_KEY, 0, 30)
           }
-
-          $scope.$apply(function () {
-            $scope.isSlowConnection = false
-          })
           
           Analytics.set('dimension1', previousThrottlingTimeout);
           Analytics.trackEvent('search', 'results', parsedQuery.query)
