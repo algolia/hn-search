@@ -122,7 +122,7 @@
         %br
         %span{'ng-repeat' => 'p in populars', bindonce: true}
           %span{'ng-show' => '$index !== 0'}>,&nbsp;
-          %a{href: '#', 'ng-click' => 'setQuery($event, p.query)'}>{{ p.query }}
+          %a{href: '#', 'ng-click' => 'setQuery($event, p.search)'}>{{ p.search }}
 
 
   %ul.search-pagination{'ng-if' => 'results && results.nbPages > 1'}
