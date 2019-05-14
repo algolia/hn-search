@@ -1,4 +1,4 @@
-Hnsearch::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -20,11 +20,11 @@ Hnsearch::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.action_controller.asset_host = "d3nb9u6x572n0.cloudfront.net"
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = Uglifier.new(harmony: true)
+  config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -78,7 +78,7 @@ Hnsearch::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-
+  config.active_record.dump_schema_after_migration = false
   config.lograge.enabled = true
   config.lograge.custom_options = lambda do |event|
     { time: event.time }

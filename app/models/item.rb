@@ -1,7 +1,7 @@
 require 'rubygems/package'
 require 'zlib'
 
-class Item < ActiveRecord::Base
+class Item < ApplicationRecord
   
   include AlgoliaSearch
 
@@ -159,7 +159,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.import_from_dump!(path)
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       Item.without_auto_index do
         Zlib::GzipReader.open(path) do |gz|
           Gem::Package::TarReader.new(gz).each do |entry|

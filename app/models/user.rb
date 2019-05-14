@@ -1,7 +1,7 @@
 require 'rubygems/package'
 require 'zlib'
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   validates_length_of :username, within: 1..255, allow_nil: false, allow_blank: false
   validates_length_of :about, within: 0..65535, allow_nil: true, allow_blank: true
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def self.import_from_dump!(path)
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       User.without_auto_index do
         Zlib::GzipReader.open(path) do |gz|
           Gem::Package::TarReader.new(gz).each do |entry|
