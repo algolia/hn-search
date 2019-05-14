@@ -30,7 +30,6 @@ gem 'therubyracer'
 gem 'turnout'
 gem 'uglifier', '>= 1.3.0'
 gem 'whenever'
-
 gem 'firebase', '0.2.2'
 gem 'eventmachine'
 gem 'em-http-request'
@@ -51,7 +50,6 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', platforms: %i[mri_19 mri_20 mri_21 rbx]
   gem 'html2haml'
-  # gem 'quiet_assets'
   gem 'rails_layout'
   gem 'guard-bundler'
   gem 'guard-rails'
@@ -67,8 +65,8 @@ group :development do
   gem 'terminal-notifier-guard'
 end
 group :production do
-  gem 'mysql2', '< 0.5'
   gem 'lograge'
+  gem 'mysql2', '< 0.5'
 end
 group :development, :test do
   gem 'factory_bot_rails'
