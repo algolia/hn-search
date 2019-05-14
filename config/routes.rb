@@ -1,5 +1,4 @@
-Hnsearch::Application.routes.draw do
-
+Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :admin do
       namespace :v1 do
@@ -27,9 +26,9 @@ Hnsearch::Application.routes.draw do
   ['about', 'settings', 'help', 'api', 'cool_apps', 'hot', 'show-hn', 'ask-hn', 'polls', 'jobs', 'starred', 'user'].each do |path|
     get "/#{path}", controller: 'home', action: 'index'
   end
-  get "/story/:id/:title", controller: 'home', action: 'index'
+  get '/story/:id/:title', controller: 'home', action: 'index'
 
   root 'home#index'
 
-  get '*unmatched_route', :to => 'application#raise_not_found!'
+  get '*unmatched_route', to: 'application#raise_not_found!'
 end

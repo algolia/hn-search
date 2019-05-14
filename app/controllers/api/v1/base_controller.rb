@@ -23,7 +23,7 @@ module Api
           render json: json, root: false
         end
       rescue Algolia::AlgoliaProtocolError => e
-        render json: { message: e.message}, status: e.code
+        render json: { message: e.message }, status: e.code
       end
 
       private
@@ -35,7 +35,6 @@ module Api
     end
 
     class Client
-
       def initialize(application_id, api_key, forwarded_api_key)
         @client = HTTPClient.new
         @client.transparent_gzip_decompression = true

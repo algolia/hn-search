@@ -1,7 +1,7 @@
-Hnsearch::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
+  # config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -28,4 +28,7 @@ Hnsearch::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.assets.digest = true
+  config.assets.raise_runtime_errors = true
 end
