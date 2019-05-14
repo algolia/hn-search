@@ -1,7 +1,7 @@
 require 'net/http'
 
 class HomeController < ApplicationController
-  caches_action :popular, expires_in: 1.hour
+  caches_action :popular, expires_in: (DateTime.tomorrow.beginning_of_day.to_i - DateTime.now.to_i)
 
   def index
     if Rails.env.production? && !request.ssl?
@@ -12,18 +12,22 @@ class HomeController < ApplicationController
   end
 
   def popular
-    body = RestClient::Request.execute(
+    response = RestClient::Request.execute(
       method: :get,
-      url: "https://analytics.algolia.com/1/searches/Item_production/popular?startAt=#{DateTime.now.utc.to_i - 24*60*60}&size=10",
+      url: 'https://analytics.de.algolia.com/2/searches',
       headers: {
-        'X-Algolia-API-Key' => ENV['ALGOLIASEARCH_API_KEY'],
-        'X-Algolia-Application-Id' => ENV['ALGOLIASEARCH_APPLICATION_ID']
-      },
-      timeout: 0.1,
-      open_timeout: 0.05) rescue nil
+        'X-Algolia-API-Key': ENV['ALGOLIASEARCH_API_KEY'],
+        'X-Algolia-Application-Id': ENV['ALGOLIASEARCH_APPLICATION_ID'],
+        params: {
+          index: 'Item_production',
+          startDate: 1.day.ago.utc.strftime('%Y-%m-%d'),
+          endDate: DateTime.now.utc.strftime('%Y-%m-%d'),
+          limit: 10
+        }
+      }) rescue nil
 
-    searches = body ? JSON.parse(body)['topSearches'] : []
-    render json: searches, root: false
+    searches = response ? JSON.parse(response)['searches'] : []
+    render json: { searches: searches }, root: false
   end
 
   def front_page

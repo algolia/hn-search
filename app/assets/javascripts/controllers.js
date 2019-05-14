@@ -578,7 +578,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
 
   $scope.populars = [];
   $http.get('/popular.json').then(function(results) {
-    $scope.populars = results.data;
+    $scope.populars = results.data.searches;
   });
 
   // Handle history
