@@ -6,6 +6,16 @@
   "author": "Jonas Badalic <jonas.badalic@algolia.com>",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "JonasBa/algoliasearch-client-javascript#453e793"
+    "@rails/webpacker": "^4.0.2",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "algoliasearch": "JonasBa/algoliasearch-client-javascript#453e793",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "ts-loader": "^6.0.0",
+    "typescript": "^3.4.5"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.3.1"
   }
 }

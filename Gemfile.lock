@@ -971,6 +971,8 @@ GEM
       rack (>= 0.4)
     rack-livereload (0.3.17)
       rack
+    rack-proxy (0.6.5)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.1.0)
@@ -1088,6 +1090,10 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
+    webpacker (4.0.2)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -1158,6 +1164,7 @@ DEPENDENCIES
   thin
   turnout
   uglifier (>= 1.3.0)
+  webpacker (~> 4.x)
   whenever
 
 RUBY VERSION

@@ -37,6 +37,8 @@
         Read-only mode:
         %em cannot connect to the MySQL database.
     %noscript This page will only work with JavaScript enabled
+    %main{id: 'root'}
     #main{role: 'main', 'ui-view' => true, 'ng-cloak' => true}
       = yield
     = javascript_include_tag "application"
+    = javascript_pack_tag 'application'

@@ -37,6 +37,7 @@ gem 'haml-rails'
 gem 'angular_xss'
 gem 'httparty'
 gem 'statsd-ruby'
+gem 'webpacker', '~> 4.x'
 
 group :development do
   # for ed25519 keys
