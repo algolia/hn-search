@@ -7,7 +7,7 @@ set :default_environment, {
 default_run_options[:pty] = true
 
 # servers
-# server 'hnsearch-1.algolia.net', :app, :web, :db, :cron, primary: true
+server 'hnsearch-1.algolia.net', :app, :web, :db, :cron, primary: true
 server 'hnsearch-2.algolia.net', :app, :web
 
 # application
@@ -21,7 +21,7 @@ set :local_repository, "."
 set :repository, "git@github.com:algolia/hn-search.git"
 set :scm, :git
 set :deploy_via, :remote_cache
-set :branch, "deps/rails5"
+set :branch, "master"
 set :git_shallow_clone, 1
 
 # keep 5 last releases
