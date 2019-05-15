@@ -62,7 +62,7 @@ before "deploy:assets:precompile", "bundle:install"
 
 # rvm
 require "rvm/capistrano"
-set :rvm_ruby_string, '2.2.7'
+set :rvm_ruby_string, '2.6.2'
 
 # cron
 set :whenever_command, "bundle exec whenever"
