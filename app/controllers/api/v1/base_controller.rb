@@ -5,6 +5,8 @@ module Api
       protected
 
       def render_json_request(method, action, params, &block)
+        params.permit!
+
         params.delete :action
         params.delete :controller
         params.delete :format
