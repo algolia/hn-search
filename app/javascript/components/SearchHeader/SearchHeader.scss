@@ -5,16 +5,21 @@ $headerHeight: 60px;
 
 .SearchHeader {
   position: fixed;
-  height: $headerHeight;
   z-index: $zIndexHeader;
-  padding: $spacing-base;
-  display: flex;
-  align-items: center;
-  background: $orange;
+  
+  &_search {
+    padding: $spacing-base;
+    height: $headerHeight;
+    display: flex;
+    align-items: center;
+    background: $orange;
+  }
 
   &_container {
+    position: relative;
     display: inline-block;
-    width: calc(100% - 100px);
+    width: calc(100% - 230px);
+    max-width: 570px;
     margin-right: $spacing-base;
   }
 
@@ -26,6 +31,7 @@ $headerHeight: 60px;
 
   &_logo {
     flex: 1 0 230px;
+    max-width: 230px;
     display: flex;
     align-items: center;
 
@@ -35,10 +41,24 @@ $headerHeight: 60px;
     }
   }
 
+  &_settings {
+    position: absolute;
+    right: $spacing-medium;
+
+    a {
+      color: white;
+    }
+  }
+
   .PoweredBy {
     display: flex;
     align-items: center;
     font-size: 12px;
+    margin-left: $spacing-small;
+
+    a {
+      margin: 0 $spacing-small;
+    }
 
     img {
       height: 16px;
@@ -46,9 +66,11 @@ $headerHeight: 60px;
   }
 
   .SearchIcon {
+    width: 24px;
+    height: 24px;
     position: absolute;
-    top: $spacing-small;
-    left: $spacing-large;
+    top: 6px;
+    left: 12px;
     color: $orange;
     font-size: 24px;
   }

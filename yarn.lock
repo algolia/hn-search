@@ -5760,6 +5760,11 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
+react-feather@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-feather/-/react-feather-1.1.6.tgz#2a547e3d5cd5e383d3da0128d593cbdb3c1b32f7"
+  integrity sha512-iCofWhTjX+vQwvDmg7o6vg0XrUg1c41yBDZG+l83nz1FiCsleJoUgd3O+kHpOeWMXuPrRIFfCixvcqyOLGOgIg==
+
 react-is@^16.8.1:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"

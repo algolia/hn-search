@@ -1,0 +1,32 @@
+@import "./../../src/colors.scss";
+@import "./../../src/variables.scss";
+
+.SearchFilters {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 0 $spacing-small;
+  background-color: #fff;
+
+  &_filters {
+    display: flex;
+    align-items: center;
+  }
+
+  &_meta {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    svg {
+      width: 18px;
+      color: $text-muted;
+      margin-left: $spacing-small;
+    }    
+  }
+}
