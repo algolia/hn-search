@@ -1,0 +1,13 @@
+.Footer {
+  padding-top: 70px;
+
+  &_list {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+
+    li {
+      padding: 4px;
+    }
+  }
+}

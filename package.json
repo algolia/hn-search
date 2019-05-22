@@ -4,12 +4,17 @@
   "main": "index.js",
   "repository": "https://github.com/algolia/hn-search",
   "author": "Jonas Badalic <jonas.badalic@algolia.com>",
+  "scripts": {
+    "dev": "./bin/webpack-dev-server"
+  },
   "license": "MIT",
   "dependencies": {
     "@rails/webpacker": "^4.0.2",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "algoliasearch": "JonasBa/algoliasearch-client-javascript#453e793",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "normalize-scss": "^7.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "ts-loader": "^6.0.0",

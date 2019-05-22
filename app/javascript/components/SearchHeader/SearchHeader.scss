@@ -1,0 +1,69 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+$headerHeight: 60px;
+
+.SearchHeader {
+  position: fixed;
+  height: $headerHeight;
+  z-index: $zIndexHeader;
+  padding: $spacing-base;
+  display: flex;
+  align-items: center;
+  background: $orange;
+
+  &_container {
+    display: inline-block;
+    width: calc(100% - 100px);
+    margin-right: $spacing-base;
+  }
+
+  &_label {
+    color: white;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  &_logo {
+    flex: 1 0 230px;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 48px;
+      margin-right: $spacing-small;
+    }
+  }
+
+  .PoweredBy {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+    img {
+      height: 16px;
+    }
+  }
+
+  .SearchIcon {
+    position: absolute;
+    top: $spacing-small;
+    left: $spacing-large;
+    color: $orange;
+    font-size: 24px;
+  }
+
+  .SearchInput {
+    border-radius: 0;
+    border-color: transparent;
+    border: none;
+
+    height: 42px;
+    box-shadow: none;
+    padding: $spacing-medium $spacing-large $spacing-medium 54px;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

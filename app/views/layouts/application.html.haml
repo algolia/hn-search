@@ -15,30 +15,18 @@
     = auto_discovery_link_tag(:atom, {controller: "home", action: "latest", format: 'atom'}, { title: 'Latest HN items'})
     = yield(:head)
 
-    :javascript
-      (function(i, s, o, g, r, a, m) {
-        i['AlgoliaAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-          (i[r].queue = i[r].queue || []).push(arguments)
-        }
-        a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-      })(window, document, 'script', 'https://cdn.jsdelivr.net/npm/search-insights@0.0.14/dist/search-insights.min.js', 'aa')
-      aa('init', {
-        apiKey: '08240194d5ef567a9f14e0f066bace0c',
-        applicationID: 'UJ5WYC0L7X'
-      })
   %body
     - if !(Item.connection rescue nil)
       .flash-alert.text-center
         Read-only mode:
         %em cannot connect to the MySQL database.
+
     %noscript This page will only work with JavaScript enabled
     %main{id: 'root'}
+    
     #main{role: 'main', 'ui-view' => true, 'ng-cloak' => true}
       = yield
     = javascript_include_tag "application"
+
     = javascript_pack_tag 'application'
+    = stylesheet_pack_tag 'application'

@@ -1,0 +1,29 @@
+@import "normalize-scss";
+
+@import "./colors.scss";
+@import "./variables.scss";
+
+$offset: 200px;
+
+// Remove after migration
+.container.ng-scope {
+  .page-header {
+    top: $offset;
+  }
+
+  header {
+    top: $offset * 1.3;
+  }
+
+  .main {
+    padding-top: $offset * 1.5;
+  }
+
+  main {
+    padding-top: $offset;
+  }
+
+  .main-content {
+    // top: $offset * 1.5;
+  }
+}
