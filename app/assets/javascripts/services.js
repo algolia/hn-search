@@ -293,53 +293,6 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
     return hotService;
 }])
 
-.factory('starred', ['$localStorage', function($localStorage) {
-    var starredService = {};
-
-    $localStorage.starred = $localStorage.starred || {};
-    starredService.add = function(id) {
-        $localStorage.starred[id] = new Date();
-    };
-
-    starredService.remove = function(id) {
-        delete $localStorage.starred[id];
-    };
-
-    starredService.toggle = function(id) {
-        if (this.is(id)) {
-            this.remove(id);
-        } else {
-            this.add(id);
-        }
-    };
-
-    starredService.is = function(id) {
-        return !!$localStorage.starred[id];
-    }
-
-    starredService.all = function() {
-        var res = [];
-        for (var id in $localStorage.starred) {
-            res.push(id);
-        }
-        return res;
-    };
-
-    return starredService;
-}])
-
-.filter('moment', function() {
-    return function(dateString, format) {
-        return moment(dateString * 1000).fromNow();
-    };
-})
-
-.filter('firstLetter', function() {
-    return function(str) {
-        return str ? str.charAt(0) : '';
-    };
-})
-
 .filter('color', function() {
     return function(str) {
         if (str) {
@@ -365,33 +318,5 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
         return a.hostname && a.hostname.replace(/_B_EM_/gi, '<em>').replace(/_E_EM_/gi, '</em>');
     };
 }])
-
-.filter('cleanup', function() {
-    return function (input) {
-        if (!input) {
-            return input;
-        }
-
-        // handle line breaks
-        var str = input.replace(/(\\r)?\\n/g, '<br />');
-
-        // remove stopwords highlighting
-        str = str.replace(/<em>(a|an|s|is|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|the|that|their|then|there|these|they|this|to|was|will|with)<\/em>/ig, '$1');
-
-        // work-around =\\" escaping bug (6c92ae092359647c04804876139516163d0567de)
-        str = str.replace(/=\\"/g, '="');
-
-        // XSS (seems HN is not stripping all of them)
-        str = $('<div />').text(str).html()
-            // keep some tags like <p>, <pre>, <em>, <strong>, <code> & <i>
-            .replace(/&lt;(\/?)(p|pre|code|em|strong|i)&gt;/g, '<$1$2>')
-            // restore predefined XML entities (quotes, apos & amps)
-            .replace(/&quot;/g, '"').replace(/&apos;/g, '\'').replace(/&amp;/g, '&')
-            // restore links as well
-            .replace(/&lt;a href="([^"]+?)" rel="nofollow"&gt;(.+?)&lt;\/a&gt;/g, '<a href="$1" rel="nofollow">$2</a>');
-
-        return '<p>' +  str.replace(/<p>/g, '</p><p>') + '</p>';
-    };
-})
 
 ;

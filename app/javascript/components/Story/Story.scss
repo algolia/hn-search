@@ -1,0 +1,37 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Story {
+  font-size: 14px;
+  padding: 0 $spacing-large;
+  overflow: hidden;
+  border-bottom: solid 1px #eee;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+
+  em {
+    background: #ff0!important;
+    color: #000!important;
+  }
+
+  &_title {
+    margin-bottom: 0;
+    em {
+      font-weight: bold;
+    }
+    a { color: black }
+  }
+
+  &_meta {
+    font-size: 10px;
+
+    a {
+      color: $text-dimmed;
+    }
+  }
+
+  &_separator {
+    margin: 0 4px;
+  }
+}

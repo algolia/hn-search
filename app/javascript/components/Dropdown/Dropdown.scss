@@ -1,0 +1,83 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Dropdown {
+  position: relative;
+
+  &_label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    text-align: left;
+    padding: 0 4px 0 8px;
+    margin: 0 8px 0 2px;
+    border: solid 1px #c3c3c3;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    color: #5C5C5C;
+    position: relative;
+    text-align: right;
+
+    svg {
+      width: 14px;
+      margin-left: $spacing-base;
+    }
+  }
+
+  &_list {
+    position: absolute;
+    right: 0;
+    top: 120%;
+    border-radius: 4px;
+    border: 1px solid #9d9d9d;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    opacity: 0;
+    visibility: hidden;
+    background-color: #fff;
+    white-space: nowrap;
+    color: #5c5c5c;
+
+    &:before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: 100%;
+      right: 13px;
+      border-width: 0 8px 8px;
+      border-style: solid;
+      border-color: #9d9d9d transparent;
+    }
+
+    &:after{
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: 100%;
+      right: 15px;
+      border-width: 0 6px 6px;
+      border-style: solid;
+      border-color: #fff transparent;
+    }
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    li {
+      padding: $spacing-base $spacing-medium;
+      font-size: 14px;
+
+      &:not(:last-child){
+        border-bottom: 1px solid #e6e8ea;
+      }
+
+      &:hover {
+        color: $orange;
+      }
+    }
+  }
+}

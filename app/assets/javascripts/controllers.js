@@ -106,23 +106,6 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
     return { query: (query || ''), params: params };
   };
 
-  function getQueryForRelevance() {
-    var ids;
-
-    if ($scope.state === 'hot') {
-      hot.get().then(function(id) {
-        ids = id;
-      });
-    }
-
-    var parsedQuery = parseQuery($scope.query || '', search.getParams(ids));
-
-    if(parsedQuery.params) {
-      return JSON.stringify(parsedQuery.params)
-    }
-    return {}
-  }
-
   function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");

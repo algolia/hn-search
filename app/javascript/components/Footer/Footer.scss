@@ -1,5 +1,7 @@
+@import "./../../src/variables.scss";
+
 .Footer {
-  padding-top: 100px;
+  padding-top: $spacing-small;
 
   &_list {
     display: flex;

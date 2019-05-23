@@ -293,47 +293,6 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
     return hotService;
 }])
 
-.factory('starred', ['$localStorage', function($localStorage) {
-    var starredService = {};
-
-    $localStorage.starred = $localStorage.starred || {};
-    starredService.add = function(id) {
-        $localStorage.starred[id] = new Date();
-    };
-
-    starredService.remove = function(id) {
-        delete $localStorage.starred[id];
-    };
-
-    starredService.toggle = function(id) {
-        if (this.is(id)) {
-            this.remove(id);
-        } else {
-            this.add(id);
-        }
-    };
-
-    starredService.is = function(id) {
-        return !!$localStorage.starred[id];
-    }
-
-    starredService.all = function() {
-        var res = [];
-        for (var id in $localStorage.starred) {
-            res.push(id);
-        }
-        return res;
-    };
-
-    return starredService;
-}])
-
-.filter('moment', function() {
-    return function(dateString, format) {
-        return moment(dateString * 1000).fromNow();
-    };
-})
-
 .filter('firstLetter', function() {
     return function(str) {
         return str ? str.charAt(0) : '';

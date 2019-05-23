@@ -1,0 +1,43 @@
+@import "./../src/variables.scss";
+
+.Settings {
+  padding-top: 100px;
+  font-size: 14px;
+  background-color: #f6f6ef;
+
+  h2 {
+    color: #000;
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: $spacing-large;
+  }
+
+  &_fieldset {
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 0;
+  }
+
+  &_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $spacing-medium;
+  }
+
+  &_actions {
+    padding: 0 $spacing-large $spacing-large;
+    text-align: right;
+  }
+
+  label {
+    width: 50%;
+    margin-right: $spacing-large;
+  }
+
+  &_inputContainer {
+    width: 50%;
+  }
+}

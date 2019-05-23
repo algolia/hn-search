@@ -2,6 +2,8 @@
 @import "./../../src/variables.scss";
 
 .SearchFilters {
+  z-index: 10;
+  top: 60px;
   height: 42px;
   display: flex;
   align-items: center;
@@ -9,6 +11,17 @@
   font-size: 12px;
   padding: 0 $spacing-small;
   background-color: #fff;
+  color: #000;
+  position: fixed;
+
+  .Dropdown {
+    margin-left: $spacing-base;
+  }
+
+  &_filterContainer {
+    display: flex;
+    align-items: center;
+  }
 
   &_filters {
     display: flex;

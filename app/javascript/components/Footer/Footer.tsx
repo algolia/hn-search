@@ -16,17 +16,18 @@ const Footer: React.FunctionComponent = () => {
   return (
     <footer className="Footer">
       <ul className="Footer_list">
-        {LINKS.map(link => {
+        {LINKS.map((link, index) => {
           const target = link.to.startsWith("http") ? "_blank" : "self";
+
           return (
-            <>
-              <li>
+            <React.Fragment key={link.to}>
+              <li key={link.to}>
                 <a href={link.to} target={target}>
                   {link.label}
                 </a>
               </li>
-              <li>•</li>
-            </>
+              <li key={index}>•</li>
+            </React.Fragment>
           );
         })}
       </ul>

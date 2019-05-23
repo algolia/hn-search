@@ -50,6 +50,11 @@ $headerHeight: 60px;
     }
   }
 
+  &_back {
+    display: flex;
+    align-items: center;
+  }
+
   .PoweredBy {
     display: flex;
     align-items: center;
