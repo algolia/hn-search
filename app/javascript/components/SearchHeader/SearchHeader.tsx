@@ -1,19 +1,16 @@
 import * as React from "react";
 import "./SearchHeader.scss";
-import { RouteComponentProps, Link } from "react-router-dom";
-import { Search, Settings, ChevronsLeft } from "react-feather";
+import { Search, Settings } from "react-feather";
+import { Link } from "react-router-dom";
 
 import { SearchContext } from "../../providers/SearchProvider";
-import SearchFilters from "../SearchFilters/SearchFilters";
-
-import HNSearchLogo from "images/logo-hn-search.png";
 import AlgoliaWhiteLogo from "images/algolia-logo-white.svg";
 
 const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";
 
 const SearchHeader: React.FunctionComponent = () => {
-  const context = React.useContext(SearchContext);
+  const { settings, search } = React.useContext(SearchContext);
 
   return (
     <>
@@ -23,8 +20,9 @@ const SearchHeader: React.FunctionComponent = () => {
         </span>
         <input
           type="search"
+          defaultValue={settings.query}
           onInput={(event: React.SyntheticEvent<HTMLInputElement>) =>
-            context.search(event.currentTarget.value)
+            search(event.currentTarget.value)
           }
           placeholder="Search stories by title, url or author"
           className="SearchInput"
@@ -41,9 +39,9 @@ const SearchHeader: React.FunctionComponent = () => {
         </a>
       </div>
       <div className="SearchHeader_settings">
-        <a href="/settings">
+        <Link to="/settings">
           <Settings />
-        </a>
+        </Link>
       </div>
     </>
   );

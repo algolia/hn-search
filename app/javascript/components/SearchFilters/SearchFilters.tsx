@@ -6,29 +6,27 @@ import Dropdown from "../Dropdown/Dropdown";
 
 import pluralize from "../../utils/pluralize";
 import { SearchContext } from "../../providers/SearchProvider";
-import { SearchSettings } from "../../providers/Search.types";
+import { HNSettings } from "../../providers/Search.types";
 
-export const STORY_FILTERS = new Map<SearchSettings["type"], string>([
+export const STORY_FILTERS = new Map<HNSettings["type"], string>([
   ["all", "All"],
-  ["stories", "Stories"],
-  ["comments", "Comments"]
+  ["story", "Stories"],
+  ["comment", "Comments"]
 ]);
 
-export const SORT_FILTERS = new Map<SearchSettings["defaultSort"], string>([
+export const SORT_FILTERS = new Map<HNSettings["defaultSort"], string>([
   ["byPopularity", "Popularity"],
   ["byDate", "Date"]
 ]);
 
-export const TIME_FILTERS = new Map<SearchSettings["defaultDateRange"], string>(
-  [
-    ["all", "All time"],
-    ["last24h", "Last 24h"],
-    ["pastWeek", "Past Week"],
-    ["pastMonth", "Past Month"],
-    ["pastYear", "Past Year"],
-    ["custom", "Custom range"]
-  ]
-);
+export const TIME_FILTERS = new Map<HNSettings["defaultDateRange"], string>([
+  ["all", "All time"],
+  ["last24h", "Last 24h"],
+  ["pastWeek", "Past Week"],
+  ["pastMonth", "Past Month"],
+  ["pastYear", "Past Year"],
+  ["custom", "Custom range"]
+]);
 
 const asItem = ([value, label]) => ({ value, label });
 
@@ -43,7 +41,7 @@ const SearchFilters: React.FunctionComponent = () => {
           <Dropdown
             items={Array.from(STORY_FILTERS).map(asItem)}
             onChange={item =>
-              setSettings({ type: item.value as SearchSettings["type"] })
+              setSettings({ type: item.value as HNSettings["type"] })
             }
             selectedItem={{
               value: settings.type,
@@ -56,7 +54,7 @@ const SearchFilters: React.FunctionComponent = () => {
           <Dropdown
             items={Array.from(SORT_FILTERS).map(asItem)}
             onChange={item =>
-              setSettings({ sort: item.value as SearchSettings["sort"] })
+              setSettings({ sort: item.value as HNSettings["sort"] })
             }
             selectedItem={{
               value: settings.sort,
@@ -70,12 +68,12 @@ const SearchFilters: React.FunctionComponent = () => {
             items={Array.from(TIME_FILTERS).map(asItem)}
             onChange={item =>
               setSettings({
-                defaultDateRange: item.value as SearchSettings["defaultDateRange"]
+                dateRange: item.value as HNSettings["dateRange"]
               })
             }
             selectedItem={{
-              value: settings.defaultDateRange,
-              label: TIME_FILTERS.get(settings.defaultDateRange)
+              value: settings.dateRange,
+              label: TIME_FILTERS.get(settings.dateRange)
             }}
           />
         </span>

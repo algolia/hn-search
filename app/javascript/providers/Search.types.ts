@@ -30,23 +30,34 @@ export interface AlgoliaResults {
   nbPages: number;
 }
 
-export interface SearchSettings {
-  showThumbnails: boolean;
-  type: "stories" | "comments" | "all";
-  defaultType: "stories" | "comments" | "all";
-  sort: "byPopularity" | "byDate";
-  defaultSort: "byPopularity" | "byDate";
-  defaultDateRange:
-    | "all"
-    | "last24h"
-    | "pastWeek"
-    | "pastMonth"
-    | "pastYear"
-    | "custom";
+type DateRange =
+  | "all"
+  | "last24h"
+  | "pastWeek"
+  | "pastMonth"
+  | "pastYear"
+  | "custom";
+
+type Sort = "byPopularity" | "byDate";
+type Type = "story" | "comment" | "all";
+
+export interface HNSettings {
+  type: Type;
+  defaultType: Type;
+  sort: Sort;
+  defaultSort: Sort;
+  dateRange: DateRange;
+  defaultDateRange: DateRange;
   style: "default" | "experimental";
   typoTolerance: boolean;
   storyText: boolean;
   authorText: boolean;
   hitsPerPage: number;
   page: number;
+  showThumbnails?: boolean;
+  prefix?: boolean;
+  login?: string;
+  query?: string;
+  dateStart?: string;
+  dateEnd?: string;
 }

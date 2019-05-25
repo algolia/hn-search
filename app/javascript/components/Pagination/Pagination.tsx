@@ -21,6 +21,8 @@ const Pagination: React.FunctionComponent = () => {
   const isFirstPage = page === 0;
   const isLastPage = page === results.nbPages;
 
+  if (!results.nbPages) return null;
+
   return (
     <ul className="Pagination">
       {!isFirstPage && (

@@ -137,40 +137,6 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
     pastMonth = pastMonth.setDate(pastMonth.getDate() - 31) / 1000;
     pastYear = pastYear.setDate(pastYear.getDate() - 365) / 1000;
 
-    var first = true;
-    searchService.applySettings = function(settings, page) {
-        this.params.tagFilters = [];
-        this.params.numericFilters = [];
-        delete this.params.minProximity;
-
-        // query
-        $location.search('query', this.query);
-        $location.search('sort', settings.sort);
-        $location.search('prefix', settings.prefix);
-        $location.search('page', settings.page);
-        this.params.page = settings.page;
-
-        // date range
-        $location.search('dateRange', settings.dateRange);
-        $location.search('dateStart', null);
-        $location.search('dateEnd', null);
-        if (settings.hasOwnProperty('dateRange')){
-            if (settings.dateRange === 'all'){
-            } else if (settings.dateRange === 'last24h'){
-                this.params.numericFilters.push('created_at_i>' + last24h);
-            } else if (settings.dateRange === 'pastWeek'){
-                this.params.numericFilters.push('created_at_i>' + pastWeek);
-            } else if (settings.dateRange === 'pastMonth'){
-                this.params.numericFilters.push('created_at_i>' + pastMonth);
-            } else if (settings.dateRange === 'pastYear'){
-                this.params.numericFilters.push('created_at_i>' + pastYear);
-            } else if (settings.dateRange === 'custom' && settings.dateStart && settings.dateEnd) {
-                $location.search('dateStart', settings.dateStart);
-                $location.search('dateEnd', settings.dateEnd);
-                this.params.numericFilters.push('created_at_i>' + settings.dateStart);
-                this.params.numericFilters.push('created_at_i<' + settings.dateEnd);
-            }
-        }
 
         // story type
         switch (page) {
@@ -190,48 +156,6 @@ angular.module('HNSearch.services', ['ngStorage', 'angular-google-analytics'])
             this.params.tagFilters.push('author_' + settings.login);
             break;
         }
-
-        // item type
-        $location.search('type', settings.type);
-        if (page !== 'jobs' && page !== 'polls') {
-            switch (settings.type) {
-                case '':
-                case undefined:
-                case 'all':
-                  this.params.tagFilters.push(['story', 'comment', 'poll', 'job']);
-                  break;
-                case 'story':
-                  this.params.minProximity = 8;
-                  // fall-through next case to add the tagFilter
-                case 'comment':
-                  this.params.tagFilters.push(settings.type);
-                  break;
-            }
-        }
-
-        // prefix
-        this.params.queryType = settings.prefix ? 'prefixLast' : 'prefixNone';
-
-        // typo tolerance
-        this.params.typoTolerance = settings.sort === 'byPopularity' && settings.typoTolerance;
-
-        // restrict attributes to search on, based on storyText and authorText settings
-        if (!settings.storyText && !settings.authorText) {
-            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url'];
-        } else if (settings.storyText && !settings.authorText) {
-            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'story_text'];
-        } else if (!settings.storyText && settings.authorText) {
-            this.params.restrictSearchableAttributes = ['title', 'comment_text', 'url', 'author'];
-        } else {
-            this.params.restrictSearchableAttributes = [];
-        }
-        if (!settings.storyText) {
-            $location.search('storyText', false);
-        }
-        if (!settings.authorText) {
-            $location.search('authorText', false);
-        }
-
 
         // hits per page
         this.params.hitsPerPage = settings.hitsPerPage;

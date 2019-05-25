@@ -1,29 +1,36 @@
 import * as React from "react";
 import algoliasearch from "algoliasearch";
-import { AlgoliaResults, SearchSettings } from "./Search.types";
-import { initSettings } from "./Settings";
+import { createBrowserHistory } from "history";
+
+import { AlgoliaResults, HNSettings } from "./Search.types";
+import getSearchSettings from "./SearchSettings";
+import { initializeSettings, asQueryString, saveSettings } from "./Settings";
+
+const history = createBrowserHistory();
 
 interface ISearchContext {
   results: AlgoliaResults;
   loading: boolean;
   search: (query: string) => Promise<AlgoliaResults>;
-  setSettings: (settings: Partial<SearchSettings>) => SearchSettings;
-  settings: SearchSettings;
+  setSettings: (settings: Partial<HNSettings>) => HNSettings;
+  settings: HNSettings;
 }
 
-export const DEFAULT_SEARCH_SETTINGS: SearchSettings = {
+export const DEFAULT_HN_SETTINGS: HNSettings = {
   showThumbnails: true,
-  type: "stories",
-  defaultType: "stories",
+  type: "story",
+  defaultType: "story",
   sort: "byPopularity",
   defaultSort: "byPopularity",
+  dateRange: "all",
   defaultDateRange: "all",
   style: "default",
   typoTolerance: true,
   storyText: true,
   authorText: true,
   hitsPerPage: 20,
-  page: 0
+  page: 0,
+  prefix: false
 };
 
 const DEFAULT_SEARCH_STATE = {
@@ -35,7 +42,7 @@ const DEFAULT_SEARCH_STATE = {
     nbPages: 0
   },
   loading: false,
-  settings: DEFAULT_SEARCH_SETTINGS
+  settings: DEFAULT_HN_SETTINGS
 };
 
 class SearchProvider extends React.Component {
@@ -52,16 +59,17 @@ class SearchProvider extends React.Component {
   state = DEFAULT_SEARCH_STATE;
 
   componentDidMount() {
-    initSettings();
-    this.search();
+    const settings = initializeSettings();
+
+    this.setSettings(settings);
   }
 
   reset = () => {
     this.setSettings({
       page: 0,
-      sort: DEFAULT_SEARCH_SETTINGS.defaultSort,
-      type: DEFAULT_SEARCH_SETTINGS.defaultType,
-      defaultDateRange: DEFAULT_SEARCH_SETTINGS.defaultDateRange
+      sort: DEFAULT_HN_SETTINGS.defaultSort,
+      type: DEFAULT_HN_SETTINGS.defaultType,
+      defaultDateRange: DEFAULT_HN_SETTINGS.defaultDateRange
     });
 
     // Analytics.trackEvent('settings', 'style', settings.style);
@@ -78,18 +86,27 @@ class SearchProvider extends React.Component {
     return this.indexSortedByPopularity;
   };
 
-  setSettings = (settings: Partial<SearchSettings>) => {
-    const newSettings: SearchSettings = { ...this.state.settings, ...settings };
-    this.setState({ settings: newSettings });
+  setSettings = (settings: Partial<HNSettings>) => {
+    const newSettings: HNSettings = { ...this.state.settings, ...settings };
+    this.setState({ settings: newSettings }, () => {
+      this.search("", newSettings);
+      saveSettings(newSettings);
+    });
+    history.replace(`?${asQueryString(newSettings)}`);
 
     return newSettings;
   };
 
-  search = (query: string = ""): Promise<AlgoliaResults> => {
+  search = (
+    query: string = "",
+    settings: HNSettings = this.state.settings
+  ): Promise<AlgoliaResults> => {
     this.setState({ loading: true });
 
+    const params = getSearchSettings(settings);
+
     return this.getIndex(query)
-      .search(query, { page: this.state.settings.page })
+      .search(query, params)
       .then((results: AlgoliaResults) => {
         if (results.query !== query) return;
 
@@ -124,8 +141,8 @@ export const SearchContext = React.createContext<ISearchContext>({
     nbPages: 0
   },
   loading: false,
-  settings: DEFAULT_SEARCH_SETTINGS,
-  setSettings: (data: Partial<SearchSettings>) => DEFAULT_SEARCH_SETTINGS,
+  settings: DEFAULT_HN_SETTINGS,
+  setSettings: (data: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
   search: (query: string) => new Promise<AlgoliaResults>(resolve => resolve())
 });
 

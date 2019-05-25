@@ -8,11 +8,14 @@
   border-bottom: solid 1px #eee;
   min-height: 54px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  // padding-top: $spacing-small;
 
   em {
     background: #ff0!important;
     color: #000!important;
+    font-weight: bold;
   }
 
   &_title {
@@ -33,5 +36,16 @@
 
   &_separator {
     margin: 0 4px;
+
+    &:last-child {
+      display: none;
+    }
+  }
+
+  &_comment {
+    padding: $spacing-medium 0 $spacing-small $spacing-medium;
+    color: #000;
+    font-size: 12px;
+    width: 100%;
   }
 }

@@ -1,37 +1,60 @@
-import { SearchSettings } from "./Search.types";
-import { parse } from "query-string";
-import { DEFAULT_SEARCH_SETTINGS } from "./SearchProvider";
+import { parse, stringify } from "query-string";
+
+import { DEFAULT_HN_SETTINGS } from "./SearchProvider";
+import { HNSettings } from "./Search.types";
 
 const STORAGE_KEY = "ALGOLIA_SETTINGS";
 
-interface AllSearchSettings extends SearchSettings {
-  query: string;
-  login: string;
-}
+const convertToCloseType = (key: string, value: any) => {
+  switch (typeof DEFAULT_HN_SETTINGS[key]) {
+    case "boolean":
+      return value === "true";
+    case "number":
+      return parseInt(value);
+    default:
+      return value;
+  }
+};
 
-export const initializeStorageSettings = () => {
-  const data = localStorage.getItem(STORAGE_KEY);
+const readNewSettings = (): Partial<HNSettings> => {
+  const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+  if (Object.keys(data).length === 0) return {};
+
   return {
-    ...DEFAULT_SEARCH_SETTINGS,
-    ...JSON.parse(data)
+    ...DEFAULT_HN_SETTINGS,
+    ...data
   };
 };
 
-export const saveSettings = (settings: SearchSettings) => {
+const readLegacySettings = (): Partial<HNSettings> => {
+  const LEGACY_PREFIX = "ngStorage-";
+
+  const settings = Object.keys(localStorage).reduce(
+    (settings: Partial<HNSettings>, key) => {
+      if (!key.startsWith(LEGACY_PREFIX)) return settings;
+
+      const value = localStorage.getItem(key).replace(/^"(.*)"$/, "$1");
+      const newKey = key.replace(LEGACY_PREFIX, "");
+
+      settings[newKey] = convertToCloseType(newKey, value);
+      return settings;
+    },
+    {}
+  );
+
+  return settings;
+};
+
+export const saveSettings = (settings: HNSettings) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 };
 
-const saveLocationSettings = (query: string, settings: SearchSettings) => {
-  // const location = {
-  //   query: settings.query,
-  //   sort: settings.sort,
-  //   prefix: settings.prefix,
-  //   page: settings.page,
-  //   type: settings.type
-  // };
+export const saveLocationSettings = (settings: HNSettings) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 };
 
-const parseParamSettings = storageSettings => {
+const withLocationParamSettings = (defaultSettings: HNSettings): HNSettings => {
   const params = parse(window.location.search);
   let defaultDateRange, defaultSort, defaultType;
 
@@ -40,40 +63,72 @@ const parseParamSettings = storageSettings => {
     defaultDateRange = "all";
     defaultSort = "byPopularity";
     defaultType = "story";
-  } else {
-    defaultDateRange = storageSettings.defaultDateRange;
-    defaultSort = storageSettings.defaultSort;
-    defaultType = storageSettings.defaultType;
   }
 
-  return {
-    dateRange: params.dateRange || defaultDateRange,
-    defaultDateRange: storageSettings.defaultDateRange,
-    type: params.type || defaultType,
-    sort: params.sort || defaultSort,
-    defaultType: storageSettings.defaultType,
-    defaultSort: storageSettings.defaultSort,
-    prefix: params.prefix || true,
-    page: parseInt(params.page as string, 10) || 0,
-    showThumbnails: storageSettings.showThumbnails,
-    login: storageSettings.login,
-    style: params.experimental ? "experimental" : storageSettings.style,
-    dateStart: params.dateStart,
-    dateEnd: params.dateEnd,
-    typoTolerance: storageSettings.typoTolerance,
-    storyText:
-      typeof params.storyText === "undefined"
-        ? storageSettings.storyText
-        : params.storyText === "true",
-    authorText:
-      typeof params.authorText === "undefined"
-        ? storageSettings.authorText
-        : params.authorText === "true",
-    hitsPerPage: storageSettings.hitsPerPage
+  const settings: HNSettings = {
+    query: String(params.q || params.query || ""),
+    dateRange:
+      params.dateRange || defaultDateRange || defaultSettings.dateRange,
+    type: params.type || defaultType || defaultSettings.type,
+    sort: params.sort || defaultSort || defaultSettings.defaultSort,
+    defaultType: defaultSettings.defaultType,
+    defaultSort: defaultSettings.defaultSort,
+    defaultDateRange: defaultSettings.defaultDateRange,
+    prefix: Boolean(params.prefix) || true,
+    page: parseInt(params.page as string) || 0,
+    showThumbnails: defaultSettings.showThumbnails,
+    login: defaultSettings.login,
+    style: defaultSettings.style,
+    dateEnd: params.dateEnd as string,
+    dateStart: params.dateStart as string,
+    typoTolerance: defaultSettings.typoTolerance,
+    storyText: defaultSettings.storyText || Boolean(params.storyText),
+    authorText: defaultSettings.authorText || Boolean(params.authorText),
+    hitsPerPage: defaultSettings.hitsPerPage
   };
+
+  return settings;
 };
 
-export const initSettings = () => {
-  const storageSettings = initializeStorageSettings();
-  const locationParams = parseParamSettings(storageSettings);
+export const asQueryString = (settings: HNSettings) => {
+  const {
+    type,
+    query,
+    sort,
+    dateRange,
+    prefix,
+    dateStart,
+    dateEnd,
+    page
+  } = settings;
+
+  return stringify({
+    type,
+    query,
+    sort,
+    page,
+    dateRange,
+    dateStart,
+    dateEnd,
+    prefix
+  });
+};
+
+export const initializeSettings = (): HNSettings => {
+  const newSettings = readNewSettings();
+
+  if (Object.keys(newSettings).length > 0) {
+    const settings = withLocationParamSettings({
+      ...DEFAULT_HN_SETTINGS,
+      ...newSettings
+    });
+    return settings;
+  }
+
+  const settings = withLocationParamSettings({
+    ...DEFAULT_HN_SETTINGS,
+    ...readLegacySettings()
+  });
+
+  return settings;
 };

@@ -12,7 +12,7 @@ interface HNSettings {
   dirty: boolean;
   hitsPerPage: 10 | 20 | 30 | 50;
   style: "default" | "experimental";
-  defaultType: "all" | "stories" | "comments";
+  defaultType: "all" | "story" | "comment";
   defaultSort: "byDate" | "byPopularity";
   defaultDateRange:
     | "all"
@@ -30,6 +30,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
   history
 }) => {
   const { settings, setSettings } = React.useContext(SearchContext);
+
   const [state, setState] = React.useState({
     dirty: false,
     hitsPerPage: settings.hitsPerPage,
@@ -41,6 +42,20 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
     authorText: settings.authorText,
     typoTolerance: settings.typoTolerance
   });
+
+  React.useEffect(() => {
+    setState({
+      dirty: state.dirty,
+      hitsPerPage: settings.hitsPerPage,
+      style: settings.style,
+      defaultType: settings.defaultType,
+      defaultSort: settings.defaultSort,
+      defaultDateRange: settings.defaultDateRange,
+      storyText: settings.storyText,
+      authorText: settings.authorText,
+      typoTolerance: settings.typoTolerance
+    });
+  }, [settings]);
 
   const wrapSetState = (settings: Partial<HNSettings>) => {
     const newState = { ...state, ...settings, dirty: true };
@@ -73,7 +88,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
               <div className="Settings_inputContainer">
                 <select
                   id="style"
-                  defaultValue={state.style}
+                  value={state.style}
                   onChange={(event: React.SyntheticEvent<HTMLSelectElement>) =>
                     wrapSetState({
                       style: event.currentTarget.value as HNSettings["style"]
@@ -91,7 +106,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
               <div className="Settings_inputContainer">
                 <select
                   id="style"
-                  defaultValue={String(state.hitsPerPage)}
+                  value={String(state.hitsPerPage)}
                   onChange={(event: React.SyntheticEvent<HTMLSelectElement>) =>
                     wrapSetState({
                       hitsPerPage: parseInt(
@@ -118,7 +133,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
               <div className="Settings_inputContainer">
                 <select
                   id="style"
-                  defaultValue={state.defaultType}
+                  value={state.defaultType}
                   onChange={(event: React.SyntheticEvent<HTMLSelectElement>) =>
                     wrapSetState({
                       defaultType: event.currentTarget
@@ -127,8 +142,8 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
                   }
                 >
                   <option value="all">All</option>
-                  <option value="stories">Stories</option>
-                  <option value="comments">Comments</option>
+                  <option value="story">Stories</option>
+                  <option value="comment">Comments</option>
                 </select>
               </div>
             </div>
@@ -137,7 +152,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
               <div className="Settings_inputContainer">
                 <select
                   id="style"
-                  defaultValue={state.defaultSort}
+                  value={state.defaultSort}
                   onChange={(event: React.SyntheticEvent<HTMLSelectElement>) =>
                     wrapSetState({
                       defaultSort: event.currentTarget
@@ -156,7 +171,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
               <div className="Settings_inputContainer">
                 <select
                   id="style"
-                  defaultValue={state.defaultDateRange}
+                  value={state.defaultDateRange}
                   onChange={(event: React.SyntheticEvent<HTMLSelectElement>) =>
                     wrapSetState({
                       defaultDateRange: event.currentTarget
@@ -180,7 +195,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
                 <input
                   type="checkbox"
                   id="style"
-                  defaultChecked={state.storyText}
+                  checked={state.storyText}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) =>
                     wrapSetState({
                       storyText: event.currentTarget
@@ -199,7 +214,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
                 <input
                   type="checkbox"
                   id="style"
-                  defaultChecked={state.authorText}
+                  checked={state.authorText}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) =>
                     wrapSetState({
                       authorText: event.currentTarget
@@ -216,7 +231,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
                 <input
                   type="checkbox"
                   id="style"
-                  defaultChecked={state.typoTolerance}
+                  checked={state.typoTolerance}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) =>
                     wrapSetState({
                       typoTolerance: event.currentTarget
