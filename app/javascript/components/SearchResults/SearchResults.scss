@@ -2,4 +2,16 @@
   position: relative;
   padding: 100px 0 0 0;
   background: #f6f6ef;
+  display: flex;
+}
+
+.experimental {
+  .SearchResults {
+    background-color: #fff;
+    padding-top: 190px;
+
+    &_container {
+      padding-left: 200px;
+    }
+  }
 }

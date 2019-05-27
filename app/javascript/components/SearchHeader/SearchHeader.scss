@@ -95,3 +95,34 @@ $headerHeight: 60px;
     }
   }
 }
+
+.experimental {
+  .SearchHeader{
+    border-bottom: solid 1px #eee;
+
+    .SearchInput {
+      border-radius: 20px;
+      border: 1px solid #b6b6b6;
+    }
+    
+    .SearchHeader {
+      &_logo img {
+        width: 60px;
+      }
+      
+      &_settings a {
+        color: #9d9d9d;
+      }
+
+      &_search {
+        height: auto;
+        padding: $spacing-large;
+        background-color: #fff;
+      }
+
+      &_label {
+        color: #9d9d9d;
+      }
+    }
+  }
+}

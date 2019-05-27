@@ -6,10 +6,10 @@ import "./SearchFilters.scss";
 import { Share2, ChevronsRight } from "react-feather";
 import Dropdown from "../Dropdown/Dropdown";
 
+import Datepicker from "../Datepicker/Datepicker";
 import pluralize from "../../utils/pluralize";
 import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings } from "../../providers/Search.types";
-import Datepicker from "../Datepicker/Datepicker";
 
 export const STORY_FILTERS = new Map<HNSettings["type"], string>([
   ["all", "All"],

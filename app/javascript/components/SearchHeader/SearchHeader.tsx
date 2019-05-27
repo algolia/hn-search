@@ -4,10 +4,19 @@ import { Search, Settings } from "react-feather";
 import { Link } from "react-router-dom";
 
 import { SearchContext } from "../../providers/SearchProvider";
-import AlgoliaWhiteLogo from "images/algolia-logo-white.svg";
+import AlgoliaLogoWhite from "images/algolia-logo-white.svg";
+import AlgoliaLogoBlue from "images/algolia-logo-master.svg";
 
 const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";
+
+const AlgoliaLogo: React.FunctionComponent = () => {
+  const {
+    settings: { style }
+  } = React.useContext(SearchContext);
+  const logoSrc = style === "default" ? AlgoliaLogoWhite : AlgoliaLogoBlue;
+  return <img src={logoSrc} alt="Algolia" />;
+};
 
 const SearchHeader: React.FunctionComponent = () => {
   const { settings, search, syncUrl } = React.useContext(SearchContext);
@@ -41,7 +50,7 @@ const SearchHeader: React.FunctionComponent = () => {
           title="Realtime Search Engine"
           target="_blank"
         >
-          <img src={AlgoliaWhiteLogo} alt="Algolia logo white" />
+          <AlgoliaLogo />
         </a>
       </div>
       <div className="SearchHeader_settings">

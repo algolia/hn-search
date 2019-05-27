@@ -1,0 +1,32 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Sidebar {
+  background-color: #f8f8f8;
+  position: fixed;
+  height: 100%;
+
+  li {
+    width: 200px;
+
+    a {
+      color: #5c5c5c;
+      display: flex;
+      align-items: center;
+      padding: $spacing-small $spacing-large;
+
+      svg {
+        width: 16px;
+        height: 16px;
+        margin-right: $spacing-small;
+      }
+    }
+  }
+
+  ul{
+    margin-bottom: $spacing-small;
+    &:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}

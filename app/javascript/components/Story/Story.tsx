@@ -3,6 +3,7 @@ import * as moment from "moment";
 import "./Story.scss";
 
 import { Hit } from "../../providers/Search.types";
+import { SearchContext } from "../../providers/SearchProvider";
 
 const StoryLink: React.FunctionComponent<{
   id: string;
