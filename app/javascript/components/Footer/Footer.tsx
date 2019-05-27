@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./Footer.scss";
+import { Link } from "react-router-dom";
 
 const LINKS: { label: string; to: string }[] = [
   { label: "About", to: "/about" },
@@ -17,14 +18,14 @@ const Footer: React.FunctionComponent = () => {
     <footer className="Footer">
       <ul className="Footer_list">
         {LINKS.map((link, index) => {
-          const target = link.to.startsWith("http") ? "_blank" : "self";
+          const target = link.to.startsWith("http") ? "_blank" : "";
 
           return (
             <React.Fragment key={link.to}>
               <li key={link.to}>
-                <a href={link.to} target={target}>
+                <Link to={link.to} target={target}>
                   {link.label}
-                </a>
+                </Link>
               </li>
               <li key={index}>•</li>
             </React.Fragment>

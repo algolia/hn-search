@@ -5,7 +5,7 @@ import classnames from "classnames";
 import "./Dropdown.scss";
 import { ChevronUp, ChevronDown } from "react-feather";
 
-type DropdownItem = { value: string; label: string };
+type DropdownItem = { value: string; label: React.ReactChild };
 
 interface DropdownProps {
   items: DropdownItem[];

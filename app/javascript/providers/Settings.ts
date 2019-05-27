@@ -68,8 +68,8 @@ const withLocationParamSettings = (defaultSettings: HNSettings): HNSettings => {
   const settings: HNSettings = {
     query: String(params.q || params.query || ""),
     dateRange:
-      params.dateRange || defaultDateRange || defaultSettings.dateRange,
-    type: params.type || defaultType || defaultSettings.type,
+      params.dateRange || defaultDateRange || defaultSettings.defaultDateRange,
+    type: params.type || defaultType || defaultSettings.defaultType,
     sort: params.sort || defaultSort || defaultSettings.defaultSort,
     defaultType: defaultSettings.defaultType,
     defaultSort: defaultSettings.defaultSort,
@@ -118,17 +118,14 @@ export const initializeSettings = (): HNSettings => {
   const newSettings = readNewSettings();
 
   if (Object.keys(newSettings).length > 0) {
-    const settings = withLocationParamSettings({
+    return withLocationParamSettings({
       ...DEFAULT_HN_SETTINGS,
       ...newSettings
     });
-    return settings;
   }
 
-  const settings = withLocationParamSettings({
+  return withLocationParamSettings({
     ...DEFAULT_HN_SETTINGS,
     ...readLegacySettings()
   });
-
-  return settings;
 };

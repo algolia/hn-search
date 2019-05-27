@@ -1,12 +1,15 @@
 import * as React from "react";
+import * as moment from "moment";
+
 import "./SearchFilters.scss";
 
-import { Share2 } from "react-feather";
+import { Share2, ChevronsRight } from "react-feather";
 import Dropdown from "../Dropdown/Dropdown";
 
 import pluralize from "../../utils/pluralize";
 import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings } from "../../providers/Search.types";
+import Datepicker from "../Datepicker/Datepicker";
 
 export const STORY_FILTERS = new Map<HNSettings["type"], string>([
   ["all", "All"],
@@ -29,9 +32,38 @@ export const TIME_FILTERS = new Map<HNSettings["defaultDateRange"], string>([
 ]);
 
 const asItem = ([value, label]) => ({ value, label });
+const formatDate = (date: string): string =>
+  moment(parseInt(date) * 1000).format("MMMM Do YYYY");
+
+const formatTimeFilters: React.FunctionComponent<{ settings: HNSettings }> = ({
+  settings
+}) => {
+  if (
+    settings.dateRange === "custom" &&
+    settings.dateEnd &&
+    settings.dateStart
+  ) {
+    return (
+      <>
+        {formatDate(settings.dateStart)}
+        <ChevronsRight />
+        {formatDate(settings.dateEnd)}
+      </>
+    );
+  }
+
+  return <>{TIME_FILTERS.get(settings.dateRange)}</>;
+};
 
 const SearchFilters: React.FunctionComponent = () => {
   const { results, settings, setSettings } = React.useContext(SearchContext);
+  const [isOpen, toggleOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (settings.dateRange === "custom") {
+      return toggleOpen(true);
+    } else toggleOpen(false);
+  }, [settings.dateRange]);
 
   return (
     <div className="SearchFilters container">
@@ -66,15 +98,27 @@ const SearchFilters: React.FunctionComponent = () => {
           for
           <Dropdown
             items={Array.from(TIME_FILTERS).map(asItem)}
-            onChange={item =>
+            onChange={item => {
               setSettings({
                 dateRange: item.value as HNSettings["dateRange"]
-              })
-            }
+              });
+            }}
             selectedItem={{
               value: settings.dateRange,
-              label: TIME_FILTERS.get(settings.dateRange)
+              label: formatTimeFilters({ settings })
             }}
+          />
+          <Datepicker
+            isOpen={isOpen}
+            onCancel={() => toggleOpen(false)}
+            onChange={(from: Date, to: Date) => {
+              toggleOpen(false);
+              setSettings({
+                dateStart: String(Math.round(from.getTime() / 1000)),
+                dateEnd: String(Math.round(to.getTime() / 1000))
+              });
+            }}
+            onBlur={() => toggleOpen(false)}
           />
         </span>
       </div>

@@ -1,6 +1,7 @@
 import { HNSettings } from "./Search.types";
 
 interface SearchSettings {
+  page: number;
   hitsPerPage: number;
   minWordSizefor1Typo: number;
   minWordSizefor2Typos: number;
@@ -38,6 +39,7 @@ const getDateFilters = (
     case "pastYear":
       return getDateTimestampSinceDays(365);
     case "custom":
+      if (!settings.dateStart || !settings.dateEnd) return [];
       return [
         "created_at_i>" + settings.dateStart,
         "created_at_i<" + settings.dateEnd
@@ -91,15 +93,14 @@ const getRestricSearchableAttributes = (
 const getMinProximity = (
   type: HNSettings["type"]
 ): SearchSettings["minProximity"] => {
-  // @TODO
-  // if (page === "jobs" && page === "polls") return 1;
   return type === "story" ? 8 : 1;
 };
 
 const getSearchSettings = (settings: HNSettings): SearchSettings => {
-  const { hitsPerPage, prefix, type, sort, typoTolerance } = settings;
+  const { hitsPerPage, prefix, type, sort, typoTolerance, page } = settings;
 
   const searchParams: SearchSettings = {
+    page: page,
     hitsPerPage: hitsPerPage,
     minWordSizefor1Typo: 4,
     minWordSizefor2Typos: 8,

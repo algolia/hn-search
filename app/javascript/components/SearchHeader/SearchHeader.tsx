@@ -10,7 +10,12 @@ const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";
 
 const SearchHeader: React.FunctionComponent = () => {
-  const { settings, search } = React.useContext(SearchContext);
+  const { settings, search, syncUrl } = React.useContext(SearchContext);
+
+  React.useEffect(() => {
+    search(settings.query);
+    syncUrl(settings);
+  }, [settings]);
 
   return (
     <>
@@ -21,9 +26,10 @@ const SearchHeader: React.FunctionComponent = () => {
         <input
           type="search"
           defaultValue={settings.query}
-          onInput={(event: React.SyntheticEvent<HTMLInputElement>) =>
-            search(event.currentTarget.value)
-          }
+          onInput={(event: React.SyntheticEvent<HTMLInputElement>) => {
+            syncUrl({ ...settings, query: event.currentTarget.value });
+            search(event.currentTarget.value);
+          }}
           placeholder="Search stories by title, url or author"
           className="SearchInput"
         />

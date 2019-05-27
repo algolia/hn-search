@@ -12,6 +12,7 @@ const Pagination: React.FunctionComponent = () => {
     settings: { page },
     setSettings
   } = React.useContext(SearchContext);
+
   const pages = new Array(Math.abs(results.nbPages - 1))
     .fill(1)
     .map((_, i) => i + 1);
@@ -49,7 +50,7 @@ const Pagination: React.FunctionComponent = () => {
           </button>
         </li>
       ))}
-      {!isLastPage && (
+      {!isLastPage && results.nbPages > MAX_RESULTS && (
         <li className="Pagination_item Pagination_next">
           <button onClick={() => setSettings({ page: pages.length })}>
             <ChevronsRight />

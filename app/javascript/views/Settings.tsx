@@ -73,13 +73,14 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
     <div className="container">
       <Header>
         <div className="SearchHeader_settings">
-          <Link onClick={() => history.goBack()} className="SearchHeader_back">
+          <Link onClick={history.goBack} className="SearchHeader_back">
             <ChevronsLeft />
             Back
           </Link>
         </div>
       </Header>
       <section className="Settings">
+        <div className="SearchFilters container">Settings</div>
         <form onSubmit={onSubmit}>
           <fieldset className="Settings_fieldset">
             <h2 className="Settings_display">Display options</h2>
@@ -160,8 +161,8 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
                     })
                   }
                 >
-                  <option value="byDate">byDate</option>
-                  <option value="byPopularity">byPopularity</option>
+                  <option value="byDate">Most recent first</option>
+                  <option value="byPopularity">Most popular first</option>
                 </select>
               </div>
             </div>
@@ -179,12 +180,11 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
                     })
                   }
                 >
-                  <option value="all">all</option>
                   <option value="last24h">Last 24h</option>
                   <option value="pastWeek">Last week</option>
                   <option value="pastMonth">Last month</option>
                   <option value="pastYear">Last year</option>
-                  <option value="custom">custom</option>
+                  <option value="all">Forever</option>
                 </select>
               </div>
             </div>

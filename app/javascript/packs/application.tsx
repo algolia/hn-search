@@ -14,6 +14,7 @@ const App = () => {
       <SearchProvider>
         <Route exact path="/" component={SearchView} />
         <Route path="/settings" component={Settings} />
+        <Route path="/hot" component={Settings} />
       </SearchProvider>
     </Router>
   );

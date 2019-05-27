@@ -1,0 +1,77 @@
+@import "./../../src/colors.scss";
+@import "./../../src/variables.scss";
+
+.DatePicker {
+  left: 0;
+  top: 40px;
+  width: 100%;
+  position: absolute;
+  background: rgba(246,246,239,.8);
+
+  &-container {
+    margin: $spacing-small;
+    display: flex;
+    background-color: #fff;
+  }
+
+  .DayPicker {
+    width: 50%;
+  }
+
+  .DayPicker-Month {
+    width: 100%;
+  }
+
+  &_form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%;
+  }
+
+  fieldset {
+    border: none;
+    background-color: #fff;
+  }
+
+  label {
+    text-align: left;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  h3 {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: $spacing-small;
+
+    svg { height: 18px }
+  }
+  
+  &_actions {
+    margin-top: $spacing-medium;
+
+    button {
+      margin-right: $spacing-small;
+    }
+  }
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  border-radius: 0;
+  background-color: $orange !important;
+  color: #fff !important;
+  &:focus {
+    outline: none;
+  }
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  border-radius: 0;
+  background-color: rgba($orange, .3) !important;
+  color: #fff !important;
+}

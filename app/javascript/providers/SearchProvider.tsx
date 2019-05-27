@@ -13,16 +13,17 @@ interface ISearchContext {
   loading: boolean;
   search: (query: string) => Promise<AlgoliaResults>;
   setSettings: (settings: Partial<HNSettings>) => HNSettings;
+  syncUrl: (settings: HNSettings) => any;
   settings: HNSettings;
 }
 
 export const DEFAULT_HN_SETTINGS: HNSettings = {
   showThumbnails: true,
   type: "story",
-  defaultType: "story",
   sort: "byPopularity",
-  defaultSort: "byPopularity",
   dateRange: "all",
+  defaultType: "story",
+  defaultSort: "byPopularity",
   defaultDateRange: "all",
   style: "default",
   typoTolerance: true,
@@ -42,7 +43,7 @@ const DEFAULT_SEARCH_STATE = {
     nbPages: 0
   },
   loading: false,
-  settings: DEFAULT_HN_SETTINGS
+  settings: initializeSettings()
 };
 
 class SearchProvider extends React.Component {
@@ -58,18 +59,12 @@ class SearchProvider extends React.Component {
 
   state = DEFAULT_SEARCH_STATE;
 
-  componentDidMount() {
-    const settings = initializeSettings();
-
-    this.setSettings(settings);
-  }
-
   reset = () => {
     this.setSettings({
       page: 0,
       sort: DEFAULT_HN_SETTINGS.defaultSort,
       type: DEFAULT_HN_SETTINGS.defaultType,
-      defaultDateRange: DEFAULT_HN_SETTINGS.defaultDateRange
+      dateRange: DEFAULT_HN_SETTINGS.defaultDateRange
     });
 
     // Analytics.trackEvent('settings', 'style', settings.style);
@@ -89,12 +84,14 @@ class SearchProvider extends React.Component {
   setSettings = (settings: Partial<HNSettings>) => {
     const newSettings: HNSettings = { ...this.state.settings, ...settings };
     this.setState({ settings: newSettings }, () => {
-      this.search("", newSettings);
       saveSettings(newSettings);
     });
-    history.replace(`?${asQueryString(newSettings)}`);
 
     return newSettings;
+  };
+
+  syncUrl = (settings: HNSettings) => {
+    history.replace(`?${asQueryString(settings)}`);
   };
 
   search = (
@@ -123,7 +120,8 @@ class SearchProvider extends React.Component {
         value={{
           ...this.state,
           search: this.search,
-          setSettings: this.setSettings
+          setSettings: this.setSettings,
+          syncUrl: this.syncUrl
         }}
       >
         {this.props.children}
@@ -142,7 +140,8 @@ export const SearchContext = React.createContext<ISearchContext>({
   },
   loading: false,
   settings: DEFAULT_HN_SETTINGS,
-  setSettings: (data: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
+  setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
+  syncUrl: (settings: HNSettings) => null,
   search: (query: string) => new Promise<AlgoliaResults>(resolve => resolve())
 });
 
