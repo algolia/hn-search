@@ -4,16 +4,27 @@
 .Sidebar {
   background-color: #f8f8f8;
   position: fixed;
+  top: 0;
   height: 100%;
+  padding-top: 128px;
+  z-index: 10;
 
   li {
     width: 200px;
+    
+    &:last-child {
+      margin-bottom: $spacing-small;
+    }
 
     a {
       color: #5c5c5c;
       display: flex;
       align-items: center;
       padding: $spacing-small $spacing-large;
+
+      &.active {
+        background-color: #e4e3e5
+      }
 
       svg {
         width: 16px;
@@ -25,6 +36,7 @@
 
   ul{
     margin-bottom: $spacing-small;
+
     &:not(:last-child) {
       border-bottom: 1px solid #eee;
     }

@@ -19,12 +19,19 @@ const AlgoliaLogo: React.FunctionComponent = () => {
 };
 
 const SearchHeader: React.FunctionComponent = () => {
-  const { settings, search, syncUrl } = React.useContext(SearchContext);
+  const { settings, search, syncUrl, fetchPopularStories } = React.useContext(
+    SearchContext
+  );
 
   React.useEffect(() => {
+    if (location.pathname === "/hot") {
+      fetchPopularStories();
+      return;
+    }
+
     search(settings.query);
-    syncUrl(settings);
-  }, [settings]);
+    // syncUrl(settings);
+  }, [settings, location.pathname]);
 
   return (
     <>

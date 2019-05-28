@@ -45,11 +45,17 @@
 }
 
 .experimental {
+
   .SearchFilters {
-    top: 110px;
+    top: 108px;
     background-color: #fdfdfd;
     height: 80px;
     color: #9d9d9d;
     border-bottom: 1px solid #eee;
+    padding-left: 200px;
+
+    &_filters {
+      padding-left: $spacing-medium;
+    }
   }
 }

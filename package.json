@@ -5,7 +5,8 @@
   "repository": "https://github.com/algolia/hn-search",
   "author": "Jonas Badalic <jonas.badalic@algolia.com>",
   "scripts": {
-    "dev": "./bin/webpack-dev-server"
+    "dev": "./bin/webpack-dev-server",
+    "test:watch": "jest --watchAll"
   },
   "license": "MIT",
   "dependencies": {
@@ -31,6 +32,9 @@
     "typescript": "^3.4.5"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
     "webpack-dev-server": "^3.3.1"
   }
 }

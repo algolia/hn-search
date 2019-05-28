@@ -5,12 +5,17 @@ import { createBrowserHistory } from "history";
 import { AlgoliaResults, HNSettings } from "./Search.types";
 import getSearchSettings from "./SearchSettings";
 import { initializeSettings, asQueryString, saveSettings } from "./Settings";
+import {
+  parseTagFiltersFromQuery,
+  buildTagFiltersForPopularStories
+} from "./SearchSettings";
 
 const history = createBrowserHistory();
 
 interface ISearchContext {
   results: AlgoliaResults;
   loading: boolean;
+  fetchPopularStories: () => Promise<AlgoliaResults>;
   search: (query: string) => Promise<AlgoliaResults>;
   setSettings: (settings: Partial<HNSettings>) => HNSettings;
   syncUrl: (settings: HNSettings) => any;
@@ -96,21 +101,30 @@ class SearchProvider extends React.Component {
 
   search = (
     query: string = "",
-    settings: HNSettings = this.state.settings
+    settings: HNSettings = this.state.settings,
+    storyIDs?: number[]
   ): Promise<AlgoliaResults> => {
     this.setState({ loading: true });
+    const params = getSearchSettings(query, settings, storyIDs);
 
-    const params = getSearchSettings(settings);
-
-    return this.getIndex(query)
-      .search(query, params)
+    return this.getIndex(params.query)
+      .search(params.query, params)
       .then((results: AlgoliaResults) => {
-        if (results.query !== query) return;
+        if (results.query !== params.query) return;
 
         this.setState({
           results,
           loading: false
         });
+      });
+  };
+
+  fetchPopularStories = (): Promise<AlgoliaResults> => {
+    return fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
+      .then(resp => resp.json())
+      .then(storyIDs => {
+        const { settings } = this.state;
+        return this.search(settings.query, settings, storyIDs);
       });
   };
 
@@ -120,6 +134,7 @@ class SearchProvider extends React.Component {
         value={{
           ...this.state,
           search: this.search,
+          fetchPopularStories: this.fetchPopularStories,
           setSettings: this.setSettings,
           syncUrl: this.syncUrl
         }}
@@ -142,7 +157,8 @@ export const SearchContext = React.createContext<ISearchContext>({
   settings: DEFAULT_HN_SETTINGS,
   setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
   syncUrl: (settings: HNSettings) => null,
-  search: (query: string) => new Promise<AlgoliaResults>(resolve => resolve())
+  search: (query: string) => new Promise<AlgoliaResults>(resolve => resolve()),
+  fetchPopularStories: () => new Promise<AlgoliaResults>(resolve => resolve())
 });
 
 export default SearchProvider;

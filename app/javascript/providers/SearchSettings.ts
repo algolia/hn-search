@@ -1,6 +1,7 @@
 import { HNSettings } from "./Search.types";
 
 interface SearchSettings {
+  query: string;
   page: number;
   hitsPerPage: number;
   minWordSizefor1Typo: number;
@@ -22,6 +23,135 @@ const getDateTimestampSinceDays = (sinceDays: number) => {
     "created_at_i>" +
       new Date().setDate(new Date().getDate() - sinceDays) / 1000
   ];
+};
+
+export const AUTHORS_REGEXP = /(author|by):\s?(\w+)/gm;
+
+export const extractByRegExp = (
+  string: string = "",
+  regExp: RegExp
+): string[] => {
+  const matches = string.match(regExp);
+  if (!matches || !string) return [];
+
+  return matches;
+};
+
+type ParsedQuery = {
+  query: string;
+  tagFilters: string[];
+  numericFilters: string[];
+};
+
+export const extractAuthorsQuery = (query: string): ParsedQuery => {
+  const matches = extractByRegExp(query, AUTHORS_REGEXP);
+
+  if (!matches.length)
+    return { query: query, tagFilters: [], numericFilters: [] };
+
+  let copiedQuery = query.slice();
+
+  const tagFilters = matches.map(match => {
+    copiedQuery = copiedQuery.replace(match, "");
+    const author = match.split(":")[1].trim();
+    return `author_${author}`;
+  });
+
+  return { query: copiedQuery.trim(), tagFilters, numericFilters: [] };
+};
+
+const POINTS_REGEXP = /points(=|<|>|<=|>=)([0-9]+)/gm;
+export const extractPointsQuery = (query: string): ParsedQuery => {
+  const matches = extractByRegExp(query, POINTS_REGEXP);
+  if (!matches.length)
+    return { query: query, tagFilters: [], numericFilters: [] };
+
+  let copiedQuery = query.slice();
+
+  const numericFilters = matches.map(match => {
+    copiedQuery = copiedQuery.replace(match, "");
+    return match;
+  });
+
+  return { query: copiedQuery.trim(), tagFilters: [], numericFilters };
+};
+
+const COMMENTS_REGEXP = /comments(=|<|>|<=|>=)([0-9]+)/gm;
+export const extractCommentsQuery = (query: string): ParsedQuery => {
+  const matches = extractByRegExp(query, COMMENTS_REGEXP);
+
+  if (!matches.length)
+    return { query: query, tagFilters: [], numericFilters: [] };
+
+  let copiedQuery = query.slice();
+
+  const numericFilters = matches.map(match => {
+    copiedQuery = copiedQuery.replace(match, "");
+    const stripComments = match.replace("comments", "");
+    return `num_comments${stripComments}`;
+  });
+
+  return { query: copiedQuery.trim(), tagFilters: [], numericFilters };
+};
+
+const CREATED_AT_REGEXP = /date(=|<|>|<=|>=)([0-9]+)/gm;
+export const extractCreatedAtQuery = (query: string): ParsedQuery => {
+  const matches = extractByRegExp(query, CREATED_AT_REGEXP);
+
+  if (!matches.length)
+    return { query: query, tagFilters: [], numericFilters: [] };
+
+  let copiedQuery = query.slice();
+
+  const numericFilters = matches.map(match => {
+    copiedQuery = copiedQuery.replace(match, "");
+    const stripComments = match.replace("date", "");
+    return `created_at_i${stripComments}`;
+  });
+
+  return { query: copiedQuery.trim(), tagFilters: [], numericFilters };
+};
+
+const STORY_REGEXP = /story:([0-9]+)/gm;
+export const extractStoryQuery = (query: string): ParsedQuery => {
+  const matches = extractByRegExp(query, STORY_REGEXP);
+
+  if (!matches.length)
+    return { query: query, tagFilters: [], numericFilters: [] };
+
+  let copiedQuery = query.slice();
+
+  const tagFilters = matches.map(match => {
+    copiedQuery = copiedQuery.replace(match, "");
+    const author = match.split(":")[1].trim();
+    return `story_${author}`;
+  });
+
+  return { query: copiedQuery.trim(), tagFilters, numericFilters: [] };
+};
+
+export const parseTagFiltersFromQuery = (query: string): ParsedQuery => {
+  const middleware = [
+    extractAuthorsQuery,
+    extractPointsQuery,
+    extractCommentsQuery,
+    extractCreatedAtQuery,
+    extractStoryQuery
+  ];
+
+  return middleware.reduce(
+    (accumulator, extractor) => {
+      const { query, tagFilters, numericFilters } = extractor(
+        accumulator.query
+      );
+      return {
+        query,
+        tagFilters: accumulator.tagFilters.concat(tagFilters),
+        numericFilters: accumulator.numericFilters.concat(numericFilters)
+      };
+    },
+    { query, tagFilters: [], numericFilters: [] }
+  );
 };
 
 const getDateFilters = (
@@ -49,24 +179,40 @@ const getDateFilters = (
   }
 };
 
+export const buildTagFiltersForPopularStories = (
+  storyIDs: number[]
+): string[] => {
+  if (!storyIDs) return [];
+  if (!storyIDs.length) return ["no_results"];
+
+  return storyIDs.reduce((acc, storyID) => {
+    return acc.concat([`story_${storyID}`, `job_${storyID}`]);
+  }, []);
+};
+
 const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
   let tagFilters = [];
+  const path = location.pathname;
 
-  switch (location.pathname) {
-    case "ask-hn":
+  switch (path) {
+    case "/ask-hn":
       tagFilters.push("ask_hn");
-    case "show-hn":
+      break;
+    case "/show-hn":
       tagFilters.push("show_hn");
-    case "jobs":
+      break;
+    case "/jobs":
       tagFilters.push("job");
-    case "polls":
+      break;
+    case "/polls":
       tagFilters.push("poll");
-    case "user":
+      break;
+    case "/user":
       tagFilters.push("author_" + settings.login);
+      break;
   }
 
-  // @TODO
-  // if (page === "jobs" || page === "polls") return tagFilters;
+  if (path === "/jobs" || path === "/polls") return tagFilters;
 
   if (settings.type === "all") {
     tagFilters.push(["story", "comment", "poll", "job"]);
@@ -96,10 +242,27 @@ const getMinProximity = (
   return type === "story" ? 8 : 1;
 };
 
-const getSearchSettings = (settings: HNSettings): SearchSettings => {
+const getSearchSettings = (
+  query: string,
+  settings: HNSettings,
+  storyIDs?: number[]
+): SearchSettings => {
   const { hitsPerPage, prefix, type, sort, typoTolerance, page } = settings;
 
+  const {
+    query: parsedQuery,
+    tagFilters,
+    numericFilters
+  } = parseTagFiltersFromQuery(query);
+
+  const extractedTagFilter = [
+    ...tagFilters,
+    buildTagFiltersForPopularStories(storyIDs)
+  ];
+  const extractedNumericFilters = numericFilters;
+
   const searchParams: SearchSettings = {
+    query: parsedQuery,
     page: page,
     hitsPerPage: hitsPerPage,
     minWordSizefor1Typo: 4,
@@ -108,8 +271,10 @@ const getSearchSettings = (settings: HNSettings): SearchSettings => {
     ignorePlurals: false,
     clickAnalytics: true,
     minProximity: getMinProximity(type),
-    numericFilters: getDateFilters(settings),
-    tagFilters: getTagFilters(settings),
+    numericFilters: getDateFilters(settings).concat(extractedNumericFilters),
+    tagFilters: (getTagFilters(settings) as string[]).concat(
+      extractedTagFilter as string[]
+    ),
     typoTolerance: sort === "byPopularity" && typoTolerance,
     queryType: prefix ? "prefixLast" : "prefixNone",
     restrictSearchableAttributes: getRestricSearchableAttributes(settings),

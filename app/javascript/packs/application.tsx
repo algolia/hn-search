@@ -22,8 +22,8 @@ const App = () => {
     <Router>
       <SearchProvider>
         <ThemeClass>
-          <Route exact path="/" component={SearchView} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/:path?" index component={SearchView} />
+          <Route exact path="/settings" component={Settings} />
         </ThemeClass>
       </SearchProvider>
     </Router>
