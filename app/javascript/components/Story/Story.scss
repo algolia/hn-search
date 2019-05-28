@@ -11,13 +11,35 @@
   flex-wrap: wrap;
   align-items: center;
 
+  &_container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   em {
     background: #ff0!important;
     color: #000!important;
     font-weight: bold;
   }
 
+  &_image {
+    width: 50px;
+    height: 50px;
+    padding: 2px;
+    margin: 0 $spacing-medium 0 0;
+    border: solid 1px #eee;
+    border-radius: 3px;
+    align-self: flex-start;
+  }
+
+  &_data {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   &_title {
+    width: 100%;
     margin-bottom: 0;
     em {
       font-weight: bold;
@@ -46,5 +68,125 @@
     color: #000;
     font-size: 12px;
     width: 100%;
+  }
+}
+
+.experimental {
+  .Story {
+    padding: $spacing-small $spacing-medium $spacing-small $spacing-medium;
+
+    &_container {
+      width: 100%;
+    }
+
+    em {
+      font-style: normal;
+      background: transparent !important;
+      color: #000!important;
+      font-weight: bold;
+    }
+
+    a:hover {
+      border-bottom: 1px dotted #ccc
+    }
+
+    &_separator {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &_meta {
+      a {
+        color: #9d9d9d;
+      }
+
+      svg {
+        transform: translate(0, 2px);
+        height: 13px;
+        width: 13px;
+        margin-right: 4px;
+        color: #d0d0d0 !important;
+      }
+    }
+
+    &_link {
+      color: #5a96b1 !important;
+    }
+
+    &_share {
+      flex: 1;
+      text-align: right;
+
+      svg {
+        width: 18px;
+      }
+
+      button {
+        padding: 0;
+        margin: $spacing-small;
+        border: none;
+        color: #9d9d9d;
+        background-color: transparent;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:hover {
+          color: $orange;
+        }
+
+        &.Story_starred-active {
+          color: $orange;
+        }
+
+        &:first-child {
+          background-color: #939393;
+          color: #fff;
+          font-size: 12px;
+          padding: $spacing-base;
+          position: relative;
+          font-weight: 700;
+
+          &:before {
+            content: "";
+            height: 0;
+            width: 0;
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+            border-right: 9px solid #939393;
+            position: absolute;
+            right: 4px;
+            bottom: -40%;
+          }
+
+          &:hover {
+            background-color: $orange;
+            &:before {
+              border-right-color: $orange;
+            }
+          }
+        }
+      }
+    }
+
+    &_title {
+      margin-bottom: $spacing-base;
+      
+      a {
+        transition: color .1s linear;
+        color: #5c5c5c;
+        font-size: 16px;
+        font-weight: 400;
+
+        &:visited {
+          color: #9c9c9c
+        }
+
+        &:hover {
+          border-bottom: 0;
+        }
+      }
+    }
   }
 }

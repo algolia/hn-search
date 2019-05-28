@@ -6,7 +6,7 @@ export type Hit = {
   created_at: string;
   created_at_i: number;
   num_comments: number;
-  objectID: string;
+  objectID: number;
   parent_id: number;
   points: number;
   relevancy_score: number;

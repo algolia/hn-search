@@ -5,7 +5,7 @@ import "./Sidebar.scss";
 import { Star } from "react-feather";
 import { RouteComponentProps } from "react-router";
 
-const SidebarItems = [
+export const SidebarItems = [
   { icon: "", label: "All", to: "/" },
   { icon: "", label: "Hot", to: "/hot" },
   { icon: "", label: "Show HN", to: "/show-hn" },

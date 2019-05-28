@@ -2,13 +2,10 @@ import * as React from "react";
 import algoliasearch from "algoliasearch";
 import { createBrowserHistory } from "history";
 
+import Starred from "./Starred";
 import { AlgoliaResults, HNSettings } from "./Search.types";
 import getSearchSettings from "./SearchSettings";
 import { initializeSettings, asQueryString, saveSettings } from "./Settings";
-import {
-  parseTagFiltersFromQuery,
-  buildTagFiltersForPopularStories
-} from "./SearchSettings";
 
 const history = createBrowserHistory();
 
@@ -16,10 +13,15 @@ interface ISearchContext {
   results: AlgoliaResults;
   loading: boolean;
   fetchPopularStories: () => Promise<AlgoliaResults>;
-  search: (query: string) => Promise<AlgoliaResults>;
+  search: (
+    query: string,
+    settings?: HNSettings,
+    storyIDs?: string[]
+  ) => Promise<AlgoliaResults>;
   setSettings: (settings: Partial<HNSettings>) => HNSettings;
   syncUrl: (settings: HNSettings) => any;
   settings: HNSettings;
+  starred: Starred;
 }
 
 export const DEFAULT_HN_SETTINGS: HNSettings = {
@@ -62,6 +64,7 @@ class SearchProvider extends React.Component {
     "Item_production_ordered"
   );
 
+  starred = new Starred();
   state = DEFAULT_SEARCH_STATE;
 
   reset = () => {
@@ -102,7 +105,7 @@ class SearchProvider extends React.Component {
   search = (
     query: string = "",
     settings: HNSettings = this.state.settings,
-    storyIDs?: number[]
+    storyIDs?: string[]
   ): Promise<AlgoliaResults> => {
     this.setState({ loading: true });
     const params = getSearchSettings(query, settings, storyIDs);
@@ -136,6 +139,7 @@ class SearchProvider extends React.Component {
           search: this.search,
           fetchPopularStories: this.fetchPopularStories,
           setSettings: this.setSettings,
+          starred: this.starred,
           syncUrl: this.syncUrl
         }}
       >
@@ -154,6 +158,7 @@ export const SearchContext = React.createContext<ISearchContext>({
     nbPages: 0
   },
   loading: false,
+  starred: new Starred(),
   settings: DEFAULT_HN_SETTINGS,
   setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
   syncUrl: (settings: HNSettings) => null,

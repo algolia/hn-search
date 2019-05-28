@@ -180,7 +180,7 @@ const getDateFilters = (
 };
 
 export const buildTagFiltersForPopularStories = (
-  storyIDs: number[]
+  storyIDs: string[]
 ): string[] => {
   if (!storyIDs) return [];
   if (!storyIDs.length) return ["no_results"];
@@ -245,7 +245,7 @@ const getMinProximity = (
 const getSearchSettings = (
   query: string,
   settings: HNSettings,
-  storyIDs?: number[]
+  storyIDs?: string[]
 ): SearchSettings => {
   const { hitsPerPage, prefix, type, sort, typoTolerance, page } = settings;
 

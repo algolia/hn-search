@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { Helmet } from "react-helmet";
 
 import "./../src/application.scss";
 import SearchView from "../views/Search";
@@ -21,6 +22,9 @@ const App = () => {
   return (
     <Router>
       <SearchProvider>
+        <Helmet>
+          <title>HN Search powered by Algolia</title>
+        </Helmet>
         <ThemeClass>
           <Route path="/:path?" index component={SearchView} />
           <Route exact path="/settings" component={Settings} />

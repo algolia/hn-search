@@ -54,6 +54,10 @@
     border-bottom: 1px solid #eee;
     padding-left: 200px;
 
+    &_meta {
+      padding-right: $spacing-medium;
+    }
+
     &_filters {
       padding-left: $spacing-medium;
     }

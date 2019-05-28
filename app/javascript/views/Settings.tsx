@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet";
 import { RouteComponentProps, Link } from "react-router-dom";
 import "./Settings.scss";
 
@@ -71,6 +72,9 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
 
   return (
     <div className="container">
+      <Helmet>
+        <title>HN Search | Settings</title>
+      </Helmet>
       <Header>
         <div className="SearchHeader_settings">
           <Link onClick={history.goBack} className="SearchHeader_back">

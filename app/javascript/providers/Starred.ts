@@ -5,63 +5,85 @@ type StarredItems = Set<string>;
 
 const readStorage = (
   key: "ALGOLIA_STARRED" | "ngStorage-starred" = STARRED_KEY,
-  defaultValue: any = new Set()
+  defaultValue: number[] = []
 ) => {
   try {
-    return JSON.parse(localStorage.getItem(key)) || {};
+    return JSON.parse(localStorage.getItem(key)) || defaultValue;
   } catch (e) {
     return defaultValue;
   }
 };
 
-const readLegacyStarred = (): StarredItems => {
-  const legacyItems = readStorage(LEGACY_KEY, {});
-  const objectIDs = Object.keys(legacyItems);
+const readNewStarred = (): StarredItems => {
+  const newStarredItems = readStorage();
+  return new Set(newStarredItems);
+};
 
+const readLegacyStarred = (): StarredItems => {
+  const legacyItems = readStorage(LEGACY_KEY, []);
+  const objectIDs = Object.keys(legacyItems);
   return new Set(objectIDs);
 };
 
-const initialize = (): StarredItems => {
-  const starred = readStorage();
-  if (starred.size > 0) return starred;
+const initializeStarredItems = (): StarredItems => {
+  const starred = readNewStarred();
+  if (starred.size > 0) {
+    saveStarredItems(starred);
+    return starred;
+  }
 
   const legacyStarred = readLegacyStarred();
 
   if (legacyStarred.size > 0) {
-    localStorage.removeItem(LEGACY_KEY);
+    saveStarredItems(legacyStarred);
     return legacyStarred;
   }
+
+  return new Set();
+};
+
+const saveStarredItems = (items: StarredItems) => {
+  localStorage.setItem(STARRED_KEY, JSON.stringify(Array.from(items)));
 };
 
 interface IStarred {
   data: StarredItems;
-  add: (itemID: string) => void;
-  remove: (itemID: string) => void;
-  toggle: (itemID: string) => boolean;
+  add: (itemID: number) => void;
+  remove: (itemID: number) => void;
+  toggle: (itemID: number) => boolean;
 }
 
 class Starred implements IStarred {
-  data = initialize();
+  data: StarredItems = initializeStarredItems();
+  asString = (itemID: number) => String(itemID);
 
-  toggle = (itemID): boolean => {
-    if (this.data.has(itemID)) {
+  toggle = (itemID: number): boolean => {
+    const ID = this.asString(itemID);
+
+    if (this.data.has(ID)) {
       this.remove(itemID);
       return false;
     }
 
     this.add(itemID);
+    saveStarredItems(this.data);
     return true;
   };
 
-  add = (itemID: string) => {
-    if (this.data.has(itemID)) return;
-    this.data.add(itemID);
+  add = (itemID: number) => {
+    const ID = this.asString(itemID);
+
+    if (this.data.has(ID)) return;
+    this.data.add(ID);
+    saveStarredItems(this.data);
   };
 
-  remove = (itemID: string) => {
-    if (!this.data.has(itemID)) return;
+  remove = (itemID: number) => {
+    const ID = this.asString(itemID);
+    if (!this.data.has(ID)) return;
 
-    this.data.delete(itemID);
+    this.data.delete(ID);
+    saveStarredItems(this.data);
   };
 }
 
