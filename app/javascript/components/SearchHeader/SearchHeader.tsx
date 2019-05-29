@@ -37,7 +37,6 @@ const SearchHeader: React.FunctionComponent = () => {
     }
 
     search(settings.query);
-    // syncUrl(settings);
   }, [settings, location.pathname]);
 
   return (

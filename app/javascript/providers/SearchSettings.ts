@@ -207,12 +207,17 @@ const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
     case "/polls":
       tagFilters.push("poll");
       break;
+    case "/starred":
+      tagFilters.push(["story", "poll", "job"]);
+      break;
     case "/user":
       tagFilters.push("author_" + settings.login);
       break;
   }
 
-  if (path === "/jobs" || path === "/polls") return tagFilters;
+  if (path === "/jobs" || path === "/polls" || path === "/starred") {
+    return tagFilters;
+  }
 
   if (settings.type === "all") {
     tagFilters.push(["story", "comment", "poll", "job"]);

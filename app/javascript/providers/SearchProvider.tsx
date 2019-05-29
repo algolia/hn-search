@@ -111,7 +111,7 @@ class SearchProvider extends React.Component {
     const params = getSearchSettings(query, settings, storyIDs);
 
     return this.getIndex(params.query)
-      .search(params.query, params)
+      .search(params)
       .then((results: AlgoliaResults) => {
         if (results.query !== params.query) return;
 

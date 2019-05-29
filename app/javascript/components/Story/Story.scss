@@ -14,7 +14,6 @@
   &_container {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
   }
 
   em {
@@ -26,6 +25,7 @@
   &_image {
     width: 50px;
     height: 50px;
+    flex: 0 0 50px;
     padding: 2px;
     margin: 0 $spacing-medium 0 0;
     border: solid 1px #eee;
@@ -41,6 +41,7 @@
   &_title {
     width: 100%;
     margin-bottom: 0;
+
     em {
       font-weight: bold;
     }
@@ -68,6 +69,10 @@
     color: #000;
     font-size: 12px;
     width: 100%;
+
+    * {
+      white-space: normal;
+    }
   }
 }
 
@@ -116,6 +121,8 @@
     &_share {
       flex: 1;
       text-align: right;
+      min-width: 140px;
+      align-self: flex-start;
 
       svg {
         width: 18px;
@@ -147,6 +154,7 @@
           padding: $spacing-base;
           position: relative;
           font-weight: 700;
+          min-width: 25px;
 
           &:before {
             content: "";
@@ -157,7 +165,7 @@
             border-right: 9px solid #939393;
             position: absolute;
             right: 4px;
-            bottom: -40%;
+            bottom: -9px;
           }
 
           &:hover {

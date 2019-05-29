@@ -62,6 +62,7 @@ class Starred implements IStarred {
 
     if (this.data.has(ID)) {
       this.remove(itemID);
+      saveStarredItems(this.data);
       return false;
     }
 
