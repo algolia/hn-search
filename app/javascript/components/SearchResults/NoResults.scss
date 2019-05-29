@@ -1,0 +1,16 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.NoResults {
+  margin-top: $spacing-large;
+  display: flex;
+  justify-content: center;
+  padding: $spacing-large;
+
+  &_popular {
+    margin-top: $spacing-large;
+    a {
+      margin: $spacing-small;
+    }
+  }
+}

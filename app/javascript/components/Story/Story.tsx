@@ -82,6 +82,8 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
     starredItems.has(String(objectID))
   );
 
+  const hasComments = num_comments !== null;
+
   return (
     <article className="Story">
       <div className="Story_container">
@@ -118,7 +120,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 {moment(created_at_i * 1000).fromNow()}
               </StoryLink>
             </span>
-            {!isExperimental && (
+            {!isExperimental && hasComments && (
               <>
                 <span className="Story_separator">|</span>
                 <span>
@@ -141,9 +143,11 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
         </div>
         {isExperimental && (
           <div className="Story_share">
-            <button className="Story_commentsButton">
-              {num_comments || 0}
-            </button>
+            {hasComments && (
+              <button className="Story_commentsButton">
+                {num_comments || 0}
+              </button>
+            )}
             <button className="Story_shareButton">
               <Share2 />
             </button>

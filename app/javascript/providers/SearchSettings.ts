@@ -208,7 +208,7 @@ const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
       tagFilters.push("poll");
       break;
     case "/starred":
-      tagFilters.push(["story", "poll", "job"]);
+      tagFilters.push(["story", "poll", "job", "ask_hn", "show_hn"]);
       break;
     case "/user":
       tagFilters.push("author_" + settings.login);

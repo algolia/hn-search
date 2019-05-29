@@ -23,9 +23,29 @@ const SearchHeader: React.FunctionComponent = () => {
     settings,
     search,
     syncUrl,
+    setSettings,
     fetchPopularStories,
     starred
   } = React.useContext(SearchContext);
+
+  const onSearch = React.useCallback(
+    (event: React.SyntheticEvent<HTMLInputElement>) => {
+      const query = event.currentTarget.value;
+      syncUrl({ ...settings, query });
+      setSettings({ query });
+
+      if (location.pathname === "/hot") {
+        fetchPopularStories();
+        return;
+      } else if (location.pathname === "/starred") {
+        search(query, settings, Array.from(starred.data));
+        return;
+      }
+
+      search(query);
+    },
+    [settings]
+  );
 
   React.useEffect(() => {
     if (location.pathname === "/hot") {
@@ -47,11 +67,8 @@ const SearchHeader: React.FunctionComponent = () => {
         </span>
         <input
           type="search"
-          defaultValue={settings.query}
-          onInput={(event: React.SyntheticEvent<HTMLInputElement>) => {
-            syncUrl({ ...settings, query: event.currentTarget.value });
-            search(event.currentTarget.value);
-          }}
+          value={settings.query}
+          onInput={onSearch}
           placeholder="Search stories by title, url or author"
           className="SearchInput"
         />

@@ -11,6 +11,7 @@ const history = createBrowserHistory();
 
 interface ISearchContext {
   results: AlgoliaResults;
+  popularSearches: PopularSearches;
   loading: boolean;
   fetchPopularStories: () => Promise<AlgoliaResults>;
   search: (
@@ -50,8 +51,11 @@ const DEFAULT_SEARCH_STATE = {
     nbPages: 0
   },
   loading: false,
+  popularSearches: [],
   settings: initializeSettings()
 };
+
+export type PopularSearches = { search: string; count: number }[];
 
 class SearchProvider extends React.Component {
   client = algoliasearch("UJ5WYC0L7X", "8ece23f8eb07cd25d40262a1764599b1");
@@ -114,6 +118,9 @@ class SearchProvider extends React.Component {
       .search(params)
       .then((results: AlgoliaResults) => {
         if (results.query !== params.query) return;
+        if (!results.hits.length) {
+          this.fetchPopularSearches();
+        }
 
         this.setState({
           results,
@@ -131,12 +138,22 @@ class SearchProvider extends React.Component {
       });
   };
 
+  fetchPopularSearches = (): Promise<PopularSearches> => {
+    return fetch("/popular.json")
+      .then(resp => resp.json())
+      .then(({ searches }) => {
+        this.setState({ popularSearches: searches });
+        return searches;
+      });
+  };
+
   render() {
     return (
       <SearchContext.Provider
         value={{
           ...this.state,
           search: this.search,
+          fetchPopularSearches: this.fetchPopularSearches,
           fetchPopularStories: this.fetchPopularStories,
           setSettings: this.setSettings,
           starred: this.starred,
@@ -158,6 +175,7 @@ export const SearchContext = React.createContext<ISearchContext>({
     nbPages: 0
   },
   loading: false,
+  popularSearches: [],
   starred: new Starred(),
   settings: DEFAULT_HN_SETTINGS,
   setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,

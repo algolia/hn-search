@@ -6,6 +6,7 @@
 
 .experimental {
   .SearchResults {
+    min-height: calc(100vh - 120px);
     background-color: #fff;
     padding-top: 190px;
     padding-left: 200px;

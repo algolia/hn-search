@@ -145,9 +145,13 @@
 
         &.Story_starred-active {
           color: $orange;
+
+          svg {
+            fill: $orange;
+          }
         }
 
-        &:first-child {
+        &.Story_commentsButton {
           background-color: #939393;
           color: #fff;
           font-size: 12px;
