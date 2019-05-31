@@ -53,10 +53,27 @@
   }
   
   &_actions {
-    margin-top: $spacing-medium;
+    margin-top: $spacing-small;
+    display: flex;
+    justify-content: flex-start;
 
-    button {
-      margin-right: $spacing-small;
+    button {
+      background: #fff;
+      color: #9d9d9d;
+      border: solid 1px #b6b6b6;
+      margin-right: $spacing-small !important;
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 12px;
+        height: 12px;
+        margin-right: $spacing-base;
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
   }
 }
@@ -74,4 +91,16 @@
   border-radius: 0;
   background-color: rgba($orange, .3) !important;
   color: #fff !important;
+}
+
+.experimental {
+
+  .DatePicker {
+    top: 80px;
+    background: rgba(#fff, .8);
+
+    &-container {
+      padding-left: 200px;
+    }
+  }
 }

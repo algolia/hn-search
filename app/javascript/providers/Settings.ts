@@ -5,7 +5,7 @@ import { HNSettings } from "./Search.types";
 
 const STORAGE_KEY = "ALGOLIA_SETTINGS";
 
-const convertToCloseType = (key: string, value: any) => {
+const convertToClosestType = (key: string, value: any) => {
   switch (typeof DEFAULT_HN_SETTINGS[key]) {
     case "boolean":
       return value === "true";
@@ -37,7 +37,7 @@ const readLegacySettings = (): Partial<HNSettings> => {
       const value = localStorage.getItem(key).replace(/^"(.*)"$/, "$1");
       const newKey = key.replace(LEGACY_PREFIX, "");
 
-      settings[newKey] = convertToCloseType(newKey, value);
+      settings[newKey] = convertToClosestType(newKey, value);
       return settings;
     },
     {}

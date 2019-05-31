@@ -7,8 +7,18 @@
   justify-content: center;
   padding: $spacing-large;
 
+  &_changeSettings {
+    margin-bottom: $spacing-large;
+    display: inline-block;
+  }
+
+  &_suggestions {
+    margin-top: $spacing-medium;
+  }
+
   &_popular {
     margin-top: $spacing-large;
+    
     a {
       margin: $spacing-small;
     }

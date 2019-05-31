@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./NoResults.scss";
 
-import { SearchContext, PopularSearches } from "../../providers/SearchProvider";
-import { HNSettings } from "../../providers/Search.types";
+import { SearchContext } from "../../providers/SearchProvider";
+import { HNSettings, PopularSearches } from "../../providers/Search.types";
 
 const getItemsLabel = (type: HNSettings["type"]): string => {
   switch (type) {
@@ -46,6 +46,7 @@ const SettingsLink: React.FunctionComponent<{
   return (
     <div>
       <a
+        className="NoResults_changeSettings"
         href="#"
         onClick={e => {
           e.preventDefault();
@@ -59,19 +60,46 @@ const SettingsLink: React.FunctionComponent<{
 };
 
 const NoResults: React.FunctionComponent = () => {
-  const { settings, setSettings, popularSearches } = React.useContext(
+  const { settings, setSettings, popularSearches, starred } = React.useContext(
     SearchContext
   );
   const showForPeriod = settings.dateRange !== "all";
   const showOtherSearch = settings.type !== "all";
 
+  if (location.pathname === "/starred") {
+    if (!starred.data.size) {
+      return (
+        <div className="NoResults">
+          <p>You have no starred items.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="NoResults">
+        <p>
+          We could not find your starred items with ID's{" "}
+          <b>
+            {" "}
+            {Array.from(starred.data)
+              .map(id => id)
+              .join(", ")}
+            .
+          </b>
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="NoResults">
       <div>
         We found no <b>{getItemsLabel(settings.type)}</b> matching{" "}
         <b>{settings.query}</b> {showForPeriod && "for this period."}
+        {(showForPeriod || settings.type !== "all") && (
+          <p className="NoResults_suggestions">Suggestions:</p>
+        )}
         {showForPeriod && (
-          <SettingsLink onClick={() => setSettings({ type: "all" })}>
+          <SettingsLink onClick={() => setSettings({ dateRange: "all" })}>
             Try a wider date range
           </SettingsLink>
         )}

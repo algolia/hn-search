@@ -9,7 +9,8 @@ import {
   MessageCircle,
   Volume2,
   Star,
-  TrendingUp
+  TrendingUp,
+  User
 } from "react-feather";
 import { RouteComponentProps } from "react-router";
 
@@ -22,9 +23,11 @@ export const SidebarItems = [
   { icon: <Eye />, label: "Jobs", to: "/jobs" }
 ];
 
-const Sidebar: React.FunctionComponent<RouteComponentProps> = ({
-  location
-}) => {
+interface SidebarProps extends RouteComponentProps {
+  user?: string;
+}
+
+const Sidebar: React.FunctionComponent<SidebarProps> = ({ location, user }) => {
   return (
     <aside className="Sidebar">
       <ul>
@@ -43,6 +46,16 @@ const Sidebar: React.FunctionComponent<RouteComponentProps> = ({
         })}
       </ul>
       <ul>
+        {user && (
+          <li>
+            <Link
+              to={{ pathname: "/user", search: location.search }}
+              className={location.pathname === "/user" ? "active" : ""}
+            >
+              <User /> {user}
+            </Link>
+          </li>
+        )}
         <li>
           <Link
             to={{ pathname: "/starred", search: location.search }}

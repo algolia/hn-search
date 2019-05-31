@@ -18,9 +18,11 @@
 
     a {
       color: #5c5c5c;
-      display: flex;
-      align-items: center;
+      display: block;
       padding: $spacing-small $spacing-large;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 
       &.active {
         background-color: #e4e3e5
@@ -29,6 +31,7 @@
       svg {
         width: 16px;
         height: 16px;
+        transform: translate(0, 2px);
         margin-right: $spacing-small;
       }
     }

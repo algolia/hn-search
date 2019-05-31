@@ -3,12 +3,13 @@ import * as ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
 
 import "./../src/application.scss";
-import SearchView from "../views/Search";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Settings from "../views/Settings";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import SearchProvider from "../providers/SearchProvider";
 import { SearchContext } from "../providers/SearchProvider";
+import SearchView from "../views/Search";
+import Settings from "../views/Settings";
 
 const ThemeClass: React.FunctionComponent = ({ children }) => {
   const {
@@ -26,8 +27,10 @@ const App = () => {
           <title>HN Search powered by Algolia</title>
         </Helmet>
         <ThemeClass>
-          <Route path="/:path?" index component={SearchView} />
-          <Route exact path="/settings" component={Settings} />
+          <Switch>
+            <Route exact path="/settings" component={Settings} />
+            <Route path="/:path?" index component={SearchView} />
+          </Switch>
         </ThemeClass>
       </SearchProvider>
     </Router>

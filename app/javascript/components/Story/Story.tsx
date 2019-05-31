@@ -6,6 +6,7 @@ import { Clock, Heart, User, Share2, Star } from "react-feather";
 
 import { Hit } from "../../providers/Search.types";
 import { SearchContext } from "../../providers/SearchProvider";
+import Comments from "./Comments";
 
 const StoryLink: React.FunctionComponent<{
   id: number;
@@ -21,7 +22,7 @@ const AuthorLink: React.FunctionComponent<{
   );
 };
 
-const stripHighlight = (text: string) => {
+export const stripHighlight = (text: string) => {
   return <span dangerouslySetInnerHTML={{ __html: text }} />;
 };
 
@@ -65,10 +66,12 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
     _highlightResult,
     created_at_i,
     num_comments,
-    url
+    url,
+    comments
   } = hit;
 
   const {
+    fetchCommentsForStory,
     starred: { toggle, data: starredItems },
     settings: { showThumbnails, style }
   } = React.useContext(SearchContext);
@@ -82,7 +85,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
     starredItems.has(String(objectID))
   );
 
-  const hasComments = num_comments !== null;
+  const disableComments = num_comments === null;
 
   return (
     <article className="Story">
@@ -120,7 +123,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 {moment(created_at_i * 1000).fromNow()}
               </StoryLink>
             </span>
-            {!isExperimental && hasComments && (
+            {!isExperimental && !disableComments && (
               <>
                 <span className="Story_separator">|</span>
                 <span>
@@ -143,8 +146,12 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
         </div>
         {isExperimental && (
           <div className="Story_share">
-            {hasComments && (
-              <button className="Story_commentsButton">
+            {!disableComments && (
+              <button
+                disabled={num_comments === 0}
+                onClick={() => fetchCommentsForStory(objectID)}
+                className="Story_commentsButton"
+              >
                 {num_comments || 0}
               </button>
             )}
@@ -166,6 +173,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
           </div>
         )}
       </div>
+      {comments && <Comments comment={comments} />}
     </article>
   );
 };

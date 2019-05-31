@@ -2,6 +2,7 @@ type HitType = "story" | "poll" | "job" | "comment";
 
 export type Hit = {
   author: string;
+  comments: Comment;
   comment_text: string;
   created_at: string;
   created_at_i: number;
@@ -22,6 +23,22 @@ export type Hit = {
   };
 };
 
+export type Comment = {
+  author: string;
+  children: Comment[];
+  created_at: string;
+  created_at_i: number;
+  id: number;
+  options: [];
+  parent_id?: number;
+  story_id?: number;
+  points: number;
+  text: string;
+  title: string;
+  type: string;
+  url: string;
+};
+
 export interface AlgoliaResults {
   hits: Hit[];
   query: string;
@@ -29,6 +46,8 @@ export interface AlgoliaResults {
   processingTimeMS: number;
   nbPages: number;
 }
+
+export type PopularSearches = { search: string; count: number }[];
 
 type DateRange =
   | "all"

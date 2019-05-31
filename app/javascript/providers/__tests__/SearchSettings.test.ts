@@ -9,7 +9,7 @@ import {
   parseTagFiltersFromQuery
 } from "../SearchSettings";
 
-const VALID_NUMERICAL_OPERATORS = [">", "<", "<=", ">=", "="];
+const VALID_NUMERICAL_OPERATORS = ["!=", ">", "<", "<=", ">=", "="];
 
 describe("extractByRegExp", () => {
   it("blank", () => {

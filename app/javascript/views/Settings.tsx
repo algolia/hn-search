@@ -5,6 +5,7 @@ import "./Settings.scss";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import Tracker from "../components/Tracker/Tracker";
 
 import { SearchContext } from "../providers/SearchProvider";
 import { ChevronsLeft } from "react-feather";
@@ -25,6 +26,7 @@ interface HNSettings {
   storyText: boolean;
   authorText: boolean;
   typoTolerance: boolean;
+  login: string;
 }
 
 const Settings: React.FunctionComponent<RouteComponentProps> = ({
@@ -34,6 +36,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
 
   const [state, setState] = React.useState({
     dirty: false,
+    login: settings.login,
     hitsPerPage: settings.hitsPerPage,
     style: settings.style,
     defaultType: settings.defaultType,
@@ -47,6 +50,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
   React.useEffect(() => {
     setState({
       dirty: state.dirty,
+      login: settings.login,
       hitsPerPage: settings.hitsPerPage,
       style: settings.style,
       defaultType: settings.defaultType,
@@ -77,7 +81,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
       </Helmet>
       <Header>
         <div className="SearchHeader_settings">
-          <Link onClick={history.goBack} className="SearchHeader_back">
+          <Link to="#" onClick={history.goBack} className="SearchHeader_back">
             <ChevronsLeft />
             Back
           </Link>
@@ -246,6 +250,26 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
               </div>
             </div>
           </fieldset>
+          {state.style === "experimental" && (
+            <fieldset className="Settings_fieldset">
+              <h2 className="Settings_display">Your options</h2>
+              <div className="Settings_row">
+                <label htmlFor="login">Your HN login</label>
+                <div className="Settings_inputContainer">
+                  <input
+                    id="login"
+                    type="text"
+                    value={state.login}
+                    onChange={(event: React.SyntheticEvent<HTMLInputElement>) =>
+                      wrapSetState({
+                        login: event.currentTarget.value as HNSettings["login"]
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </fieldset>
+          )}
           <div className="Settings_actions">
             <button disabled={!state.dirty}>Apply</button>
           </div>
@@ -256,4 +280,4 @@ const Settings: React.FunctionComponent<RouteComponentProps> = ({
   );
 };
 
-export default Settings;
+export default Tracker(Settings);

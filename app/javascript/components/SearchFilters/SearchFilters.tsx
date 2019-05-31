@@ -59,12 +59,6 @@ const SearchFilters: React.FunctionComponent = () => {
   const { results, settings, setSettings } = React.useContext(SearchContext);
   const [isOpen, toggleOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    if (settings.dateRange === "custom") {
-      return toggleOpen(true);
-    } else toggleOpen(false);
-  }, [settings.dateRange]);
-
   return (
     <div className="SearchFilters container">
       <div className="SearchFilters_filters">
@@ -99,6 +93,9 @@ const SearchFilters: React.FunctionComponent = () => {
           <Dropdown
             items={Array.from(TIME_FILTERS).map(asItem)}
             onChange={item => {
+              if (item.value === "custom") {
+                toggleOpen(true);
+              }
               setSettings({
                 dateRange: item.value as HNSettings["dateRange"]
               });
@@ -112,7 +109,6 @@ const SearchFilters: React.FunctionComponent = () => {
             isOpen={isOpen}
             onCancel={() => toggleOpen(false)}
             onChange={(from: Date, to: Date) => {
-              toggleOpen(false);
               setSettings({
                 dateStart: String(Math.round(from.getTime() / 1000)),
                 dateEnd: String(Math.round(to.getTime() / 1000))

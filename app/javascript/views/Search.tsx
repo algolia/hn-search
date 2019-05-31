@@ -12,10 +12,11 @@ import Footer from "../components/Footer/Footer";
 import SearchFilters from "../components/SearchFilters/SearchFilters";
 import { SearchContext } from "../providers/SearchProvider";
 import { SidebarItems } from "../components/Sidebar/Sidebar";
+import Tracker from "../components/Tracker/Tracker";
 
 const SearchView: React.FunctionComponent<RouteComponentProps> = props => {
   const {
-    settings: { style }
+    settings: { style, login }
   } = React.useContext(SearchContext);
 
   const knownTitle = SidebarItems.find(
@@ -35,11 +36,11 @@ const SearchView: React.FunctionComponent<RouteComponentProps> = props => {
       </Header>
       <SearchFilters />
       <SearchResults />
-      {style === "experimental" && <Sidebar {...props} />}
+      {style === "experimental" && <Sidebar {...props} user={login} />}
       <Pagination />
       <Footer />
     </div>
   );
 };
 
-export default SearchView;
+export default Tracker(SearchView);

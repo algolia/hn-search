@@ -1,9 +1,11 @@
 import * as React from "react";
+import * as moment from "moment";
 import DayPicker from "react-day-picker";
 import "./Datepicker.scss";
 import "react-day-picker/lib/style.css";
 
-import { Calendar } from "react-feather";
+import { Calendar, XCircle } from "react-feather";
+import { SearchContext } from "../../providers/SearchProvider";
 
 const isSelectingFirstDay = (from: Date, to: Date, day: Date) => {
   const isBeforeFirstDay = from && DayPicker.DateUtils.isDayBefore(day, from);
@@ -11,17 +13,14 @@ const isSelectingFirstDay = (from: Date, to: Date, day: Date) => {
   return !from || isBeforeFirstDay || isRangeSelected;
 };
 
+const DEFAULT_FROM_DATE = moment().subtract(7, "days");
+const DEFAULT_TO_DATE = moment();
+
 interface DatePickerState {
   from: Date;
   to: Date;
   enteredTo: Date;
 }
-
-const DEFAULT_STATE: DatePickerState = {
-  from: null,
-  to: null,
-  enteredTo: null
-};
 
 interface DatePickerProps {
   isOpen: boolean;
@@ -30,12 +29,28 @@ interface DatePickerProps {
   onBlur: () => any;
 }
 
+const parseDate = (date: string, defaultDate: moment.Moment): moment.Moment => {
+  if (!date) return moment(defaultDate);
+  return moment.unix(parseInt(date));
+};
+
 const DatePicker: React.FunctionComponent<DatePickerProps> = ({
   isOpen,
   onCancel,
-  onChange
+  onChange,
+  onBlur
 }) => {
-  const [state, setState] = React.useState(DEFAULT_STATE);
+  if (!isOpen) return null;
+
+  const {
+    settings: { dateEnd, dateStart }
+  } = React.useContext(SearchContext);
+
+  const [state, setState] = React.useState({
+    from: parseDate(dateStart, DEFAULT_FROM_DATE).toDate(),
+    to: parseDate(dateEnd, DEFAULT_TO_DATE).toDate(),
+    enteredTo: parseDate(dateEnd, DEFAULT_TO_DATE).toDate()
+  });
 
   const handleResetClick = React.useCallback(() => {
     setState({
@@ -56,7 +71,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
         setState({
           from: day,
           to: null,
-          enteredTo: null
+          enteredTo: day
         });
       } else {
         setState({
@@ -86,10 +101,8 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
 
   const { from, enteredTo } = state;
   const modifiers = { start: from, end: enteredTo };
-  const disabledDays = { before: state.from };
+  const disabledDays = { after: new Date() };
   const selectedDays = [from, { from, to: enteredTo }];
-
-  if (!isOpen) return null;
 
   return (
     <div className="DatePicker">
@@ -97,7 +110,6 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
         <DayPicker
           className="Range"
           numberOfMonths={1}
-          fromMonth={from}
           selectedDays={selectedDays}
           disabledDays={disabledDays}
           modifiers={modifiers}
@@ -122,13 +134,16 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
               <input
                 id="from"
                 type="date"
+                placeholder="From date"
+                value={moment(state.from || DEFAULT_FROM_DATE).format(
+                  "YYYY-MM-DD"
+                )}
                 onChange={event => {
                   setState({
                     ...state,
                     from: new Date(event.currentTarget.value)
                   });
                 }}
-                placeholder="From date"
               />
             </div>
             <div>
@@ -137,6 +152,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 id="to"
                 type="date"
                 placeholder="To date"
+                value={moment(state.to || DEFAULT_TO_DATE).format("YYYY-MM-DD")}
                 onChange={event => {
                   setState({
                     ...state,
@@ -147,9 +163,16 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
             </div>
             <div className="DatePicker_actions">
               <button type="button" onClick={onCancel}>
-                Cancel
+                <XCircle /> Cancel
               </button>
-              <button type="submit" disabled={!state.from || !state.to}>
+              <button
+                type="submit"
+                disabled={!state.from || !state.to}
+                onClick={() => {
+                  onBlur();
+                  onChange(state.from, state.to);
+                }}
+              >
                 Apply
               </button>
             </div>

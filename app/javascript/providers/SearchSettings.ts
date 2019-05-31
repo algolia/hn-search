@@ -60,7 +60,7 @@ export const extractAuthorsQuery = (query: string): ParsedQuery => {
   return { query: copiedQuery.trim(), tagFilters, numericFilters: [] };
 };
 
-const POINTS_REGEXP = /points(=|<|>|<=|>=)([0-9]+)/gm;
+const POINTS_REGEXP = /points(!=|=|<|>|<=|>=)([0-9]+)/gm;
 export const extractPointsQuery = (query: string): ParsedQuery => {
   const matches = extractByRegExp(query, POINTS_REGEXP);
   if (!matches.length)
@@ -76,7 +76,7 @@ export const extractPointsQuery = (query: string): ParsedQuery => {
   return { query: copiedQuery.trim(), tagFilters: [], numericFilters };
 };
 
-const COMMENTS_REGEXP = /comments(=|<|>|<=|>=)([0-9]+)/gm;
+const COMMENTS_REGEXP = /comments(!=|=|<|>|<=|>=)([0-9]+)/gm;
 export const extractCommentsQuery = (query: string): ParsedQuery => {
   const matches = extractByRegExp(query, COMMENTS_REGEXP);
 
@@ -94,7 +94,7 @@ export const extractCommentsQuery = (query: string): ParsedQuery => {
   return { query: copiedQuery.trim(), tagFilters: [], numericFilters };
 };
 
-const CREATED_AT_REGEXP = /date(=|<|>|<=|>=)([0-9]+)/gm;
+const CREATED_AT_REGEXP = /date(!=|=|<|>|<=|>=)([0-9]+)/gm;
 export const extractCreatedAtQuery = (query: string): ParsedQuery => {
   const matches = extractByRegExp(query, CREATED_AT_REGEXP);
 
@@ -192,9 +192,9 @@ export const buildTagFiltersForPopularStories = (
 
 const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
   let tagFilters = [];
-  const path = location.pathname;
+  const { pathname } = location;
 
-  switch (path) {
+  switch (pathname) {
     case "/ask-hn":
       tagFilters.push("ask_hn");
       break;
@@ -208,14 +208,14 @@ const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
       tagFilters.push("poll");
       break;
     case "/starred":
-      tagFilters.push(["story", "poll", "job", "ask_hn", "show_hn"]);
+      tagFilters.push(["story", "poll", "job", "ask_hn", "show_hn", "comment"]);
       break;
     case "/user":
       tagFilters.push("author_" + settings.login);
       break;
   }
 
-  if (path === "/jobs" || path === "/polls" || path === "/starred") {
+  if (["/jobs", "/polls", "/starred"].includes(pathname)) {
     return tagFilters;
   }
 

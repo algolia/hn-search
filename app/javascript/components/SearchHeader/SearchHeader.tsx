@@ -68,7 +68,7 @@ const SearchHeader: React.FunctionComponent = () => {
         <input
           type="search"
           value={settings.query}
-          onInput={onSearch}
+          onChange={onSearch}
           placeholder="Search stories by title, url or author"
           className="SearchInput"
         />
