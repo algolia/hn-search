@@ -18,11 +18,16 @@ const AlgoliaLogo: React.FunctionComponent = () => {
   return <img src={logoSrc} alt="Algolia" />;
 };
 
+const isEnterKeyPress = (
+  event: React.KeyboardEvent<HTMLInputElement>
+): boolean => {
+  return event.keyCode === 13 || event.which === 13;
+};
+
 const SearchHeader: React.FunctionComponent = () => {
   const {
     settings,
     search,
-    syncUrl,
     setSettings,
     fetchPopularStories,
     starred
@@ -31,18 +36,19 @@ const SearchHeader: React.FunctionComponent = () => {
   const onSearch = React.useCallback(
     (event: React.SyntheticEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value;
-      syncUrl({ ...settings, query });
-      setSettings({ query });
+      setSettings({ query, prefix: true });
+    },
+    [settings]
+  );
 
-      if (location.pathname === "/hot") {
-        fetchPopularStories();
-        return;
-      } else if (location.pathname === "/starred") {
-        search(query, settings, Array.from(starred.data));
-        return;
-      }
+  const onPrefixNoneSearch = React.useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const isEnter = isEnterKeyPress(event);
+      if (!isEnter) return;
 
-      search(query);
+      setSettings({
+        prefix: false
+      });
     },
     [settings]
   );
@@ -56,7 +62,8 @@ const SearchHeader: React.FunctionComponent = () => {
       return;
     }
 
-    search(settings.query);
+    search(settings.query, settings);
+    return;
   }, [settings, location.pathname]);
 
   return (
@@ -69,6 +76,7 @@ const SearchHeader: React.FunctionComponent = () => {
           type="search"
           value={settings.query}
           onChange={onSearch}
+          onKeyUp={onPrefixNoneSearch}
           placeholder="Search stories by title, url or author"
           className="SearchInput"
         />

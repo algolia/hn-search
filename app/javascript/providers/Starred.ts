@@ -1,7 +1,7 @@
 const STARRED_KEY = "ALGOLIA_STARRED";
 const LEGACY_KEY = "ngStorage-starred";
 
-type StarredItems = Set<string>;
+type StarredItems = Set<number>;
 
 const readStorage = (
   key: "ALGOLIA_STARRED" | "ngStorage-starred" = STARRED_KEY,
@@ -21,7 +21,7 @@ const readNewStarred = (): StarredItems => {
 
 const readLegacyStarred = (): StarredItems => {
   const legacyItems = readStorage(LEGACY_KEY, []);
-  const objectIDs = Object.keys(legacyItems);
+  const objectIDs = Object.keys(legacyItems).map(number => parseInt(number));
   return new Set(objectIDs);
 };
 
@@ -55,12 +55,9 @@ interface IStarred {
 
 class Starred implements IStarred {
   data: StarredItems = initializeStarredItems();
-  asString = (itemID: number) => String(itemID);
 
-  toggle = (itemID: number): boolean => {
-    const ID = this.asString(itemID);
-
-    if (this.data.has(ID)) {
+  public toggle = (itemID: number): boolean => {
+    if (this.data.has(itemID)) {
       this.remove(itemID);
       saveStarredItems(this.data);
       return false;
@@ -71,19 +68,16 @@ class Starred implements IStarred {
     return true;
   };
 
-  add = (itemID: number) => {
-    const ID = this.asString(itemID);
-
-    if (this.data.has(ID)) return;
-    this.data.add(ID);
+  public add = (itemID: number) => {
+    if (this.data.has(itemID)) return;
+    this.data.add(itemID);
     saveStarredItems(this.data);
   };
 
-  remove = (itemID: number) => {
-    const ID = this.asString(itemID);
-    if (!this.data.has(ID)) return;
+  public remove = (itemID: number) => {
+    if (!this.data.has(itemID)) return;
 
-    this.data.delete(ID);
+    this.data.delete(itemID);
     saveStarredItems(this.data);
   };
 }

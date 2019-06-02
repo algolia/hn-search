@@ -41,3 +41,26 @@
     width: 50%;
   }
 }
+
+.experimental {
+  .Settings {
+    background-color: #fff;
+    padding-top: 208px;
+    padding-left: 200px;
+
+    &_fieldset {
+      background: #f7f7f7;
+      border: 1px solid #ddd;
+      margin: $spacing-medium;
+    }
+
+    h2 {
+      color: #5c5c5c;
+      border-bottom: 1px solid transparent;
+    }
+
+    #login {
+      max-width: 240px;
+    }
+  }
+}

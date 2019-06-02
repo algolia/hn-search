@@ -9,14 +9,15 @@ type DropdownItem = { value: string; label: React.ReactChild };
 
 interface DropdownProps {
   items: DropdownItem[];
-  selectedItem: DropdownItem;
   onChange: (item: DropdownItem) => any;
+  selectedItem?: DropdownItem;
 }
 
 const Dropdown: React.FunctionComponent<DropdownProps> = ({
   onChange,
   selectedItem,
-  items
+  items,
+  children
 }) => {
   return (
     <Downshift
@@ -30,7 +31,8 @@ const Dropdown: React.FunctionComponent<DropdownProps> = ({
             {...getLabelProps()}
             onClick={openMenu}
           >
-            {selectedItem.label} {isOpen ? <ChevronUp /> : <ChevronDown />}
+            {selectedItem ? selectedItem.label : children}{" "}
+            {isOpen ? <ChevronUp /> : <ChevronDown />}
           </label>
           <ul
             className={classnames(

@@ -4,22 +4,17 @@ import { RouteComponentProps } from "react-router-dom";
 
 ReactGA.initialize("UA-32446386-3");
 
-const Tracker = <P extends RouteComponentProps>(
-  WrappedComponent: React.ComponentType<P>,
-  options: ReactGA.FieldsObject = {}
-) => {
+const Tracker: React.FunctionComponent<RouteComponentProps> = props => {
   const trackPage = (page: string) => {
-    ReactGA.set({ page, ...options });
+    ReactGA.set({ page });
     ReactGA.pageview(page);
   };
 
-  return (props: P) => {
-    React.useEffect(() => {
-      trackPage(props.location.pathname);
-    }, [props.location.pathname]);
+  React.useEffect(() => {
+    trackPage(props.location.pathname);
+  }, [props.location.pathname]);
 
-    return <WrappedComponent {...props} />;
-  };
+  return props.children;
 };
 
 export default Tracker;

@@ -7,9 +7,9 @@ const LINKS: { label: string; to: string }[] = [
   { label: "Setting", to: "/settings" },
   { label: "Help", to: "/help" },
   { label: "Api", to: "/api" },
-  { label: "Hacker News", to: "https://news.ycombinator.com" },
+  { label: "Hacker News", to: "httpss://news.ycombinator.com" },
   { label: "Fork/Contribute", to: "https://github.com/algolia/hn-search" },
-  { label: "Status", to: "http://status.algolia.com/hn" },
+  { label: "Status", to: "https://status.algolia.com/hn" },
   { label: "Cool Apps", to: "/cool_apps" }
 ];
 
@@ -18,7 +18,7 @@ const Footer: React.FunctionComponent = () => {
     <footer className="Footer">
       <ul className="Footer_list">
         {LINKS.map((link, index) => {
-          const target = link.to.startsWith("http") ? "_blank" : "";
+          const target = link.to.startsWith("https") ? "_blank" : "";
 
           return (
             <React.Fragment key={link.to}>

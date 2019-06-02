@@ -4,7 +4,6 @@
 .Story {
   font-size: 14px;
   padding: 0 $spacing-large;
-  overflow: hidden;
   border-bottom: solid 1px #eee;
   min-height: 54px;
   display: flex;
@@ -156,9 +155,9 @@
           color: #fff;
           font-size: 12px;
           padding: $spacing-base;
-          position: relative;
           font-weight: 700;
           min-width: 25px;
+          position: relative;
 
           &:before {
             content: "";
@@ -179,6 +178,17 @@
             }
           }
         }
+      }
+    }
+
+    &_comment {
+      a {
+        color: #5a96b1 !important;
+      }
+
+      em {
+        color: #000 !important;
+        font-weight: bold;
       }
     }
 

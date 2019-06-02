@@ -12,6 +12,7 @@ import {
 } from "./Search.types";
 import { initializeSettings, asQueryString, saveSettings } from "./Settings";
 import getSearchSettings from "./SearchSettings";
+import { trackSettingsChanges } from "./Analytics";
 
 const history = createBrowserHistory();
 const CSRFMeta: HTMLMetaElement = document.querySelector(
@@ -24,11 +25,12 @@ const REQUEST_HEADERS = new Headers({
 interface ISearchContext {
   results: AlgoliaResults;
   popularSearches: PopularSearches;
+  popularStories: number[];
   loading: boolean;
   search: (
     query: string,
     settings?: HNSettings,
-    storyIDs?: string[]
+    storyIDs?: number[]
   ) => Promise<AlgoliaResults>;
   fetchPopularStories: () => Promise<AlgoliaResults>;
   fetchCommentsForStory: (objectID: Hit["objectID"]) => Promise<Comment>;
@@ -64,12 +66,14 @@ const DEFAULT_SEARCH_STATE = {
     nbPages: 0
   },
   loading: true,
+  popularStories: [],
   popularSearches: [],
   settings: initializeSettings()
 };
 
 class SearchProvider extends React.Component {
   client = algoliasearch("UJ5WYC0L7X", "8ece23f8eb07cd25d40262a1764599b1");
+
   indexUser = (this.client as any).initIndex("User_production");
   indexSortedByPopularity = (this.client as any).initIndex("Item_production");
   indexSortedByDate = (this.client as any).initIndex(
@@ -89,11 +93,6 @@ class SearchProvider extends React.Component {
       type: DEFAULT_HN_SETTINGS.defaultType,
       dateRange: DEFAULT_HN_SETTINGS.defaultDateRange
     });
-
-    // Analytics.trackEvent('settings', 'style', settings.style);
-    // Analytics.trackEvent('settings', 'defaultType', settings.defaultType);
-    // Analytics.trackEvent('settings', 'defaultSort', settings.defaultSort);
-    // Analytics.trackEvent('settings', 'defaultDateRange', settings.defaultDateRange);
   };
 
   getIndex = (query: string) => {
@@ -106,6 +105,8 @@ class SearchProvider extends React.Component {
 
   setSettings = (settings: Partial<HNSettings>) => {
     const newSettings: HNSettings = { ...this.state.settings, ...settings };
+    trackSettingsChanges(this.state.settings, newSettings);
+
     this.setState({ settings: newSettings }, () => {
       this.syncUrl(newSettings);
       saveSettings(newSettings);
@@ -115,13 +116,16 @@ class SearchProvider extends React.Component {
   };
 
   syncUrl = (settings: HNSettings) => {
-    history.replace(`?${asQueryString(settings)}`);
+    history.push({
+      pathname: window.location.pathname,
+      search: `${asQueryString(settings)}`
+    });
   };
 
   search = (
     query: string = "",
     settings: HNSettings = this.state.settings,
-    storyIDs?: string[]
+    storyIDs?: number[]
   ): Promise<AlgoliaResults> => {
     this.setState({ loading: true });
     const params = getSearchSettings(query, settings, storyIDs);
@@ -144,10 +148,18 @@ class SearchProvider extends React.Component {
   };
 
   fetchPopularStories = (): Promise<AlgoliaResults> => {
+    const { settings } = this.state;
+
+    if (this.state.popularStories.length) {
+      return this.search(settings.query, settings, this.state.popularStories);
+    }
+
     return fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
       .then(resp => resp.json())
-      .then(storyIDs => {
-        const { settings } = this.state;
+      .then((storyIDs: number[]) => {
+        this.setState({
+          popularStories: storyIDs
+        });
         return this.search(settings.query, settings, storyIDs);
       });
   };
@@ -212,6 +224,7 @@ export const SearchContext = React.createContext<ISearchContext>({
     nbPages: 0
   },
   loading: true,
+  popularStories: [],
   popularSearches: [],
   starred: new Starred(),
   settings: DEFAULT_HN_SETTINGS,

@@ -2,11 +2,12 @@ import * as React from "react";
 import * as moment from "moment";
 import classnames from "classnames";
 import "./Story.scss";
-import { Clock, Heart, User, Share2, Star } from "react-feather";
+import { Clock, Heart, User, Star } from "react-feather";
 
+import Comments from "./Comments";
 import { Hit } from "../../providers/Search.types";
 import { SearchContext } from "../../providers/SearchProvider";
-import Comments from "./Comments";
+import SocialShare from "../SocialShare/SocialShare";
 
 const StoryLink: React.FunctionComponent<{
   id: number;
@@ -73,7 +74,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
   const {
     fetchCommentsForStory,
     starred: { toggle, data: starredItems },
-    settings: { showThumbnails, style }
+    settings: { showThumbnails, style, query }
   } = React.useContext(SearchContext);
 
   const isExperimental = style === "experimental";
@@ -81,11 +82,16 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
     showThumbnails && isExperimental && hit._tags[0] === "story";
   const domain = isExperimental ? extractDomain(hit.url) : hit.url;
 
-  const [starred, setStarred] = React.useState(
-    starredItems.has(String(objectID))
-  );
-
+  const [starred, setStarred] = React.useState(starredItems.has(objectID));
+  const [showComments, setShowComments] = React.useState(false);
   const disableComments = num_comments === null;
+
+  const onLoadCommentsClick = React.useCallback(() => {
+    if (!hit.comments) {
+      fetchCommentsForStory(objectID);
+    }
+    setShowComments(!showComments);
+  }, [showComments, hit.comments]);
 
   return (
     <article className="Story">
@@ -149,15 +155,13 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
             {!disableComments && (
               <button
                 disabled={num_comments === 0}
-                onClick={() => fetchCommentsForStory(objectID)}
+                onClick={onLoadCommentsClick}
                 className="Story_commentsButton"
               >
                 {num_comments || 0}
               </button>
             )}
-            <button className="Story_shareButton">
-              <Share2 />
-            </button>
+            <SocialShare hit={hit} query={query} />
             <button
               className={classnames(
                 "Story_starred",
@@ -173,7 +177,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
           </div>
         )}
       </div>
-      {comments && <Comments comment={comments} />}
+      {comments && showComments && <Comments comment={comments} />}
     </article>
   );
 };

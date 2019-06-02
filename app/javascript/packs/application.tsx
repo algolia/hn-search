@@ -29,7 +29,7 @@ const App = () => {
         <ThemeClass>
           <Switch>
             <Route exact path="/settings" component={Settings} />
-            <Route path="/:path?" index component={SearchView} />
+            <Route path="/:path?" component={SearchView} />
           </Switch>
         </ThemeClass>
       </SearchProvider>

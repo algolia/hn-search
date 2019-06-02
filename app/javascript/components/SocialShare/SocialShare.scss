@@ -1,0 +1,32 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.SocialShare {
+  display: inline-block;
+  transform: translate(0, $spacing-small);
+
+  .Dropdown {
+    &_label {
+      border: none;
+      color: #9d9d9d;
+
+      &:hover {
+        color: $orange;
+      }
+    }
+    
+    svg + svg {
+      display: none;
+    }
+  }
+
+  ul {
+    background-color: #fff;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}

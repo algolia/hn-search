@@ -5,14 +5,13 @@ import { RouteComponentProps } from "react-router";
 import Header from "../components/Header/Header";
 import SearchHeader from "../components/SearchHeader/SearchHeader";
 import SearchResults from "../components/SearchResults/SearchResults";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar, { SidebarItems } from "../components/Sidebar/Sidebar";
 import Pagination from "../components/Pagination/Pagination";
 import Footer from "../components/Footer/Footer";
+import Tracker from "../components/Tracker/Tracker";
 
 import SearchFilters from "../components/SearchFilters/SearchFilters";
 import { SearchContext } from "../providers/SearchProvider";
-import { SidebarItems } from "../components/Sidebar/Sidebar";
-import Tracker from "../components/Tracker/Tracker";
 
 const SearchView: React.FunctionComponent<RouteComponentProps> = props => {
   const {
@@ -27,20 +26,22 @@ const SearchView: React.FunctionComponent<RouteComponentProps> = props => {
     : "HN Search powered by Algolia";
 
   return (
-    <div className="container">
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
-      <Header>
-        <SearchHeader />
-      </Header>
-      <SearchFilters />
-      <SearchResults />
-      {style === "experimental" && <Sidebar {...props} user={login} />}
-      <Pagination />
-      <Footer />
-    </div>
+    <Tracker {...props}>
+      <div className="container">
+        <Helmet>
+          <title>{title}</title>
+        </Helmet>
+        <Header>
+          <SearchHeader />
+        </Header>
+        <SearchFilters />
+        <SearchResults />
+        {style === "experimental" && <Sidebar {...props} user={login} />}
+        <Pagination />
+        <Footer />
+      </div>
+    </Tracker>
   );
 };
 
-export default Tracker(SearchView);
+export default SearchView;
