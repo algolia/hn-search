@@ -51,17 +51,17 @@ const Comments: React.FunctionComponent<{ comment: Comment }> = ({
     <ul className="Comments">
       {comment.children.map(comment => {
         const {
+          id,
           author,
           created_at_i,
           created_at,
           text,
-          story_id,
-          id
+          story_id
         } = comment;
         const timeAgo = moment(created_at_i * 1000).fromNow();
 
         return (
-          <li className="Comment">
+          <li className="Comment" key={id}>
             <span className="Comment_author">
               <Avatar author={author} />
               <a

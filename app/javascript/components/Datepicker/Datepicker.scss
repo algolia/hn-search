@@ -98,9 +98,12 @@
   .DatePicker {
     top: 80px;
     background: rgba(#fff, .8);
+    box-shadow: 0 5px 15px -5px rgba(37,44,97,.15), 0 2px 15px -13px rgba(93,100,148,.2);
 
     &-container {
       padding-left: 200px;
+      margin: 0;
+      padding: $spacing-small;
     }
   }
 }

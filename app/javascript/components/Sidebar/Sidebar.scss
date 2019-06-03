@@ -9,6 +9,10 @@
   padding-top: 128px;
   z-index: 10;
 
+  @media (max-width: 768px) {
+    display: none
+  }
+
   li {
     width: 200px;
     

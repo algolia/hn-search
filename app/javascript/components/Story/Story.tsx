@@ -10,7 +10,7 @@ import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
 
 const StoryLink: React.FunctionComponent<{
-  id: number;
+  id: Hit["objectID"];
 }> = ({ id, children }) => {
   return <a href={`https://news.ycombinator.com/item?id=${id}`}>{children}</a>;
 };
@@ -82,8 +82,12 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
     showThumbnails && isExperimental && hit._tags[0] === "story";
   const domain = isExperimental ? extractDomain(hit.url) : hit.url;
 
-  const [starred, setStarred] = React.useState(starredItems.has(objectID));
-  const [showComments, setShowComments] = React.useState(false);
+  const [starred, setStarred] = React.useState(
+    starredItems.has(parseInt(objectID))
+  );
+  const [showComments, setShowComments] = React.useState(
+    location.pathname.startsWith("/story")
+  );
   const disableComments = num_comments === null;
 
   const onLoadCommentsClick = React.useCallback(() => {
@@ -169,7 +173,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
               )}
               onClick={() => {
                 setStarred(!starred);
-                toggle(objectID);
+                toggle(parseInt(objectID));
               }}
             >
               <Star />

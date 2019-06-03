@@ -24,11 +24,18 @@ const isEnterKeyPress = (
   return event.keyCode === 13 || event.which === 13;
 };
 
-const SearchHeader: React.FunctionComponent = () => {
+interface SearchHeaderProps {
+  storyID?: string;
+}
+
+const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
+  storyID
+}) => {
   const {
     settings,
     search,
     setSettings,
+    fetchCommentsForStory,
     fetchPopularStories,
     starred
   } = React.useContext(SearchContext);
@@ -54,11 +61,16 @@ const SearchHeader: React.FunctionComponent = () => {
   );
 
   React.useEffect(() => {
-    if (location.pathname === "/hot") {
+    if (location.pathname.startsWith("/hot")) {
       fetchPopularStories();
       return;
-    } else if (location.pathname === "/starred") {
+    } else if (location.pathname.startsWith("/starred")) {
       search(settings.query, settings, Array.from(starred.data));
+      return;
+    } else if (location.pathname.startsWith("/story")) {
+      search(settings.query, settings, [parseInt(storyID)]).then(() => {
+        fetchCommentsForStory(storyID);
+      });
       return;
     }
 

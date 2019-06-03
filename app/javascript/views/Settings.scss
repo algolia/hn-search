@@ -40,6 +40,10 @@
   &_inputContainer {
     width: 50%;
   }
+
+  #login {
+    max-width: 240px;
+  }
 }
 
 .experimental {
@@ -57,10 +61,6 @@
     h2 {
       color: #5c5c5c;
       border-bottom: 1px solid transparent;
-    }
-
-    #login {
-      max-width: 240px;
     }
   }
 }

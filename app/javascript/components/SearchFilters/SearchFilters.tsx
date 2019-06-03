@@ -10,6 +10,7 @@ import Datepicker from "../Datepicker/Datepicker";
 import pluralize from "../../utils/pluralize";
 import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings } from "../../providers/Search.types";
+import SocialShare from "../SocialShare/SocialShare";
 
 export const STORY_FILTERS = new Map<HNSettings["type"], string>([
   ["all", "All"],
@@ -57,7 +58,9 @@ const formatTimeFilters: React.FunctionComponent<{ settings: HNSettings }> = ({
 
 const SearchFilters: React.FunctionComponent = () => {
   const { results, settings, setSettings } = React.useContext(SearchContext);
-  const [isOpen, toggleOpen] = React.useState(false);
+  const forceOpen =
+    settings.dateRange === "custom" && !settings.dateEnd && !settings.dateStart;
+  const [isOpen, toggleOpen] = React.useState(forceOpen);
 
   return (
     <div className="SearchFilters container">
@@ -124,9 +127,7 @@ const SearchFilters: React.FunctionComponent = () => {
           {pluralize(results.nbHits, "result")} (
           {results.processingTimeMS / 1000} seconds)
         </p>
-        <a href="/settings">
-          <Share2 />
-        </a>
+        <SocialShare query={settings.query} />
       </div>
     </div>
   );

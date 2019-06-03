@@ -3,9 +3,12 @@
 
 .SocialShare {
   display: inline-block;
-  transform: translate(0, $spacing-small);
+  position: relative;
+  z-index: 5;
 
   .Dropdown {
+    position: initial;
+
     &_label {
       border: none;
       color: #9d9d9d;
@@ -21,6 +24,7 @@
   }
 
   ul {
+    width: 140px;
     background-color: #fff;
 
     li {

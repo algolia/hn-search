@@ -52,10 +52,17 @@
     height: 80px;
     color: #9d9d9d;
     border-bottom: 1px solid #eee;
-    padding-left: 200px;
+
+    @media (min-width: 769px) {
+      padding-left: 200px;
+    }
 
     &_meta {
       padding-right: $spacing-medium;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
 
     &_filters {

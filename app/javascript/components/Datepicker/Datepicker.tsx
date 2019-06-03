@@ -68,18 +68,27 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
         return handleResetClick();
       }
       if (isSelectingFirstDay(from, to, day)) {
+        const fromDate = moment
+          .utc(day)
+          .startOf("day")
+          .toDate();
+
         setState({
-          from: day,
+          from: fromDate,
           to: null,
-          enteredTo: day
+          enteredTo: fromDate
         });
       } else {
+        const toDate = moment
+          .utc(day)
+          .endOf("day")
+          .toDate();
         setState({
-          to: day,
           from: state.from,
-          enteredTo: day
+          to: toDate,
+          enteredTo: toDate
         });
-        onChange(from, day);
+        onChange(from, toDate);
       }
     },
     [state]

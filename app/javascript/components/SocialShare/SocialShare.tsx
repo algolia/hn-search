@@ -37,17 +37,20 @@ export const SocialShareItems = [
 
 type SharePlatform = "twitter" | "facebook" | "email";
 
-const shareItem = (selected: SharePlatform, hit: Hit, query: string) => {
-  const url = hit
-    ? window.location +
-      "://" +
-      window.location +
-      "/story/" +
-      hit.objectID +
-      "/" +
-      hit.title
-    : window.location.href;
+const convertToSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+};
+const createStoryUrl = (hit: Hit) => {
+  return `${window.location.origin}/story/${hit.objectID}/${convertToSlug(
+    hit.title
+  )}`;
+};
 
+const shareItem = (selected: SharePlatform, hit: Hit, query: string) => {
+  const url = hit ? createStoryUrl(hit) : window.location.href;
   const title =
     (hit
       ? hit.title + " - "
@@ -66,7 +69,7 @@ const shareItem = (selected: SharePlatform, hit: Hit, query: string) => {
     case "facebook":
       window.open(
         "https://www.facebook.com/sharer/sharer.php?u=" +
-          escape(url) +
+          escape(window.location.href) +
           "&t=" +
           title,
         "",
@@ -80,8 +83,8 @@ const shareItem = (selected: SharePlatform, hit: Hit, query: string) => {
 };
 
 interface SocialShareProps {
-  hit: Hit;
   query: string;
+  hit?: Hit;
 }
 
 const SocialShare: React.FunctionComponent<SocialShareProps> = ({
