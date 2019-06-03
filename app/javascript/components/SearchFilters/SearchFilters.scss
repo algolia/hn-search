@@ -14,8 +14,24 @@
   color: #000;
   position: fixed;
 
+  @media (max-width: 768px) {
+    .Dropdown_label {
+      margin-right: 0;
+    }
+
+    .SearchFilters_text {
+      display: none;
+    }
+  }
+
   .Dropdown {
     margin-left: $spacing-base;
+  }
+
+  .SocialShare {
+    .Dropdown_label {
+      margin-right: 0;
+    }
   }
 
   &_filterContainer {
@@ -26,11 +42,19 @@
   &_filters {
     display: flex;
     align-items: center;
+
+    @media (max-width: 768px) {
+      padding-left: 0;
+    }
   }
 
   &_meta {
     display: flex;
     align-items: center;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
 
     p {
       margin-bottom: 0;
@@ -53,16 +77,18 @@
     color: #9d9d9d;
     border-bottom: 1px solid #eee;
 
+    @media (max-width: 768px) {
+      top: 58px;
+      height: 44px;
+      justify-content: flex-end;
+    }
+
     @media (min-width: 769px) {
       padding-left: 200px;
     }
 
     &_meta {
       padding-right: $spacing-medium;
-
-      @media (max-width: 768px) {
-        display: none;
-      }
     }
 
     &_filters {

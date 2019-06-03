@@ -79,10 +79,8 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
           enteredTo: fromDate
         });
       } else {
-        const toDate = moment
-          .utc(day)
-          .endOf("day")
-          .toDate();
+        const toDate = moment.utc(day).toDate();
+
         setState({
           from: state.from,
           to: toDate,

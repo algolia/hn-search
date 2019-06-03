@@ -13,5 +13,9 @@
     @media (min-width: 769px) {
       padding-left: 200px;
     }
+
+    @media (max-width: 768px) {
+      padding-top: 100px;
+    }
   }
 }

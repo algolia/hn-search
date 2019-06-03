@@ -50,7 +50,14 @@
   .Settings {
     background-color: #fff;
     padding-top: 208px;
-    padding-left: 200px;
+
+    @media (min-width: 769px){
+      padding-left: 200px;
+    }
+
+    @media (max-width: 769px){
+      padding-top: 90px;
+    }
 
     &_fieldset {
       background: #f7f7f7;

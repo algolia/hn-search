@@ -5,18 +5,25 @@
 
   &_list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     list-style-type: none;
 
     li {
       padding: 4px;
+
+      &:last-child {
+        display: none;
+      }
     }
   }
 }
 
 .experimental {
   .Footer {
-    padding-left: 200px;
+    @media (min-width: 769px){
+      padding-left: 200px;
+    }
 
     li, a {
       color: #9d9d9d;

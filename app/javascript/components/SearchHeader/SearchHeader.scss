@@ -21,6 +21,14 @@ $headerHeight: 60px;
     width: calc(100% - 230px);
     max-width: 570px;
     margin-right: $spacing-base;
+
+    @media (max-width:768px) {
+      width: calc(100% - 160px)
+    }
+
+    @media (max-width: 480px){
+      width: calc(100% - 86px)
+    }
   }
 
   &_label {
@@ -35,6 +43,16 @@ $headerHeight: 60px;
     display: flex;
     align-items: center;
 
+    @media (max-width:768px) {
+      flex: 1 0 40px;
+      max-width: 40px;
+      min-width: 40px;
+      
+      .SearchHeader_label {
+        display: none;
+      }
+    }
+
     img {
       width: 48px;
       margin-right: $spacing-small;
@@ -44,8 +62,9 @@ $headerHeight: 60px;
   &_settings {
     position: absolute;
     right: $spacing-medium;
-
+    
     a {
+      display: flex;
       color: white;
     }
   }
@@ -62,7 +81,12 @@ $headerHeight: 60px;
     font-size: 12px;
     margin-left: $spacing-small;
 
+    @media (max-width: 480px) {
+      display: none;
+    }
+
     a {
+      display: flex;
       margin: 0 $spacing-small;
     }
 
@@ -79,6 +103,7 @@ $headerHeight: 60px;
     left: 12px;
     color: $orange;
     font-size: 24px;
+    pointer-events: none;
   }
 
   .SearchInput {
@@ -106,8 +131,32 @@ $headerHeight: 60px;
     }
     
     .SearchHeader {
-      &_logo img {
-        width: 60px;
+      @media (max-width: 768px) {
+        height: 60px;
+      }
+
+      &_logo {
+        img {
+          width: 60px;
+
+          @media (max-width: 768px) {
+            width: 32px;
+          }
+        }
+      }
+
+      .PoweredBy {
+        img {
+          @media (max-width: 768px) {
+            height: 8px;
+          }
+        }
+      }
+
+      &_label {
+        @media (max-width: 768px) {
+          font-size: 12px;
+        }
       }
       
       &_settings a {
@@ -116,8 +165,12 @@ $headerHeight: 60px;
 
       &_search {
         height: auto;
-        padding: $spacing-large;
+        padding: $spacing-large 40px $spacing-large $spacing-large;
         background-color: #fff;
+
+        @media (max-width:768px) {
+          padding: $spacing-small $spacing-large $spacing-small $spacing-small;
+        }
       }
 
       &_label {

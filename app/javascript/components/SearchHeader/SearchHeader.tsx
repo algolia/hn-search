@@ -43,7 +43,7 @@ const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
   const onSearch = React.useCallback(
     (event: React.SyntheticEvent<HTMLInputElement>) => {
       const query = event.currentTarget.value;
-      setSettings({ query, prefix: true });
+      setSettings({ query, prefix: true, page: 0 });
     },
     [settings]
   );

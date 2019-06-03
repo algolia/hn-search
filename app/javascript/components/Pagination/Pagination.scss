@@ -6,13 +6,13 @@
   justify-content: center;
   background-color: #f6f6ef;
   padding: $spacing-small 0;
+  flex-wrap: wrap;
 
   svg {
     height: 14px;
   }
 
   &_item {
-
     button {
       padding: 0;
       min-width: 30px;
@@ -39,7 +39,10 @@
 .experimental {
   .Pagination {
     margin-top: $spacing-small;
-    padding-left: 200px;
     background-color: #fff;
+
+    @media (min-width: 769px){
+      padding-left: 200px;
+    }
   }
 }

@@ -66,7 +66,7 @@ const SearchFilters: React.FunctionComponent = () => {
     <div className="SearchFilters container">
       <div className="SearchFilters_filters">
         <span className="SearchFilters_filterContainer">
-          Search{" "}
+          <span className="SearchFilters_text">Search</span>
           <Dropdown
             items={Array.from(STORY_FILTERS).map(asItem)}
             onChange={item =>
@@ -79,7 +79,7 @@ const SearchFilters: React.FunctionComponent = () => {
           />
         </span>
         <span className="SearchFilters_filterContainer">
-          by
+          <span className="SearchFilters_text">by</span>
           <Dropdown
             items={Array.from(SORT_FILTERS).map(asItem)}
             onChange={item =>
@@ -92,7 +92,7 @@ const SearchFilters: React.FunctionComponent = () => {
           />
         </span>
         <span className="SearchFilters_filterContainer">
-          for
+          <span className="SearchFilters_text">for</span>
           <Dropdown
             items={Array.from(TIME_FILTERS).map(asItem)}
             onChange={item => {
