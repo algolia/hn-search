@@ -1,5 +1,8 @@
 import * as React from "react";
-import { Share2, Mail, Twitter, Facebook } from "react-feather";
+import Share2 from "react-feather/dist/icons/share-2";
+import Mail from "react-feather/dist/icons/mail";
+import Twitter from "react-feather/dist/icons/twitter";
+import Facebook from "react-feather/dist/icons/facebook";
 import "./SocialShare.scss";
 
 import { Hit } from "../../providers/Search.types";

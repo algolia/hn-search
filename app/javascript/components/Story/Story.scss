@@ -9,6 +9,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  overflow: hidden;
 
   &_container {
     display: flex;
@@ -30,6 +31,10 @@
     border: solid 1px #eee;
     border-radius: 3px;
     align-self: flex-start;
+
+    @media (max-width: 768px){
+      display: none;
+    }
   }
 
   &_data {
@@ -94,6 +99,11 @@
       border-bottom: 1px dotted #ccc
     }
 
+    &_data {
+      white-space: normal;
+      overflow: hidden;
+    }
+
     &_separator {
       opacity: 0;
       visibility: hidden;
@@ -122,6 +132,10 @@
       text-align: right;
       min-width: 140px;
       align-self: flex-start;
+
+      @media (max-width: 480px) {
+        display: none;
+      }
 
       svg {
         width: 18px;

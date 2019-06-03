@@ -2,7 +2,9 @@ import * as React from "react";
 import "./Pagination.scss";
 
 import { SearchContext } from "../../providers/SearchProvider";
-import { ChevronsLeft, ChevronsRight } from "react-feather";
+
+import ChevronsLeft from "react-feather/dist/icons/chevrons-left";
+import ChevronsRight from "react-feather/dist/icons/chevrons-right";
 
 const MAX_RESULTS = 5;
 
@@ -16,11 +18,12 @@ const Pagination: React.FunctionComponent = () => {
   const pages = new Array(Math.abs(results.nbPages - 1))
     .fill(1)
     .map((_, i) => i + 1);
+
   const tailPages = pages.slice(page, page + MAX_RESULTS);
   const headPages = page > 0 ? pages.slice(0, page).slice(-MAX_RESULTS) : [];
 
   const isFirstPage = page === 0;
-  const isLastPage = page === results.nbPages;
+  const isLastPage = page === results.nbPages - 1;
 
   if (!results.nbPages) return null;
 

@@ -1,7 +1,9 @@
 import * as React from "react";
-import "./SearchHeader.scss";
-import { Search, Settings } from "react-feather";
 import { Link } from "react-router-dom";
+import "./SearchHeader.scss";
+
+import Search from "react-feather/dist/icons/search";
+import Settings from "react-feather/dist/icons/search";
 
 import { SearchContext } from "../../providers/SearchProvider";
 import AlgoliaLogoWhite from "images/algolia-logo-white.svg";

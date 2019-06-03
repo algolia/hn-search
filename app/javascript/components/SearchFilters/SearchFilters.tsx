@@ -3,9 +3,9 @@ import * as moment from "moment";
 
 import "./SearchFilters.scss";
 
-import { Share2, ChevronsRight } from "react-feather";
-import Dropdown from "../Dropdown/Dropdown";
+import ChevronsRight from "react-feather/dist/icons/chevron-right";
 
+import Dropdown from "../Dropdown/Dropdown";
 import Datepicker from "../Datepicker/Datepicker";
 import pluralize from "../../utils/pluralize";
 import { SearchContext } from "../../providers/SearchProvider";

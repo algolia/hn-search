@@ -9,7 +9,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Tracker from "../components/Tracker/Tracker";
 
 import { SearchContext } from "../providers/SearchProvider";
-import { ChevronsLeft } from "react-feather";
+import ChevronsLeft from "react-feather/dist/icons/chevron-left";
 
 interface HNSettings {
   dirty: boolean;
@@ -28,6 +28,7 @@ interface HNSettings {
   authorText: boolean;
   typoTolerance: boolean;
   login: string;
+  showThumbnails: boolean;
 }
 
 const Settings: React.FunctionComponent<RouteComponentProps> = props => {
@@ -43,7 +44,8 @@ const Settings: React.FunctionComponent<RouteComponentProps> = props => {
     defaultDateRange: settings.defaultDateRange,
     storyText: settings.storyText,
     authorText: settings.authorText,
-    typoTolerance: settings.typoTolerance
+    typoTolerance: settings.typoTolerance,
+    showThumbnails: settings.showThumbnails
   });
 
   React.useEffect(() => {
@@ -57,7 +59,8 @@ const Settings: React.FunctionComponent<RouteComponentProps> = props => {
       defaultDateRange: settings.defaultDateRange,
       storyText: settings.storyText,
       authorText: settings.authorText,
-      typoTolerance: settings.typoTolerance
+      typoTolerance: settings.typoTolerance,
+      showThumbnails: settings.showThumbnails
     });
   }, [settings]);
 
@@ -81,11 +84,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = props => {
         </Helmet>
         <Header>
           <div className="SearchHeader_settings">
-            <Link
-              to="#"
-              onClick={props.history.goBack}
-              className="SearchHeader_back"
-            >
+            <Link to="/" className="SearchHeader_back">
               <ChevronsLeft />
               Back
             </Link>
@@ -102,6 +101,26 @@ const Settings: React.FunctionComponent<RouteComponentProps> = props => {
           <form onSubmit={onSubmit}>
             <fieldset className="Settings_fieldset">
               <h2 className="Settings_display">Display options</h2>
+              {state.style === "experimental" && (
+                <div className="Settings_row">
+                  <label htmlFor="login">Show thumbnails</label>
+                  <div className="Settings_inputContainer">
+                    <input
+                      id="showThumbnails"
+                      type="checkbox"
+                      checked={state.showThumbnails}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>
+                      ) =>
+                        wrapSetState({
+                          showThumbnails: event.currentTarget
+                            .checked as HNSettings["showThumbnails"]
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+              )}
               <div className="Settings_row">
                 <label htmlFor="style">Style</label>
                 <div className="Settings_inputContainer">

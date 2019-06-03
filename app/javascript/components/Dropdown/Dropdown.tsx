@@ -3,7 +3,9 @@ import Downshift from "downshift";
 import classnames from "classnames";
 
 import "./Dropdown.scss";
-import { ChevronUp, ChevronDown } from "react-feather";
+
+import ChevronUp from "react-feather/dist/icons/chevron-up";
+import ChevronDown from "react-feather/dist/icons/chevron-down";
 
 type DropdownItem = { value: string; label: React.ReactChild };
 

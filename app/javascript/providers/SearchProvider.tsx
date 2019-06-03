@@ -13,6 +13,7 @@ import {
 import { initializeSettings, asQueryString, saveSettings } from "./Settings";
 import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
+import debounce from "../utils/debounce";
 
 const history = createBrowserHistory();
 const CSRFMeta: HTMLMetaElement = document.querySelector(
@@ -116,10 +117,21 @@ class SearchProvider extends React.Component {
   };
 
   syncUrl = (settings: HNSettings) => {
-    history.push({
-      pathname: window.location.pathname,
-      search: `${asQueryString(settings)}`
-    });
+    if ("requestIdleCallback" in (window as any)) {
+      return window["requestIdleCallback"](() => {
+        history.push({
+          pathname: window.location.pathname,
+          search: `${asQueryString(settings)}`
+        });
+      });
+    }
+
+    return debounce(() => {
+      history.push({
+        pathname: window.location.pathname,
+        search: `${asQueryString(settings)}`
+      });
+    }, 300);
   };
 
   search = (
@@ -172,7 +184,7 @@ class SearchProvider extends React.Component {
 
   fetchCommentsForStory = (objectID: Hit["objectID"]): Promise<Comment> => {
     return fetch(`https://hn.algolia.com/api/v1/items/${objectID}`, {
-      // headers: REQUEST_HEADERS
+      headers: REQUEST_HEADERS
     })
       .then(resp => resp.json())
       .then(comments => {

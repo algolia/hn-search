@@ -1,8 +1,13 @@
 import * as React from "react";
 import * as moment from "moment";
 import classnames from "classnames";
+
 import "./Story.scss";
-import { Clock, Heart, User, Star } from "react-feather";
+
+import Clock from "react-feather/dist/icons/clock";
+import Heart from "react-feather/dist/icons/heart";
+import User from "react-feather/dist/icons/user";
+import Star from "react-feather/dist/icons/star";
 
 import Comments from "./Comments";
 import { Hit } from "../../providers/Search.types";

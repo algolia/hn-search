@@ -4,7 +4,9 @@ import DayPicker from "react-day-picker";
 import "./Datepicker.scss";
 import "react-day-picker/lib/style.css";
 
-import { Calendar, XCircle } from "react-feather";
+import XCircle from "react-feather/dist/icons/x-circle";
+import Calendar from "react-feather/dist/icons/calendar";
+
 import { SearchContext } from "../../providers/SearchProvider";
 
 const isSelectingFirstDay = (from: Date, to: Date, day: Date) => {
@@ -15,12 +17,6 @@ const isSelectingFirstDay = (from: Date, to: Date, day: Date) => {
 
 const DEFAULT_FROM_DATE = moment().subtract(7, "days");
 const DEFAULT_TO_DATE = moment();
-
-interface DatePickerState {
-  from: Date;
-  to: Date;
-  enteredTo: Date;
-}
 
 interface DatePickerProps {
   isOpen: boolean;

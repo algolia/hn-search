@@ -3,7 +3,7 @@
 
 .SearchFilters {
   z-index: 10;
-  top: 60px;
+  top: 56px;
   height: 42px;
   display: flex;
   align-items: center;
@@ -15,8 +15,12 @@
   position: fixed;
 
   @media (max-width: 768px) {
+    justify-content: flex-end;
+
     .Dropdown_label {
       margin-right: 0;
+      max-width: 80px;
+      white-space: nowrap;
     }
 
     .SearchFilters_text {
@@ -97,6 +101,7 @@
 
     &_settings {
       padding-left: $spacing-medium;
+      margin: 0;
     }
   }
 }

@@ -2,16 +2,15 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
 
-import {
-  Eye,
-  Home,
-  HelpCircle,
-  MessageCircle,
-  Volume2,
-  Star,
-  TrendingUp,
-  User
-} from "react-feather";
+import Eye from "react-feather/dist/icons/eye";
+import Home from "react-feather/dist/icons/home";
+import HelpCircle from "react-feather/dist/icons/help-circle";
+import MessageCircle from "react-feather/dist/icons/message-circle";
+import Volume2 from "react-feather/dist/icons/volume-2";
+import Star from "react-feather/dist/icons/star";
+import TrendingUp from "react-feather/dist/icons/trending-up";
+import User from "react-feather/dist/icons/user";
+
 import { RouteComponentProps } from "react-router";
 
 export const SidebarItems = [

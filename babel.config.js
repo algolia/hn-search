@@ -42,6 +42,7 @@ module.exports = function(api) {
           "images": "assets/images"
         }
       }],
+      [ "import", { "libraryName": "react-feather", "libraryDirectory": "dist/icons" } ],
       require('babel-plugin-macros'),
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),

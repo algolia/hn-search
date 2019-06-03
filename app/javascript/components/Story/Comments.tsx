@@ -2,7 +2,7 @@ import * as React from "react";
 import * as moment from "moment";
 import "./Comments.scss";
 
-import { XCircle } from "react-feather";
+import XCircle from "react-feather/dist/icons/x-circle";
 import { stripHighlight } from "./Story";
 import { Comment } from "../../providers/Search.types";
 
