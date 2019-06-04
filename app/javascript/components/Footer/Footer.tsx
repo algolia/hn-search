@@ -7,7 +7,7 @@ const LINKS: { label: string; to: string }[] = [
   { label: "Setting", to: "/settings" },
   { label: "Help", to: "/help" },
   { label: "Api", to: "/api" },
-  { label: "Hacker News", to: "httpss://news.ycombinator.com" },
+  { label: "Hacker News", to: "https://news.ycombinator.com" },
   { label: "Fork/Contribute", to: "https://github.com/algolia/hn-search" },
   { label: "Status", to: "https://status.algolia.com/hn" },
   { label: "Cool Apps", to: "/cool_apps" }
