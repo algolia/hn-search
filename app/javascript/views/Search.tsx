@@ -13,9 +13,9 @@ import Tracker from "../components/Tracker/Tracker";
 import SearchFilters from "../components/SearchFilters/SearchFilters";
 import { SearchContext } from "../providers/SearchProvider";
 
-interface SearchViewProps extends RouteComponentProps<{ story_id: string }> {}
+interface SearchProps extends RouteComponentProps<{ story_id: string }> {}
 
-const SearchView: React.FunctionComponent<SearchViewProps> = props => {
+const Search: React.FunctionComponent<SearchProps> = props => {
   const {
     settings: { style, login }
   } = React.useContext(SearchContext);
@@ -46,4 +46,4 @@ const SearchView: React.FunctionComponent<SearchViewProps> = props => {
   );
 };
 
-export default SearchView;
+export default Search;

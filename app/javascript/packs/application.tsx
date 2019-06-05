@@ -1,14 +1,17 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./../src/application.scss";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import SearchProvider, { SearchContext } from "../providers/SearchProvider";
 
-import SearchProvider from "../providers/SearchProvider";
-import { SearchContext } from "../providers/SearchProvider";
-import SearchView from "../views/Search";
+import About from "../views/About";
+import Api from "../views/Api";
+import CoolApps from "../views/CoolApps";
+import Help from "../views/Help";
+import Search from "../views/Search";
 import Settings from "../views/Settings";
 
 const ThemeClass: React.FunctionComponent = ({ children }) => {
@@ -29,8 +32,12 @@ const App = () => {
         <ThemeClass>
           <Switch>
             <Route exact path="/settings" component={Settings} />
-            <Route path="/story/:story_id" component={SearchView} />
-            <Route path="/:path?" component={SearchView} />
+            <Route path="/about" component={About} />
+            <Route path="/api" component={Api} />
+            <Route path="/cool_apps" component={CoolApps} />
+            <Route path="/help" component={Help} />
+            <Route path="/story/:story_id" component={Search} />
+            <Route path="/:path?" component={Search} />
           </Switch>
         </ThemeClass>
       </SearchProvider>
