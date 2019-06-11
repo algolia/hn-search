@@ -25,7 +25,7 @@ $headerHeight: 60px;
     position: relative;
     display: inline-block;
     width: calc(100% - 230px);
-    max-width: 570px;
+    max-width: 870px;
     margin-right: $spacing-base;
 
     @media (max-width:768px) {
@@ -122,11 +122,14 @@ $headerHeight: 60px;
     border: none;
 
     height: 42px;
+    width: 100%;
     box-shadow: none;
     padding: $spacing-medium $spacing-large $spacing-medium 54px;
+    font-weight: 300;
 
     &:focus {
       box-shadow: none;
+      outline: none;
     }
   }
 }

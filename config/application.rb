@@ -20,8 +20,6 @@ module HNsearch
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.assets.paths << Rails.root.join('node_modules')
-    config.assets.precompile += %w[themes/default.css themes/experimental.css]
-
     config.active_record.migration_error = false
 
     config.middleware.use ActionDispatch::Flash

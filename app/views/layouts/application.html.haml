@@ -7,9 +7,6 @@
     %base{:href=> root_url}
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}
     %link{:href => '/opensearch.xml', :rel => 'search', :title => 'HN Search', :type => 'application/opensearchdescription+xml'}
-    = stylesheet_link_tag "application", :media => "all"
-    = stylesheet_link_tag "themes/default", :media => "all", 'ng-if' => 'settings.style !== "experimental"'
-    = stylesheet_link_tag "themes/experimental", :media => "all", 'ng-if' => 'settings.style === "experimental"'
     = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})
     = auto_discovery_link_tag(:atom, {controller: "home", action: "latest", format: 'atom'}, { title: 'Latest HN items'})

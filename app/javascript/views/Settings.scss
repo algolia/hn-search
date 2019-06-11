@@ -6,8 +6,8 @@
   background-color: #f6f6ef;
 
   h2 {
-    color: #000;
-    font-size: 18px;
+    color: #5c5c5c;
+    font-size: 16px;
     border-bottom: 1px solid #ccc;
     margin-bottom: $spacing-large;
   }
@@ -32,9 +32,15 @@
     text-align: right;
   }
 
+  select, input {
+    color: #5c5c5c;
+  }
+
   label {
     width: 50%;
     margin-right: $spacing-large;
+    text-align: right;
+    color: #5c5c5c;
   }
 
   &_inputContainer {

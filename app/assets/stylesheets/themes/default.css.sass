@@ -1,234 +1,234 @@
-@import "../bourbon/bourbon"
-@import "../neat/grid/media"
-@import "../base/grid-settings"
-@import "../base/variables"
-@import "../base/extends/clearfix"
+// @import "../bourbon/bourbon"
+// @import "../neat/grid/media"
+// @import "../base/grid-settings"
+// @import "../base/variables"
+// @import "../base/extends/clearfix"
 
-$titleHeight: 42px
-$headerHeight: 60px
+// $titleHeight: 42px
+// $headerHeight: 60px
 
-//Typography
-h1, h2, h3, h4, h5
-  font-weight: 200
-  font-family: Verdana, Geneva, sans-serif !important
+// //Typography
+// h1, h2, h3, h4, h5
+//   font-weight: 200
+//   font-family: Verdana, Geneva, sans-serif !important
 
-html, body
-  height: 100%
-  color: black
-  font-family: Verdana, Geneva, sans-serif !important
+// html, body
+//   height: 100%
+//   color: black
+//   font-family: Verdana, Geneva, sans-serif !important
 
-//LAYOUT
-.container
-  +media($large-screen-up)
-    width: 80%
-    margin: 0 auto
-  +media($large-screen-down)
-    width: 100%
-  +media($small-screen-down)
-    min-width: 0px
+// //LAYOUT
+// .container
+//   +media($large-screen-up)
+//     width: 80%
+//     margin: 0 auto
+//   +media($large-screen-down)
+//     width: 100%
+//   +media($small-screen-down)
+//     min-width: 0px
 
-.slow-connection
-  padding: 24px 12px 0 12px
-  margin-top: $titleHeight
-  text-align: center
-  display: flex
-  align-items: center
-  justify-content: center
+// .slow-connection
+//   padding: 24px 12px 0 12px
+//   margin-top: $titleHeight
+//   text-align: center
+//   display: flex
+//   align-items: center
+//   justify-content: center
 
-  p
-    margin-left: 16px
-    font-weight: bold
-    opacity: .7
+//   p
+//     margin-left: 16px
+//     font-weight: bold
+//     opacity: .7
 
-  + .search_results
-    margin-top: 0 !important
+//   + .search_results
+//     margin-top: 0 !important
 
-.page-header
-  position: fixed
-  z-index: 15
-  height: $headerHeight
-  padding: 5px
-  background: $orange
-  border: none
-  +media($large-screen-up)
-    width: 80%
-  +media($large-screen-down)
-    width: 100%
-  .logo-wrapper
-    float: left
-    width: 230px
-    +media($medium-screen-down)
-      width: 70px
-    .logo-name
-      color: white
-      font-size: 18px
-      padding-top: 6px
-    .logo
-      img
-        width: 48px
-        height: 48px
-  .search-wrapper
-    float: left
-    width: calc(90% - 230px)
-    margin-top: 3px
-    +media($medium-screen-down)
-      width: calc(90% - 60px)
-    input
-      border-radius: 0
-      border-color: transparent
-      border: none
-  a, a:visited
-    color: white
-  .nav-link-settings
-    position: absolute
-    top: 15px
-    right: 20px
-    a:link, a:visited
-      font-size: 16px
-      color: white
-      i
-        position: relative
-        top: 3px
-        font-size: 20px
+// .page-header
+//   position: fixed
+//   z-index: 15
+//   height: $headerHeight
+//   padding: 5px
+//   background: $orange
+//   border: none
+//   +media($large-screen-up)
+//     width: 80%
+//   +media($large-screen-down)
+//     width: 100%
+//   .logo-wrapper
+//     float: left
+//     width: 230px
+//     +media($medium-screen-down)
+//       width: 70px
+//     .logo-name
+//       color: white
+//       font-size: 18px
+//       padding-top: 6px
+//     .logo
+//       img
+//         width: 48px
+//         height: 48px
+//   .search-wrapper
+//     float: left
+//     width: calc(90% - 230px)
+//     margin-top: 3px
+//     +media($medium-screen-down)
+//       width: calc(90% - 60px)
+//     input
+//       border-radius: 0
+//       border-color: transparent
+//       border: none
+//   a, a:visited
+//     color: white
+//   .nav-link-settings
+//     position: absolute
+//     top: 15px
+//     right: 20px
+//     a:link, a:visited
+//       font-size: 16px
+//       color: white
+//       i
+//         position: relative
+//         top: 3px
+//         font-size: 20px
 
-.sidebar
-  display: none
-.sliding-menu-button
-  display: none
+// .sidebar
+//   display: none
+// .sliding-menu-button
+//   display: none
 
-.main
-  font-size: 13px
-  position: relative
-  padding: $headerHeight 0 0 0
-  background: #f6f6ef
-  header
-    border: none
-    padding-left: 10px
-    font-size: 12px
-    position: fixed
-    line-height: $titleHeight
-    top: $headerHeight
-    h1
-      text-align: center
-      font-size: 18px
-    +media($large-screen-up)
-      left: 10%
-      right: 10%
-    +media($large-screen-down)
-      padding: 0 10px !important
-      width: 100%
-      left: 0
-    +media($small-screen-down)
-      > span
-        display: none
-    z-index: 5
-    height: $titleHeight
-    .date-range-filter
-      +position(absolute, 28px 15px null null)
-  .search-results
-    margin-top: $titleHeight
-    padding-top: 10px
-    +media($small-screen-down)
-      width: 100%
-    em
-      background: yellow !important
-      color: black !important
-    .item
-      position: relative
-      padding: 3px 15px 10px
-      overflow: hidden
-      .item-main
-        width: 100%
-        .item-content-wrapper
-          padding: 0 !important
-        .item-title-and-infos
-          float: inherit
-          h2
-            font-size: 14px
-            margin-bottom: 4px
-            a
-              color: black
-              text-decoration: none
-          .item-infos
-            line-height: 12px
-            white-space: nowrap
-            > li
-              margin-right: 2px
-              border-left: 1px solid lighten(#828282,30%)
-              padding-left: 5px
-              &:first-child
-                padding-left: 0
-                border: none
-            i, span, a
-              font-size: 10px
-              color: darken(#828282,10%)
-            i
-              display: none
-              color: lighten(#828282,20%)
-            +media($small-screen-down)
-              .hit-link
-                display: none
-          h2, .item-infos
-            float: inherit
-            display: block
-        .item-actions
-          display: none
-        .text-container
-          padding: 10px 0 0 10px
-          max-width: 800px
-          color: black
-    .item-fixed
-      .item-main
-        background: #f6f6ef
-        top: $headerHeight + $titleHeight
-        +media($large-screen-up)
-          width: 80%
-          right: 10%
-          left: 10%
-        +media($large-screen-down)
-          width: 100%
-          right: 0
-          left: 0
-    .item-absolute-bottom
-      .item-main
-        background: #f6f6ef
-        right: 0
-        left: 0
-    .item-clearfix
-      @extend %clearfix
-    .list-item-comments
-      padding-left: 10px
-      .item-comments
-        span, a
-          color: black
-    .no-results
-      width: auto
+// .main
+//   font-size: 13px
+//   position: relative
+//   padding: $headerHeight 0 0 0
+//   background: #f6f6ef
+//   header
+//     border: none
+//     padding-left: 10px
+//     font-size: 12px
+//     position: fixed
+//     line-height: $titleHeight
+//     top: $headerHeight
+//     h1
+//       text-align: center
+//       font-size: 18px
+//     +media($large-screen-up)
+//       left: 10%
+//       right: 10%
+//     +media($large-screen-down)
+//       padding: 0 10px !important
+//       width: 100%
+//       left: 0
+//     +media($small-screen-down)
+//       > span
+//         display: none
+//     z-index: 5
+//     height: $titleHeight
+//     .date-range-filter
+//       +position(absolute, 28px 15px null null)
+//   .search-results
+//     margin-top: $titleHeight
+//     padding-top: 10px
+//     +media($small-screen-down)
+//       width: 100%
+//     em
+//       background: yellow !important
+//       color: black !important
+//     .item
+//       position: relative
+//       padding: 3px 15px 10px
+//       overflow: hidden
+//       .item-main
+//         width: 100%
+//         .item-content-wrapper
+//           padding: 0 !important
+//         .item-title-and-infos
+//           float: inherit
+//           h2
+//             font-size: 14px
+//             margin-bottom: 4px
+//             a
+//               color: black
+//               text-decoration: none
+//           .item-infos
+//             line-height: 12px
+//             white-space: nowrap
+//             > li
+//               margin-right: 2px
+//               border-left: 1px solid lighten(#828282,30%)
+//               padding-left: 5px
+//               &:first-child
+//                 padding-left: 0
+//                 border: none
+//             i, span, a
+//               font-size: 10px
+//               color: darken(#828282,10%)
+//             i
+//               display: none
+//               color: lighten(#828282,20%)
+//             +media($small-screen-down)
+//               .hit-link
+//                 display: none
+//           h2, .item-infos
+//             float: inherit
+//             display: block
+//         .item-actions
+//           display: none
+//         .text-container
+//           padding: 10px 0 0 10px
+//           max-width: 800px
+//           color: black
+//     .item-fixed
+//       .item-main
+//         background: #f6f6ef
+//         top: $headerHeight + $titleHeight
+//         +media($large-screen-up)
+//           width: 80%
+//           right: 10%
+//           left: 10%
+//         +media($large-screen-down)
+//           width: 100%
+//           right: 0
+//           left: 0
+//     .item-absolute-bottom
+//       .item-main
+//         background: #f6f6ef
+//         right: 0
+//         left: 0
+//     .item-clearfix
+//       @extend %clearfix
+//     .list-item-comments
+//       padding-left: 10px
+//       .item-comments
+//         span, a
+//           color: black
+//     .no-results
+//       width: auto
 
-.edit-settings
-  padding-top: 60px
-  fieldset
-    border: none
-    border-top: solid 1px #ccc
-    background-color: transparent
-  h2
-    font-size: 16px
-    margin-bottom: 0
+// .edit-settings
+//   padding-top: 60px
+//   fieldset
+//     border: none
+//     border-top: solid 1px #ccc
+//     background-color: transparent
+//   h2
+//     font-size: 16px
+//     margin-bottom: 0
 
 
-#datepicker
-  background: rgba(#f6f6ef,.8)
-  top: $titleHeight
+// #datepicker
+//   background: rgba(#f6f6ef,.8)
+//   top: $titleHeight
 
-.wrap-dd-select
-  line-height: 24px
+// .wrap-dd-select
+//   line-height: 24px
 
-.page
-  h3
-    color: black
+// .page
+//   h3
+//     color: black
 
-footer
-  background: white
-  padding: 10px 0 30px 0
-  &, a
-    font-size: 13px
-    color: black
+// footer
+//   background: white
+//   padding: 10px 0 30px 0
+//   &, a
+//     font-size: 13px
+//     color: black

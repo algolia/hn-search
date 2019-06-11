@@ -35,6 +35,12 @@
     @media (max-width: 768px){
       display: none;
     }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   &_data {
@@ -44,7 +50,7 @@
 
   &_title {
     width: 100%;
-    margin-bottom: 0;
+    margin-bottom: $spacing-small;
 
     em {
       font-weight: bold;
@@ -62,6 +68,7 @@
 
   &_separator {
     margin: 0 4px;
+    color: dimgray;
 
     &:last-child {
       display: none;

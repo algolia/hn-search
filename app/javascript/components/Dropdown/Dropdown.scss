@@ -71,6 +71,10 @@
       padding: $spacing-base $spacing-medium;
       font-size: 14px;
 
+      a {
+        cursor: pointer;
+      }
+
       &:not(:last-child){
         border-bottom: 1px solid #e6e8ea;
       }

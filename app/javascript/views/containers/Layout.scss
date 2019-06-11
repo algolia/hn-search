@@ -1,0 +1,85 @@
+@import "./../../src/variables.scss";
+
+.Layout {
+  background-color: #f6f6ef;
+  padding-top: 98px;
+  padding: 112px $spacing-large $spacing-large $spacing-large;
+  min-height: calc(100vh - 98px);
+  color: #5c5c5c;
+  font-size: 14px;
+
+  dl dt {
+    margin-top: $spacing-medium;
+  }
+
+  dd {
+    margin-left: 0;
+  }
+
+  h3 {
+    color: #000;
+    font-size: 20px;
+    margin: $spacing-medium 0 $spacing-base;
+  }
+
+  p {
+    color: #5c5c5c;
+    font-size: 14px;
+    margin-bottom: $spacing-small;
+  }
+
+  code {
+    color: #1c709b;
+    background-color: #edf7fc;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: pre-wrap;
+  }
+
+  &_panel {
+    border-radius: 4px;
+    border: solid 1px #d0d0d0;
+    padding: $spacing-medium $spacing-large;
+    margin-bottom: $spacing-large;
+
+    h2 {
+      margin-bottom: $spacing-medium;
+      font-weight: 600;
+    }
+  }
+
+  &_label {
+    text-transform: capitalize;
+    background-color: #4699ff;
+    padding: $spacing-base $spacing-small;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  &_hoverable {
+    padding: 1px 2px;
+    border-radius: 2px;
+  }
+
+  &_property {
+    font-weight: 700;
+  }
+
+  &-About,
+  &-Cool {
+    li {
+      margin-bottom: $spacing-small;
+    }
+  }
+
+  .type-number { color: blue }
+  .type-string { color: green }
+  .type-nukk { color: gray }
+}
+
+.experimental {
+  .Layout {
+
+  }
+}

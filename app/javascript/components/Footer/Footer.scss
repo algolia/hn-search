@@ -11,10 +11,15 @@
 
     li {
       padding: 4px;
-
+      font-size: 12px;
+      
       &:last-child {
         display: none;
       }
+    }
+
+    a { 
+      color: #000;
     }
   }
 }
