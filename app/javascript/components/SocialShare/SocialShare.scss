@@ -24,13 +24,27 @@
   }
 
   ul {
-    width: 140px;
+    width: 220px;
     background-color: #fff;
 
     li {
+      padding: $spacing-small;
+    }
+
+    li a {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      color: #9d9d9d;
+
+      &:hover {
+        color: $orange;
+        border-bottom: 0 dotted #ccc !important;
+
+        svg {
+          color: $orange;
+        }
+      }
     }
   }
 }

@@ -12,10 +12,16 @@
     margin: $spacing-small;
     display: flex;
     background-color: #fff;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
   }
 
   .DayPicker {
-    width: 50%;
+    @media (min-width: 769px){
+      width: 50%;
+    }
   }
 
   .DayPicker-Month {
@@ -27,7 +33,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 50%;
+
+    @media (min-width: 769px){
+      width: 50%;
+    }
   }
 
   fieldset {
@@ -49,7 +58,7 @@
     border: 1px solid #ddd;
     height: 32px;
     margin-bottom: $spacing-small;
-    padding: 0 $spacing-small;
+    padding: 0 $spacing-medium;
 
     &:focus {
       outline: none;
@@ -115,6 +124,10 @@
     top: 80px;
     background: rgba(#fff, .8);
     box-shadow: 0 5px 15px -5px rgba(37,44,97,.15), 0 2px 15px -13px rgba(93,100,148,.2);
+
+    @media (max-width: 768px) {
+      top: 44px;
+    }
 
     &-container {
       margin: 0;

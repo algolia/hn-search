@@ -9,7 +9,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  overflow: hidden;
 
   &_container {
     display: flex;
@@ -32,7 +31,7 @@
     border-radius: 3px;
     align-self: flex-start;
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
       display: none;
     }
 
@@ -44,8 +43,9 @@
   }
 
   &_data {
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
+    margin: 4px 0;
   }
 
   &_title {
@@ -89,7 +89,7 @@
 
 .experimental {
   .Story {
-    padding: $spacing-small $spacing-medium $spacing-small $spacing-medium;
+    padding: $spacing-small 12px $spacing-small $spacing-medium;
 
     &_container {
       width: 100%;
@@ -106,11 +106,6 @@
       border-bottom: 1px dotted #ccc
     }
 
-    &_data {
-      white-space: normal;
-      overflow: hidden;
-    }
-
     &_separator {
       opacity: 0;
       visibility: hidden;
@@ -119,6 +114,12 @@
     &_meta {
       a {
         color: #9d9d9d;
+        display: inline-block;
+        border-bottom: 1px dotted transparent !important;
+
+        &:hover {
+          border-bottom: 1px dotted #ccc !important;
+        }
       }
 
       svg {
@@ -150,7 +151,7 @@
 
       button {
         padding: 0;
-        margin: $spacing-small;
+        margin: 0 $spacing-small;
         border: none;
         color: #9d9d9d;
         background-color: transparent;
@@ -161,6 +162,10 @@
 
         &:hover {
           color: $orange;
+        }
+
+        &.Story_starred {
+          transform: translate(0, 6px)
         }
 
         &.Story_starred-active {
@@ -192,7 +197,12 @@
             bottom: -9px;
           }
 
-          &:hover {
+          &:disabled {
+            cursor: not-allowed;
+            opacity: .7;
+          }
+
+          &:hover:not(:disabled) {
             background-color: $orange;
             &:before {
               border-right-color: $orange;

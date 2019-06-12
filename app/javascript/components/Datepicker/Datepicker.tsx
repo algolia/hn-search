@@ -79,7 +79,6 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
           to: toDate,
           enteredTo: toDate
         });
-        onChange(from, toDate);
       }
     },
     [state]

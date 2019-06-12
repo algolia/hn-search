@@ -25,7 +25,8 @@
     "react-ga": "^2.5.7",
     "react-helmet": "^5.2.1",
     "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "react-transition-group": "^4.1.1"
   },
   "devDependencies": {
     "@rails/webpacker": "^4.0.2",
