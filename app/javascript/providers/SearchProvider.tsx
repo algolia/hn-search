@@ -177,7 +177,7 @@ class SearchProvider extends React.Component {
   };
 
   fetchPopularSearches = (): Promise<PopularSearches> => {
-    return fetch("https://hn.algolia.com/popular.json", {
+    return fetch("/popular.json", {
       headers: REQUEST_HEADERS
     }).then(resp => resp.json());
   };

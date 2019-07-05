@@ -58,7 +58,7 @@ type DateRange =
   | "custom";
 
 type Sort = "byPopularity" | "byDate";
-type Type = "story" | "comment" | "all";
+type Type = "story" | "comment" | "all" | "user";
 
 export interface HNSettings {
   type: Type;

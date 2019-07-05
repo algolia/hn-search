@@ -13,6 +13,7 @@ import Comments from "./Comments";
 import { Hit } from "../../providers/Search.types";
 import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
+import Loader from "../Loader/Loader";
 
 const StoryLink: React.FunctionComponent<{
   id: Hit["objectID"];
@@ -81,6 +82,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
     starred: { toggle, data: starredItems },
     settings: { showThumbnails, style, query }
   } = React.useContext(SearchContext);
+  const [loadingComments, setLoadingComments] = React.useState(false);
 
   const isExperimental = style === "experimental";
   const showThumbnailImage =
@@ -97,7 +99,10 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
 
   const onLoadCommentsClick = React.useCallback(() => {
     if (!hit.comments) {
-      fetchCommentsForStory(objectID);
+      setLoadingComments(true);
+      fetchCommentsForStory(objectID).then(() => {
+        setLoadingComments(false);
+      });
     }
     setShowComments(!showComments);
   }, [showComments, hit.comments]);
@@ -143,7 +148,11 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 <span className="Story_separator">|</span>
                 <span>
                   <StoryLink id={objectID}>
-                    {num_comments || 0} comments
+                    {!loadingComments ? (
+                      num_comments || 0
+                    ) : (
+                      <Loader size="small" />
+                    )}
                   </StoryLink>
                 </span>
               </>
@@ -167,7 +176,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 onClick={onLoadCommentsClick}
                 className="Story_commentsButton"
               >
-                {num_comments || 0}
+                {!loadingComments ? num_comments || 0 : <Loader size="small" />}
               </button>
             )}
             <SocialShare hit={hit} query={query} />

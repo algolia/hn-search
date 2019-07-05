@@ -58,7 +58,7 @@
     border: 1px solid #ddd;
     height: 32px;
     margin-bottom: $spacing-small;
-    padding: 0 $spacing-medium;
+    padding: 0 $spacing-small;
 
     &:focus {
       outline: none;
@@ -132,9 +132,10 @@
     &-container {
       margin: 0;
       padding: $spacing-small;
-
-      @media (min-width: 769px){
-        padding-left: 200px;
+      
+      @media (min-width: 769px) {
+        margin-left: 200px;
+        width: calc(100% - 200px);
       }
     }
   }

@@ -18,6 +18,13 @@
     color: #5C5C5C;
     position: relative;
     text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
 
     svg {
       width: 14px;

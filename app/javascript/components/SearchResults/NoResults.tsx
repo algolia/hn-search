@@ -65,6 +65,7 @@ const NoResults: React.FunctionComponent = () => {
   );
   const showForPeriod = settings.dateRange !== "all";
   const showOtherSearch = settings.type !== "all";
+  const showUsersQuery = settings.type !== "user";
 
   if (location.pathname === "/starred") {
     if (!starred.data.size) {
@@ -84,8 +85,8 @@ const NoResults: React.FunctionComponent = () => {
             {Array.from(starred.data)
               .map(id => id)
               .join(", ")}
-            .
           </b>
+          .
         </p>
       </div>
     );
@@ -93,8 +94,17 @@ const NoResults: React.FunctionComponent = () => {
   return (
     <div className="NoResults">
       <div>
-        We found no <b>{getItemsLabel(settings.type)}</b> matching{" "}
-        <b>{settings.query}</b> {showForPeriod && "for this period."}
+        {showUsersQuery ? (
+          <>
+            We found no results from profile <b>{settings.login}</b>
+          </>
+        ) : (
+          <>
+            We found no <b>{getItemsLabel(settings.type)}</b> matching{" "}
+            <b>{settings.query || "your query"}</b>{" "}
+            {showForPeriod && "for this period."}
+          </>
+        )}
         {(showForPeriod || settings.type !== "all") && (
           <p className="NoResults_suggestions">Suggestions:</p>
         )}

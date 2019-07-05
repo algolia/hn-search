@@ -26,12 +26,19 @@ const Dropdown: React.FunctionComponent<DropdownProps> = ({
       onChange={onChange}
       itemToString={item => (item ? item.value : "")}
     >
-      {({ getItemProps, getLabelProps, getMenuProps, isOpen, openMenu }) => (
+      {({
+        getItemProps,
+        getLabelProps,
+        getMenuProps,
+        isOpen,
+        openMenu,
+        closeMenu
+      }) => (
         <div className="Dropdown">
           <label
             className="Dropdown_label"
             {...getLabelProps()}
-            onClick={openMenu}
+            onClick={() => (isOpen ? closeMenu() : openMenu())}
           >
             {selectedItem ? selectedItem.label : children}{" "}
             {isOpen ? <ChevronUp /> : <ChevronDown />}
