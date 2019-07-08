@@ -47,7 +47,7 @@ class HomeController < ApplicationController
   def userfeed
     @stories = Item.where(item_type_cd: Item.comment).where(author: params[:username]).order('id DESC').first(20).reverse
     @updated_at = DateTime.now
-    @title = params[:username]+"'s comments"
+    @title = params[:username] + "'s comments"
     feed
   end
 
