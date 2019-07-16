@@ -189,7 +189,7 @@ $(document).ready(function() {
 
 window.trackResource = function(query){
   try {
-    if (window.performance === undefined) {
+    if (window.performance === undefined || typeof window.performance.getEntriesByType !== "function") {
       return false
     }
     var resources = window.performance.getEntriesByType("resource");
