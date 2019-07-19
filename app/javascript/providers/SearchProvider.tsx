@@ -126,12 +126,10 @@ class SearchProvider extends React.Component {
       });
     }
 
-    return debounce(() => {
-      history.push({
-        pathname: window.location.pathname,
-        search: `${asQueryString(settings)}`
-      });
-    }, 300);
+    return history.push({
+      pathname: window.location.pathname,
+      search: `${asQueryString(this.state.settings)}`
+    });
   };
 
   search = (

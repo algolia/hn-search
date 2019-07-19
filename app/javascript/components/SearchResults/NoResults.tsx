@@ -110,17 +110,17 @@ const NoResults: React.FunctionComponent = () => {
         )}
         {showForPeriod && (
           <SettingsLink onClick={() => setSettings({ dateRange: "all" })}>
-            Try a wider date range
+            Search with a wider date range
           </SettingsLink>
         )}
         {showOtherSearch && settings.type === "story" && (
           <SettingsLink onClick={() => setSettings({ type: "comment" })}>
-            Search also for comments
+            Search for comments
           </SettingsLink>
         )}
         {showOtherSearch && settings.type === "comment" && (
           <SettingsLink onClick={() => setSettings({ type: "story" })}>
-            Search also for stories
+            Search for stories
           </SettingsLink>
         )}
         <PopularSearches

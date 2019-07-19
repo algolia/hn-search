@@ -7,10 +7,13 @@ import { SearchContext } from "../../providers/SearchProvider";
 
 const SearchResults: React.FunctionComponent = () => {
   const { results, loading } = React.useContext(SearchContext);
-  const hitsContainerRef = React.useRef();
+
+  React.useEffect(() => {
+    document.scrollingElement.scrollTop = 0;
+  }, [results]);
 
   return (
-    <section className="SearchResults" ref={hitsContainerRef}>
+    <section className="SearchResults">
       {(!results.hits || !results.hits.length) && !loading && <NoResults />}
       {results.hits.map(hit => (
         <Story hit={hit} key={hit.objectID} />

@@ -29,6 +29,11 @@
       text-overflow: ellipsis;
       overflow: hidden;
 
+      
+      &:hover {
+        background-color: rgba(#e4e3e5, .4);
+      }
+
       &.active {
         background-color: #e4e3e5
       }
