@@ -14,6 +14,7 @@ import { Hit } from "../../providers/Search.types";
 import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
+import StoryImage from "./StoryImage";
 
 const StoryLink: React.FunctionComponent<{
   id: Hit["objectID"];
@@ -110,14 +111,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
   return (
     <article className="Story">
       <div className="Story_container">
-        {showThumbnailImage && (
-          <div className="Story_image">
-            <img
-              src={`https://drcs9k8uelb9s.cloudfront.net/${hit.objectID}.png`}
-              alt=""
-            />
-          </div>
-        )}
+        {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
           <div className="Story_title">
             <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
