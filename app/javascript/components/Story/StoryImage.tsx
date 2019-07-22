@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Hit } from "../../providers/Search.types";
 import useIntersectionObserver from "../../utils/useIntersectionObserver";
 
