@@ -6,6 +6,6 @@
   "author": "Jonas Badalic <jonas.badalic@algolia.com>",
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "JonasBa/algoliasearch-client-javascript#453e793"
+    "algoliasearch": "JonasBa/algoliasearch-client-javascript#d627913"
   }
 }

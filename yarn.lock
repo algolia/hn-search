@@ -7,9 +7,9 @@ agentkeepalive@^2.2.0:
   resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-2.2.0.tgz#c5d1bd4b129008f1163f236f86e5faea2026e2ef"
   integrity sha1-xdG9SxKQCPEWPyNvhuX66iAm4u8=
 
-algoliasearch@JonasBa/algoliasearch-client-javascript#749d2e9:
+algoliasearch@JonasBa/algoliasearch-client-javascript#d627913:
   version "3.32.0"
-  resolved "https://codeload.github.com/JonasBa/algoliasearch-client-javascript/tar.gz/749d2e9b598c5d2b1ee0217617e74c518da181d2"
+  resolved "https://codeload.github.com/JonasBa/algoliasearch-client-javascript/tar.gz/d62791341559441565496ac9e7d2c060da3175f9"
   dependencies:
     agentkeepalive "^2.2.0"
     debug "^2.6.8"
