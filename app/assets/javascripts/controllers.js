@@ -164,7 +164,7 @@ angular.module('HNSearch.controllers', ['ngSanitize', 'ngDropdowns', 'pasvaz.bin
         })
 
         searchPromise.then(function(results) {
-          typeof window.trackResource === 'function' && window.trackResource(results);
+          typeof window.reportTelemetry === 'function' && window.reportTelemetry(results);
           aa && aa('initSearch', { getQueryID: function() { return results.queryID; }});
 
           if(results.indexUsed && results.indexUsed.indexOf('telemetry' > -1) && getCookie(THROTTLING_COOKIE_KEY) !== THROTTLING_TIMEOUT){

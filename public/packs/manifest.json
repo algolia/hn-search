@@ -1,0 +1,17 @@
+{
+  "application.js": "/packs/js/application-eb5fa48aa01b987a5c99.js",
+  "application.js.map": "/packs/js/application-eb5fa48aa01b987a5c99.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-eb5fa48aa01b987a5c99.js"
+      ],
+      "js.map": [
+        "/packs/js/application-eb5fa48aa01b987a5c99.js.map"
+      ]
+    }
+  },
+  "media/images/algolia-logo-master.svg": "/packs/media/images/algolia-logo-master-96b11f04.svg",
+  "media/images/algolia-logo-white.svg": "/packs/media/images/algolia-logo-white-a44a3efb.svg",
+  "media/images/logo-hn-search.png": "/packs/media/images/logo-hn-search-a822432b.png"
+}
