@@ -1,3 +1,10 @@
+// A set of helpers and functions to help
+// us monitor search performance on HN.
+// With real world telemetry information we are able to
+// experiment, monitor and tweak both our servers and 
+// the JavaScript client to deliver the fastest experience possible
+// If you are interested in the project, feel free to reach out to
+
 function generateSessionID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = (Math.random() * 16) | 0,
@@ -16,6 +23,11 @@ function supportsConnection(){
 
 function supportsPerformance(){
   return typeof window.performance !== 'undefined' && typeof window.performance.getEntriesByType === 'function'
+}
+
+function protectInfinity(metric){
+  if(typeof metric === "undefined") return null
+  return metric === Infinity ? -1 : metric
 }
 
 function isAlgoliaEngineQuery(input){
@@ -51,7 +63,7 @@ function reportData(data, endpoint){
   }
 }
 
-var session_id = generateSessionID()
+var SESSION_ID = generateSessionID()
 
 window.reportTelemetry = function(query){
   if (!supportsPerformance()) return;
@@ -59,7 +71,7 @@ window.reportTelemetry = function(query){
 
   allQueries.forEach(function(entry, index, array){
     var data = {
-      telemetry_session_id: session_id,
+      telemetry_session_id: SESSION_ID,
       connect_end: entry.connectEnd,
       connect_start: entry.connectStart,
       decoded_body_size: entry.decodedBodySize,
@@ -89,12 +101,12 @@ window.reportTelemetry = function(query){
   })
 }
 
-window.reportConnection = function(){
+window.reportConnection = function() {
   if(!supportsConnection()) return;
 
   var data = {
     timestamp: Date.now(),
-    session_id: session_id,
+    session_id: SESSION_ID,
     downlink: navigator.connection.downlink,
     downlink_max: navigator.connection.downlinkMax,
     effective_type: navigator.connection.effectiveType,
@@ -107,7 +119,20 @@ window.reportConnection = function(){
 
 window.addEventListener('load', function(){
   window.reportConnection()
-  if(supportsConnection()){
-    navigator.connection.onchange = window.reportConnection
+  if(supportsConnection() && typeof navigator.connection.addEventListener === "function"){
+    navigator.connection.addEventListener('change', window.reportConnection);
   }
 })
+
+window.reportTimeout = function(data, requestOptions) {
+  var data = {
+    timestamp: Date.now(),
+    timeout_session_id: parseString(SESSION_ID),
+    host_node: parseNumber(data.hostIndexes.read),
+    timeout_multiplier: parseNumber(data.timeoutMultiplier),
+    connect_timeout: parseNumber(requestOptions.timeouts.connect),
+    complete_timeout: parseNumber(requestOptions.timeouts.complete),
+  }
+
+  reportData(data, "timeout")
+}
