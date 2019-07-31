@@ -49,7 +49,7 @@ function getAlgoliaQueries(){
 }
 
 function reportData(data, endpoint){
-  var url = 'http://localhost:3001/1/' + endpoint
+  var url = 'https://telemetry.algolia.com/1/' + endpoint
 
   if(supportsSendBeacon()){
     navigator.sendBeacon(url, JSON.stringify(data));
