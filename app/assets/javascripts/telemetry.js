@@ -127,11 +127,11 @@ window.addEventListener('load', function(){
 window.reportTimeout = function(data, requestOptions) {
   var data = {
     timestamp: Date.now(),
-    timeout_session_id: parseString(SESSION_ID),
-    host_node: parseNumber(data.hostIndexes.read),
-    timeout_multiplier: parseNumber(data.timeoutMultiplier),
-    connect_timeout: parseNumber(requestOptions.timeouts.connect),
-    complete_timeout: parseNumber(requestOptions.timeouts.complete),
+    timeout_session_id: SESSION_ID,
+    host_node: data.hostIndexes.read,
+    timeout_multiplier: data.timeoutMultiplier,
+    connect_timeout: requestOptions.timeouts.connect,
+    complete_timeout: requestOptions.timeouts.complete,
   }
 
   reportData(data, "timeout")
