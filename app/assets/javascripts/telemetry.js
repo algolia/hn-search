@@ -71,6 +71,7 @@ window.reportTelemetry = function(query){
 
   allQueries.forEach(function(entry, index, array){
     var data = {
+      timestamp: Date.now(),
       telemetry_session_id: SESSION_ID,
       connect_end: entry.connectEnd,
       connect_start: entry.connectStart,
