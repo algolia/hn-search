@@ -9,7 +9,9 @@ const SearchResults: React.FunctionComponent = () => {
   const { results, loading } = React.useContext(SearchContext);
 
   React.useEffect(() => {
-    document.scrollingElement.scrollTop = 0;
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = 0;
+    }
   }, [results]);
 
   return (
