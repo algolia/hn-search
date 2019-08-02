@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import "./Sidebar.scss";
 
 import Eye from "react-feather/dist/icons/eye";
@@ -11,8 +11,6 @@ import Star from "react-feather/dist/icons/star";
 import TrendingUp from "react-feather/dist/icons/trending-up";
 import User from "react-feather/dist/icons/user";
 
-import { RouteComponentProps } from "react-router";
-
 export const SidebarItems = [
   { icon: <Home />, label: "All", to: "/" },
   { icon: <TrendingUp />, label: "Hot", to: "/hot" },
@@ -22,48 +20,73 @@ export const SidebarItems = [
   { icon: <Eye />, label: "Jobs", to: "/jobs" }
 ];
 
-interface SidebarProps extends RouteComponentProps {
+const ListItemLink: React.FC<{
+  to: string;
+  setMenu?: (value: boolean) => void;
+}> = ({ to, children, setMenu }) => (
+  <Route
+    exact
+    path={to}
+    children={({ match }) => (
+      <li>
+        <Link
+          to={to}
+          className={match ? "active" : ""}
+          onClick={() => {
+            setMenu(false);
+          }}
+        >
+          {children}
+        </Link>
+      </li>
+    )}
+  />
+);
+
+export const DefaultLinks: React.FC<{ setMenu?: (value: boolean) => void }> = ({
+  setMenu
+}) => {
+  return (
+    <ul>
+      {SidebarItems.map(item => {
+        return (
+          <ListItemLink to={item.to} setMenu={setMenu}>
+            {item.icon}
+            {item.label}
+          </ListItemLink>
+        );
+      })}
+    </ul>
+  );
+};
+
+export const StarredLinks: React.FC<{
+  user?: string;
+  setMenu?: (value: boolean) => void;
+}> = ({ user, setMenu }) => {
+  return (
+    <ul>
+      {user && (
+        <ListItemLink to={"/user"} setMenu={setMenu}>
+          <User /> {user}
+        </ListItemLink>
+      )}
+      <ListItemLink to={"/starred"} setMenu={setMenu}>
+        <Star /> Starred
+      </ListItemLink>
+    </ul>
+  );
+};
+
+interface SidebarProps {
   user?: string;
 }
 
-const Sidebar: React.FunctionComponent<SidebarProps> = ({ location, user }) => {
+const Sidebar: React.FunctionComponent<SidebarProps> = ({ user }) => {
   return (
     <aside className="Sidebar">
-      <ul>
-        {SidebarItems.map(item => {
-          return (
-            <li key={item.to}>
-              <Link
-                to={{ pathname: item.to, search: location.search }}
-                className={location.pathname === item.to ? "active" : ""}
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      <ul>
-        {user && (
-          <li>
-            <Link
-              to={{ pathname: "/user", search: location.search }}
-              className={location.pathname === "/user" ? "active" : ""}
-            >
-              <User /> {user}
-            </Link>
-          </li>
-        )}
-        <li>
-          <Link
-            to={{ pathname: "/starred", search: location.search }}
-            className={location.pathname === "/starred" ? "active" : ""}
-          >
-            <Star /> Starred
-          </Link>
-        </li>
-      </ul>
+      <DefaultLinks />
+      <StarredLinks user={user} />
     </aside>
   );
 };

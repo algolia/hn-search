@@ -174,7 +174,6 @@ class SearchProvider extends React.Component {
   };
 
   fetchPopularSearches = (): Promise<PopularSearches> => {
-    console.log('yolo')
     return fetch("/popular.json", {
       headers: REQUEST_HEADERS
     }).then(resp => resp.json());
