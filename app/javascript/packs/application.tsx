@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "whatwg-fetch";
 
 import "./../src/application.scss";
 
