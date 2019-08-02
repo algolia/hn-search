@@ -13,6 +13,7 @@ import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings } from "../../providers/Search.types";
 import SocialShare from "../SocialShare/SocialShare";
 import { DefaultLinks, StarredLinks } from "../Sidebar/Sidebar";
+import useClickOutside from "../../utils/useClickOutside";
 
 export const STORY_FILTERS = new Map<HNSettings["type"], string>([
   ["all", "All"],
@@ -77,11 +78,15 @@ const SearchFilters: React.FunctionComponent = () => {
     settings.dateRange === "custom" && !settings.dateEnd && !settings.dateStart;
   const [isOpen, setOpen] = React.useState(forceOpen);
   const [isOpenMenu, setMenu] = React.useState(false);
+  const menuRef = React.useRef(null);
+
+  useClickOutside(menuRef, () => setMenu(false));
 
   return (
     <>
       <div className="SearchFilters container">
         <button
+          ref={menuRef}
           className="SearchFilters_menuButton"
           onClick={() => setMenu(!isOpenMenu)}
         >

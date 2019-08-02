@@ -52,12 +52,12 @@
   }
 
   &_menu {
-    position: absolute;
-    top: 104px;
+    position: fixed;
+    top: 102px;
     width: 100%;
     z-index: 20;
     background-color: #fff;
-    
+    box-shadow: 0 5px 15px -5px rgba(37, 44, 97, 0.15), 0 2px 15px -13px rgba(93, 100, 148, 0.2);
 
     li {
       &:last-child {

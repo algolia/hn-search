@@ -15,7 +15,9 @@ const LINKS: { label: string; to: string }[] = [
 
 const PossiblyExternalLink = ({ to, children }) =>
   to.startsWith("https") ? (
-    <a href={to}>{children}</a>
+    <a href={to} target="_blank" rel="noopener">
+      {children}
+    </a>
   ) : (
     <Link to={to}>{children}</Link>
   );
