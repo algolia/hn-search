@@ -65,7 +65,7 @@ const NoResults: React.FunctionComponent = () => {
   );
   const showForPeriod = settings.dateRange !== "all";
   const showOtherSearch = settings.type !== "all";
-  const showUsersQuery = settings.type !== "user";
+  const showUsersQuery = location.pathname === "/user";
 
   if (location.pathname === "/starred") {
     if (!starred.data.size) {
