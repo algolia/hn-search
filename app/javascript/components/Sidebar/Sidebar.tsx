@@ -11,6 +11,8 @@ import Star from "react-feather/dist/icons/star";
 import TrendingUp from "react-feather/dist/icons/trending-up";
 import User from "react-feather/dist/icons/user";
 
+import { SearchContext } from "../../providers/SearchProvider";
+
 export const SidebarItems = [
   { icon: <Home />, label: "All", to: "/" },
   { icon: <TrendingUp />, label: "Hot", to: "/hot" },
@@ -30,7 +32,7 @@ const ListItemLink: React.FC<{
     children={({ match }) => (
       <li>
         <Link
-          to={to}
+          to={{ pathname: to, search: location.search }}
           className={match ? "active" : ""}
           onClick={() => {
             setMenu(false);
@@ -83,10 +85,24 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ user }) => {
+  const { settings, setSettings } = React.useContext(SearchContext);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSettings({ theme: e.currentTarget.checked ? "dark" : "light" });
+
   return (
     <aside className="Sidebar">
       <DefaultLinks />
       <StarredLinks user={user} />
+      <li>
+        <label htmlFor="theme">
+          <input
+            type="checkbox"
+            checked={settings.theme === "dark"}
+            onChange={onChange}
+          />
+          Dark Theme
+        </label>
+      </li>
     </aside>
   );
 };

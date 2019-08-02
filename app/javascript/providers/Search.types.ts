@@ -73,6 +73,7 @@ export interface HNSettings {
   authorText: boolean;
   hitsPerPage: number;
   page: number;
+  theme: "light" | "dark";
   showThumbnails?: boolean;
   prefix?: boolean;
   login?: string;

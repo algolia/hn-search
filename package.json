@@ -5,7 +5,7 @@
   "repository": "https://github.com/algolia/hn-search",
   "author": "Jonas Badalic <jonas.badalic@algolia.com>",
   "scripts": {
-    "dev": "./bin/webpack-dev-server",
+    "dev": "NODE_ENV=development ./bin/webpack-dev-server",
     "build": "NODE_ENV=production ./bin/webpack",
     "test": "jest",
     "test:watch": "jest --watchAll"

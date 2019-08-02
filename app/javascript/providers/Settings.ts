@@ -79,6 +79,7 @@ const withLocationParamSettings = (defaultSettings: HNSettings): HNSettings => {
     showThumbnails: defaultSettings.showThumbnails,
     login: defaultSettings.login,
     style: defaultSettings.style,
+    theme: defaultSettings.theme,
     dateEnd: params.dateEnd as string,
     dateStart: params.dateStart as string,
     typoTolerance: defaultSettings.typoTolerance,

@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "whatwg-fetch";
 
+import classnames from "classnames";
 import "./../src/application.scss";
 
 import SearchProvider, { SearchContext } from "../providers/SearchProvider";
@@ -26,10 +27,10 @@ window.addEventListener("load", () => {
 
 const ThemeClass: React.FunctionComponent = ({ children }) => {
   const {
-    settings: { style }
+    settings: { style, theme }
   } = React.useContext(SearchContext);
 
-  return <div className={style}>{children}</div>;
+  return <div className={classnames(style, theme)}>{children}</div>;
 };
 
 const App = () => {

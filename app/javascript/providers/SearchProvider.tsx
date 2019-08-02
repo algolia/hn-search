@@ -53,6 +53,7 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
   storyText: true,
   authorText: true,
   hitsPerPage: 20,
+  theme: "light",
   page: 0,
   prefix: false
 };

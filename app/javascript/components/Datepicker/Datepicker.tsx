@@ -99,6 +99,13 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
     [state]
   );
 
+  const wrapOnChangeWithDefaults = () => {
+    onChange(
+      state.from || DEFAULT_FROM_DATE.toDate(),
+      state.to || DEFAULT_TO_DATE.toDate()
+    );
+  };
+
   const { from, enteredTo } = state;
   const modifiers = { start: from, end: enteredTo };
   const disabledDays = { after: new Date() };
@@ -140,10 +147,10 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 value={moment(state.from || DEFAULT_FROM_DATE).format(
                   "YYYY-MM-DD"
                 )}
-                onChange={event => {
+                onChange={({ currentTarget: { value } }) => {
                   setState({
                     ...state,
-                    from: new Date(event.currentTarget.value)
+                    from: value ? new Date(value) : null
                   });
                 }}
               />
@@ -155,10 +162,10 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 type="date"
                 placeholder="To date"
                 value={moment(state.to || DEFAULT_TO_DATE).format("YYYY-MM-DD")}
-                onChange={event => {
+                onChange={({ currentTarget: { value } }) => {
                   setState({
                     ...state,
-                    to: new Date(event.currentTarget.value)
+                    to: value ? new Date(value) : null
                   });
                 }}
               />
@@ -169,10 +176,10 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
               </button>
               <button
                 type="submit"
-                disabled={!state.from || !state.to}
+                disabled={!state.from}
                 onClick={() => {
                   onBlur();
-                  onChange(state.from, state.to);
+                  wrapOnChangeWithDefaults();
                 }}
               >
                 Apply
