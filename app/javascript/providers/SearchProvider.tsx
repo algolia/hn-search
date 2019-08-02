@@ -18,9 +18,9 @@ const history = createBrowserHistory();
 const CSRFMeta: HTMLMetaElement = document.querySelector(
   'meta[name="csrf-token"]'
 );
-const REQUEST_HEADERS = new Headers({
+const REQUEST_HEADERS = {
   "X-CSRF-TOKEN": CSRFMeta.content
-});
+};
 
 interface ISearchContext {
   results: AlgoliaResults;
@@ -174,6 +174,7 @@ class SearchProvider extends React.Component {
   };
 
   fetchPopularSearches = (): Promise<PopularSearches> => {
+    console.log('yolo')
     return fetch("/popular.json", {
       headers: REQUEST_HEADERS
     }).then(resp => resp.json());
