@@ -63,9 +63,12 @@ const SearchFiltersMenu: React.FC<{
   setMenu?: (value: boolean) => void;
 }> = ({ setMenu }) => {
   const { settings } = React.useContext(SearchContext);
+  const menuRef = React.useRef(null);
+
+  useClickOutside(menuRef, () => setMenu(false));
 
   return (
-    <div className="SearchFilters_menu">
+    <div className="SearchFilters_menu" ref={menuRef}>
       <DefaultLinks setMenu={setMenu} />
       <StarredLinks setMenu={setMenu} user={settings.login} />
     </div>
@@ -78,15 +81,11 @@ const SearchFilters: React.FunctionComponent = () => {
     settings.dateRange === "custom" && !settings.dateEnd && !settings.dateStart;
   const [isOpen, setOpen] = React.useState(forceOpen);
   const [isOpenMenu, setMenu] = React.useState(false);
-  const menuRef = React.useRef(null);
-
-  useClickOutside(menuRef, () => setMenu(false));
 
   return (
     <>
       <div className="SearchFilters container">
         <button
-          ref={menuRef}
           className="SearchFilters_menuButton"
           onClick={() => setMenu(!isOpenMenu)}
         >

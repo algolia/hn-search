@@ -8,6 +8,7 @@ import XCircle from "react-feather/dist/icons/x-circle";
 import Calendar from "react-feather/dist/icons/calendar";
 
 import { SearchContext } from "../../providers/SearchProvider";
+import useClickOutside from "../../utils/useClickOutside";
 
 const isSelectingFirstDay = (from: Date, to: Date, day: Date) => {
   const isBeforeFirstDay = from && DayPicker.DateUtils.isDayBefore(day, from);
@@ -102,9 +103,11 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
   const modifiers = { start: from, end: enteredTo };
   const disabledDays = { after: new Date() };
   const selectedDays = [from, { from, to: enteredTo }];
+  const datePickerRef = React.useRef(null);
+  useClickOutside(datePickerRef, () => onBlur());
 
   return (
-    <div className="DatePicker">
+    <div className="DatePicker" ref={datePickerRef}>
       <div className="DatePicker-container">
         <DayPicker
           className="Range"
