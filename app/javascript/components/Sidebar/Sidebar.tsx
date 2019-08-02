@@ -23,7 +23,7 @@ export const SidebarItems = [
 const ListItemLink: React.FC<{
   to: string;
   setMenu?: (value: boolean) => void;
-}> = ({ to, children, setMenu }) => (
+}> = ({ to, children, setMenu = () => null }) => (
   <Route
     exact
     path={to}
@@ -50,7 +50,7 @@ export const DefaultLinks: React.FC<{ setMenu?: (value: boolean) => void }> = ({
     <ul>
       {SidebarItems.map(item => {
         return (
-          <ListItemLink to={item.to} setMenu={setMenu}>
+          <ListItemLink key={item.to} to={item.to} setMenu={setMenu}>
             {item.icon}
             {item.label}
           </ListItemLink>
