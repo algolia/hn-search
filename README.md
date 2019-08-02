@@ -1,7 +1,7 @@
 HN Search powered by Algolia
 ==================
 
-This is the Rails 4 application providing [HN Search](http://hn.algolia.com). It's mainly based on [angular.js](https://github.com/angular/angular.js), [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl+render thumbnails.
+This is the Rails 5 application providing [HN Search](http://hn.algolia.com). It's leveraging [react](https://reactjs.org) on the frontend, [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) for the search and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl+render thumbnails.
 
 Development/Contributions
 -------------
@@ -23,10 +23,10 @@ cp config/database.example.yml config/database.yml # feel free to edit, default 
 cp config/application.example.yml config/application.yml # feel free to edit, default configuration is OK for search-only
 
 # setup your (sqlite3) database
-rake db:migrate
+bundle exec rake db:migrate
 
 # start contributing enjoying Guard (watchers, livereload, notifications, ...)
-guard
+bundle exec guard
 
 # done!
 open http://localhost:3000
