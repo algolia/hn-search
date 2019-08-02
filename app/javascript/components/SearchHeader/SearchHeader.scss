@@ -15,6 +15,7 @@ $headerHeight: 60px;
     background: $orange;
     height: auto;
     padding: $spacing-base 40px $spacing-base $spacing-base;
+    position: relative;
 
     @media (max-width:768px) {
       padding: $spacing-base $spacing-large $spacing-base $spacing-base;
@@ -33,7 +34,7 @@ $headerHeight: 60px;
     }
 
     @media (max-width: 480px){
-      width: calc(100% - 86px)
+      width: calc(100% - 54px)
     }
   }
 
@@ -68,6 +69,7 @@ $headerHeight: 60px;
   &_settings {
     position: absolute;
     right: $spacing-medium;
+    top: calc(50% - (24px / 2)); // 24 is the size of the icon, written in the svg
 
     @media (max-width: 768px){
       right: $spacing-small;
@@ -124,7 +126,7 @@ $headerHeight: 60px;
     height: 42px;
     width: 100%;
     box-shadow: none;
-    padding: $spacing-medium $spacing-large $spacing-medium 54px;
+    padding: $spacing-medium 0 $spacing-medium 54px;
     font-weight: 300;
 
     &:focus {
@@ -136,7 +138,7 @@ $headerHeight: 60px;
 
 .experimental {
   .SearchHeader{
-    border-bottom: solid 1px #eee;      
+    border-bottom: solid 1px #eee;
 
     &_search {
       @media (max-width: 768px) {
@@ -157,15 +159,6 @@ $headerHeight: 60px;
     .SearchInput {
       border-radius: 20px;
       border: 1px solid #b6b6b6;
-    }
-    
-
-    .PoweredBy {
-      img {
-        @media (max-width: 768px) {
-          height: 8px;
-        }
-      }
     }
 
     &_label {
