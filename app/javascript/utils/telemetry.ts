@@ -42,6 +42,9 @@ const isAlgoliaEngineQuery = input => {
 
 const reportedQueries = [];
 const getAlgoliaQueries = () => {
+  if (!supportsPerformance()) {
+    return [];
+  }
   const resources = window.performance.getEntriesByType("resource");
 
   if (!resources.length) {

@@ -48,6 +48,7 @@
 
   select, input {
     color: #5c5c5c;
+    max-width: 100%;
   }
 
   label {
@@ -62,7 +63,7 @@
   }
 
   #login {
-    max-width: 240px;
+    width: 240px;
     border-radius: 4px;
     padding: $spacing-base $spacing-small;
     border: 1px solid rgb(166, 166, 166);
