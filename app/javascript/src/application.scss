@@ -51,3 +51,7 @@ ul {
     width: 100%;
   }
 }
+
+input[type=search], input[type=text] {
+  -webkit-appearance: none; // prevents the ugly shadow on iOS inputs
+}
