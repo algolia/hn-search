@@ -5,7 +5,6 @@
 // the JavaScript client to deliver the fastest experience possible
 // If you are interested in the project, feel free to reach out to
 
-const SESSION_ID = generateSessionID();
 const generateSessionID = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
     const r = (Math.random() * 16) | 0,
@@ -14,12 +13,14 @@ const generateSessionID = () => {
   });
 };
 
+const SESSION_ID = generateSessionID();
+
 const supportsSendBeacon = () => {
   return navigator && typeof navigator.sendBeacon === "function";
 };
 
 const supportsConnection = () => {
-  return typeof navigator.connection === "object";
+  return typeof (navigator as any).connection === "object";
 };
 
 const supportsPerformance = () => {
@@ -49,7 +50,7 @@ const getAlgoliaQueries = () => {
 
   return resources.filter(resource => {
     return (
-      resource.initiatorType === "xmlhttprequest" &&
+      (resource as any).initiatorType === "xmlhttprequest" &&
       isAlgoliaEngineQuery(resource.name) &&
       reportedQueries.indexOf(resource) === -1
     );
@@ -62,7 +63,7 @@ const reportData = (data, endpoint) => {
   if (supportsSendBeacon()) {
     navigator.sendBeacon(url, JSON.stringify(data));
   } else {
-    $.ajax({
+    ((window as any).$ as any).ajax({
       contentType: "application/json",
       type: "POST",
       url: url,
@@ -75,7 +76,7 @@ export const reportTelemetry = query => {
   if (!supportsPerformance()) return;
   const allQueries = getAlgoliaQueries();
 
-  allQueries.forEach(function(entry, index, array) {
+  allQueries.forEach(function(entry: any, index, array) {
     const data = {
       timestamp: Date.now(),
       telemetry_session_id: SESSION_ID,
@@ -115,18 +116,18 @@ export const reportConnection = () => {
   const data = {
     timestamp: Date.now(),
     session_id: SESSION_ID,
-    downlink: navigator.connection.downlink,
-    downlink_max: navigator.connection.downlinkMax,
-    effective_type: navigator.connection.effectiveType,
-    rtt: navigator.connection.rtt,
-    save_data: navigator.connection.saveData,
-    type: navigator.connection.type
+    downlink: (navigator as any).connection.downlink,
+    downlink_max: (navigator as any).connection.downlinkMax,
+    effective_type: (navigator as any).connection.effectiveType,
+    rtt: (navigator as any).connection.rtt,
+    save_data: (navigator as any).connection.saveData,
+    type: (navigator as any).connection.type
   };
   reportData(data, "connection");
 };
 
-export const reportTimeout = (data, requestOptions) => {
-  const data = {
+export const reportTimeout = (data: any, requestOptions) => {
+  const data2 = {
     timestamp: Date.now(),
     timeout_session_id: SESSION_ID,
     host_node: data.hostIndexes.read,
@@ -135,19 +136,19 @@ export const reportTimeout = (data, requestOptions) => {
     complete_timeout: requestOptions.timeouts.complete
   };
 
-  reportData(data, "timeout");
+  reportData(data2, "timeout");
 };
 
 window.addEventListener("load", function() {
-  window.reportConnection();
+  (window as any).reportConnection();
   if (
     supportsConnection() &&
-    typeof navigator.connection.addEventListener === "function"
+    typeof (navigator as any).connection.addEventListener === "function"
   ) {
-    navigator.connection.addEventListener("change", window.reportConnection);
+    (navigator as any).connection.addEventListener("change", (window as any).reportConnection);
   }
 });
 
-window.reportTelemetry = reportTelemetry;
-window.reportConnection = reportConnection;
-window.reportTimeout = reportTimeout;
+(window as any).reportTelemetry = reportTelemetry;
+(window as any).reportConnection = reportConnection;
+(window as any).reportTimeout = reportTimeout;

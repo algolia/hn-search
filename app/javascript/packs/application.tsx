@@ -14,7 +14,7 @@ import Help from "../views/Help";
 import Search from "../views/Search";
 import Settings from "../views/Settings";
 
-import * from './../utils/telemetry';
+// import * as telemetry from './../utils/telemetry';
 
 const ThemeClass: React.FunctionComponent = ({ children }) => {
   const {

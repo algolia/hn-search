@@ -3,7 +3,7 @@ const debounce = (
   wait: number,
   immediate?: boolean
 ) => {
-  let timeout;
+  let timeout: null | number;
   return function() {
     const context = this;
     const args = arguments;
@@ -17,7 +17,7 @@ const debounce = (
 
     clearTimeout(timeout);
 
-    timeout = setTimeout(later, wait);
+    timeout = window.setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
 };
