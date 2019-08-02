@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./SearchHeader.scss";
 
 import Search from "react-feather/dist/icons/search";
-import Sliders from "react-feather/dist/icons/sliders";
+import Settings from "react-feather/dist/icons/settings";
 
 import { SearchContext } from "../../providers/SearchProvider";
 import AlgoliaLogoWhite from "images/algolia-logo-white.svg";
@@ -107,7 +107,7 @@ const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
       </div>
       <div className="SearchHeader_settings">
         <Link to="/settings">
-          <Sliders />
+          <Settings />
         </Link>
       </div>
     </>

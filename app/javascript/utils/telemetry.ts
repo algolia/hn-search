@@ -145,7 +145,10 @@ window.addEventListener("load", function() {
     supportsConnection() &&
     typeof (navigator as any).connection.addEventListener === "function"
   ) {
-    (navigator as any).connection.addEventListener("change", (window as any).reportConnection);
+    (navigator as any).connection.addEventListener(
+      "change",
+      (window as any).reportConnection
+    );
   }
 });
 

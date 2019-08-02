@@ -122,7 +122,7 @@ const SearchFilters: React.FunctionComponent = () => {
         </span>
       </div>
       <div className="SearchFilters_meta">
-        <p>
+        <p className="SearchFilters_engineProcessingTime">
           {Number(results.nbHits).toLocaleString()}{" "}
           {pluralize(results.nbHits, "result")} (
           {results.processingTimeMS / 1000} seconds)
