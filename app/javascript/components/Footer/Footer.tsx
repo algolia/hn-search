@@ -13,24 +13,27 @@ const LINKS: { label: string; to: string }[] = [
   { label: "Cool Apps", to: "/cool_apps" }
 ];
 
+const PossiblyExternalLink = ({ to, children }) =>
+  to.startsWith("https") ? (
+    <a href={to}>{children}</a>
+  ) : (
+    <Link to={to}>{children}</Link>
+  );
+
 const Footer: React.FunctionComponent = () => {
   return (
     <footer className="Footer">
       <ul className="Footer_list">
-        {LINKS.map((link, index) => {
-          const target = link.to.startsWith("https") ? "_blank" : "";
-
-          return (
-            <React.Fragment key={link.to}>
-              <li key={link.to}>
-                <Link to={link.to} target={target}>
-                  {link.label}
-                </Link>
-              </li>
-              <li key={index}>•</li>
-            </React.Fragment>
-          );
-        })}
+        {LINKS.map((link, index) => (
+          <React.Fragment key={link.to}>
+            <li key={link.to}>
+              <PossiblyExternalLink to={link.to}>
+                {link.label}
+              </PossiblyExternalLink>
+            </li>
+            <li key={index}>•</li>
+          </React.Fragment>
+        ))}
       </ul>
     </footer>
   );
