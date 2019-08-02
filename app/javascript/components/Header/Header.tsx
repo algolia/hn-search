@@ -7,8 +7,6 @@ const Header: React.FunctionComponent = ({ children }) => {
       <div className="SearchHeader_search">
         <a
           className="SearchHeader_logo"
-          ng-click="reset()"
-          ng-href="/?"
           href="/?"
         >
           <img src={HNSearchLogo} />
