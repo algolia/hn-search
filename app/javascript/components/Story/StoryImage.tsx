@@ -9,7 +9,7 @@ interface StoryImageProps {
 
 const StoryImage: React.FunctionComponent<StoryImageProps> = ({ objectID }) => {
   const imageRef = React.useRef<HTMLImageElement>(null);
-  const [imageSource, setImageSource] = React.useState<string>("#");
+  const [imageSource, setImageSource] = React.useState<string>(null);
 
   const isIntersecting = useIntersectionObserver(imageRef, {
     rootMargin: "60px",
@@ -23,7 +23,11 @@ const StoryImage: React.FunctionComponent<StoryImageProps> = ({ objectID }) => {
 
   return (
     <div className="Story_image">
-      <img ref={imageRef} src={imageSource} alt="" />
+      {imageSource ? (
+        <img ref={imageRef} src={imageSource} alt="" />
+      ) : (
+        <div ref={imageRef} />
+      )}
     </div>
   );
 };
