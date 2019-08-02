@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "JonasBa/algoliasearch-client-javascript#453e793",
+    "algoliasearch": "JonasBa/algoliasearch-client-javascript#82a6074",
     "classnames": "^2.2.6",
     "downshift": "^3.2.10",
     "moment": "^2.24.0",
