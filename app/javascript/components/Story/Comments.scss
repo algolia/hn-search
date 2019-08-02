@@ -62,6 +62,10 @@
     font-size: 12px;
     margin-top: $spacing-base;
 
+    code, pre {
+      white-space: pre-wrap;
+    }
+
     p {
       margin-bottom: $spacing-base;
     }
