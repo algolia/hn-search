@@ -15,7 +15,13 @@ import Help from "../views/Help";
 import Search from "../views/Search";
 import Settings from "../views/Settings";
 
-// import * as telemetry from './../utils/telemetry';
+import * as Telemetry from "../utils/telemetry";
+
+window.addEventListener("load", () => {
+  (window as any).Sentry.init({
+    dsn: "https://f13a43fa91884c6fae60762be4dfb6f5@sentry.io/1520033"
+  });
+});
 
 const ThemeClass: React.FunctionComponent = ({ children }) => {
   const {
