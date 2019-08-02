@@ -228,7 +228,7 @@ const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
   return tagFilters;
 };
 
-const getRestricSearchableAttributes = (
+const getRestrictSearchableAttributes = (
   settings: HNSettings
 ): SearchSettings["restrictSearchableAttributes"] => {
   if (!settings.storyText && !settings.authorText) {
@@ -282,7 +282,7 @@ const getSearchSettings = (
     ),
     typoTolerance: sort === "byPopularity" && typoTolerance,
     queryType: prefix ? "prefixLast" : "prefixNone",
-    restrictSearchableAttributes: getRestricSearchableAttributes(settings),
+    restrictSearchableAttributes: getRestrictSearchableAttributes(settings),
     getRankingInfo: true
   };
 

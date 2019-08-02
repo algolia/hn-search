@@ -99,12 +99,6 @@ const CoolApps: React.FunctionComponent<RouteComponentProps> = props => {
             Materialistic - Hacker News
           </a>
         </li>
-        <li>
-          <a href="https://play.google.com/store/apps/details?id=au.com.timmutton.yarn">
-            {" "}
-            Yarn for Hacker News
-          </a>
-        </li>
       </ul>
       <h3>Newsletters</h3>
       <ul>

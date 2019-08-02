@@ -13,7 +13,6 @@ import {
 import { initializeSettings, asQueryString, saveSettings } from "./Settings";
 import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
-import debounce from "../utils/debounce";
 
 const history = createBrowserHistory();
 const CSRFMeta: HTMLMetaElement = document.querySelector(
