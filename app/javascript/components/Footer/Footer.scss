@@ -8,6 +8,8 @@
     flex-wrap: wrap;
     justify-content: center;
     list-style-type: none;
+    padding: $spacing-base $spacing-small $spacing-large $spacing-small;
+    margin: 0;
 
     li {
       padding: 4px;
@@ -32,6 +34,18 @@
 
     li, a {
       color: #9d9d9d;
+    }
+  }
+}
+
+.experimental {
+  & .dark {
+    
+  }
+
+  &.light {
+    .Footer {
+      background-color: transparent;
     }
   }
 }

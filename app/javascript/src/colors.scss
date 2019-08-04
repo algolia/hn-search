@@ -4,10 +4,19 @@ $orange: #FF742B;
 $text-muted: #9d9d9d;
 $text-dimmed: dimgray;
 
+// Dark theme
+$dark-background: #1e2129;
+$dark-background-dark-light: #32323f;
+$dark-button-background-dark: #17171e;
+$dark-text-dark: rgba(255,255,255,.42);
+$dark-text-dark-light: rgba(255,255,255,.85);
+$dark-text-dark-small:  rgba(255,255,255,.5);
 
-$button-background-dark: #17171e;
-$text-dark: rgba(255,255,255,.42);
-$text-dark-light: rgba(255,255,255,.85);
-$text-dark-small:  rgba(255,255,255,.5);
-$background-dark: #1e2129;
-$background-dark-light: #32323f;
+// Light theme
+$light-background: #f5f5fa;
+$light-background-light-dark: rgba(#c5c9e0, .4);
+$light-button-background: rgba(#c5c9e0, .4);
+$light-text-dark: #3a416f;
+$light-text-dark-light: rgba(#21243d, .8);
+$light-text-dark-small: rgba(#21243d, .5);
+$light-shadow: 0 18px 34px rgba(14, 16, 29, .24);

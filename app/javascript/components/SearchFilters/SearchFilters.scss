@@ -144,13 +144,10 @@
 }
 
 .experimental {
-
   .SearchFilters {
     top: 108px;
-    background-color: #fdfdfd;
     height: 80px;
     color: #9d9d9d;
-    border-bottom: 1px solid #eee;
 
     @media (max-width: 768px) {
       top: 58px;
@@ -172,6 +169,27 @@
     &_settings {
       padding-left: $spacing-medium;
       margin: 0;
+    }
+  }
+}
+
+.experimental {
+  & .dark {
+      
+  }
+
+  &.light {
+    .SearchFilters { 
+      background-color: $light-background;
+      color: $light-text-dark-small;
+
+      &_engineProcessingTime {
+        color: $light-text-dark;
+      }
+
+      &_text {
+        margin: 0 8px;
+      }
     }
   }
 }

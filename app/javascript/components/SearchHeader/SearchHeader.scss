@@ -138,8 +138,6 @@ $headerHeight: 60px;
 
 .experimental {
   .SearchHeader{
-    border-bottom: solid 1px #eee;
-
     &_search {
       @media (max-width: 768px) {
         height: 60px !important;
@@ -157,8 +155,15 @@ $headerHeight: 60px;
     }
 
     .SearchInput {
-      border-radius: 20px;
-      border: 1px solid #b6b6b6;
+      height: 64px;
+      border-radius: 4px;
+      padding-left: 58px;
+    }
+
+    .SearchIcon {
+      left: 18px;
+      top: 50%;
+      transform: translate(0, -50%);
     }
 
     &_label {
@@ -182,6 +187,30 @@ $headerHeight: 60px;
 
     &_label {
       color: #9d9d9d;
+    }
+  }
+
+  & .dark {
+    
+  }
+
+  &.light {
+    .SearchInput {
+      background-color: $light-background-light-dark;
+      &::placeholder {
+        color: $light-text-dark-small
+      }
+    }
+    .SearchIcon {
+      color: $light-text-dark-light;
+    }
+    .SearchHeader_search { background-color: $light-background; }
+    .SearchHeader_settings a {
+      color: $light-text-dark-light;
+
+      &:hover {
+        color: $light-text-dark;
+      }
     }
   }
 }

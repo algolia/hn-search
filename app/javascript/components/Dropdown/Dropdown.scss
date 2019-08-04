@@ -75,7 +75,8 @@
     }
 
     li {
-      padding: $spacing-base $spacing-small;
+      cursor: pointer;
+      padding: $spacing-small $spacing-medium;
       font-size: 14px;
 
       a {
@@ -88,6 +89,50 @@
 
       &:hover {
         color: $orange;
+      }
+    }
+  }
+}
+
+.experimental {
+  .Dropdown_label {
+    padding: 4px 16px;
+    border: none;
+  }
+
+  .Dropdown_list {
+    border-bottom: 0;
+    border: none;
+    li {
+      border: none;
+    }
+  }
+
+  & .dark {
+    
+  }
+
+  &.light {
+    .Dropdown {
+      &_label {
+        color: $light-text-dark-light;
+        background-color: $light-button-background;
+      }
+
+      &_list {
+        background-color: #FFF;
+        box-shadow: $light-shadow;
+
+        &:before {
+          border-color: transparent;
+        }
+        &:after {
+          border-color: #fff;
+        }
+
+        li {
+          color: $light-text-dark-light;
+        }
       }
     }
   }

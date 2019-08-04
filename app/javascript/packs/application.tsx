@@ -1,9 +1,10 @@
 import "core-js/stable";
+import "whatwg-fetch";
+
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "whatwg-fetch";
 
 import classnames from "classnames";
 import "./../src/application.scss";

@@ -48,3 +48,65 @@
     }
   }
 }
+
+.experimental {
+
+  .SocialShare {
+    .Dropdown_label {
+      border: none;
+      padding: 0 4px 0 8px;
+    }
+  }
+  &.dark {
+    
+  }
+
+  &.light {
+    .SocialShare {
+      .Dropdown {
+        &_label {
+          color: $light-text-dark-small;
+          background-color: transparent;
+
+          svg {
+            color: $light-text-dark-light;
+
+            &:hover {
+              color: $light-text-dark;
+            }
+          }
+        }
+
+        &_list {
+          background-color: #FFF;
+          border: none;
+          box-shadow: $light-shadow;
+
+          &:before {
+            border-color: transparent;
+          }
+          &:after {
+            border-color: #fff;
+          }
+
+          li {
+            a {
+              border-bottom: 0;
+              color: $light-text-dark-light;
+
+              svg {
+                color: $light-text-dark-light;
+              }
+            }
+
+            &:hover {
+              svg {
+                color: $light-text-dark-light;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

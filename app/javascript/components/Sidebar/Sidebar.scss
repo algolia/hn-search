@@ -2,7 +2,6 @@
 @import "./../../src/colors.scss";
 
 .Sidebar {
-  background-color: #f8f8f8;
   position: fixed;
   top: 0;
   height: 100%;
@@ -22,20 +21,20 @@
     }
 
     a {
-      color: #5c5c5c;
+      font-size: 20px;
       display: block;
-      padding: $spacing-small $spacing-large;
+      padding: $spacing-medium $spacing-large;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      color: $light-text-dark-small;
 
-      
       &:hover {
-        background-color: rgba(#e4e3e5, .4);
+        color: $light-text-dark;
       }
 
       &.active {
-        background-color: #e4e3e5
+        color: $light-text-dark;
       }
 
       svg {
@@ -53,5 +52,15 @@
     &:not(:last-child) {
       border-bottom: 1px solid #eee;
     }
+  }
+}
+
+.experimental {
+  & .dark {
+    
+  }
+
+  &.light {
+    .Sidebar { background-color: $light-background; }
   }
 }

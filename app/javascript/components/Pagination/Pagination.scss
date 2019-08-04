@@ -47,3 +47,15 @@
     }
   }
 }
+
+.experimental {
+  & .dark {
+    
+  }
+
+  &.light {
+    .Pagination {
+      background-color: transparent;
+    }
+  }
+}

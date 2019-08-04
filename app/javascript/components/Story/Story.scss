@@ -248,3 +248,32 @@
     }
   }
 }
+
+.experimental {
+  .Story {
+    min-height: 88px;
+    padding-left: 18px;
+
+    &_image {
+      height: 56px;
+      width: 56px;
+      flex: 0 0 56px;
+      padding: 0;
+    }
+  }
+  & .dark {
+    
+  }
+
+  &.light {
+    .Story { background-color: #fff; }
+
+    .Story_title a {
+      color: $light-text-dark-light;
+
+      &:visited {
+        color: $light-text-dark-small;
+      }
+    }
+  }
+}
