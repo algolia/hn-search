@@ -8,25 +8,20 @@ $headerHeight: 60px;
   z-index: $zIndexHeader;
   
   &_search {
-    padding: $spacing-base;
     height: $headerHeight;
     display: flex;
     align-items: center;
     background: $orange;
     height: auto;
-    padding: $spacing-base 40px $spacing-base $spacing-base;
+    padding: $spacing-base;
     position: relative;
-
-    @media (max-width:768px) {
-      padding: $spacing-base $spacing-large $spacing-base $spacing-base;
-    }
+    justify-content: space-between;
   }
 
   &_container {
     position: relative;
     display: inline-block;
-    width: calc(100% - 230px);
-    max-width: 870px;
+    width: calc(100% - 324px);
     margin-right: $spacing-base;
 
     @media (max-width:768px) {
@@ -67,9 +62,10 @@ $headerHeight: 60px;
   }
 
   &_settings {
-    position: absolute;
-    right: $spacing-medium;
-    top: calc(50% - (24px / 2)); // 24 is the size of the icon, written in the svg
+    // position: absolute;
+    // right: $spacing-medium;
+    // top: calc(50% - (24px / 2));
+    span { display: none }
 
     @media (max-width: 768px){
       right: $spacing-small;
@@ -92,6 +88,7 @@ $headerHeight: 60px;
     align-items: center;
     font-size: 12px;
     margin-left: $spacing-small;
+    white-space: nowrap;
 
     @media (max-width: 480px) {
       display: none;
@@ -174,10 +171,30 @@ $headerHeight: 60px;
     
     &_settings a {
       color: #9d9d9d;
+      padding: $spacing-medium + 4px;
+      min-width: 64px;
+      text-align: center;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+    }
+
+    &_settings {
+      font-size: 14px;
+
+      span {
+        display: initial;
+      }
+
+      svg {
+        color: #3a416f;
+        width: 14px;
+        margin-right: $spacing-small;
+      }
     }
 
     &_search {
-      padding: $spacing-large 40px $spacing-large $spacing-large;
+      padding: $spacing-large;
       background-color: #fff;
 
       @media (max-width:768px) {
@@ -198,7 +215,7 @@ $headerHeight: 60px;
     .SearchInput {
       background-color: $light-background-light-dark;
       &::placeholder {
-        color: $light-text-dark-small
+        color: $light-placeholder
       }
     }
     .SearchIcon {
@@ -207,6 +224,7 @@ $headerHeight: 60px;
     .SearchHeader_search { background-color: $light-background; }
     .SearchHeader_settings a {
       color: $light-text-dark-light;
+      background-color: rgba(#c5c9e0, .4);
 
       &:hover {
         color: $light-text-dark;

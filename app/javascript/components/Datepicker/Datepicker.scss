@@ -119,14 +119,32 @@
 }
 
 .experimental {
-
   .DatePicker {
     top: 80px;
-    background: rgba(#fff, .8);
-    box-shadow: 0 5px 15px -5px rgba(37,44,97,.15), 0 2px 15px -13px rgba(93,100,148,.2);
+    background: transparent;
+
+    &-container {
+      box-shadow: 0 5px 15px -5px rgba(37,44,97,.15), 0 2px 15px -13px rgba(93,100,148,.2);
+    }
 
     @media (max-width: 768px) {
       top: 44px;
+    }
+
+    input {
+      padding: 20px 16px
+    }
+
+    &_actions {
+      justify-content: space-between;
+
+      button {
+        flex: 1 1 100%;
+        text-align: center !important;
+        &:last-child {
+          margin-right: 0 !important;
+        }
+      }
     }
 
     &-container {
@@ -134,8 +152,53 @@
       padding: $spacing-small;
       
       @media (min-width: 769px) {
-        margin-left: 200px;
-        width: calc(100% - 200px);
+        margin-left: 254px;
+        width: calc(100% - 254px);
+      }
+    }
+  }
+}
+
+.experimental {
+  &.light {
+    .DatePicker {
+      .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+        border-radius: 0;
+        background-color: rgba($light-text-dark, .3) !important;
+        color: #fff !important;
+      }
+      .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+        border-radius: 0;
+        background-color: $light-text-dark !important;
+        color: #fff !important;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .DayPicker-Day.DayPicker-Day--today {
+        color: $light-text-dark;
+      }
+
+      .DayPicker-Weekday,
+      .DayPicker-Caption {
+        color: $light-text-dark;
+      }
+
+      h3, label, input {
+        color: $light-text-dark;
+      }
+
+      input {
+        border-color: $light-text-dark;
+      }
+
+      .DatePicker_actions button {
+        padding: 14px;
+        background-color: #3a416f;
+        border-color: #3a416f;
+        color: #fff;
+        font-size: 14px;
       }
     }
   }

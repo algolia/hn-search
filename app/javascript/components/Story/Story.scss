@@ -4,11 +4,14 @@
 .Story {
   font-size: 14px;
   padding: 0 $spacing-large;
-  border-bottom: solid 1px #eee;
   min-height: 54px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+
+  &:not(:last-child){
+    border-bottom: solid 1px #eee;
+  }
 
   &_container {
     display: flex;
@@ -45,7 +48,7 @@
   &_data {
     white-space: normal;
     overflow: hidden;
-    margin: 4px 0;
+    margin: 8px 0;
   }
 
   &_title {
@@ -89,7 +92,8 @@
 
 .experimental {
   .Story {
-    padding: $spacing-small 12px $spacing-small $spacing-medium;
+    padding: $spacing-medium;
+    box-shadow: 0 18px 34px rgba(#0E101D, .12);
 
     &_container {
       width: 100%;
@@ -102,7 +106,8 @@
       font-weight: bold;
     }
 
-    a:hover {
+    a:hover,
+    a:focus {
       border-bottom: 1px dotted #ccc
     }
 
@@ -117,7 +122,8 @@
         display: inline-block;
         border-bottom: 1px dotted transparent !important;
 
-        &:hover {
+        &:hover,
+        &:focus {
           border-bottom: 1px dotted #ccc !important;
         }
       }
@@ -158,6 +164,7 @@
 
         &:focus {
           outline: none;
+          color: $orange;
         }
 
         &:hover {
@@ -203,7 +210,8 @@
             opacity: .7;
           }
 
-          &:hover:not(:disabled) {
+          &:hover:not(:disabled),
+          &:focus:not(:disabled) {
             background-color: $orange;
             &:before {
               border-right-color: $orange;
@@ -267,6 +275,42 @@
 
   &.light {
     .Story { background-color: #fff; }
+    .Story_meta a { 
+      color: $light-text-dark-small
+    }
+    .Story_commentsButton {
+      color: rgba(#848ab84d, .8) !important;
+      background-color: #dbddea !important;
+
+      &:before {
+        border-right: 9px solid #dbddea !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        color: #fff !important;
+        background-color: $light-text-dark !important;
+        &:before {
+          border-right: 9px solid $light-text-dark !important;
+        }
+      }
+    }
+
+    .Story_starred {
+      color: #dbddea !important;
+
+      &-active svg {
+        fill: #dbddea !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        svg {
+          color: $light-text-dark !important;
+          fill: $light-text-dark !important;
+        }
+      }
+    }
 
     .Story_title a {
       color: $light-text-dark-light;

@@ -103,6 +103,8 @@
   .Dropdown_list {
     border-bottom: 0;
     border: none;
+    box-shadow: 0 18px 34px rgba(#0E101D, .12) !important;
+    
     li {
       border: none;
     }
@@ -127,7 +129,7 @@
           border-color: transparent;
         }
         &:after {
-          border-color: #fff;
+          border-color: #fff transparent;
         }
 
         li {

@@ -8,6 +8,7 @@
   padding-top: 128px;
   z-index: 10;
   overflow: auto;
+  width: 220px;
 
   @media (max-width: 768px) {
     display: none
@@ -38,8 +39,8 @@
       }
 
       svg {
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         transform: translate(0, 2px);
         margin-right: $spacing-small;
       }

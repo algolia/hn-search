@@ -96,7 +96,7 @@ const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
         />
       </div>
       <div className="PoweredBy">
-        by
+        Search by
         <a
           href={POWERED_BY_LINK}
           title="Realtime Search Engine"
@@ -107,7 +107,7 @@ const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
       </div>
       <div className="SearchHeader_settings">
         <Link to="/settings">
-          <Settings />
+          <Settings /> <span>Settings</span>
         </Link>
       </div>
     </>

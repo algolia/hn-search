@@ -34,6 +34,8 @@
     padding: 3px 8px;
     border-radius: 3px;
     white-space: pre-wrap;
+    display: inline-block;
+    margin: 2px 0;
   }
 
   &_panel {
@@ -79,7 +81,9 @@
 }
 
 .experimental {
-  .Layout {
-    background-color: #f7f7f7;
+  &.light {
+    .Layout {
+      background-color: #fff;
+    }
   }
 }

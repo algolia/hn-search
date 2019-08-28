@@ -50,8 +50,10 @@
 }
 
 .experimental {
-
   .SocialShare {
+    .Dropdown_list {
+      box-shadow: 0 18px 34px rgba(#0E101D, .12) !important;
+    }
     .Dropdown_label {
       border: none;
       padding: 0 4px 0 8px;
@@ -69,10 +71,13 @@
           background-color: transparent;
 
           svg {
-            color: $light-text-dark-light;
+            color: #dbddea !important;
+          }
 
-            &:hover {
-              color: $light-text-dark;
+          &:focus:not(:disabled),
+          &:hover:not(:disabled) {
+            svg {
+              color: $light-text-dark-light !important;
             }
           }
         }
@@ -86,7 +91,7 @@
             border-color: transparent;
           }
           &:after {
-            border-color: #fff;
+            border-color: #fff transparent;
           }
 
           li {
@@ -99,9 +104,10 @@
               }
             }
 
-            &:hover {
+            &:focus:not(:disabled),
+            &:hover:not(:disabled) {
               svg {
-                color: $light-text-dark-light;
+                color: $light-text-dark-light !important;
               }
             }
           }

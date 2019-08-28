@@ -56,6 +56,20 @@
   &.light {
     .Pagination {
       background-color: transparent;
+
+      &_item {
+        button {
+          color: $light-placeholder;
+          border: 1px solid $light-placeholder;
+        }
+
+        &-current {
+          button {
+            color: $light-text-dark;
+            border: 1px solid $light-text-dark;
+          }
+        }
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 @import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
 
 .Footer {
   padding-top: $spacing-small;
@@ -46,6 +47,10 @@
   &.light {
     .Footer {
       background-color: transparent;
+
+      li, a {
+        color: $light-text-dark;
+      }
     }
   }
 }

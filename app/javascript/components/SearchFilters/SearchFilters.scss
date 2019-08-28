@@ -53,7 +53,7 @@
 
   &_menu {
     position: fixed;
-    top: 102px;
+    top: 99px;
     width: 100%;
     z-index: 20;
     background-color: #fff;
@@ -145,7 +145,7 @@
 
 .experimental {
   .SearchFilters {
-    top: 108px;
+    top: 90px;
     height: 80px;
     color: #9d9d9d;
 
@@ -155,7 +155,11 @@
     }
 
     @media (min-width: 769px) {
-      padding-left: 200px;
+      padding-left: 254px;
+    }
+
+    &_text {
+      margin: 0 8px;
     }
 
     &_meta {
@@ -163,7 +167,7 @@
     }
 
     &_filters {
-      padding-left: $spacing-medium;
+      padding-left: $spacing-small;
     }
 
     &_settings {
@@ -184,11 +188,7 @@
       color: $light-text-dark-small;
 
       &_engineProcessingTime {
-        color: $light-text-dark;
-      }
-
-      &_text {
-        margin: 0 8px;
+        color: rgba(#21243d, .5);
       }
     }
   }

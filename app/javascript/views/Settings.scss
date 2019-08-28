@@ -42,6 +42,7 @@
 
       &:disabled {
         opacity: .7;
+        cursor: not-allowed;
       }
     }
   }
@@ -76,11 +77,15 @@
     padding-top: 208px;
 
     @media (min-width: 769px){
-      padding-left: 200px;
+      padding-left: 254px;
     }
 
     @media (max-width: 769px){
       padding-top: 90px;
+    }
+
+    &_actions button {
+      padding: $spacing-medium + 4px;
     }
 
     &_fieldset {
@@ -95,3 +100,27 @@
     }
   }
 }
+
+.experimental {
+  &.light {
+    .Settings {
+      label {
+        color: $light-text-dark-light
+      }
+      fieldset {
+        background-color: #f5f5fa;
+      }
+
+      &_actions button {
+        color: #fff;
+        background-color: $light-text-dark;
+
+        &:disabled {
+          color: $light-text-dark;
+          background-color: rgba(197, 201, 224, 0.4);
+        }
+      }
+    }
+  }
+}
+
