@@ -24,7 +24,11 @@ const StoryImage: React.FunctionComponent<StoryImageProps> = ({ objectID }) => {
   return (
     <div className="Story_image">
       {imageSource ? (
-        <img ref={imageRef} src={imageSource} alt="" />
+        <img
+          ref={imageRef}
+          src={imageSource}
+          alt={`Image thumbnail for result - ${objectID}`}
+        />
       ) : (
         <div ref={imageRef} />
       )}

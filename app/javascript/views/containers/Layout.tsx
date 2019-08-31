@@ -20,7 +20,7 @@ const Layout: React.FunctionComponent<LayoutProps> = props => {
           <title>{props.title} | HN Search powered by Algolia</title>
         </Helmet>
         <Header />
-        <div className="SearchFilters container">
+        <div className={`SearchFilters container SearchFilters-${props.title}`}>
           <p className="SearchFilters_settings">{props.title}</p>
         </div>
         <section className={`Layout Layout-${props.title}`}>

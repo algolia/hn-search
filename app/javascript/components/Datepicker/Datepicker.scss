@@ -160,17 +160,65 @@
 }
 
 .experimental {
+  &.dark {
+    .DatePicker {
+      .DatePicker-container, fieldset {
+        background-color: $dark-background-light;
+      }
+
+      .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+        border-radius: 0;
+        background-color: rgba(#fff, .8) !important;
+        color: $light-text-dark !important;
+      }
+      .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+        border-radius: 0;
+        background-color: rgba(#fff, .8) !important;
+        color: $light-text-dark !important;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .DayPicker-Day.DayPicker-Day--today {
+        color:rgba(#fff, .8);
+      }
+
+      .DayPicker-Weekday,
+      .DayPicker-Caption {
+        color: rgba(#fff, .8);
+      }
+
+      h3, label, input {
+        color: rgba(#fff, .8);
+      }
+
+      input {
+        border-color: rgba(#fff, .8);
+        color: $dark-background;
+      }
+
+      .DatePicker_actions button {
+        padding: 14px;
+        background-color: $light-button-background;
+        border: none;
+        color: rgba(#fff, .8);
+        font-size: 14px;
+      }
+    }
+  }
+
   &.light {
     .DatePicker {
       .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
         border-radius: 0;
-        background-color: rgba($light-text-dark, .3) !important;
-        color: #fff !important;
+        background-color: rgba($light-button-background, .3) !important;
+        color: $light-text-dark !important;
       }
       .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
         border-radius: 0;
-        background-color: $light-text-dark !important;
-        color: #fff !important;
+        background-color: $light-button-background !important;
+        color: $light-text-dark !important;
         &:focus {
           outline: none;
         }
@@ -182,7 +230,7 @@
 
       .DayPicker-Weekday,
       .DayPicker-Caption {
-        color: $light-text-dark;
+        color: $light-button-background;
       }
 
       h3, label, input {
@@ -195,9 +243,9 @@
 
       .DatePicker_actions button {
         padding: 14px;
-        background-color: #3a416f;
-        border-color: #3a416f;
-        color: #fff;
+        background-color: $light-button-background;
+        border: none;
+        color: $light-text-dark;
         font-size: 14px;
       }
     }

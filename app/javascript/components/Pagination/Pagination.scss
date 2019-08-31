@@ -49,8 +49,29 @@
 }
 
 .experimental {
-  & .dark {
-    
+  .Pagination {
+    margin-top: $spacing-large;
+  }
+
+  &.dark {
+    .Pagination {
+      background-color: transparent;
+
+      &_item {
+        button {
+          color: $dark-placeholder;
+          border: 1px solid $dark-placeholder;
+        }
+
+        &-current {
+          button {
+            color: rgba(#fff, 1);
+            border: 1px solid $dark-text-dark;
+            background-color: $dark-background-light;
+          }
+        }
+      }
+    }
   }
 
   &.light {
@@ -59,14 +80,19 @@
 
       &_item {
         button {
-          color: $light-placeholder;
-          border: 1px solid $light-placeholder;
+          border: none;
         }
 
+        button {
+          color: $light-placeholder;
+          // border: 1px solid $light-placeholder;
+        }
+        
         &-current {
           button {
+            background-color: #fff;
             color: $light-text-dark;
-            border: 1px solid $light-text-dark;
+            border: 1px solid rgba($light-text-dark, .5);
           }
         }
       }

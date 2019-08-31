@@ -107,11 +107,37 @@
     
     li {
       border: none;
+      padding: 16px 24px;
     }
   }
 
-  & .dark {
-    
+  &.dark {
+    .Dropdown {
+        &_label {
+        color: $dark-text-dark-light;
+        background-color: #17171e;
+      }
+
+      &_list {
+        background-color: #17171e;
+        color: rgba(#fff, .8);
+
+        &:before {
+          border-color: transparent;
+        }
+        &:after {
+          border-color: #17171e transparent;
+        }
+
+        li {
+          color: $dark-text-dark-light;
+
+          &:not(:last-child){
+            border-bottom: 1px solid $dark-background;
+          }
+        }
+      }
+    }
   }
 
   &.light {
@@ -134,6 +160,9 @@
 
         li {
           color: $light-text-dark-light;
+          &:not(:last-child){
+            border-bottom: 1px solid #eee;
+          }
         }
       }
     }

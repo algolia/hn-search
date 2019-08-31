@@ -1,8 +1,8 @@
 @import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
 
 .Layout {
   background-color: #f6f6ef;
-  padding-top: 98px;
   padding: 112px $spacing-large $spacing-large $spacing-large;
   min-height: calc(100vh - 98px);
   color: #5c5c5c;
@@ -81,6 +81,40 @@
 }
 
 .experimental {
+  &.dark {
+    .Layout {
+      padding-top: 170px;
+      background-color: $dark-background-light;
+
+      .Layout_property {
+        color: rgba(#fff, .8)
+      }
+      .type-string {
+        font-weight: bold;
+        color: rgba(#fff, .8)
+      }
+
+      table {
+        td, th {
+          border-bottom: 1px solid $dark-background;
+        }
+      }
+
+      p, h3, li, h2, table td, table, th, dt {
+        color: rgba(#fff, .8);
+      }
+
+      &_panel {
+        border: none;
+      }
+
+      code, pre {
+        border: none;
+        background-color: $dark-button-background-dark;
+        color: rgba(#fff, .8)
+      }
+    }
+  }
   &.light {
     .Layout {
       background-color: #fff;

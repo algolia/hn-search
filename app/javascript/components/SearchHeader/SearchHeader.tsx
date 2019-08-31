@@ -6,18 +6,26 @@ import Search from "react-feather/dist/icons/search";
 import Settings from "react-feather/dist/icons/settings";
 
 import { SearchContext } from "../../providers/SearchProvider";
-import AlgoliaLogoWhite from "images/algolia-logo-white.svg";
-import AlgoliaLogoBlue from "images/algolia-logo-master.svg";
+import AlgoliaLogoWhite from "images/logo-algolia-white.svg";
+import AlgoliaLogoBlue from "images/logo-algolia-blue.svg";
 
 const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";
 
 const AlgoliaLogo: React.FunctionComponent = () => {
   const {
-    settings: { style }
+    settings: { style, theme }
   } = React.useContext(SearchContext);
-  const logoSrc = style === "default" ? AlgoliaLogoWhite : AlgoliaLogoBlue;
-  return <img src={logoSrc} alt="Algolia" />;
+
+  if (style === "default") {
+    return <img src={AlgoliaLogoBlue} alt="Algolia Logo" />;
+  }
+  return (
+    <img
+      src={theme === "dark" ? AlgoliaLogoWhite : AlgoliaLogoBlue}
+      alt="Algolia Logo"
+    />
+  );
 };
 
 const isEnterKeyPress = (
@@ -94,16 +102,16 @@ const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
           placeholder="Search stories by title, url or author"
           className="SearchInput"
         />
-      </div>
-      <div className="PoweredBy">
-        Search by
-        <a
-          href={POWERED_BY_LINK}
-          title="Realtime Search Engine"
-          target="_blank"
-        >
-          <AlgoliaLogo />
-        </a>
+        <div className="PoweredBy">
+          Search by
+          <a
+            href={POWERED_BY_LINK}
+            title="Realtime Search Engine"
+            target="_blank"
+          >
+            <AlgoliaLogo />
+          </a>
+        </div>
       </div>
       <div className="SearchHeader_settings">
         <Link to="/settings">

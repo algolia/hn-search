@@ -156,14 +156,11 @@
 
     @media (min-width: 769px) {
       padding-left: 254px;
+      padding-right: 24px;
     }
 
     &_text {
       margin: 0 8px;
-    }
-
-    &_meta {
-      padding-right: $spacing-small;
     }
 
     &_filters {
@@ -178,8 +175,24 @@
 }
 
 .experimental {
-  & .dark {
-      
+  .SearchFilters-Cool,
+  .SearchFilters-HN,
+  .SearchFilters-Help,
+  .SearchFilters-About {
+    padding-left: 24px;
+    .SearchFilters_settings {
+      padding-left: 0;
+    }
+  }
+  &.dark {
+    .SearchFilters {
+      background-color: $dark-background;
+      color: $dark-text-dark-small;
+
+      &_engineProcessingTime {
+        color: rgba(#fff, .8)
+      }
+    }
   }
 
   &.light {

@@ -102,8 +102,34 @@
 }
 
 .experimental {
+  &.dark {
+    .Settings {
+      background-color: $dark-background;
+      h2 { color: $dark-text-dark-light }
+      label {
+        color: $dark-text-dark-light
+      }
+      fieldset {
+        border:none;
+        background-color: $dark-background-light;
+      }
+
+      &_actions button {
+        color: rgba(#fff, .8);
+        background-color: rgba(#17171e, .4);
+
+        &:disabled {
+          color: $dark-text-dark;
+          background-color: rgba(197, 201, 224, 0.4);
+        }
+      }
+    }
+  }
   &.light {
     .Settings {
+      h2 {
+        color: $light-text-dark;
+      }
       label {
         color: $light-text-dark-light
       }

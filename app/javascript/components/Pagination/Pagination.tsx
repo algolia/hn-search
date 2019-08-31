@@ -48,9 +48,7 @@ const Pagination: React.FunctionComponent = () => {
       </li>
       {tailPages.map(page => (
         <li key={page} className="Pagination_item">
-          <button onClick={() => setSettings({ page: page })}>
-            {page + 1}
-          </button>
+          <button onClick={() => setSettings({ page })}>{page + 1}</button>
         </li>
       ))}
       {!isLastPage && results.nbPages > MAX_RESULTS && (

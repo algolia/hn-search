@@ -43,8 +43,7 @@ const Api: React.FunctionComponent<RouteComponentProps> = props => {
                 <span className="Layout_label">GET</span>
                 <code>http://hn.algolia.com/api/v1/search_by_date?query=...</code>
             </p>
-            {/*
-            <!-- %p Common query parameters: -->*/}
+            <p>Common query parameters:</p>
             <table>
                 <tbody>
                     <tr>

@@ -59,8 +59,27 @@
       padding: 0 4px 0 8px;
     }
   }
+
   &.dark {
-    
+    .SocialShare {
+      .Dropdown_label {
+        background-color: transparent;
+        color:#696871 !important;
+
+        svg {
+          color: #888890 !important;
+        }
+
+        &:focus:not(:disabled),
+        &:hover:not(:disabled) {
+          color: rgba(#fff, .8) !important;
+          
+          svg {
+            color: rgba(#fff, .8) !important;
+          }
+        }
+      }
+    }
   }
 
   &.light {

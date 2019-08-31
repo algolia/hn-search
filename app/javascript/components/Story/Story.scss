@@ -93,7 +93,7 @@
 .experimental {
   .Story {
     padding: $spacing-medium;
-    box-shadow: 0 18px 34px rgba(#0E101D, .12);
+    box-shadow: 0 18px 24px rgba(#0E101D, .12);
 
     &_container {
       width: 100%;
@@ -146,6 +146,7 @@
       text-align: right;
       min-width: 140px;
       align-self: flex-start;
+      transform: translate(0, 6px);
 
       @media (max-width: 480px) {
         display: none;
@@ -172,7 +173,7 @@
         }
 
         &.Story_starred {
-          transform: translate(0, 6px)
+          transform: translate(0, 8px)
         }
 
         &.Story_starred-active {
@@ -188,21 +189,22 @@
           color: #fff;
           font-size: 12px;
           padding: $spacing-base;
-          font-weight: 700;
+          font-weight: 500;
           min-width: 25px;
           position: relative;
           height: 21px;
+          border-radius: 2px;
 
           &:before {
             content: "";
             height: 0;
             width: 0;
-            border-top: 9px solid transparent;
-            border-bottom: 9px solid transparent;
-            border-right: 9px solid #939393;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid #939393;
             position: absolute;
             right: 4px;
-            bottom: -9px;
+            bottom: -6px;
           }
 
           &:disabled {
@@ -269,8 +271,78 @@
       padding: 0;
     }
   }
-  & .dark {
-    
+
+  &.dark {
+    .Story {
+      background-color: $dark-background-light;
+
+      &:not(:last-child){
+        border-bottom: 1px solid $dark-background;
+      }
+
+      em {
+        background-color: $dark-text-dark !important;
+        color: #FFF !important;
+        font-weight: bold;
+      }
+
+      &_comment,
+      .Comment_text p {
+        color: $dark-text-dark-small;
+      }
+
+      .Comment:not(:last-child){
+        border-bottom: 1px solid rgba(#fff, .2)
+      }
+      .Comments {
+        border-left: 1px solid rgba(#fff, .2)
+      }
+    }
+    .Story_meta a { 
+      color: $dark-text-dark-small
+    }
+    .Story_commentsButton {
+      color: rgba(#fff, .8) !important;
+      background-color: #696871 !important;
+
+      &:before {
+        border-right: 6px solid #696871 !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        color: #fff !important;
+        background-color: #888890 !important;
+
+        &:before {
+          border-right: 6px solid #888890 !important;
+        }
+      }
+    }
+
+    .Story_starred {
+      color: #888890 !important;
+
+      &-active svg {
+        fill: #888890 !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        svg {
+          color: #888890 !important;
+          fill: #888890 !important;
+        }
+      }
+    }
+
+    .Story_title a {
+      color: $dark-text-dark-light;
+
+      &:visited {
+        color: $dark-text-dark-small;
+      }
+    }
   }
 
   &.light {
@@ -279,11 +351,11 @@
       color: $light-text-dark-small
     }
     .Story_commentsButton {
-      color: rgba(#848ab84d, .8) !important;
+      color: rgba(#21243D,.8) !important;
       background-color: #dbddea !important;
 
       &:before {
-        border-right: 9px solid #dbddea !important;
+        border-right: 6px solid #dbddea !important;
       }
 
       &:hover:not(:disabled),
@@ -291,7 +363,7 @@
         color: #fff !important;
         background-color: $light-text-dark !important;
         &:before {
-          border-right: 9px solid $light-text-dark !important;
+          border-right: 6px solid $light-text-dark !important;
         }
       }
     }
@@ -300,7 +372,8 @@
       color: #dbddea !important;
 
       &-active svg {
-        fill: #dbddea !important;
+        color: $light-text-dark !important;
+        fill: $light-text-dark !important;
       }
 
       &:hover:not(:disabled),

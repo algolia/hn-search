@@ -22,7 +22,7 @@ $headerHeight: 60px;
     position: relative;
     display: inline-block;
     width: calc(100% - 324px);
-    margin-right: $spacing-base;
+    margin-right: $spacing-medium;
 
     @media (max-width:768px) {
       width: calc(100% - 160px)
@@ -62,9 +62,6 @@ $headerHeight: 60px;
   }
 
   &_settings {
-    // position: absolute;
-    // right: $spacing-medium;
-    // top: calc(50% - (24px / 2));
     span { display: none }
 
     @media (max-width: 768px){
@@ -83,12 +80,17 @@ $headerHeight: 60px;
   }
 
   .PoweredBy {
-    color: #000;
+    color: $light-text-dark-small;
     display: flex;
     align-items: center;
     font-size: 12px;
     margin-left: $spacing-small;
     white-space: nowrap;
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translate(0, -50%);
+
 
     @media (max-width: 480px) {
       display: none;
@@ -100,7 +102,8 @@ $headerHeight: 60px;
     }
 
     img {
-      height: 16px;
+      height: 14px;
+      transform: translate(0, 1px)
     }
   }
 
@@ -123,7 +126,7 @@ $headerHeight: 60px;
     height: 42px;
     width: 100%;
     box-shadow: none;
-    padding: $spacing-medium 0 $spacing-medium 54px;
+    padding: $spacing-medium $spacing-small $spacing-medium 54px;
     font-weight: 300;
 
     &:focus {
@@ -207,13 +210,31 @@ $headerHeight: 60px;
     }
   }
 
-  & .dark {
-    
+  &.dark {
+    .SearchInput {
+      color: #fff;
+      background-color: $dark-background-light;
+      &::placeholder {
+        color: $dark-placeholder
+      }
+    }
+    .SearchIcon {
+      color: $dark-text-dark-light;
+    }
+    .PoweredBy {
+      color: rgba(#fff, .4)
+    }
+    .SearchHeader_search { background-color: $dark-background; }
+    .SearchHeader_settings a {
+      color: $dark-text-dark-light;
+      background-color: rgba(#17171e, .4);
+      svg { color: rgba(#fff, .8) }
+    }
   }
 
   &.light {
     .SearchInput {
-      background-color: $light-background-light-dark;
+      background-color: $light-background-dark;
       &::placeholder {
         color: $light-placeholder
       }
@@ -225,10 +246,6 @@ $headerHeight: 60px;
     .SearchHeader_settings a {
       color: $light-text-dark-light;
       background-color: rgba(#c5c9e0, .4);
-
-      &:hover {
-        color: $light-text-dark;
-      }
     }
   }
 }

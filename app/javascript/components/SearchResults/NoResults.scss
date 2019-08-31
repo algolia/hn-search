@@ -23,3 +23,12 @@
     }
   }
 }
+
+.experimental {
+  &.dark {
+    color: rgba(#fff, .8)
+  }
+  &.light {
+    color: $light-text-dark;
+  }
+}

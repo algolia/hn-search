@@ -15,7 +15,7 @@
   }
 
   li {
-    width: 200px;
+    width: 100%;
     
     &:last-child {
       margin-bottom: $spacing-small;
@@ -23,8 +23,9 @@
 
     a {
       font-size: 20px;
-      display: block;
-      padding: $spacing-medium $spacing-large;
+      display: flex;
+      align-items: center;
+      padding: $spacing-medium $spacing-large $spacing-medium 0;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -41,14 +42,15 @@
       svg {
         width: 24px;
         height: 24px;
-        transform: translate(0, 2px);
-        margin-right: $spacing-small;
+        margin-right: $spacing-large;
       }
     }
   }
 
   ul{
+    width: 80%;
     margin-bottom: $spacing-small;
+    margin-left: 24px;
 
     &:not(:last-child) {
       border-bottom: 1px solid #eee;
@@ -57,8 +59,20 @@
 }
 
 .experimental {
-  & .dark {
-    
+  &.dark {
+    .Sidebar { 
+      background-color: $dark-background;
+      li a {
+        color: rgba(#fff, .6)
+      }
+      li a.active {
+        color: rgba(#fff, .85)
+      }
+
+      ul:not(:last-child) {
+        border-bottom: 1px solid rgba(#fff, .1);
+      }
+    }
   }
 
   &.light {

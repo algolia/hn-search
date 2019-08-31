@@ -90,7 +90,7 @@ const Settings: React.FunctionComponent<RouteComponentProps> = props => {
             </Link>
           </div>
         </Header>
-        <div className="SearchFilters container">
+        <div className="SearchFilters container SearchFilters-settings">
           <p className="SearchFilters_settings">Settings</p>
         </div>
 

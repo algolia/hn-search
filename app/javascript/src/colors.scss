@@ -5,16 +5,17 @@ $text-muted: #9d9d9d;
 $text-dimmed: dimgray;
 
 // Dark theme
-$dark-background: #1e2129;
-$dark-background-dark-light: #32323f;
-$dark-button-background-dark: #17171e;
+$dark-background: #22222B;
+$dark-background-light: #32323f;
+$dark-button-background-dark: #17171E;
+$dark-placeholder: rgba(#fff, .4);
 $dark-text-dark: rgba(255,255,255,.42);
 $dark-text-dark-light: rgba(255,255,255,.85);
 $dark-text-dark-small:  rgba(255,255,255,.5);
 
 // Light theme
 $light-background: #f5f5fa;
-$light-background-light-dark: rgba(#c5c9e0, .4);
+$light-background-dark: rgba(#c5c9e0, .4);
 $light-button-background: rgba(#c5c9e0, .4);
 $light-placeholder: rgba(#3a416f, .4);
 $light-text-dark: #3a416f;

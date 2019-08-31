@@ -9,9 +9,10 @@
     min-height: calc(100vh - 120px);
     background-color: #fff;
     padding-top: 178px;
-
+    
     @media (min-width: 769px) {
       padding-left: 254px;
+      padding-right: 24px;
     }
 
     @media (max-width: 768px) {
@@ -25,9 +26,8 @@
 }
 
 .experimental {
-  &.light {
-    .SearchResults {
-      background-color: transparent;
-    }
+  .SearchResults {
+    background-color: transparent;
   }
+  
 }

@@ -36,8 +36,9 @@ const Dropdown: React.FunctionComponent<DropdownProps> = ({
       }) => (
         <div className="Dropdown">
           <label
-            className="Dropdown_label"
             {...getLabelProps()}
+            tabIndex="0"
+            className="Dropdown_label"
             onClick={() => (isOpen ? closeMenu() : openMenu())}
           >
             {selectedItem ? selectedItem.label : children}{" "}
