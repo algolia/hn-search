@@ -7,9 +7,27 @@ interface StoryImageProps {
   objectID: Hit["objectID"];
 }
 
+const supportsLazyLoading = ((): boolean => {
+  return "loading" in HTMLImageElement.prototype;
+})();
+
 const StoryImage: React.FunctionComponent<StoryImageProps> = ({ objectID }) => {
   const imageRef = React.useRef<HTMLImageElement>(null);
   const [imageSource, setImageSource] = React.useState<string>(null);
+
+  const DEFAULT_PROPS = {
+    loading: "lazy",
+    alt: `Image thumbnail for result - ${objectID}`,
+    src: `https://drcs9k8uelb9s.cloudfront.net/${objectID}.png`
+  };
+
+  if (supportsLazyLoading) {
+    return (
+      <div className="Story_image">
+        <img {...DEFAULT_PROPS} />
+      </div>
+    );
+  }
 
   const isIntersecting = useIntersectionObserver(imageRef, {
     rootMargin: "60px",
