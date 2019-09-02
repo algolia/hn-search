@@ -11,12 +11,12 @@ import "./../src/application.scss";
 
 import SearchProvider, { SearchContext } from "../providers/SearchProvider";
 
-import About from "../views/About";
-import Api from "../views/Api";
-import CoolApps from "../views/CoolApps";
-import Help from "../views/Help";
-import Search from "../views/Search";
-import Settings from "../views/Settings";
+const About = React.lazy(() => import("../views/About"));
+const Api = React.lazy(() => import("../views/Api"));
+const CoolApps = React.lazy(() => import("../views/CoolApps"));
+const Help = React.lazy(() => import("../views/Help"));
+const Search = React.lazy(() => import("../views/Search"));
+const Settings = React.lazy(() => import("../views/Settings"));
 
 import * as Telemetry from "../utils/telemetry";
 
@@ -37,22 +37,24 @@ const ThemeClass: React.FunctionComponent = ({ children }) => {
 const App = () => {
   return (
     <Router>
-      <SearchProvider>
-        <Helmet>
-          <title>HN Search powered by Algolia</title>
-        </Helmet>
-        <ThemeClass>
-          <Switch>
-            <Route exact path="/settings" component={Settings} />
-            <Route path="/about" component={About} />
-            <Route path="/api" component={Api} />
-            <Route path="/cool_apps" component={CoolApps} />
-            <Route path="/help" component={Help} />
-            <Route path="/story/:story_id" component={Search} />
-            <Route path="/:path?" component={Search} />
-          </Switch>
-        </ThemeClass>
-      </SearchProvider>
+      <React.Suspense fallback={null}>
+        <SearchProvider>
+          <Helmet>
+            <title>HN Search powered by Algolia</title>
+          </Helmet>
+          <ThemeClass>
+            <Switch>
+              <Route exact path="/settings" component={Settings} />
+              <Route path="/about" component={About} />
+              <Route path="/api" component={Api} />
+              <Route path="/cool_apps" component={CoolApps} />
+              <Route path="/help" component={Help} />
+              <Route path="/story/:story_id" component={Search} />
+              <Route path="/:path?" component={Search} />
+            </Switch>
+          </ThemeClass>
+        </SearchProvider>
+      </React.Suspense>
     </Router>
   );
 };

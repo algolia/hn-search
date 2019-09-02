@@ -6,6 +6,6 @@ const environment = require('./environment')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 environment.plugins.prepend('BundleAnalyzer', new BundleAnalyzerPlugin())
-environment.plugins.prepend('MomentLocales', new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /(en)$/))
+environment.plugins.prepend('MomentIgnore', new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
 
 module.exports = environment.toWebpackConfig()
