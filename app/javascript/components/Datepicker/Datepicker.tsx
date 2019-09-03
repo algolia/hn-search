@@ -1,6 +1,9 @@
 import * as React from "react";
-import * as moment from "moment";
 import DayPicker from "react-day-picker";
+import format from "date-fns/format";
+import fromUnixTime from "date-fns/fromUnixTime";
+import subDays from "date-fns/subDays";
+
 import "./Datepicker.scss";
 import "react-day-picker/lib/style.css";
 
@@ -16,19 +19,23 @@ const isSelectingFirstDay = (from: Date, to: Date, day: Date) => {
   return !from || isBeforeFirstDay || isRangeSelected;
 };
 
-const DEFAULT_FROM_DATE = moment().subtract(7, "days");
-const DEFAULT_TO_DATE = moment();
+const getUTCDate = (date = new Date()) => {
+  return new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+};
 
-interface DatePickerProps {
+const DEFAULT_FROM_DATE = subDays(new Date(), 7);
+const DEFAULT_TO_DATE = new Date();
+
+export interface DatePickerProps {
   isOpen: boolean;
   onChange: (from: Date, to: Date) => any;
   onCancel: () => any;
   onBlur: () => any;
 }
 
-const parseDate = (date: string, defaultDate: moment.Moment): moment.Moment => {
-  if (!date) return moment(defaultDate);
-  return moment.unix(parseInt(date));
+const parseDate = (date: string, defaultDate: Date): Date => {
+  if (!date) return defaultDate;
+  return fromUnixTime(parseInt(date));
 };
 
 const DatePicker: React.FunctionComponent<DatePickerProps> = ({
@@ -44,9 +51,9 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
   } = React.useContext(SearchContext);
 
   const [state, setState] = React.useState({
-    from: parseDate(dateStart, DEFAULT_FROM_DATE).toDate(),
-    to: parseDate(dateEnd, DEFAULT_TO_DATE).toDate(),
-    enteredTo: parseDate(dateEnd, DEFAULT_TO_DATE).toDate()
+    from: parseDate(dateStart, DEFAULT_FROM_DATE),
+    to: parseDate(dateEnd, DEFAULT_TO_DATE),
+    enteredTo: parseDate(dateEnd, DEFAULT_TO_DATE)
   });
 
   const handleResetClick = React.useCallback(() => {
@@ -65,7 +72,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
         return handleResetClick();
       }
       if (isSelectingFirstDay(from, to, day)) {
-        const fromDate = moment.utc(day).toDate();
+        const fromDate = getUTCDate(day);
 
         setState({
           from: fromDate,
@@ -73,7 +80,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
           enteredTo: fromDate
         });
       } else {
-        const toDate = moment.utc(day).toDate();
+        const toDate = getUTCDate(day);
 
         setState({
           from: state.from,
@@ -100,10 +107,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
   );
 
   const wrapOnChangeWithDefaults = () => {
-    onChange(
-      state.from || DEFAULT_FROM_DATE.toDate(),
-      state.to || DEFAULT_TO_DATE.toDate()
-    );
+    onChange(state.from || DEFAULT_FROM_DATE, state.to || DEFAULT_TO_DATE);
   };
 
   const { from, enteredTo } = state;
@@ -144,9 +148,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 id="from"
                 type="date"
                 placeholder="From date"
-                value={moment(state.from || DEFAULT_FROM_DATE).format(
-                  "YYYY-MM-DD"
-                )}
+                value={format(state.from || DEFAULT_FROM_DATE, "yyyy-mm-dd")}
                 onChange={({ currentTarget: { value } }) => {
                   setState({
                     ...state,
@@ -161,7 +163,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 id="to"
                 type="date"
                 placeholder="To date"
-                value={moment(state.to || DEFAULT_TO_DATE).format("YYYY-MM-DD")}
+                value={format(state.to || DEFAULT_TO_DATE, "yyyy-mm-dd")}
                 onChange={({ currentTarget: { value } }) => {
                   setState({
                     ...state,

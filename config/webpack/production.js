@@ -2,7 +2,10 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
 const webpack = require('webpack')
 const environment = require('./environment')
-
-environment.plugins.prepend('MomentIgnore', new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
+const supportedLocales = ["en"]
+environment.plugins.prepend('DateFNSLocales', new webpack.ContextReplacementPlugin(
+  /date\-fns[\/\\]/,
+  new RegExp(`[/\\\\\](${supportedLocales.join('|')})[/\\\\\]`)
+))
 
 module.exports = environment.toWebpackConfig()

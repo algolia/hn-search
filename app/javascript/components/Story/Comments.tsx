@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as moment from "moment";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import "./Comments.scss";
 
 import XCircle from "react-feather/dist/icons/x-circle";
@@ -58,7 +58,7 @@ const Comments: React.FunctionComponent<{ comment: Comment }> = ({
           text,
           story_id
         } = comment;
-        const timeAgo = moment(created_at_i * 1000).fromNow();
+        const timeAgo = formatDistanceToNow(created_at_i * 1000);
 
         return (
           <li className="Comment" key={id}>

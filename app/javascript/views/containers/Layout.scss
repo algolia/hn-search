@@ -77,7 +77,7 @@
 
   .type-number { color: blue }
   .type-string { color: green }
-  .type-nukk { color: gray }
+  .type-null { color: gray }
 }
 
 .experimental {
@@ -89,7 +89,7 @@
       .Layout_property {
         color: rgba(#fff, .8)
       }
-      .type-string {
+      .type-string, .type-number, .type-null {
         font-weight: bold;
         color: rgba(#fff, .8)
       }
@@ -118,6 +118,35 @@
   &.light {
     .Layout {
       background-color: #fff;
+      padding-top: 170px;
+
+      .Layout_property {
+        color: $light-text-dark;
+      }
+      .type-string, .type-number, .type-null {
+        font-weight: bold;
+        color: $light-text-dark
+      }
+
+      table {
+        td, th {
+          border-bottom: 1px solid $dark-background;
+        }
+      }
+
+      p, h3, li, h2, table td, table, th, dt {
+        color: $light-text-dark
+      }
+
+      &_panel {
+        border: none;
+      }
+
+      code, pre {
+        border: none;
+        background-color: $light-background-dark;
+        color: $light-text-dark;
+      }
     }
   }
 }

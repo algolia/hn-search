@@ -1,6 +1,6 @@
 import * as React from "react";
-import * as moment from "moment";
 import classnames from "classnames";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 import "./Story.scss";
 
@@ -134,7 +134,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
             <span>
               <StoryLink id={objectID}>
                 {isExperimental && <Clock />}
-                {moment(created_at_i * 1000).fromNow()}
+                {formatDistanceToNow(created_at_i * 1000)} ago
               </StoryLink>
             </span>
             {!isExperimental && !disableComments && (

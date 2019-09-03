@@ -1,5 +1,6 @@
 import * as React from "react";
-import * as moment from "moment";
+import fromUnixTime from "date-fns/fromUnixTime";
+import format from "date-fns/format";
 
 import "./SearchFilters.scss";
 
@@ -7,7 +8,7 @@ import ChevronsRight from "react-feather/dist/icons/chevron-right";
 import Menu from "react-feather/dist/icons/menu";
 
 import Dropdown from "../Dropdown/Dropdown";
-import Datepicker from "../Datepicker/Datepicker";
+import Datepicker from "../Datepicker/index";
 import pluralize from "../../utils/pluralize";
 import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings } from "../../providers/Search.types";
@@ -36,8 +37,10 @@ export const TIME_FILTERS = new Map<HNSettings["defaultDateRange"], string>([
 ]);
 
 const asItem = ([value, label]) => ({ value, label });
-const formatDate = (date: string): string =>
-  moment(parseInt(date) * 1000).format("MMMM Do YYYY");
+const formatDate = (date: string): string => {
+  const unixDate = fromUnixTime(parseInt(date));
+  return format(unixDate, "MMM do yyyy");
+};
 
 const formatTimeFilters: React.FunctionComponent<{ settings: HNSettings }> = ({
   settings
