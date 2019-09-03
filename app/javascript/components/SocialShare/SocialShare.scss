@@ -26,20 +26,24 @@
   ul {
     width: 220px;
     background-color: #fff;
+    overflow: hidden;
 
     li {
-      padding: $spacing-small;
+      padding: 0;
     }
 
-    li a {
+    li button {
       display: flex;
       align-items: center;
       justify-content: space-between;
       color: #9d9d9d;
+      appearance: none;
+      border: none;
+      width: 100%;
+      padding: 8px 16px;
 
       &:hover {
         color: $orange;
-        border-bottom: 0 dotted #ccc !important;
 
         svg {
           color: $orange;
@@ -114,7 +118,7 @@
           }
 
           li {
-            a {
+            button {
               border-bottom: 0;
               color: $light-text-dark-light;
 

@@ -11,28 +11,28 @@ import Dropdown from "../Dropdown/Dropdown";
 export const SocialShareItems = [
   {
     label: (
-      <a href="#">
+      <button role="button">
         Share on Twitter
         <Twitter />
-      </a>
+      </button>
     ),
     value: "twitter"
   },
   {
     label: (
-      <a href="#">
+      <button role="button">
         Share on Facebook
         <Facebook />
-      </a>
+      </button>
     ),
     value: "facebook"
   },
   {
     label: (
-      <a href="#">
+      <button role="button">
         Share via Email
         <Mail />
-      </a>
+      </button>
     ),
     value: "email"
   }

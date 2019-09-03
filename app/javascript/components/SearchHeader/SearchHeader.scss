@@ -62,14 +62,17 @@ $headerHeight: 60px;
   }
 
   &_settings {
-    span { display: none }
-
     @media (max-width: 768px){
       right: $spacing-small;
+    }
+
+    svg {
+      margin: 0 $spacing-small;
     }
     
     a {
       display: flex;
+      align-items: center;
       color: white;
     }
   }
@@ -87,7 +90,7 @@ $headerHeight: 60px;
     margin-left: $spacing-small;
     white-space: nowrap;
     position: absolute;
-    right: 24px;
+    right: 124px;
     top: 50%;
     transform: translate(0, -50%);
 
@@ -124,7 +127,7 @@ $headerHeight: 60px;
     border: none;
 
     height: 42px;
-    width: 100%;
+    width: calc(100% - 100px);
     box-shadow: none;
     padding: $spacing-medium $spacing-small $spacing-medium 54px;
     font-weight: 300;

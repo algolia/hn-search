@@ -33,7 +33,7 @@ export interface DatePickerProps {
   onBlur: () => any;
 }
 
-const parseDate = (date: string, defaultDate: Date): Date => {
+const parseDate = (date: string | null, defaultDate: Date): Date => {
   if (!date) return defaultDate;
   return fromUnixTime(parseInt(date));
 };
@@ -148,7 +148,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 id="from"
                 type="date"
                 placeholder="From date"
-                value={format(state.from || DEFAULT_FROM_DATE, "yyyy-mm-dd")}
+                value={format(state.from || DEFAULT_FROM_DATE, "yyyy-MM-dd")}
                 onChange={({ currentTarget: { value } }) => {
                   setState({
                     ...state,
@@ -163,7 +163,7 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
                 id="to"
                 type="date"
                 placeholder="To date"
-                value={format(state.to || DEFAULT_TO_DATE, "yyyy-mm-dd")}
+                value={format(state.to || DEFAULT_TO_DATE, "yyyy-MM-dd")}
                 onChange={({ currentTarget: { value } }) => {
                   setState({
                     ...state,

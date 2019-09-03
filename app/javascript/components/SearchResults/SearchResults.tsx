@@ -16,7 +16,7 @@ const SearchResults: React.FunctionComponent = () => {
 
   return (
     <section className="SearchResults">
-      {(!results.hits || !results.hits.length) && !loading && <NoResults />}
+      {(!results.hits || !results.hits.length) && <NoResults />}
       <div className="SearchResults_container">
         {results.hits.map(hit => (
           <Story hit={hit} key={hit.objectID} />
