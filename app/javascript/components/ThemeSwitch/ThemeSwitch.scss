@@ -1,0 +1,45 @@
+.ThemeSwitch {
+  $height: 16px;
+  $width: 28px;
+  position: relative;
+  margin-right: 20px;
+
+  label {
+    width: $width;
+    height: $height;
+    border-radius: $height;
+    border: 1px solid #8B8C9B;
+    display: block;
+    cursor: pointer;
+  }
+
+  &_icon {
+    left:0;
+    top: 0;
+    width: $height;
+    height: $height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    pointer-events: none;
+    background-color: #8B8C9B;
+    border-radius: $height;
+    transition: 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  &-dark {
+    label {
+      border: 1px solid #909095;
+    }
+    .ThemeSwitch_icon {
+      transform: translate($width - $height, 0);
+      background-color: #909095;
+    }
+  }
+
+  input {
+    visibility: hidden;
+    display: none;
+  }
+}

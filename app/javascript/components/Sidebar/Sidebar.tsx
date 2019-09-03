@@ -12,6 +12,7 @@ import TrendingUp from "react-feather/dist/icons/trending-up";
 import User from "react-feather/dist/icons/user";
 
 import { SearchContext } from "../../providers/SearchProvider";
+import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 
 export const SidebarItems = [
   { icon: <Home />, label: "All", to: "/" },
@@ -85,24 +86,15 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ user }) => {
-  const { settings, setSettings } = React.useContext(SearchContext);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setSettings({ theme: e.currentTarget.checked ? "dark" : "light" });
-
   return (
     <aside className="Sidebar">
       <DefaultLinks />
       <StarredLinks user={user} />
-      <li>
-        <label htmlFor="theme">
-          <input
-            type="checkbox"
-            checked={settings.theme === "dark"}
-            onChange={onChange}
-          />
-          Dark Theme
-        </label>
-      </li>
+      <ul>
+        <li className="Sidebar_theme">
+          <ThemeSwitch /> Theme
+        </li>
+      </ul>
     </aside>
   );
 };
