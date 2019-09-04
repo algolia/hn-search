@@ -28,6 +28,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-feature-settings: "tnum";
   }
 
   &_settings {
@@ -72,7 +73,6 @@
         text-overflow: ellipsis;
         overflow: hidden;
   
-        
         &:hover {
           background-color: rgba(#e4e3e5, .4);
         }

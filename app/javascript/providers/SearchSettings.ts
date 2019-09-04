@@ -16,6 +16,7 @@ interface SearchSettings {
   restrictSearchableAttributes: string[];
   minProximity: number;
   getRankingInfo: boolean;
+  analyticsTags: string[];
 }
 
 const getDateTimestampSinceDays = (sinceDays: number) => {
@@ -267,6 +268,7 @@ const getSearchSettings = (
   const extractedNumericFilters = numericFilters;
 
   const searchParams: SearchSettings = {
+    analyticsTags: ["web"],
     query: parsedQuery,
     page: page,
     hitsPerPage: hitsPerPage,

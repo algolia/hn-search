@@ -47,7 +47,8 @@ const readLegacySettings = (): Partial<HNSettings> => {
 };
 
 export const saveSettings = (settings: HNSettings) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  const { query, ...withoutQuery } = settings;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(withoutQuery));
 };
 
 export const saveLocationSettings = (settings: HNSettings) => {
