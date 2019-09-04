@@ -1,5 +1,15 @@
-import "core-js/stable";
+// import "core-js/stable";
+import "core-js/stable/array/find";
+import "core-js/stable/array/from";
+import "core-js/stable/array/includes";
+import "core-js/stable/array/fill";
+
+import "core-js/stable/promise";
+import "core-js/stable/string/starts-with";
+import "core-js/stable/object/assign";
+
 import "whatwg-fetch";
+import "../utils/telemetry";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -17,8 +27,6 @@ const CoolApps = React.lazy(() => import("../views/CoolApps"));
 const Help = React.lazy(() => import("../views/Help"));
 const Search = React.lazy(() => import("../views/Search"));
 const Settings = React.lazy(() => import("../views/Settings"));
-
-import * as Telemetry from "../utils/telemetry";
 
 window.addEventListener("load", () => {
   (window as any).Sentry.init({
