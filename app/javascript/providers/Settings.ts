@@ -18,7 +18,6 @@ const convertToClosestType = (key: string, value: any) => {
 
 const readNewSettings = (): Partial<HNSettings> | null => {
   const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-
   if (Object.keys(data).length === 0) return null;
 
   return {
@@ -47,11 +46,6 @@ const readLegacySettings = (): Partial<HNSettings> => {
 };
 
 export const saveSettings = (settings: HNSettings) => {
-  const { query, ...withoutQuery } = settings;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(withoutQuery));
-};
-
-export const saveLocationSettings = (settings: HNSettings) => {
   const { query, ...withoutQuery } = settings;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(withoutQuery));
 };
@@ -120,7 +114,7 @@ export const asQueryString = (settings: HNSettings) => {
 export const initializeSettings = (): HNSettings => {
   const newSettings = readNewSettings();
 
-  if (!newSettings) {
+  if (newSettings) {
     return withLocationParamSettings({
       ...DEFAULT_HN_SETTINGS,
       ...newSettings

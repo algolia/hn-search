@@ -19,7 +19,7 @@ const debouncedUrlSync = debounce(
 
     return history.push({
       pathname: window.location.pathname,
-      search: asQueryString(this.state.settings)
+      search: asQueryString(settings)
     });
   },
   500,
