@@ -153,7 +153,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
             )}
             <span className="Story_separator">|</span>
             {url && (
-              <span>
+              <span className="Story_LinkContainer">
                 <a href={url} target="_blank" className="Story_link">
                   ({domain})
                 </a>

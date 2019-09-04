@@ -64,7 +64,7 @@ const Dropdown: React.FunctionComponent<DropdownProps> = ({
             {isOpen ? <ChevronUp /> : <ChevronDown />}
           </label>
           <CSSTransition
-            classNames="DropdownAnimation"
+            classNames={`DropdownAnimation${fixed ? "Fixed" : ""}`}
             in={isOpen}
             timeout={0}
             exit={false}

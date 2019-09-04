@@ -24,6 +24,10 @@ $headerHeight: 60px;
     width: calc(100% - 324px);
     margin-right: $spacing-medium;
 
+    @media (max-width: 1200px) {
+      width: calc(100% - 240px)
+    }
+
     @media (max-width:768px) {
       width: calc(100% - 160px)
     }
@@ -47,8 +51,6 @@ $headerHeight: 60px;
 
     @media (max-width:768px) {
       flex: 1 0 40px;
-      max-width: 40px;
-      min-width: 40px;
       
       .SearchHeader_label {
         display: none;
@@ -64,6 +66,9 @@ $headerHeight: 60px;
   &_settings {
     @media (max-width: 768px){
       right: $spacing-small;
+    }
+    span {
+      @media (max-width: 768px){ display: none }
     }
 
     svg {
@@ -97,6 +102,7 @@ $headerHeight: 60px;
 
     span {
       pointer-events: none;
+      @media (max-width: 768px){ display: none }
     }
 
     @media (max-width: 480px) {
@@ -104,7 +110,7 @@ $headerHeight: 60px;
     }
 
     @media (max-width: 1024px){
-      right: 8px;
+      right: 18px;
     }
 
     a {
@@ -119,26 +125,40 @@ $headerHeight: 60px;
   }
 
   .SearchIcon {
-    width: 24px;
-    height: 24px;
     position: absolute;
     top: 9px;
     left: 12px;
     color: $orange;
     font-size: 24px;
     pointer-events: none;
+    @media (max-width: 768px){
+      top: 4px;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      @media (max-width: 768px){
+        width: 18px;
+        height: 18px;
+      }
+    }
   }
 
   .SearchInput {
     border-radius: 0;
     border-color: transparent;
     border: none;
-
     height: 42px;
     width: calc(100% - 100px);
     box-shadow: none;
     padding: $spacing-medium $spacing-small $spacing-medium 54px;
     font-weight: 300;
+
+    @media (max-width: 768px) {
+      height: 34px;
+      padding-left: 40px;
+    }
 
     @media (max-width: 1024px){
       width: 100%;
