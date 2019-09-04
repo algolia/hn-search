@@ -4,11 +4,8 @@
 .SocialShare {
   display: inline-block;
   position: relative;
-  z-index: 5;
 
   .Dropdown {
-    position: initial;
-
     &_label {
       border: none;
       color: #9d9d9d;
@@ -40,7 +37,6 @@
       appearance: none;
       border: none;
       width: 100%;
-      padding: 8px 16px;
 
       &:hover {
         color: $orange;

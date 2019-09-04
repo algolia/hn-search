@@ -93,10 +93,18 @@ $headerHeight: 60px;
     right: 124px;
     top: 50%;
     transform: translate(0, -50%);
+    user-select: none;
 
+    span {
+      pointer-events: none;
+    }
 
     @media (max-width: 480px) {
       display: none;
+    }
+
+    @media (max-width: 1024px){
+      right: 8px;
     }
 
     a {
@@ -131,6 +139,10 @@ $headerHeight: 60px;
     box-shadow: none;
     padding: $spacing-medium $spacing-small $spacing-medium 54px;
     font-weight: 300;
+
+    @media (max-width: 1024px){
+      width: 100%;
+    }
 
     &:focus {
       box-shadow: none;
@@ -214,6 +226,9 @@ $headerHeight: 60px;
   }
 
   &.dark {
+    .SearchHeader_label {
+      color: rgba(#fff, .8)
+    }
     .SearchInput {
       color: #fff;
       background-color: $dark-background-light;
@@ -236,6 +251,9 @@ $headerHeight: 60px;
   }
 
   &.light {
+    .SearchHeader_label {
+      color: $light-text-dark-small;
+    }
     .SearchInput {
       background-color: $light-background-dark;
       &::placeholder {

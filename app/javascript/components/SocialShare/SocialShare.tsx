@@ -11,28 +11,28 @@ import Dropdown from "../Dropdown/Dropdown";
 export const SocialShareItems = [
   {
     label: (
-      <button role="button">
+      <>
         Share on Twitter
         <Twitter />
-      </button>
+      </>
     ),
     value: "twitter"
   },
   {
     label: (
-      <button role="button">
+      <>
         Share on Facebook
         <Facebook />
-      </button>
+      </>
     ),
     value: "facebook"
   },
   {
     label: (
-      <button role="button">
+      <>
         Share via Email
         <Mail />
-      </button>
+      </>
     ),
     value: "email"
   }
@@ -97,6 +97,7 @@ const SocialShare: React.FunctionComponent<SocialShareProps> = ({
   return (
     <div className="SocialShare">
       <Dropdown
+        fixed
         items={SocialShareItems}
         onChange={item => {
           shareItem(item.value as SharePlatform, hit, query);

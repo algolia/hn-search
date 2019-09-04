@@ -3,6 +3,7 @@ import DayPicker from "react-day-picker";
 import format from "date-fns/format";
 import fromUnixTime from "date-fns/fromUnixTime";
 import subDays from "date-fns/subDays";
+import { CSSTransition } from "react-transition-group";
 
 import "./Datepicker.scss";
 import "react-day-picker/lib/style.css";
@@ -118,79 +119,86 @@ const DatePicker: React.FunctionComponent<DatePickerProps> = ({
   useClickOutside(datePickerRef, () => onBlur());
 
   return (
-    <div className="DatePicker" ref={datePickerRef}>
-      <div className="DatePicker-container">
-        <DayPicker
-          className="Range"
-          numberOfMonths={1}
-          selectedDays={selectedDays}
-          disabledDays={disabledDays}
-          modifiers={modifiers}
-          onDayClick={handleDayClick}
-          onDayMouseEnter={handleDayMouseEnter}
-        />
-        <form
-          className="DatePicker_form"
-          action=""
-          onSubmit={event => {
-            event.preventDefault();
-            onChange(state.from, state.to);
-          }}
-        >
-          <fieldset>
-            <h3>
-              <Calendar />
-              Custom Date Range
-            </h3>
-            <div>
-              <label htmlFor="from">From</label>
-              <input
-                id="from"
-                type="date"
-                placeholder="From date"
-                value={format(state.from || DEFAULT_FROM_DATE, "yyyy-MM-dd")}
-                onChange={({ currentTarget: { value } }) => {
-                  setState({
-                    ...state,
-                    from: value ? new Date(value) : null
-                  });
-                }}
-              />
-            </div>
-            <div>
-              <label htmlFor="to">To</label>
-              <input
-                id="to"
-                type="date"
-                placeholder="To date"
-                value={format(state.to || DEFAULT_TO_DATE, "yyyy-MM-dd")}
-                onChange={({ currentTarget: { value } }) => {
-                  setState({
-                    ...state,
-                    to: value ? new Date(value) : null
-                  });
-                }}
-              />
-            </div>
-            <div className="DatePicker_actions">
-              <button type="button" onClick={onCancel}>
-                <XCircle /> Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={!state.from}
-                onClick={() => {
-                  onBlur();
-                  wrapOnChangeWithDefaults();
-                }}
-              >
-                Apply
-              </button>
-            </div>
-          </fieldset>
-        </form>
+    <CSSTransition
+      appear={true}
+      classNames="DatepickerAnimation"
+      in={true}
+      timeout={0}
+    >
+      <div className="DatePicker" ref={datePickerRef}>
+        <div className="DatePicker-container">
+          <DayPicker
+            className="Range"
+            numberOfMonths={1}
+            selectedDays={selectedDays}
+            disabledDays={disabledDays}
+            modifiers={modifiers}
+            onDayClick={handleDayClick}
+            onDayMouseEnter={handleDayMouseEnter}
+          />
+          <form
+            className="DatePicker_form"
+            action=""
+            onSubmit={event => {
+              event.preventDefault();
+              onChange(state.from, state.to);
+            }}
+          >
+            <fieldset>
+              <h3>
+                <Calendar />
+                Custom Date Range
+              </h3>
+              <div>
+                <label htmlFor="from">From</label>
+                <input
+                  id="from"
+                  type="date"
+                  placeholder="From date"
+                  value={format(state.from || DEFAULT_FROM_DATE, "yyyy-MM-dd")}
+                  onChange={({ currentTarget: { value } }) => {
+                    setState({
+                      ...state,
+                      from: value ? new Date(value) : null
+                    });
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="to">To</label>
+                <input
+                  id="to"
+                  type="date"
+                  placeholder="To date"
+                  value={format(state.to || DEFAULT_TO_DATE, "yyyy-MM-dd")}
+                  onChange={({ currentTarget: { value } }) => {
+                    setState({
+                      ...state,
+                      to: value ? new Date(value) : null
+                    });
+                  }}
+                />
+              </div>
+              <div className="DatePicker_actions">
+                <button type="button" onClick={onCancel}>
+                  <XCircle /> Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!state.from}
+                  onClick={() => {
+                    onBlur();
+                    wrapOnChangeWithDefaults();
+                  }}
+                >
+                  Apply
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
       </div>
-    </div>
+    </CSSTransition>
   );
 };
 

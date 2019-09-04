@@ -103,7 +103,7 @@ const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
           className="SearchInput"
         />
         <div className="PoweredBy">
-          Search by
+          <span>Search by</span>
           <a
             href={POWERED_BY_LINK}
             title="Realtime Search Engine"

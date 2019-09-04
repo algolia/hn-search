@@ -68,6 +68,7 @@
   &.dark {
     .Sidebar { 
       background-color: $dark-background;
+      li,
       li a {
         color: rgba(#fff, .6)
       }
@@ -82,6 +83,16 @@
   }
 
   &.light {
-    .Sidebar { background-color: $light-background; }
+    .Sidebar { 
+      background-color: $light-background;
+      li,
+      li a {
+        color: $light-text-dark-small
+      }
+
+      li a.active {
+        color: $light-text-dark;
+      }
+    }
   }
 }
