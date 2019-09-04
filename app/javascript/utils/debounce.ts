@@ -1,25 +1,17 @@
-const debounce = (
-  func: (args: any) => void,
-  wait: number,
-  immediate?: boolean
-) => {
-  let timeout: null | number;
+function debounce(func, wait, immediate) {
+  var timeout;
   return function() {
-    const context = this;
-    const args = arguments;
-
-    const later = function() {
+    var context = this,
+      args = arguments;
+    var later = function() {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
-
-    const callNow = immediate && !timeout;
-
+    var callNow = immediate && !timeout;
     clearTimeout(timeout);
-
-    timeout = window.setTimeout(later, wait);
+    timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};
+}
 
 export default debounce;

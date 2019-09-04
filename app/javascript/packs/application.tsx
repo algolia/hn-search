@@ -1,4 +1,3 @@
-// import "core-js/stable";
 import "core-js/stable/array/find";
 import "core-js/stable/array/from";
 import "core-js/stable/array/includes";
@@ -15,8 +14,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import classnames from "classnames";
+
 import "./../src/application.scss";
 
 import SearchProvider, { SearchContext } from "../providers/SearchProvider";

@@ -1,6 +1,5 @@
 import * as React from "react";
 import algoliasearch from "algoliasearch";
-import { createBrowserHistory } from "history";
 
 import Starred from "./Starred";
 import {
@@ -10,11 +9,12 @@ import {
   Hit,
   PopularSearches
 } from "./Search.types";
-import { initializeSettings, asQueryString, saveSettings } from "./Settings";
+import { initializeSettings, saveSettings } from "./Settings";
 import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
+import getPreferredTheme from "../utils/detectColorThemePreference";
+import debouncedUrlSync from "../utils/debouncedUrlSync";
 
-const history = createBrowserHistory();
 const CSRFMeta: HTMLMetaElement = document.querySelector(
   'meta[name="csrf-token"]'
 );
@@ -35,7 +35,6 @@ interface ISearchContext {
   fetchPopularStories: () => Promise<AlgoliaResults>;
   fetchCommentsForStory: (objectID: Hit["objectID"]) => Promise<Comment>;
   setSettings: (settings: Partial<HNSettings>) => HNSettings;
-  syncUrl: (settings: HNSettings) => any;
   settings: HNSettings;
   starred: Starred;
 }
@@ -53,7 +52,7 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
   storyText: true,
   authorText: true,
   hitsPerPage: 20,
-  theme: "light",
+  theme: getPreferredTheme(),
   page: 0,
   prefix: false
 };
@@ -109,27 +108,11 @@ class SearchProvider extends React.Component {
     trackSettingsChanges(this.state.settings, newSettings);
 
     this.setState({ settings: newSettings }, () => {
-      this.syncUrl(newSettings);
       saveSettings(newSettings);
+      (debouncedUrlSync as any)(newSettings);
     });
 
     return newSettings;
-  };
-
-  syncUrl = (settings: HNSettings) => {
-    if ("requestIdleCallback" in (window as any)) {
-      return window["requestIdleCallback"](() => {
-        history.push({
-          pathname: window.location.pathname,
-          search: `${asQueryString(settings)}`
-        });
-      });
-    }
-
-    return history.push({
-      pathname: window.location.pathname,
-      search: `${asQueryString(this.state.settings)}`
-    });
   };
 
   search = (
@@ -215,8 +198,7 @@ class SearchProvider extends React.Component {
           fetchPopularStories: this.fetchPopularStories,
           fetchCommentsForStory: this.fetchCommentsForStory,
           setSettings: this.setSettings,
-          starred: this.starred,
-          syncUrl: this.syncUrl
+          starred: this.starred
         }}
       >
         {this.props.children}
@@ -239,7 +221,6 @@ export const SearchContext = React.createContext<ISearchContext>({
   starred: new Starred(),
   settings: DEFAULT_HN_SETTINGS,
   setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
-  syncUrl: (settings: HNSettings) => null,
   search: (query: string) => new Promise<AlgoliaResults>(resolve => resolve()),
   fetchPopularStories: () => new Promise<AlgoliaResults>(resolve => resolve()),
   fetchCommentsForStory: (objectID: Hit["objectID"]) =>
