@@ -8,7 +8,7 @@ import Settings from "react-feather/dist/icons/settings";
 import { SearchContext } from "../../providers/SearchProvider";
 import AlgoliaLogoWhite from "images/logo-algolia-white.svg";
 import AlgoliaLogoBlue from "images/logo-algolia-blue.svg";
-import trackCMDK from "./trackCMDK";
+import trackCMDK from "../../utils/trackCMDK";
 
 const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";

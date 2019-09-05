@@ -1,21 +1,20 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 import HNSearchLogo from "images/logo-hn-search.png";
 
 const Header: React.FunctionComponent = ({ children }) => {
   return (
     <header className="SearchHeader container">
       <div className="SearchHeader_search">
-        <a
-          className="SearchHeader_logo"
-          href="/?"
-        >
+        <Link className="SearchHeader_logo" to="/">
           <img src={HNSearchLogo} />
           <div className="SearchHeader_label">
             Search
             <br />
             Hacker News
           </div>
-        </a>
+        </Link>
         {children}
       </div>
     </header>
