@@ -1,4 +1,5 @@
 import * as React from "react";
+import { CSSTransition } from "react-transition-group";
 import fromUnixTime from "date-fns/fromUnixTime";
 import format from "date-fns/format";
 
@@ -9,11 +10,12 @@ import Menu from "react-feather/dist/icons/menu";
 
 import Dropdown from "../Dropdown/Dropdown";
 import Datepicker from "../Datepicker/index";
-import pluralize from "../../utils/pluralize";
-import { SearchContext } from "../../providers/SearchProvider";
-import { HNSettings } from "../../providers/Search.types";
+import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import SocialShare from "../SocialShare/SocialShare";
 import { DefaultLinks, StarredLinks } from "../Sidebar/Sidebar";
+import { SearchContext } from "../../providers/SearchProvider";
+import { HNSettings } from "../../providers/Search.types";
+import pluralize from "../../utils/pluralize";
 import useClickOutside from "../../utils/useClickOutside";
 
 export const STORY_FILTERS = new Map<HNSettings["type"], string>([
@@ -68,13 +70,28 @@ const SearchFiltersMenu: React.FC<{
   const { settings } = React.useContext(SearchContext);
   const menuRef = React.useRef(null);
 
-  useClickOutside(menuRef, () => setMenu(false));
+  useClickOutside(menuRef, e => {
+    if (!e.currentTarget.classList.contains("SearchFilters_menuButton")) return;
+    setMenu(false);
+  });
 
   return (
-    <div className="SearchFilters_menu" ref={menuRef}>
-      <DefaultLinks setMenu={setMenu} />
-      <StarredLinks setMenu={setMenu} user={settings.login} />
-    </div>
+    <CSSTransition
+      appear={true}
+      classNames="SearchMenuAnimation"
+      in={true}
+      timeout={0}
+    >
+      <div className="SearchFilters_menu" ref={menuRef}>
+        <DefaultLinks setMenu={setMenu} />
+        <StarredLinks setMenu={setMenu} user={settings.login} />
+        <ul>
+          <li className="SearchFilters_theme">
+            <ThemeSwitch /> Theme
+          </li>
+        </ul>
+      </div>
+    </CSSTransition>
   );
 };
 

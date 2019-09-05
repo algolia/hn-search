@@ -1,6 +1,9 @@
 import * as React from "react";
 
-const useClickOutside = (ref: React.RefObject<any>, callback: () => void) => {
+const useClickOutside = (
+  ref: React.RefObject<any>,
+  callback: (e?: React.MouseEvent<HTMLElement>) => void
+) => {
   /**
    * Alert if clicked on outside of element
    */

@@ -51,6 +51,7 @@ $headerHeight: 60px;
 
     @media (max-width:768px) {
       flex: 1 0 40px;
+      max-width: 56px;
       
       .SearchHeader_label {
         display: none;
@@ -193,6 +194,15 @@ $headerHeight: 60px;
       height: 64px;
       border-radius: 4px;
       padding-left: 58px;
+
+      @media (max-width: 768px) {
+        height: 34px;
+        padding-left: 40px;
+      }
+  
+      @media (max-width: 1024px){
+        width: 100%;
+      }
     }
 
     .SearchIcon {
@@ -219,9 +229,20 @@ $headerHeight: 60px;
 
     &_settings {
       font-size: 14px;
+      @media (max-width: 768px) {
+        a {
+          padding: $spacing-base;
+          min-width: 0;
+          height: 34px;
+        }
+      }
 
       span {
         display: initial;
+
+        @media (max-width: 768px) {
+          display: none 
+        }
       }
 
       svg {

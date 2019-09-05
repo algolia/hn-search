@@ -11,7 +11,6 @@ import Star from "react-feather/dist/icons/star";
 import TrendingUp from "react-feather/dist/icons/trending-up";
 import User from "react-feather/dist/icons/user";
 
-import { SearchContext } from "../../providers/SearchProvider";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 
 export const SidebarItems = [

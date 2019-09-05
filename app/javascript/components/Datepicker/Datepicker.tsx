@@ -40,13 +40,10 @@ const parseDate = (date: string | null, defaultDate: Date): Date => {
 };
 
 const DatePicker: React.FunctionComponent<DatePickerProps> = ({
-  isOpen,
   onCancel,
   onChange,
   onBlur
 }) => {
-  if (!isOpen) return null;
-
   const {
     settings: { dateEnd, dateStart }
   } = React.useContext(SearchContext);
