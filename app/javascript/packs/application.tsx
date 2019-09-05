@@ -12,13 +12,14 @@ import "../utils/telemetry";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import classnames from "classnames";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import classnames from "classnames";
 
 import "./../src/application.scss";
 
 import SearchProvider, { SearchContext } from "../providers/SearchProvider";
+import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 
 const About = React.lazy(() => import("../views/About"));
 const Api = React.lazy(() => import("../views/Api"));
@@ -26,12 +27,6 @@ const CoolApps = React.lazy(() => import("../views/CoolApps"));
 const Help = React.lazy(() => import("../views/Help"));
 const Search = React.lazy(() => import("../views/Search"));
 const Settings = React.lazy(() => import("../views/Settings"));
-
-window.addEventListener("load", () => {
-  (window as any).Sentry.init({
-    dsn: "https://f13a43fa91884c6fae60762be4dfb6f5@sentry.io/1520033"
-  });
-});
 
 const ThemeClass: React.FunctionComponent = ({ children }) => {
   const {
@@ -41,8 +36,8 @@ const ThemeClass: React.FunctionComponent = ({ children }) => {
   return <div className={classnames(style, theme)}>{children}</div>;
 };
 
-const App = () => {
-  return (
+const App: React.FC = () => (
+  <ErrorBoundary>
     <Router>
       <React.Suspense fallback={null}>
         <SearchProvider>
@@ -63,7 +58,7 @@ const App = () => {
         </SearchProvider>
       </React.Suspense>
     </Router>
-  );
-};
+  </ErrorBoundary>
+);
 
 ReactDOM.render(<App />, document.querySelector("#root"));

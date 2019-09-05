@@ -10,5 +10,10 @@ environment.plugins.prepend('DateFNSLocales', new webpack.ContextReplacementPlug
   /date\-fns[\/\\]/,
   new RegExp(`[/\\\\\](${supportedLocales.join('|')})[/\\\\\]`)
 ))
+environment.plugins.prepend("DefinePlugin", new webpack.DefinePlugin({
+    "DEVELOPMENT": JSON.stringify(true),
+    "PRODUCTION": JSON.stringify(false),
+  })
+)
 
 module.exports = environment.toWebpackConfig()

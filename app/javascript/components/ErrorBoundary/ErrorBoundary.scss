@@ -1,0 +1,21 @@
+
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.ErrorBoundary {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  &_content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: $spacing-large;
+    border: 1px solid $orange;
+  }
+}
