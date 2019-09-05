@@ -55,7 +55,8 @@
 
   ul{
     width: 80%;
-    margin-bottom: $spacing-small;
+    padding: $spacing-small 0;
+    margin: 0;
     margin-left: 24px;
 
     &:not(:last-child) {

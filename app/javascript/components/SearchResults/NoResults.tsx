@@ -3,6 +3,7 @@ import "./NoResults.scss";
 
 import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings, PopularSearches } from "../../providers/Search.types";
+import Star from "react-feather/dist/icons/star";
 
 const getItemsLabel = (type: HNSettings["type"]): string => {
   switch (type) {
@@ -71,7 +72,17 @@ const NoResults: React.FunctionComponent = () => {
     if (!starred.data.size) {
       return (
         <div className="NoResults">
-          <p>You have no starred items.</p>
+          <p>
+            You have no starred items. To star items, click the{" "}
+            <Star
+              size={16}
+              style={{
+                transform: "translate(0, 2px)",
+                fill: "currentColor"
+              }}
+            />{" "}
+            icon on the right side of each story
+          </p>
         </div>
       );
     }
