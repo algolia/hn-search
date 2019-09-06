@@ -9,7 +9,6 @@ const LINKS: { label: string; to: string }[] = [
   { label: "API Documentation", to: "/api" },
   { label: "Hacker News", to: "https://news.ycombinator.com" },
   { label: "Fork/Contribute", to: "https://github.com/algolia/hn-search" },
-  { label: "Status", to: "https://status.algolia.com/hn" },
   { label: "Cool Apps", to: "/cool_apps" }
 ];
 
