@@ -47,7 +47,7 @@ before 'bundle:install', 'copy_shared'
 desc 'Restart Thin'
 namespace :deploy do
   task :restart do
-    run "cd #{current_path} bundle exec thin restart -C #{deploy_to}/shared/thin.yml"
+    run "cd #{current_path} && bundle exec thin restart -C #{deploy_to}/shared/thin.yml"
   end
 end
 
