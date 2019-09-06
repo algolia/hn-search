@@ -29,7 +29,7 @@ set :git_shallow_clone, 1
 # keep 5 last releases
 set :keep_releases, 5
 
-set :node_version, 'v8.9.0'
+set :node_version, '10.16.3'
 set :yarn_version, '1.7.0'
 
 task :install_javascript_dependencies do
