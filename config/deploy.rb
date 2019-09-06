@@ -32,10 +32,6 @@ set :keep_releases, 5
 set :node_version, '10.16.3'
 set :yarn_version, '1.7.0'
 
-task :install_dependencies do
-  run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install && bundle install"
-end
-
 after 'deploy:update', 'deploy:cleanup'
 
 # configuration
@@ -45,8 +41,6 @@ task :copy_shared do
   run "cp #{deploy_to}/shared/config/application.yml #{release_path}/config/"
   run "paxctl -C #{release_path}/wkhtmltoimage-amd64"
   run "paxctl -prmsx #{release_path}/wkhtmltoimage-amd64"
-  run "mkdir -p #{deploy_to}/shared/node_modules"
-  run "ln -sf #{deploy_to}/shared/node_modules #{release_path}/node_modules"
 end
 before 'bundle:install', 'copy_shared'
 
