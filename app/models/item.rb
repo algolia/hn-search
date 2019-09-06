@@ -52,7 +52,7 @@ class Item < ApplicationRecord
     queryType 'prefixLast'
     customRanking ['desc(points)', 'desc(num_comments)']
     ranking ['typo', 'proximity', 'attribute', 'custom']
-    separatorsToIndex '+#$'
+    separatorsToIndex '+#$.'
 
     add_slave "Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming
       attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
