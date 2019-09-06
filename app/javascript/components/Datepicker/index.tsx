@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DatePickerProps } from "./DatePicker";
+import { DatePickerProps } from "./Datepicker";
 
 const LazyDatepicker: React.FC = React.lazy(() => import("./Datepicker"));
 

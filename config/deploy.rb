@@ -51,6 +51,15 @@ namespace :deploy do
   end
 end
 
+namespace :deploy do
+  namespace :assets do
+    task :precompile do
+      run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install --silent"
+      run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && RAILS_ENV=production RAILS_GROUPS=assets bundle exec rake assets:precompile"
+    end
+  end
+end
+
 # rvm
 set :rvm_ruby_string, '2.6.2'
 
