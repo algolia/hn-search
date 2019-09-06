@@ -33,7 +33,9 @@ set :node_version, 'v8.4.0'
 set :yarn_version, '1.7.0'
 
 task :install_javascript_dependencies do
-  run "source /home/prod/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install"
+  run 'source /home/prod/.nvm/nvm.sh'
+  run "nvm use #{node_version}"
+  run "cd#{release_path} && yarn install"
 end
 
 after 'deploy:update', 'deploy:cleanup'
@@ -53,7 +55,7 @@ before 'bundle:install', 'copy_shared'
 desc 'Restart Thin'
 namespace :deploy do
   task :restart do
-    run "cd #{current_path} && bundle exec thin restart -C #{deploy_to}/shared/thin.yml"
+    run "cd #{current_path} bundle exec thin restart -C #{deploy_to}/shared/thin.yml"
   end
 end
 
