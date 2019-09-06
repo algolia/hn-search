@@ -60,7 +60,6 @@ end
 # ugly workaround for bug https://github.com/capistrano/capistrano/issues/81
 before 'deploy:assets:precompile', 'install_javascript_dependencies'
 before 'deploy:assets:precompile', 'bundle:install'
-before 'deploy:assets:precompile', 'webpacker:compile'
 
 # rvm
 set :rvm_ruby_string, '2.6.2'
