@@ -32,8 +32,8 @@ set :keep_releases, 5
 set :node_version, '10.16.3'
 set :yarn_version, '1.7.0'
 
-task :install_javascript_dependencies do
-  run "source /home/prod/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install"
+task :install_dependencies do
+  run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install && bundle install"
 end
 
 after 'deploy:update', 'deploy:cleanup'
@@ -56,10 +56,6 @@ namespace :deploy do
     run "cd #{current_path} bundle exec thin restart -C #{deploy_to}/shared/thin.yml"
   end
 end
-
-# ugly workaround for bug https://github.com/capistrano/capistrano/issues/81
-before 'deploy:assets:precompile', 'install_javascript_dependencies'
-before 'deploy:assets:precompile', 'bundle:install'
 
 # rvm
 set :rvm_ruby_string, '2.6.2'
