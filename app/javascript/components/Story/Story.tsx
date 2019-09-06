@@ -143,7 +143,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 <span>
                   <StoryLink id={objectID}>
                     {!loadingComments ? (
-                      num_comments || 0
+                      <>{num_comments || 0} comments</>
                     ) : (
                       <Loader size="small" />
                     )}

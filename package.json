@@ -6,7 +6,7 @@
   "author": "Jonas Badalic <jonas.badalic@algolia.com>",
   "engines": {
     "node": "10.16.3",
-    "yarn": "1.7.0"
+    "yarn": "1.17.3"
   },
   "scripts": {
     "dev": "./bin/webpack-dev-server",
