@@ -55,7 +55,7 @@ namespace :deploy do
   namespace :assets do
     task :precompile do
       run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && yarn install --silent"
-      run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && RAILS_ENV=production RAILS_GROUPS=assets bundle exec rake assets:precompile"
+      run "source /home/hnsearch/.nvm/nvm.sh && nvm use #{node_version} && cd #{release_path} && RAILS_ENV=production NODE_ENV=production RAILS_GROUPS=assets bundle exec rake assets:precompile"
     end
   end
 end
