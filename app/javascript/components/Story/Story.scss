@@ -1,0 +1,398 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Story {
+  font-size: 14px;
+  padding: 0 $spacing-large;
+  min-height: 54px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  @media (max-width: 768px){
+    padding: 0 $spacing-medium;
+  }
+
+  &:not(:last-child){
+    border-bottom: solid 1px #eee;
+  }
+
+  &_container {
+    display: flex;
+    align-items: center;
+  }
+
+  em {
+    background: #ff0!important;
+    color: #000!important;
+    font-weight: bold;
+  }
+
+  &_image {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+    padding: 2px;
+    margin: 0 $spacing-medium 0 0;
+    border: solid 1px #eee;
+    border-radius: 3px;
+    align-self: flex-start;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &_LinkContainer {
+    @media (max-width: 768px){ display: none }
+  }
+
+  &_data {
+    white-space: normal;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  &_title {
+    width: 100%;
+    margin-bottom: $spacing-small;
+
+    em {
+      font-weight: bold;
+    }
+    a { color: black }
+  }
+
+  &_meta {
+    font-size: 10px;
+
+    a {
+      color: $text-dimmed;
+    }
+  }
+
+  &_separator {
+    margin: 0 4px;
+    color: dimgray;
+
+    &:last-child {
+      display: none;
+    }
+  }
+
+  &_comment {
+    padding: $spacing-medium 0 $spacing-small $spacing-medium;
+    color: #000;
+    font-size: 12px;
+    width: 100%;
+
+    * {
+      white-space: normal;
+    }
+  }
+}
+
+.experimental {
+  .Story {
+    padding: $spacing-medium;
+    box-shadow: 0 18px 24px rgba(#0E101D, .12);
+
+    &_container {
+      width: 100%;
+    }
+
+    em {
+      font-style: normal;
+      background: transparent !important;
+      color: #000!important;
+      font-weight: bold;
+    }
+
+    a:hover,
+    a:focus {
+      border-bottom: 1px dotted #ccc
+    }
+
+    &_separator {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &_meta {
+      a {
+        color: #9d9d9d;
+        display: inline-block;
+        border-bottom: 1px dotted transparent !important;
+
+        &:hover,
+        &:focus {
+          border-bottom: 1px dotted #ccc !important;
+        }
+      }
+
+      svg {
+        transform: translate(0, 2px);
+        height: 13px;
+        width: 13px;
+        margin-right: 4px;
+        color: #d0d0d0 !important;
+      }
+    }
+
+    &_link {
+      color: #5a96b1 !important;
+      @media (max-width: 768px){ display: none }
+    }
+
+    &_share {
+      flex: 1;
+      text-align: right;
+      min-width: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      @media (max-width: 480px) {
+        display: none;
+      }
+
+      svg {
+        width: 18px;
+      }
+
+      button {
+        padding: 0;
+        margin: 0 $spacing-small;
+        border: none;
+        color: #9d9d9d;
+        background-color: transparent;
+
+        &:focus {
+          outline: none;
+          color: $orange;
+        }
+
+        &:hover {
+          color: $orange;
+        }
+
+        &.Story_starred-active {
+          color: $orange;
+
+          svg {
+            fill: $orange;
+          }
+        }
+
+        &.Story_commentsButton {
+          background-color: #939393;
+          color: #fff;
+          font-size: 12px;
+          padding: $spacing-base;
+          font-weight: 500;
+          min-width: 25px;
+          position: relative;
+          height: 21px;
+          border-radius: 2px;
+
+          &:before {
+            content: "";
+            height: 0;
+            width: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid #939393;
+            position: absolute;
+            right: 4px;
+            bottom: -6px;
+          }
+
+          &:disabled {
+            cursor: not-allowed;
+            opacity: .7;
+          }
+
+          &:hover:not(:disabled),
+          &:focus:not(:disabled) {
+            background-color: $orange;
+            &:before {
+              border-right-color: $orange;
+            }
+          }
+        }
+      }
+    }
+
+    &_comment {
+      a {
+        color: #5a96b1 !important;
+      }
+
+      em {
+        color: #000 !important;
+        font-weight: bold;
+      }
+    }
+
+    &_title {
+      margin-bottom: $spacing-base;
+      
+      a {
+        transition: color .1s linear;
+        color: #5c5c5c;
+        font-size: 16px;
+        font-weight: 400;
+
+        &:visited {
+          color: #9c9c9c
+        }
+
+        &:hover {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.experimental {
+  .Story {
+    min-height: 88px;
+    padding-left: 18px;
+
+    &_image {
+      height: 56px;
+      width: 56px;
+      flex: 0 0 56px;
+      padding: 0;
+    }
+  }
+
+  &.dark {
+    .Story {
+      background-color: $dark-background-light;
+
+      &:not(:last-child){
+        border-bottom: 1px solid $dark-background;
+      }
+
+      em {
+        background-color: $dark-text-dark !important;
+        color: #FFF !important;
+        font-weight: bold;
+      }
+
+      &_comment,
+      .Comment_text p {
+        color: $dark-text-dark-small;
+      }
+
+      .Comment:not(:last-child){
+        border-bottom: 1px solid rgba(#fff, .2)
+      }
+      .Comments {
+        border-left: 1px solid rgba(#fff, .2)
+      }
+    }
+    .Story_meta a { 
+      color: $dark-text-dark-small
+    }
+    .Story_commentsButton {
+      color: rgba(#fff, .8) !important;
+      background-color: #696871 !important;
+
+      &:before {
+        border-right: 6px solid #696871 !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        color: #fff !important;
+        background-color: #888890 !important;
+
+        &:before {
+          border-right: 6px solid #888890 !important;
+        }
+      }
+    }
+
+    .Story_starred {
+      color: #888890 !important;
+
+      &-active svg {
+        fill: #888890 !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        svg {
+          color: #888890 !important;
+          fill: #888890 !important;
+        }
+      }
+    }
+
+    .Story_title a {
+      color: $dark-text-dark-light;
+
+      &:visited {
+        color: $dark-text-dark-small;
+      }
+    }
+  }
+
+  &.light {
+    .Story { background-color: #fff; }
+    .Story_meta a { 
+      color: $light-text-dark-small
+    }
+    .Story_commentsButton {
+      color: rgba(#21243D,.8) !important;
+      background-color: #dbddea !important;
+
+      &:before {
+        border-right: 6px solid #dbddea !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        color: #fff !important;
+        background-color: $light-text-dark !important;
+        &:before {
+          border-right: 6px solid $light-text-dark !important;
+        }
+      }
+    }
+
+    .Story_starred {
+      color: #dbddea !important;
+
+      &-active svg {
+        color: $light-text-dark !important;
+        fill: $light-text-dark !important;
+      }
+
+      &:hover:not(:disabled),
+      &:focus:not(:disabled) {
+        svg {
+          color: $light-text-dark !important;
+          fill: $light-text-dark !important;
+        }
+      }
+    }
+
+    .Story_title a {
+      color: $light-text-dark-light;
+
+      &:visited {
+        color: $light-text-dark-small;
+      }
+    }
+  }
+}

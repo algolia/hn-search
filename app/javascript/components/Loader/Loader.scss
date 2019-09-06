@@ -1,0 +1,24 @@
+.Loader {
+  box-sizing: border-box;
+  border: solid 2px transparent;
+  border-top-color: white;
+  border-left-color: white;
+  border-radius: 50%;
+  animation: Loader 400ms linear infinite;
+
+  &-regular {
+    width: 18px;
+    height: 18px;
+  }
+
+  &-small {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@keyframes Loader {
+  100% {
+    transform: rotate(1turn)
+  }
+}

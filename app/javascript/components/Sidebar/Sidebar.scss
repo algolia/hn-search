@@ -1,0 +1,99 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Sidebar {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  padding-top: 128px;
+  z-index: 10;
+  overflow: auto;
+  width: 220px;
+
+  @media (max-width: 768px) {
+    display: none
+  }
+
+  &_theme {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+  }
+
+  li {
+    width: 100%;
+    
+    &:last-child {
+      margin-bottom: $spacing-small;
+    }
+
+    a {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      padding: $spacing-medium $spacing-large $spacing-medium 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: $light-text-dark-small;
+
+      &:hover {
+        color: $light-text-dark;
+      }
+
+      &.active {
+        color: $light-text-dark;
+      }
+
+      svg {
+        width: 24px;
+        height: 24px;
+        margin-right: $spacing-large;
+      }
+    }
+  }
+
+  ul{
+    width: 80%;
+    padding: $spacing-small 0;
+    margin: 0;
+    margin-left: 24px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+
+.experimental {
+  &.dark {
+    .Sidebar { 
+      background-color: $dark-background;
+      li,
+      li a {
+        color: rgba(#fff, .6)
+      }
+      li a.active {
+        color: rgba(#fff, .85)
+      }
+
+      ul:not(:last-child) {
+        border-bottom: 1px solid rgba(#fff, .1);
+      }
+    }
+  }
+
+  &.light {
+    .Sidebar { 
+      background-color: $light-background;
+      li,
+      li a {
+        color: $light-text-dark-small
+      }
+
+      li a.active {
+        color: $light-text-dark;
+      }
+    }
+  }
+}

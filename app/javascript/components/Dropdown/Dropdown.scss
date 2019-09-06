@@ -1,0 +1,210 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Dropdown {
+  position: relative;
+
+  &_label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    text-align: left;
+    padding: 0 4px 0 8px;
+    margin: 0 8px 0 2px;
+    border: solid 1px #c3c3c3;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    color: #5C5C5C;
+    position: relative;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
+
+    svg {
+      width: 14px;
+      margin-left: $spacing-base;
+    }
+  }
+
+  &_list {
+    right: 0;
+    top: 120%;
+    border-radius: 4px;
+    border: 1px solid #c3c3c3;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    opacity: 0;
+    visibility: hidden;
+    background-color: #fff;
+    white-space: nowrap;
+    color: #5c5c5c;
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: 100%;
+      right: 13px;
+      border-width: 0 8px 8px;
+      border-style: solid;
+      border-color: #c3c3c3 transparent;
+    }
+
+    &:after{
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: 100%;
+      right: 15px;
+      border-width: 0 6px 6px;
+      border-style: solid;
+      border-color: #fff transparent;
+    }
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    li {
+      font-size: 14px;
+
+      &:not(:last-child){
+        border-bottom: 1px solid #e6e8ea;
+      }
+
+      &:hover {
+        color: $orange;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        appearance: none;
+        border: none;
+        width: 100%;
+        margin-left: 0 !important;
+        padding: $spacing-small $spacing-medium;
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+.experimental {
+  .Dropdown_label {
+    padding: 4px 16px;
+    border: none;
+  }
+
+  .Dropdown_list {
+    border-bottom: 0;
+    border: none;
+    box-shadow: 0 18px 34px rgba(#0E101D, .12) !important;
+    
+    li {
+      border: none;
+
+      button {
+        padding: 16px 24px;
+      }
+    }
+  }
+
+  &.dark {
+    .Dropdown {
+        &_label {
+        color: $dark-text-dark-light;
+        background-color: #17171e;
+      }
+
+      &_list {
+        background-color: #17171e;
+        color: rgba(#fff, .8);
+
+        &:before {
+          border-color: transparent;
+        }
+        &:after {
+          border-color: #17171e transparent;
+        }
+
+        li {
+          color: $dark-text-dark-light;
+
+          button {
+            background-color: #17171e;
+            color: rgba(#fff, .8);
+          }
+
+          &:not(:last-child){
+            border-bottom: 1px solid $dark-background;
+          }
+        }
+      }
+    }
+  }
+
+  &.light {
+    .Dropdown {
+      &_label {
+        color: $light-text-dark-light;
+        background-color: $light-button-background;
+      }
+
+      &_list {
+        background-color: #FFF;
+        box-shadow: $light-shadow;
+
+        &:before {
+          border-color: transparent;
+        }
+        &:after {
+          border-color: #fff transparent;
+        }
+
+        li {
+          color: $light-text-dark-light;
+          &:not(:last-child){
+            border-bottom: 1px solid #eee;
+          }
+        }
+      }
+    }
+  }
+}
+
+.DropdownAnimationFixed {
+  &-enter {
+    opacity: 0;
+    transform: translate(-100%, -6px);
+    transform-origin: center bottom;
+  } 
+  &-enter-done{
+    opacity: 1;
+    transform: translate(-100%, 0);
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+.DropdownAnimation {
+  &-enter {
+    opacity: 0;
+    transform: translate(0%, -6px);
+    transform-origin: center bottom;
+  } 
+  &-enter-done{
+    opacity: 1;
+    transform: translate(0%, 0);
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}

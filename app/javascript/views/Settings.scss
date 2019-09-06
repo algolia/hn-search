@@ -1,0 +1,152 @@
+@import "./../src/variables.scss";
+@import "./../src/colors.scss";
+
+.Settings {
+  padding-top: 100px;
+  font-size: 14px;
+  background-color: #f6f6ef;
+
+  h2 {
+    color: #5c5c5c;
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: $spacing-large;
+  }
+
+  &_fieldset {
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 0;
+    flex-direction: column;
+  }
+
+  &_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $spacing-medium;
+  }
+
+  &_actions {
+    padding: 0 $spacing-large $spacing-large;
+    text-align: right;
+
+    button {
+      padding: $spacing-small $spacing-medium;
+      border: 0px solid #ccc;
+      border-radius: 4px;
+      color: white;
+      background-color: $orange;
+
+      &:disabled {
+        opacity: .7;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  select, input {
+    color: #5c5c5c;
+    max-width: 100%;
+  }
+
+  label {
+    width: 50%;
+    margin-right: $spacing-large;
+    text-align: right;
+    color: #5c5c5c;
+  }
+
+  &_inputContainer {
+    width: 50%;
+  }
+
+  #login {
+    width: 240px;
+    border-radius: 4px;
+    padding: $spacing-base $spacing-small;
+    border: 1px solid rgb(166, 166, 166);
+  }
+}
+
+.experimental {
+  .Settings {
+    background-color: #fff;
+    padding-top: 208px;
+
+    @media (min-width: 769px){
+      padding-left: 254px;
+    }
+
+    @media (max-width: 769px){
+      padding-top: 90px;
+    }
+
+    &_actions button {
+      padding: $spacing-medium + 4px;
+    }
+
+    &_fieldset {
+      background: #f7f7f7;
+      border: 1px solid rgb(253, 250, 250);
+      margin: $spacing-medium;
+    }
+
+    h2 {
+      color: #5c5c5c;
+      border-bottom: 1px solid transparent;
+    }
+  }
+}
+
+.experimental {
+  &.dark {
+    .Settings {
+      background-color: $dark-background;
+      h2 { color: $dark-text-dark-light }
+      label {
+        color: $dark-text-dark-light
+      }
+      fieldset {
+        border:none;
+        background-color: $dark-background-light;
+      }
+
+      &_actions button {
+        color: rgba(#fff, .8);
+        background-color: rgba(#17171e, .4);
+
+        &:disabled {
+          color: $dark-text-dark;
+          background-color: rgba(197, 201, 224, 0.4);
+        }
+      }
+    }
+  }
+  &.light {
+    .Settings {
+      h2 {
+        color: $light-text-dark;
+      }
+      label {
+        color: $light-text-dark-light
+      }
+      fieldset {
+        background-color: #f5f5fa;
+      }
+
+      &_actions button {
+        color: #fff;
+        background-color: $light-text-dark;
+
+        &:disabled {
+          color: $light-text-dark;
+          background-color: rgba(197, 201, 224, 0.4);
+        }
+      }
+    }
+  }
+}
+

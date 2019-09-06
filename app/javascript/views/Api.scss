@@ -1,0 +1,41 @@
+@import "./../src/variables.scss";
+
+.Layout-HN {
+  p.text-center {
+    text-align: center;
+  }
+
+  pre {
+    background-color: #e1e1e1;
+    border: 1px solid #d7d7d7;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: $spacing-large;
+    overflow: hidden;
+
+    li {
+      padding-bottom: $spacing-small;
+    }
+  }
+
+  .Layout_collapsible {
+    margin: $spacing-small 0 0 $spacing-medium;
+  }
+
+  table {
+    width: 100%;
+    border-spacing: 0;
+
+    td {
+      border-bottom: 1px solid #ddd;
+      padding: $spacing-small 0;
+    }
+  }
+
+  th {
+    border-bottom: 1px solid #b7b7b7;
+    font-weight: 700;
+    padding: .75em 0;
+    text-align: left;
+  }
+}

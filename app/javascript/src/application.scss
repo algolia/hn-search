@@ -1,0 +1,74 @@
+@import "./normalize";
+
+@import "./colors.scss";
+@import "./variables.scss";
+
+* {
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 200;
+}
+
+html .experimental,
+body .experimental {
+  color: #000;
+  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body {
+  color: #000;
+  -webkit-font-smoothing: antialiased;
+  font-family: Verdana,Geneva,sans-serif
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  transition: color .1s linear;
+  color: #477dca;
+  text-decoration: none;
+}
+
+code, pre {
+  font-family: monospace,monospace;
+}
+
+ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.container{
+  @media screen and (min-width: 1200px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+input[type=search], input[type=text] {
+  -webkit-appearance: none; // prevents the ugly shadow on iOS inputs
+}
+
+main > div {
+  min-height: 100vh;
+}
+
+.experimental.light {
+  background-color: $light-background;
+}
+.experimental.dark {
+  background-color: $dark-background;
+}

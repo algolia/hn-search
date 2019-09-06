@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get '/legacy' => redirect('/')
   get '/status' => redirect('http://status.algolia.com/hn')
 
-  ['about', 'settings', 'help', 'api', 'cool_apps', 'hot', 'show-hn', 'ask-hn', 'polls', 'jobs', 'starred', 'user'].each do |path|
+  %w[about settings help api cool_apps hot show-hn ask-hn polls jobs starred user].each do |path|
     get "/#{path}", controller: 'home', action: 'index'
   end
   get '/story/:id/:title', controller: 'home', action: 'index'

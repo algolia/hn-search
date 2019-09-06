@@ -1,0 +1,152 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.Layout {
+  background-color: #f6f6ef;
+  padding: 112px $spacing-large $spacing-large $spacing-large;
+  min-height: calc(100vh - 98px);
+  color: #5c5c5c;
+  font-size: 14px;
+
+  dl dt {
+    margin-top: $spacing-medium;
+  }
+
+  dd {
+    margin-left: 0;
+  }
+
+  h3 {
+    color: #000;
+    font-size: 20px;
+    margin: $spacing-medium 0 $spacing-base;
+  }
+
+  p {
+    color: #5c5c5c;
+    font-size: 14px;
+    margin-bottom: $spacing-small;
+  }
+
+  code {
+    color: #1c709b;
+    background-color: #edf7fc;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: pre-wrap;
+    display: inline-block;
+    margin: 2px 0;
+  }
+
+  &_panel {
+    border-radius: 4px;
+    border: solid 1px #d0d0d0;
+    padding: $spacing-medium $spacing-large;
+    margin-bottom: $spacing-large;
+
+    h2 {
+      margin-bottom: $spacing-medium;
+      font-weight: 600;
+    }
+  }
+
+  &_label {
+    text-transform: capitalize;
+    background-color: #4699ff;
+    padding: $spacing-base $spacing-small;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  &_hoverable {
+    padding: 1px 2px;
+    border-radius: 2px;
+  }
+
+  &_property {
+    font-weight: 700;
+  }
+
+  &-About,
+  &-Cool {
+    li {
+      margin-bottom: $spacing-small;
+    }
+  }
+
+  .type-number { color: blue }
+  .type-string { color: green }
+  .type-null { color: gray }
+}
+
+.experimental {
+  &.dark {
+    .Layout {
+      padding-top: 170px;
+      background-color: $dark-background-light;
+
+      .Layout_property {
+        color: rgba(#fff, .8)
+      }
+      .type-string, .type-number, .type-null {
+        font-weight: bold;
+        color: rgba(#fff, .8)
+      }
+
+      table {
+        td, th {
+          border-bottom: 1px solid $dark-background;
+        }
+      }
+
+      p, h3, li, h2, table td, table, th, dt {
+        color: rgba(#fff, .8);
+      }
+
+      &_panel {
+        border: none;
+      }
+
+      code, pre {
+        border: none;
+        background-color: $dark-button-background-dark;
+        color: rgba(#fff, .8)
+      }
+    }
+  }
+  &.light {
+    .Layout {
+      background-color: #fff;
+      padding-top: 170px;
+
+      .Layout_property {
+        color: $light-text-dark;
+      }
+      .type-string, .type-number, .type-null {
+        font-weight: bold;
+        color: $light-text-dark
+      }
+
+      table {
+        td, th {
+          border-bottom: 1px solid $dark-background;
+        }
+      }
+
+      p, h3, li, h2, table td, table, th, dt {
+        color: $light-text-dark
+      }
+
+      &_panel {
+        border: none;
+      }
+
+      code, pre {
+        border: none;
+        background-color: $light-background-dark;
+        color: $light-text-dark;
+      }
+    }
+  }
+}

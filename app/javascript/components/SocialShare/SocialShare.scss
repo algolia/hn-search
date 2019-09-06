@@ -1,0 +1,137 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.SocialShare {
+  display: inline-block;
+  position: relative;
+
+  .Dropdown {
+    &_label {
+      border: none;
+      color: #9d9d9d;
+
+      &:hover {
+        color: $orange;
+      }
+    }
+    
+    svg + svg {
+      display: none;
+    }
+  }
+
+  ul {
+    width: 220px;
+    background-color: #fff;
+    overflow: hidden;
+
+    li {
+      padding: 0;
+    }
+
+    li button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #9d9d9d;
+      appearance: none;
+      border: none;
+      width: 100%;
+
+      &:hover {
+        color: $orange;
+
+        svg {
+          color: $orange;
+        }
+      }
+    }
+  }
+}
+
+.experimental {
+  .SocialShare {
+    .Dropdown_list {
+      box-shadow: 0 18px 34px rgba(#0E101D, .12) !important;
+    }
+    .Dropdown_label {
+      border: none;
+      padding: 0 4px 0 8px;
+    }
+  }
+
+  &.dark {
+    .SocialShare {
+      .Dropdown_label {
+        background-color: transparent;
+        color:#696871 !important;
+
+        svg {
+          color: #888890 !important;
+        }
+
+        &:focus:not(:disabled),
+        &:hover:not(:disabled) {
+          color: rgba(#fff, .8) !important;
+          
+          svg {
+            color: rgba(#fff, .8) !important;
+          }
+        }
+      }
+    }
+  }
+
+  &.light {
+    .SocialShare {
+      .Dropdown {
+        &_label {
+          color: $light-text-dark-small;
+          background-color: transparent;
+
+          svg {
+            color: #dbddea !important;
+          }
+
+          &:focus:not(:disabled),
+          &:hover:not(:disabled) {
+            svg {
+              color: $light-text-dark-light !important;
+            }
+          }
+        }
+
+        &_list {
+          background-color: #FFF;
+          border: none;
+          box-shadow: $light-shadow;
+
+          &:before {
+            border-color: transparent;
+          }
+          &:after {
+            border-color: #fff transparent;
+          }
+
+          li {
+            button {
+              border-bottom: 0;
+              color: $light-text-dark-light;
+
+              svg {
+                color: $light-text-dark-light;
+              }
+            }
+
+            &:focus:not(:disabled),
+            &:hover:not(:disabled) {
+              svg {
+                color: $light-text-dark-light !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

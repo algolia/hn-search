@@ -1,0 +1,34 @@
+@import "./../../src/variables.scss";
+@import "./../../src/colors.scss";
+
+.NoResults {
+  margin-top: $spacing-large;
+  display: flex;
+  justify-content: center;
+  padding: $spacing-large;
+
+  &_changeSettings {
+    display: inline-block;
+  }
+
+  &_suggestions {
+    margin-top: $spacing-medium;
+  }
+
+  &_popular {
+    margin-top: $spacing-large;
+    
+    a {
+      margin: $spacing-small;
+    }
+  }
+}
+
+.experimental {
+  &.dark {
+    color: rgba(#fff, .8)
+  }
+  &.light {
+    color: $light-text-dark;
+  }
+}

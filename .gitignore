@@ -82,3 +82,10 @@ pickle-email-*.html
 /config/application.yml
 hn-search.sublime-project
 hn-search.sublime-workspace
+
+/public/packs/
+/public/packs-test/
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

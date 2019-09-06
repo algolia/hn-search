@@ -1,0 +1,27 @@
+@import "normalize-scss";
+
+@import "./colors.scss";
+@import "./variables.scss";
+
+h1, h2, h3, h4, h5 {
+  font-weight: 200;
+}
+
+html, body {
+  color: #9d9d9d;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+
+//LAYOUT
+.container{
+  @media screen and (min-width: 1200px) {
+    width: 1200px;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}

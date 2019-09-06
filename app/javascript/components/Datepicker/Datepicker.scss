@@ -1,0 +1,274 @@
+@import "./../../src/colors.scss";
+@import "./../../src/variables.scss";
+
+.DatePicker {
+  left: 0;
+  top: 40px;
+  width: 100%;
+  position: absolute;
+  background: rgba(246,246,239,.8);
+
+  &-container {
+    margin: $spacing-small;
+    display: flex;
+    background-color: #fff;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  .DayPicker {
+    @media (min-width: 769px){
+      width: 50%;
+    }
+
+    @media (max-width: 768px){
+      display: none;
+    }
+  }
+
+  .DayPicker-Month {
+    width: 100%;
+  }
+
+  &_form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: 769px){
+      width: 50%;
+    }
+  }
+
+  fieldset {
+    border: none;
+    background-color: #fff;
+  }
+
+  label {
+    display: block;
+    text-align: left;
+    margin-bottom: $spacing-base;
+  }
+
+  input {
+    font-size: 16px;
+    color: #5c5c5c;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.06);
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    height: 32px;
+    margin-bottom: $spacing-small;
+    padding: 0 $spacing-small;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #477DCF;
+    }
+  }
+
+  h3 {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: $spacing-medium;
+
+    svg { height: 18px }
+  }
+  
+  &_actions {
+    margin-top: $spacing-small;
+    display: flex;
+    justify-content: flex-start;
+
+    button {
+      background: #fff;
+      color: #9d9d9d;
+      border: solid 1px #b6b6b6;
+      margin-right: $spacing-small !important;
+      display: flex;
+      align-items: center;
+      padding: $spacing-small $spacing-small;
+      border-radius: 4px;
+
+      svg {
+        width: 12px;
+        height: 12px;
+        margin-right: $spacing-base;
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  border-radius: 0;
+  background-color: $orange !important;
+  color: #fff !important;
+  &:focus {
+    outline: none;
+  }
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  border-radius: 0;
+  background-color: rgba($orange, .3) !important;
+  color: #fff !important;
+}
+
+.experimental {
+  .DatePicker {
+    top: 80px;
+    background: transparent;
+
+    &-container {
+      box-shadow: 0 5px 15px -5px rgba(37,44,97,.15), 0 2px 15px -13px rgba(93,100,148,.2);
+    }
+
+    @media (max-width: 768px) {
+      top: 44px;
+    }
+
+    input {
+      padding: 20px 16px
+    }
+
+    &_actions {
+      justify-content: space-between;
+
+      button {
+        flex: 1 1 100%;
+        text-align: center !important;
+        &:last-child {
+          margin-right: 0 !important;
+        }
+      }
+    }
+
+    &-container {
+      margin: 0;
+      padding: $spacing-small;
+      
+      @media (min-width: 769px) {
+        margin-left: 254px;
+        width: calc(100% - 278px)
+      }
+    }
+  }
+}
+
+.experimental {
+  &.dark {
+    .DatePicker {
+      &-container {
+        box-shadow: 0 5px 15px -5px rgba(#22222B,.8), 0 2px 15px -13px rgba(#22222B,.9);
+      }
+
+      .DatePicker-container, fieldset {
+        background-color: $dark-background-light;
+      }
+
+      .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+        border-radius: 0;
+        background-color: rgba(#fff, .8) !important;
+        color: $light-text-dark !important;
+      }
+      .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+        border-radius: 0;
+        background-color: rgba(#fff, .8) !important;
+        color: $light-text-dark !important;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .DayPicker-Day.DayPicker-Day--today {
+        color:rgba(#fff, .8);
+      }
+
+      .DayPicker-Weekday,
+      .DayPicker-Caption {
+        color: rgba(#fff, .8);
+      }
+
+      h3, label, input {
+        color: rgba(#fff, .8);
+      }
+
+      input {
+        border-color: rgba(#fff, .8);
+        color: $dark-background;
+      }
+
+      .DatePicker_actions button {
+        padding: 14px;
+        background-color: $light-button-background;
+        border: none;
+        color: rgba(#fff, .8);
+        font-size: 14px;
+      }
+    }
+  }
+
+  &.light {
+    .DatePicker {
+      .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+        border-radius: 0;
+        background-color: rgba($light-button-background, .3) !important;
+        color: $light-text-dark !important;
+      }
+      .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+        border-radius: 0;
+        background-color: $light-button-background !important;
+        color: $light-text-dark !important;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .DayPicker-Day.DayPicker-Day--today {
+        color: $light-text-dark;
+      }
+
+      .DayPicker-Weekday,
+      .DayPicker-Caption {
+        color: $light-text-dark;
+      }
+
+      h3, label, input {
+        color: $light-text-dark;
+      }
+
+      input {
+        border-color: $light-text-dark;
+      }
+
+      .DatePicker_actions button {
+        padding: 14px;
+        background-color: $light-button-background;
+        border: none;
+        color: $light-text-dark;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.DatepickerAnimation {
+  &-appear {
+    opacity: 0;
+    transform: translate(0, 4px) scale(.98)
+  } 
+
+  &-appear-done{
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+    transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
