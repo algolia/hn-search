@@ -52,7 +52,7 @@ default: &default
 
 development:
   <<: *default
-  compile: true
+  compile: false
 
   # Verifies that versions and hashed value of the package contents in the project's package.json
   check_yarn_integrity: true

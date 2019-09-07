@@ -3,18 +3,14 @@
 
 .Story {
   font-size: 14px;
-  padding: 0 $spacing-large;
-  min-height: 54px;
+  padding: 0 $spacing-large 0 $spacing-xlarge;
+  min-height: 40px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 
   @media (max-width: 768px){
     padding: 0 $spacing-medium;
-  }
-
-  &:not(:last-child){
-    border-bottom: solid 1px #eee;
   }
 
   &_container {
@@ -55,19 +51,41 @@
   }
 
   &_data {
-    white-space: normal;
-    overflow: hidden;
-    margin: 8px 0;
+    margin: 4px 0;
   }
 
   &_title {
     width: 100%;
-    margin-bottom: $spacing-small;
+    position: relative;
+    margin-bottom: $spacing-base;
 
     em {
       font-weight: bold;
     }
     a { color: black }
+
+    .Story_rank {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #828282;
+      text-align: right;
+      width: 24px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      transform: translate(-110%, 0);
+      user-select: none;
+    }
+
+    .Story_link {
+      color: #828282;
+      font-size: 12px;
+      margin-left: $spacing-base;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &_meta {
@@ -88,7 +106,7 @@
   }
 
   &_comment {
-    padding: $spacing-medium 0 $spacing-small $spacing-medium;
+    padding: $spacing-small 0;
     color: #000;
     font-size: 12px;
     width: 100%;
@@ -106,6 +124,14 @@
 
     &_container {
       width: 100%;
+    }
+
+    &_rank {
+      display: none;
+    }
+
+    &:not(:last-child){
+      border-bottom: 1px solid #eee;
     }
 
     em {
