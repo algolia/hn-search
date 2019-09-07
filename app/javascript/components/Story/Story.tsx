@@ -66,7 +66,10 @@ const extractDomain = (url: string): string => {
   return link.hostname;
 };
 
-const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
+const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
+  hit,
+  index
+}) => {
   const {
     points,
     objectID,
@@ -88,7 +91,6 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
   const isExperimental = style === "experimental";
   const showThumbnailImage =
     showThumbnails && isExperimental && hit._tags[0] === "story";
-  const domain = isExperimental ? extractDomain(hit.url) : hit.url;
 
   const [starred, setStarred] = React.useState(
     starredItems.has(parseInt(objectID))
@@ -113,6 +115,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
       <div className="Story_container">
         {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
+          <span className="Story_rank">{index}.</span>
           <div className="Story_title">
             <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
           </div>
@@ -151,11 +154,11 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 </span>
               </>
             )}
-            <span className="Story_separator">|</span>
+            {url && <span className="Story_separator">|</span>}
             {url && (
               <span className="Story_LinkContainer">
                 <a href={url} target="_blank" className="Story_link">
-                  ({domain})
+                  {extractDomain(hit.url)}
                 </a>
               </span>
             )}

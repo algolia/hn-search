@@ -3,11 +3,12 @@
 
 .Story {
   font-size: 14px;
-  padding: 0 $spacing-large;
-  min-height: 54px;
+  padding: 0 $spacing-large 0 $spacing-xlarge;
+  min-height: 44px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  position: relative;
 
   @media (max-width: 768px){
     padding: 0 $spacing-medium;
@@ -16,6 +17,18 @@
   &_container {
     display: flex;
     align-items: center;
+  }
+
+  &_rank {
+    position: absolute;
+    left: $spacing-base;
+    top: 4px;
+    color: #828282;
+    text-align: right;
+    width: 24px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   em {
@@ -53,12 +66,12 @@
   &_data {
     white-space: normal;
     overflow: hidden;
-    margin: 8px 0;
+    margin: 4px 0;
   }
 
   &_title {
     width: 100%;
-    margin-bottom: $spacing-small;
+    margin-bottom: $spacing-base;
 
     em {
       font-weight: bold;
@@ -102,6 +115,10 @@
 
     &_container {
       width: 100%;
+    }
+
+    &_rank {
+      display: none;
     }
 
     em {
