@@ -13,10 +13,6 @@
     padding: 0 $spacing-medium;
   }
 
-  &:not(:last-child){
-    border-bottom: solid 1px #eee;
-  }
-
   &_container {
     display: flex;
     align-items: center;
