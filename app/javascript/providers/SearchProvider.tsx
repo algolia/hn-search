@@ -15,9 +15,17 @@ import { trackSettingsChanges } from "./Analytics";
 import getPreferredTheme from "../utils/detectColorThemePreference";
 import debouncedUrlSync from "../utils/debouncedUrlSync";
 
+enum ENV {
+  production = "https://hn.algolia.com",
+  development = "http://localhost:3000"
+}
+const HN_API = ((): string =>
+  process.env.NODE_ENV === "production" ? ENV.production : ENV.development)();
+
 const CSRFMeta: HTMLMetaElement = document.querySelector(
   'meta[name="csrf-token"]'
 );
+
 const REQUEST_HEADERS = {
   "X-CSRF-TOKEN": CSRFMeta.content
 };
@@ -158,13 +166,13 @@ class SearchProvider extends React.Component {
   };
 
   fetchPopularSearches = (): Promise<PopularSearches> => {
-    return fetch("/popular.json", {
+    return fetch(`${HN_API}/popular.json`, {
       headers: REQUEST_HEADERS
     }).then(resp => resp.json());
   };
 
   fetchCommentsForStory = (objectID: Hit["objectID"]): Promise<Comment> => {
-    return fetch(`https://hn.algolia.com/api/v1/items/${objectID}`, {
+    return fetch(`${HN_API}/api/v1/items/${objectID}`, {
       headers: REQUEST_HEADERS
     })
       .then(resp => resp.json())

@@ -118,7 +118,7 @@ const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
           <div className="Story_title">
             <span className="Story_rank">{index}.</span>
             <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
-            {url && (
+            {!isExperimental && url && (
               <a href={url} target="_blank" className="Story_link">
                 ({extractDomain(hit.url)})
               </a>
@@ -157,6 +157,14 @@ const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
                     )}
                   </StoryLink>
                 </span>
+              </>
+            )}
+            {isExperimental && url && (
+              <>
+                <span className="Story_separator">|</span>
+                <a href={url} target="_blank" className="Story_link">
+                  ({extractDomain(hit.url)})
+                </a>
               </>
             )}
             <StoryComment hit={hit} />
