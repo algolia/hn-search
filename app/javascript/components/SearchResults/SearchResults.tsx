@@ -13,6 +13,10 @@ const computeOffsetIndex = (
   return hitsPerPage * currentPage + hitIndex + 1;
 };
 
+const shouldShowNoResults = (hits, isLoading): boolean => {
+  return hits !== null && (!hits.length && !isLoading);
+};
+
 const SearchResults: React.FunctionComponent = () => {
   const {
     results,
@@ -28,15 +32,16 @@ const SearchResults: React.FunctionComponent = () => {
 
   return (
     <section className="SearchResults">
-      {(!results.hits || !results.hits.length) && !loading && <NoResults />}
+      {shouldShowNoResults(results.hits, loading) && <NoResults />}
       <div className="SearchResults_container">
-        {results.hits.map((hit, index) => (
-          <Story
-            index={computeOffsetIndex(index, hitsPerPage, page)}
-            hit={hit}
-            key={hit.objectID}
-          />
-        ))}
+        {results.hits &&
+          results.hits.map((hit, index) => (
+            <Story
+              index={computeOffsetIndex(index, hitsPerPage, page)}
+              hit={hit}
+              key={hit.objectID}
+            />
+          ))}
       </div>
     </section>
   );

@@ -59,7 +59,7 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
 
 const DEFAULT_SEARCH_STATE = {
   results: {
-    hits: [],
+    hits: null,
     query: "",
     nbHits: 0,
     processingTimeMS: 0,
@@ -165,7 +165,7 @@ class SearchProvider extends React.Component {
 
   fetchCommentsForStory = (objectID: Hit["objectID"]): Promise<Comment> => {
     return fetch(`https://hn.algolia.com/api/v1/items/${objectID}`, {
-      // headers: REQUEST_HEADERS
+      headers: REQUEST_HEADERS
     })
       .then(resp => resp.json())
       .then(comments => {
@@ -209,7 +209,7 @@ class SearchProvider extends React.Component {
 
 export const SearchContext = React.createContext<ISearchContext>({
   results: {
-    hits: [],
+    hits: null,
     query: "",
     nbHits: 0,
     processingTimeMS: 0,

@@ -115,9 +115,14 @@ const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
       <div className="Story_container">
         {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
-          <span className="Story_rank">{index}.</span>
           <div className="Story_title">
+            <span className="Story_rank">{index}.</span>
             <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
+            {url && (
+              <a href={url} target="_blank" className="Story_link">
+                ({extractDomain(hit.url)})
+              </a>
+            )}
           </div>
           <div className="Story_meta">
             <span>
@@ -153,14 +158,6 @@ const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
                   </StoryLink>
                 </span>
               </>
-            )}
-            {url && <span className="Story_separator">|</span>}
-            {url && (
-              <span className="Story_LinkContainer">
-                <a href={url} target="_blank" className="Story_link">
-                  {extractDomain(hit.url)}
-                </a>
-              </span>
             )}
             <StoryComment hit={hit} />
           </div>

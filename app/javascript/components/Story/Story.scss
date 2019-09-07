@@ -4,11 +4,10 @@
 .Story {
   font-size: 14px;
   padding: 0 $spacing-large 0 $spacing-xlarge;
-  min-height: 44px;
+  min-height: 40px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  position: relative;
 
   @media (max-width: 768px){
     padding: 0 $spacing-medium;
@@ -17,18 +16,6 @@
   &_container {
     display: flex;
     align-items: center;
-  }
-
-  &_rank {
-    position: absolute;
-    left: $spacing-base;
-    top: 4px;
-    color: #828282;
-    text-align: right;
-    width: 24px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
   }
 
   em {
@@ -64,19 +51,41 @@
   }
 
   &_data {
-    white-space: normal;
-    overflow: hidden;
     margin: 4px 0;
   }
 
   &_title {
     width: 100%;
+    position: relative;
     margin-bottom: $spacing-base;
 
     em {
       font-weight: bold;
     }
     a { color: black }
+
+    .Story_rank {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #828282;
+      text-align: right;
+      width: 24px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      transform: translate(-110%, 0);
+      user-select: none;
+    }
+
+    .Story_link {
+      color: #828282;
+      font-size: 12px;
+      margin-left: $spacing-base;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &_meta {
@@ -97,7 +106,7 @@
   }
 
   &_comment {
-    padding: $spacing-medium 0 $spacing-small $spacing-medium;
+    padding: $spacing-small 0;
     color: #000;
     font-size: 12px;
     width: 100%;
@@ -119,6 +128,10 @@
 
     &_rank {
       display: none;
+    }
+
+    &:not(:last-child){
+      border-bottom: 1px solid #eee;
     }
 
     em {
