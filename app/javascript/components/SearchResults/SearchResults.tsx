@@ -17,7 +17,7 @@ const shouldShowNoResults = (hits, isLoading): boolean => {
   return hits !== null && (!hits.length && !isLoading);
 };
 
-const SearchResults: React.FunctionComponent = () => {
+const SearchResults: React.FC = () => {
   const {
     results,
     loading,

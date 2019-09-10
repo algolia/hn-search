@@ -16,13 +16,13 @@ import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
 import StoryImage from "./StoryImage";
 
-const StoryLink: React.FunctionComponent<{
+const StoryLink: React.FC<{
   id: Hit["objectID"];
 }> = ({ id, children }) => {
   return <a href={`https://news.ycombinator.com/item?id=${id}`}>{children}</a>;
 };
 
-const AuthorLink: React.FunctionComponent<{
+const AuthorLink: React.FC<{
   username: string;
 }> = ({ username, children }) => {
   return (
@@ -46,7 +46,7 @@ const getTitle = (hit: Hit) => {
   return hit.title || hit.story_title || hit.story_text;
 };
 
-const StoryComment: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
+const StoryComment: React.FC<{ hit: Hit }> = ({ hit }) => {
   const { _highlightResult } = hit;
   const type = hit._tags[0];
 
@@ -60,16 +60,28 @@ const StoryComment: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
   return <div className="Story_comment">{stripHighlight(text)}</div>;
 };
 
+const HighlightURL: React.FC<{ hit: Hit }> = ({
+  hit: { url, _highlightResult }
+}) => {
+  const highlighted = `(${_highlightResult.url.value})`;
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      className="Story_link"
+      dangerouslySetInnerHTML={{ __html: highlighted }}
+    />
+  );
+};
+
 const extractDomain = (url: string): string => {
   const link = document.createElement("a");
   link.href = url;
   return link.hostname;
 };
 
-const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
-  hit,
-  index
-}) => {
+const Story: React.FC<{ hit: Hit; index: number }> = ({ hit, index }) => {
   const {
     points,
     objectID,
@@ -118,11 +130,7 @@ const Story: React.FunctionComponent<{ hit: Hit; index: number }> = ({
           <div className="Story_title">
             <span className="Story_rank">{index}.</span>
             <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
-            {!isExperimental && url && (
-              <a href={url} target="_blank" className="Story_link">
-                ({extractDomain(hit.url)})
-              </a>
-            )}
+            {!isExperimental && url && <HighlightURL hit={hit} />}
           </div>
           <div className="Story_meta">
             <span>

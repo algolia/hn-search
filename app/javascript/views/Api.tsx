@@ -6,7 +6,7 @@ import "./Api.scss"
 
 import Layout from './containers/Layout';
 
-const Api: React.FunctionComponent<RouteComponentProps> = props => {
+const Api: React.FC<RouteComponentProps> = props => {
   return (
     <Layout {...props} title={"HN Search API"}>
       <section className="page api-doc ng-scope">

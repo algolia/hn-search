@@ -31,7 +31,7 @@ interface HNSettings {
   showThumbnails: boolean;
 }
 
-const Settings: React.FunctionComponent<RouteComponentProps> = props => {
+const Settings: React.FC<RouteComponentProps> = props => {
   const { settings, setSettings } = React.useContext(SearchContext);
 
   const [state, setState] = React.useState({

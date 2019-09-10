@@ -39,7 +39,7 @@ const parseDate = (date: string | null, defaultDate: Date): Date => {
   return fromUnixTime(parseInt(date));
 };
 
-const DatePicker: React.FunctionComponent<DatePickerProps> = ({
+const DatePicker: React.FC<DatePickerProps> = ({
   onCancel,
   onChange,
   onBlur

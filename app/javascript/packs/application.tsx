@@ -28,7 +28,7 @@ const Help = React.lazy(() => import("../views/Help"));
 const Search = React.lazy(() => import("../views/Search"));
 const Settings = React.lazy(() => import("../views/Settings"));
 
-const ThemeClass: React.FunctionComponent = ({ children }) => {
+const ThemeClass: React.FC = ({ children }) => {
   const {
     settings: { style, theme }
   } = React.useContext(SearchContext);

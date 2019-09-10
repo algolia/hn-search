@@ -19,7 +19,7 @@ const ABOUT_LINKS = [
   }
 ];
 
-const About: React.FunctionComponent<RouteComponentProps> = props => {
+const About: React.FC<RouteComponentProps> = props => {
   return (
     <Layout {...props} title="About">
       <p>
