@@ -21,7 +21,7 @@ const PossiblyExternalLink = ({ to, children }) =>
     <Link to={to}>{children}</Link>
   );
 
-const Footer: React.FunctionComponent = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="Footer">
       <ul className="Footer_list">

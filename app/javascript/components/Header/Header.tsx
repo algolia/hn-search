@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import HNSearchLogo from "images/logo-hn-search.png";
 
-const Header: React.FunctionComponent = ({ children }) => {
+const Header: React.FC = ({ children }) => {
   return (
     <header className="SearchHeader container">
       <div className="SearchHeader_search">

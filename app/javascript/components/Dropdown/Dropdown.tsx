@@ -17,7 +17,7 @@ interface DropdownProps {
   fixed?: boolean;
 }
 
-const Dropdown: React.FunctionComponent<DropdownProps> = ({
+const Dropdown: React.FC<DropdownProps> = ({
   onChange,
   selectedItem,
   fixed,

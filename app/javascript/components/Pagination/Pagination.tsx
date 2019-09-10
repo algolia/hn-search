@@ -8,7 +8,7 @@ import ChevronsRight from "react-feather/dist/icons/chevrons-right";
 
 const MAX_RESULTS = 5;
 
-const Pagination: React.FunctionComponent = () => {
+const Pagination: React.FC = () => {
   const {
     results,
     settings: { page },
