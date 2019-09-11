@@ -3,15 +3,11 @@
 
 .Story {
   font-size: 14px;
-  padding: 0 $spacing-large 0 $spacing-xlarge;
+  padding: 0 $spacing-medium;
   min-height: 40px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
-  @media (max-width: 768px){
-    padding: 0 $spacing-medium;
-  }
 
   &_container {
     display: flex;
@@ -64,20 +60,6 @@
     }
     a { color: black }
 
-    .Story_rank {
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #828282;
-      text-align: right;
-      width: 24px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      transform: translate(-110%, 0);
-      user-select: none;
-    }
-
     .Story_link {
       color: #828282;
       font-size: 12px;
@@ -110,6 +92,8 @@
     color: #000;
     font-size: 12px;
     width: 100%;
+
+    p { margin: $spacing-small 0 0 }
 
     * {
       white-space: normal;

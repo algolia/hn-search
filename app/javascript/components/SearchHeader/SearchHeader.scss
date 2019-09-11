@@ -155,6 +155,7 @@ $headerHeight: 60px;
     box-shadow: none;
     padding: $spacing-medium $spacing-small $spacing-medium 54px;
     font-weight: 300;
+    color: rgba(0,0,0,.8);
 
     @media (max-width: 768px) {
       height: 34px;

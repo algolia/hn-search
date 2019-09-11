@@ -10,9 +10,10 @@
   justify-content: space-between;
   font-size: 12px;
   padding: 0 $spacing-small;
-  background-color: #fff;
+  background-color: #f6f6ef;
   color: #000;
   position: fixed;
+  border-bottom: 1px solid rgba(#000, .05);
 
   @media (max-width: 768px) {
     justify-content: flex-end;
