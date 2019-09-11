@@ -4,9 +4,6 @@
 $headerHeight: 60px;
 
 .SearchHeader {
-  position: fixed;
-  z-index: $zIndexHeader;
-  
   &_search {
     height: $headerHeight;
     display: flex;
@@ -96,7 +93,7 @@ $headerHeight: 60px;
     margin-left: $spacing-small;
     white-space: nowrap;
     position: absolute;
-    right: 124px;
+    right: 108px;
     top: 50%;
     transform: translate(0, -50%);
     user-select: none;
@@ -153,13 +150,14 @@ $headerHeight: 60px;
     height: 42px;
     width: calc(100% - 100px);
     box-shadow: none;
-    padding: $spacing-medium $spacing-small $spacing-medium 54px;
+    padding: $spacing-medium 144px $spacing-medium 54px;
     font-weight: 300;
     color: rgba(0,0,0,.8);
 
     @media (max-width: 768px) {
       height: 34px;
       padding-left: 40px;
+      padding-right: 84px;
     }
 
     @media (max-width: 1024px){
@@ -175,6 +173,9 @@ $headerHeight: 60px;
 
 .experimental {
   .SearchHeader{
+    position: fixed;
+    z-index: $zIndexHeader;
+
     &_search {
       @media (max-width: 768px) {
         height: 60px !important;
