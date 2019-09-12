@@ -57,6 +57,11 @@ ul {
   }
 }
 
+.default .SearchHeader.container,
+.default .SearchFilters.container {
+  width: 100% !important;
+}
+
 input[type=search], input[type=text] {
   -webkit-appearance: none; // prevents the ugly shadow on iOS inputs
 }

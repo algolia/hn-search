@@ -13,58 +13,57 @@ const generateSessionID = () => {
   });
 };
 
+const APPLICATION_ID = "UJ5WYC0L7X";
 const SESSION_ID = generateSessionID();
 
-const supportsSendBeacon = () => {
-  return navigator && typeof navigator.sendBeacon === "function";
+const supportsSendBeacon = (): boolean =>
+  navigator && typeof navigator.sendBeacon === "function";
+const supportsConnection = (): boolean =>
+  typeof (navigator as any).connection === "object";
+const supportsConnectionListener = (): boolean =>
+  typeof (navigator as any).connection.addEventListener === "function";
+
+const registerNetworkConnectionChangeHandler = () => {
+  if (supportsConnection() && supportsConnectionListener()) {
+    (navigator as any).connection.addEventListener(
+      "change",
+      (window as any).reportConnection
+    );
+  }
 };
 
-const supportsConnection = () => {
-  return typeof (navigator as any).connection === "object";
-};
+const supportsPerformance = (): boolean =>
+  typeof window.performance !== "undefined" &&
+  typeof window.performance.getEntriesByType === "function";
 
-const supportsPerformance = () => {
-  return (
-    typeof window.performance !== "undefined" &&
-    typeof window.performance.getEntriesByType === "function"
-  );
-};
-
-const protectInfinity = metric => {
-  if (typeof metric === "undefined") return null;
-  return metric === Infinity ? -1 : metric;
-};
-
-const isAlgoliaEngineQuery = input => {
+const isAlgoliaEngineQuery = (input: string): boolean => {
   if (typeof input !== "string") return false;
   return /\.algolia\.net\/1/g.test(input);
 };
 
 const reportedQueries = [];
 const getAlgoliaQueries = () => {
-  if (!supportsPerformance()) {
-    return [];
-  }
+  if (!supportsPerformance()) return [];
   const resources = window.performance.getEntriesByType("resource");
 
-  if (!resources.length) {
-    return [];
-  }
+  if (!resources.length) return [];
 
-  return resources.filter(resource => {
-    return (
+  return resources.filter(
+    resource =>
       (resource as any).initiatorType === "xmlhttprequest" &&
       isAlgoliaEngineQuery(resource.name) &&
       reportedQueries.indexOf(resource) === -1
-    );
-  });
+  );
 };
 
 const reportData = (data, endpoint) => {
   const url = "https://telemetry.algolia.com/1/" + endpoint;
 
   if (supportsSendBeacon()) {
-    navigator.sendBeacon(url, JSON.stringify(data));
+    navigator.sendBeacon(
+      url,
+      JSON.stringify({ ...data, application_id: APPLICATION_ID })
+    );
   } else {
     ((window as any).$ as any).ajax({
       contentType: "application/json",
@@ -79,7 +78,7 @@ export const reportTelemetry = query => {
   if (!supportsPerformance()) return;
   const allQueries = getAlgoliaQueries();
 
-  allQueries.forEach(function(entry: any, index, array) {
+  allQueries.forEach((entry: any, _index, array) => {
     const data = {
       timestamp: Date.now(),
       telemetry_session_id: SESSION_ID,
@@ -143,18 +142,8 @@ export const reportTimeout = (data: any, requestOptions) => {
 };
 
 window.addEventListener("load", function() {
-  (window as any).reportConnection();
-  if (
-    supportsConnection() &&
-    typeof (navigator as any).connection.addEventListener === "function"
-  ) {
-    (navigator as any).connection.addEventListener(
-      "change",
-      (window as any).reportConnection
-    );
-  }
+  reportConnection();
+  registerNetworkConnectionChangeHandler();
 });
 
-(window as any).reportTelemetry = reportTelemetry;
-(window as any).reportConnection = reportConnection;
 (window as any).reportTimeout = reportTimeout;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import classnames from "classnames";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import formatDistanceStrict from "date-fns/formatDistanceStrict";
 
 import "./Story.scss";
 
@@ -10,7 +10,7 @@ import User from "react-feather/dist/icons/user";
 import Star from "react-feather/dist/icons/star";
 
 import Comments from "./Comments";
-import { Hit } from "../../providers/Search.types";
+import { Hit, HNSettings } from "../../providers/Search.types";
 import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
@@ -33,6 +33,8 @@ const AuthorLink: React.FC<{
 export const stripHighlight = (text: string) => {
   return <span dangerouslySetInnerHTML={{ __html: text }} />;
 };
+
+const isStory = (hit: Hit): boolean => hit._tags[0] === "story";
 
 const getTitle = (hit: Hit) => {
   const {
@@ -81,7 +83,9 @@ const extractDomain = (url: string): string => {
   return link.hostname;
 };
 
-const Story: React.FC<{ hit: Hit; index: number }> = ({ hit, index }) => {
+const Story: React.FC<{
+  hit: Hit;
+}> = ({ hit }) => {
   const {
     points,
     objectID,
@@ -98,11 +102,10 @@ const Story: React.FC<{ hit: Hit; index: number }> = ({ hit, index }) => {
     starred: { toggle, data: starredItems },
     settings: { showThumbnails, style, query }
   } = React.useContext(SearchContext);
-  const [loadingComments, setLoadingComments] = React.useState(false);
 
+  const [loadingComments, setLoadingComments] = React.useState(false);
   const isExperimental = style === "experimental";
-  const showThumbnailImage =
-    showThumbnails && isExperimental && hit._tags[0] === "story";
+  const showThumbnailImage = showThumbnails && isExperimental && isStory(hit);
 
   const [starred, setStarred] = React.useState(
     starredItems.has(parseInt(objectID))
@@ -128,7 +131,6 @@ const Story: React.FC<{ hit: Hit; index: number }> = ({ hit, index }) => {
         {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
           <div className="Story_title">
-            <span className="Story_rank">{index}.</span>
             <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
             {!isExperimental && url && <HighlightURL hit={hit} />}
           </div>
@@ -150,7 +152,7 @@ const Story: React.FC<{ hit: Hit; index: number }> = ({ hit, index }) => {
             <span>
               <StoryLink id={objectID}>
                 {isExperimental && <Clock />}
-                {formatDistanceToNow(created_at_i * 1000)} ago
+                {formatDistanceStrict(created_at_i * 1000, Date.now())} ago
               </StoryLink>
             </span>
             {!isExperimental && !disableComments && (
