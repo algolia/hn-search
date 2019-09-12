@@ -14,6 +14,7 @@ import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
 import getPreferredTheme from "../utils/detectColorThemePreference";
 import debouncedUrlSync from "../utils/debouncedUrlSync";
+import { reportTelemetry } from "../utils/telemetry";
 
 enum ENV {
   production = "https://hn.algolia.com",
@@ -134,6 +135,8 @@ class SearchProvider extends React.Component {
     return this.getIndex(params.query)
       .search(params)
       .then((results: AlgoliaResults) => {
+        reportTelemetry(results);
+
         if (results.query !== params.query) return;
         if (!results.hits.length) {
           this.fetchPopularSearches().then(searches => {
