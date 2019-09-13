@@ -241,6 +241,14 @@ describe("parseTagFilters", () => {
         numericFilters: ["points=30", "num_comments>30"],
         tagFilters: ["author_jonas", "story_12345"]
       }
+    },
+    {
+      query: "author:jonas author:other_jonas",
+      expectation: {
+        query: "",
+        numericFilters: [],
+        tagFilters: ["author_jonas", "author_other_jonas"]
+      }
     }
   ];
 
