@@ -72,7 +72,8 @@ const DEFAULT_SEARCH_STATE = {
     query: "",
     nbHits: 0,
     processingTimeMS: 0,
-    nbPages: 0
+    nbPages: 0,
+    queryID: null
   },
   loading: true,
   popularStories: [],
