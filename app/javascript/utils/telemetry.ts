@@ -73,7 +73,7 @@ const reportData = (data, endpoint) => {
 };
 
 export const reportTelemetry = query => {
-  if (!supportsPerformance()) return;
+  if (!supportsPerformance() || process.env.NODE_ENV !== "production") return;
   const allQueries = getAlgoliaQueries();
 
   allQueries.forEach((entry: any, _index, array) => {
@@ -111,7 +111,7 @@ export const reportTelemetry = query => {
 };
 
 export const reportConnection = () => {
-  if (!supportsConnection()) return;
+  if (!supportsConnection() || process.env.NODE_ENV !== "production") return;
 
   const connectionData = {
     timestamp: Date.now(),
@@ -127,6 +127,7 @@ export const reportConnection = () => {
 };
 
 export const reportTimeout = (data: any, requestOptions) => {
+  if (process.env.NODE_ENV !== "production") return;
   const timeoutData = {
     timestamp: Date.now(),
     timeout_session_id: SESSION_ID,

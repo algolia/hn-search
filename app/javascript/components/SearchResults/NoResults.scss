@@ -2,10 +2,13 @@
 @import "./../../src/colors.scss";
 
 .NoResults {
-  margin-top: $spacing-large;
   display: flex;
   justify-content: center;
   padding: $spacing-large;
+
+  > div {
+    padding-top: $spacing-large;
+  }
 
   &_changeSettings {
     display: inline-block;
