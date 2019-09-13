@@ -12,6 +12,7 @@ const generateUserToken = () =>
   });
 
 const APPLICATION_ID = "UJ5WYC0L7X";
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const SESSION_ID = generateUserToken();
 
 const supportsSendBeacon = (): boolean =>
@@ -73,7 +74,7 @@ const reportData = (data, endpoint) => {
 };
 
 export const reportTelemetry = query => {
-  if (!supportsPerformance() || process.env.NODE_ENV !== "production") return;
+  if (!supportsPerformance() || !IS_PRODUCTION) return;
   const allQueries = getAlgoliaQueries();
 
   allQueries.forEach((entry: any, _index, array) => {
@@ -111,7 +112,7 @@ export const reportTelemetry = query => {
 };
 
 export const reportConnection = () => {
-  if (!supportsConnection() || process.env.NODE_ENV !== "production") return;
+  if (!supportsConnection() || !IS_PRODUCTION) return;
 
   const connectionData = {
     timestamp: Date.now(),
@@ -127,7 +128,7 @@ export const reportConnection = () => {
 };
 
 export const reportTimeout = (data: any, requestOptions) => {
-  if (process.env.NODE_ENV !== "production") return;
+  if (!IS_PRODUCTION) return;
   const timeoutData = {
     timestamp: Date.now(),
     timeout_session_id: SESSION_ID,

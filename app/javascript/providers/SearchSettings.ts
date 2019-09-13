@@ -261,10 +261,9 @@ const getSearchSettings = (
     numericFilters
   } = parseTagFiltersFromQuery(query);
 
-  const extractedTagFilter = [
-    ...tagFilters,
+  const extractedTagFilter = tagFilters.concat(
     buildTagFiltersForPopularStories(storyIDs)
-  ];
+  );
   const extractedNumericFilters = numericFilters;
 
   const searchParams: SearchSettings = {
@@ -279,9 +278,9 @@ const getSearchSettings = (
     clickAnalytics: true,
     minProximity: getMinProximity(type),
     numericFilters: getDateFilters(settings).concat(extractedNumericFilters),
-    tagFilters: (getTagFilters(settings) as string[]).concat(
+    tagFilters: (getTagFilters(settings) as string[]).concat([
       extractedTagFilter as string[]
-    ),
+    ] as any),
     typoTolerance: sort === "byPopularity" && typoTolerance,
     queryType: prefix ? "prefixLast" : "prefixNone",
     restrictSearchableAttributes: getRestrictSearchableAttributes(settings),
