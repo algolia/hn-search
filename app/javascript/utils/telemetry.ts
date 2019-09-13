@@ -4,17 +4,15 @@
 // experiment, monitor and tweak both our servers and
 // the JavaScript client to deliver the fastest experience possible
 // If you are interested in the project, feel free to reach out to
-
-const generateSessionID = () => {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+const generateUserToken = () =>
+  "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
     const r = (Math.random() * 16) | 0,
       v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
-};
 
 const APPLICATION_ID = "UJ5WYC0L7X";
-const SESSION_ID = generateSessionID();
+const SESSION_ID = generateUserToken();
 
 const supportsSendBeacon = (): boolean =>
   navigator && typeof navigator.sendBeacon === "function";
@@ -79,7 +77,7 @@ export const reportTelemetry = query => {
   const allQueries = getAlgoliaQueries();
 
   allQueries.forEach((entry: any, _index, array) => {
-    const data = {
+    const telemetryData = {
       timestamp: Date.now(),
       telemetry_session_id: SESSION_ID,
       connect_end: entry.connectEnd,
@@ -107,7 +105,7 @@ export const reportTelemetry = query => {
       targeted_server: entry.name.match(/(.*)\:\/\/(.*?)\//)[2]
     };
 
-    reportData(data, "measure");
+    reportData(telemetryData, "measure");
     reportedQueries.push(entry);
   });
 };
@@ -115,7 +113,7 @@ export const reportTelemetry = query => {
 export const reportConnection = () => {
   if (!supportsConnection()) return;
 
-  const data = {
+  const connectionData = {
     timestamp: Date.now(),
     session_id: SESSION_ID,
     downlink: (navigator as any).connection.downlink,
@@ -125,11 +123,11 @@ export const reportConnection = () => {
     save_data: (navigator as any).connection.saveData,
     type: (navigator as any).connection.type
   };
-  reportData(data, "connection");
+  reportData(connectionData, "connection");
 };
 
 export const reportTimeout = (data: any, requestOptions) => {
-  const data2 = {
+  const timeoutData = {
     timestamp: Date.now(),
     timeout_session_id: SESSION_ID,
     host_node: data.hostIndexes.read,
@@ -138,7 +136,7 @@ export const reportTimeout = (data: any, requestOptions) => {
     complete_timeout: requestOptions.timeouts.complete
   };
 
-  reportData(data2, "timeout");
+  reportData(timeoutData, "timeout");
 };
 
 window.addEventListener("load", function() {

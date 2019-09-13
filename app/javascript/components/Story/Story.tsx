@@ -10,16 +10,57 @@ import User from "react-feather/dist/icons/user";
 import Star from "react-feather/dist/icons/star";
 
 import Comments from "./Comments";
-import { Hit, HNSettings } from "../../providers/Search.types";
+import { Hit } from "../../providers/Search.types";
 import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
 import StoryImage from "./StoryImage";
 
+const reportClickEvent = (
+  queryID: string,
+  objectID: string,
+  position: number,
+  indexName: string
+) => {
+  //@ts-ignore
+  if (typeof window.aa !== "function") return;
+
+  //@ts-ignore
+  window.aa("clickedObjectIDsAfterSearch", {
+    index: indexName,
+    eventName: "Clicked Title",
+    queryID: queryID,
+    objectIDs: [objectID],
+    positions: [position]
+  });
+};
+
+const reportConversion = (
+  queryID: string,
+  objectID: string,
+  indexName: string
+) => {
+  //@ts-ignore
+  if (typeof window.aa !== "function") return;
+
+  //@ts-ignore
+  window.aa("convertedObjectIDsAfterSearch", {
+    index: indexName,
+    eventName: "Conversion",
+    queryID: queryID,
+    objectIDs: [objectID]
+  });
+};
+
 const StoryLink: React.FC<{
   id: Hit["objectID"];
-}> = ({ id, children }) => {
-  return <a href={`https://news.ycombinator.com/item?id=${id}`}>{children}</a>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+}> = ({ id, children, onClick }) => {
+  return (
+    <a href={`https://news.ycombinator.com/item?id=${id}`} onClick={onClick}>
+      {children}
+    </a>
+  );
 };
 
 const AuthorLink: React.FC<{
@@ -62,9 +103,11 @@ const StoryComment: React.FC<{ hit: Hit }> = ({ hit }) => {
   return <div className="Story_comment">{stripHighlight(text)}</div>;
 };
 
-const HighlightURL: React.FC<{ hit: Hit }> = ({
-  hit: { url, _highlightResult }
-}) => {
+const HighlightURL: React.FC<{
+  hit: Hit;
+  queryID: string;
+  indexName: string;
+}> = ({ hit: { url, _highlightResult, objectID }, queryID, indexName }) => {
   const highlighted = `(${_highlightResult.url.value})`;
 
   return (
@@ -72,6 +115,7 @@ const HighlightURL: React.FC<{ hit: Hit }> = ({
       href={url}
       target="_blank"
       className="Story_link"
+      onClick={() => reportConversion(queryID, objectID, indexName)}
       dangerouslySetInnerHTML={{ __html: highlighted }}
     />
   );
@@ -85,7 +129,8 @@ const extractDomain = (url: string): string => {
 
 const Story: React.FC<{
   hit: Hit;
-}> = ({ hit }) => {
+  position: number;
+}> = ({ hit, position }) => {
   const {
     points,
     objectID,
@@ -98,6 +143,7 @@ const Story: React.FC<{
   } = hit;
 
   const {
+    results,
     fetchCommentsForStory,
     starred: { toggle, data: starredItems },
     settings: { showThumbnails, style, query }
@@ -131,8 +177,26 @@ const Story: React.FC<{
         {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
           <div className="Story_title">
-            <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
-            {!isExperimental && url && <HighlightURL hit={hit} />}
+            <StoryLink
+              id={objectID}
+              onClick={() =>
+                reportClickEvent(
+                  results.queryID,
+                  objectID,
+                  position,
+                  results.indexUsed
+                )
+              }
+            >
+              {stripHighlight(getTitle(hit))}
+            </StoryLink>
+            {!isExperimental && url && (
+              <HighlightURL
+                hit={hit}
+                indexName={results.indexUsed}
+                queryID={results.queryID}
+              />
+            )}
           </div>
           <div className="Story_meta">
             <span>

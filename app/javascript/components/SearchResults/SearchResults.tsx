@@ -9,11 +9,19 @@ const shouldShowNoResults = (hits, isLoading): boolean => {
   return hits !== null && (!hits.length && !isLoading);
 };
 
+const computePosition = (
+  index: number,
+  hitsPerPage: number,
+  page: number
+): number => {
+  return hitsPerPage * page + index + 1;
+};
+
 const SearchResults: React.FC = () => {
   const {
     results,
     loading,
-    settings: { hitsPerPage, page, type }
+    settings: { hitsPerPage, page }
   } = React.useContext(SearchContext);
 
   React.useEffect(() => {
@@ -27,7 +35,13 @@ const SearchResults: React.FC = () => {
       {shouldShowNoResults(results.hits, loading) && <NoResults />}
       <div className="SearchResults_container">
         {results.hits &&
-          results.hits.map(hit => <Story hit={hit} key={hit.objectID} />)}
+          results.hits.map((hit, i) => (
+            <Story
+              hit={hit}
+              key={hit.objectID}
+              position={computePosition(i, hitsPerPage, page)}
+            />
+          ))}
       </div>
     </section>
   );
