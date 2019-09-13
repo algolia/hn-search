@@ -45,6 +45,8 @@ export interface AlgoliaResults {
   nbHits: number;
   processingTimeMS: number;
   nbPages: number;
+  queryID: string;
+  indexUsed: string | null;
 }
 
 export type PopularSearches = { search: string; count: number }[];
