@@ -24,7 +24,7 @@
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application'
 
-    - if ENV["RAILS_ENV"] === 'production'
+    - if Rails.env.production?
       = render 'shared/sentry'
     = render 'shared/search-insights'
 
