@@ -64,11 +64,13 @@ const reportData = (data, endpoint) => {
       JSON.stringify({ ...data, application_id: APPLICATION_ID })
     );
   } else {
-    ((window as any).$ as any).ajax({
-      contentType: "application/json",
-      type: "POST",
-      url: url,
-      data: JSON.stringify(data)
+    fetch(url, {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ ...data, application_id: APPLICATION_ID })
     });
   }
 };
@@ -137,6 +139,7 @@ const getIndexFromUrl = (url: string): string => {
 
 export const reportTimeout = (data: any, requestOptions) => {
   if (!IS_PRODUCTION) return;
+
   const timeoutData = {
     index: getIndexFromUrl(requestOptions.url),
     timestamp: Date.now(),
