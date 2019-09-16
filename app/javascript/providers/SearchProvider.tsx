@@ -60,7 +60,7 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
   typoTolerance: true,
   storyText: true,
   authorText: true,
-  hitsPerPage: 20,
+  hitsPerPage: 30,
   theme: getPreferredTheme(),
   page: 0,
   prefix: false
