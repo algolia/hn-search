@@ -73,14 +73,15 @@ const reportData = (data, endpoint) => {
   }
 };
 
-export const reportTelemetry = query => {
+export const reportTelemetry = (query, index: string) => {
   if (!supportsPerformance() || !IS_PRODUCTION) return;
   const allQueries = getAlgoliaQueries();
 
   allQueries.forEach((entry: any, _index, array) => {
     const telemetryData = {
+      index: index,
       timestamp: Date.now(),
-      telemetry_session_id: SESSION_ID,
+      session_id: SESSION_ID,
       connect_end: entry.connectEnd,
       connect_start: entry.connectStart,
       decoded_body_size: entry.decodedBodySize,
@@ -115,6 +116,7 @@ export const reportConnection = () => {
   if (!supportsConnection() || !IS_PRODUCTION) return;
 
   const connectionData = {
+    online: Boolean(navigator.onLine),
     timestamp: Date.now(),
     session_id: SESSION_ID,
     downlink: (navigator as any).connection.downlink,
@@ -127,11 +129,18 @@ export const reportConnection = () => {
   reportData(connectionData, "connection");
 };
 
+const getIndexFromUrl = (url: string): string => {
+  const removeTrailingQuery = url.replace(/\/query$/, "");
+  const path = removeTrailingQuery.split("/");
+  return path[path.length - 1];
+};
+
 export const reportTimeout = (data: any, requestOptions) => {
   if (!IS_PRODUCTION) return;
   const timeoutData = {
+    index: getIndexFromUrl(requestOptions.url),
     timestamp: Date.now(),
-    timeout_session_id: SESSION_ID,
+    session_id: SESSION_ID,
     host_node: data.hostIndexes.read,
     timeout_multiplier: data.timeoutMultiplier,
     connect_timeout: requestOptions.timeouts.connect,

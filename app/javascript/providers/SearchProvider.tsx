@@ -143,7 +143,7 @@ class SearchProvider extends React.Component {
     const index = this.getIndex(params.query);
 
     return index.search(params).then((results: AlgoliaResults) => {
-      reportTelemetry(results);
+      reportTelemetry(results, index.indexName);
 
       if (results.query !== params.query) return;
       if (!results.hits.length) {
