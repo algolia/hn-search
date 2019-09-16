@@ -44,7 +44,7 @@ const formatDate = (date: string): string => {
   return format(unixDate, "MMM do yyyy");
 };
 
-const formatTimeFilters: React.FunctionComponent<{ settings: HNSettings }> = ({
+const formatTimeFilters: React.FC<{ settings: HNSettings }> = ({
   settings
 }) => {
   if (
@@ -95,7 +95,7 @@ const SearchFiltersMenu: React.FC<{
   );
 };
 
-const SearchFilters: React.FunctionComponent = () => {
+const SearchFilters: React.FC = () => {
   const { results, settings, setSettings } = React.useContext(SearchContext);
   const forceOpen =
     settings.dateRange === "custom" && !settings.dateEnd && !settings.dateStart;

@@ -22,7 +22,7 @@ const encodeStringToColor = (string: string) => {
   return colour;
 };
 
-const Avatar: React.FunctionComponent<{ author: string }> = ({ author }) => {
+const Avatar: React.FC<{ author: string }> = ({ author }) => {
   if (!author) {
     return (
       <div className="Avatar">
@@ -42,9 +42,7 @@ const Avatar: React.FunctionComponent<{ author: string }> = ({ author }) => {
   );
 };
 
-const Comments: React.FunctionComponent<{ comment: Comment }> = ({
-  comment
-}) => {
+const Comments: React.FC<{ comment: Comment }> = ({ comment }) => {
   if (!comment.children || !comment.children.length) return null;
 
   return (

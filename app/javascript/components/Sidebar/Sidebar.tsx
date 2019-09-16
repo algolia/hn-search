@@ -84,7 +84,7 @@ interface SidebarProps {
   user?: string;
 }
 
-const Sidebar: React.FunctionComponent<SidebarProps> = ({ user }) => {
+const Sidebar: React.FC<SidebarProps> = ({ user }) => {
   return (
     <aside className="Sidebar">
       <DefaultLinks />

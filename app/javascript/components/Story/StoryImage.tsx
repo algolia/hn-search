@@ -11,7 +11,7 @@ const supportsLazyLoading = ((): boolean => {
   return "loading" in HTMLImageElement.prototype;
 })();
 
-const StoryImage: React.FunctionComponent<StoryImageProps> = ({ objectID }) => {
+const StoryImage: React.FC<StoryImageProps> = ({ objectID }) => {
   const imageRef = React.useRef<HTMLImageElement>(null);
   const [imageSource, setImageSource] = React.useState<string>(null);
 

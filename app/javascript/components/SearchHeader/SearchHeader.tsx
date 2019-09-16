@@ -13,7 +13,7 @@ import trackCMDK from "../../utils/trackCMDK";
 const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";
 
-const AlgoliaLogo: React.FunctionComponent = () => {
+const AlgoliaLogo: React.FC = () => {
   const {
     settings: { style, theme }
   } = React.useContext(SearchContext);
@@ -39,7 +39,7 @@ interface SearchHeaderProps {
   storyID?: string;
 }
 
-const SearchHeader: React.FunctionComponent<SearchHeaderProps> = ({
+const SearchHeader: React.FC<SearchHeaderProps> = ({
   storyID
 }) => {
   const {

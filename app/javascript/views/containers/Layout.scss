@@ -2,8 +2,8 @@
 @import "./../../src/colors.scss";
 
 .Layout {
+  padding: $spacing-large;
   background-color: #f6f6ef;
-  padding: 112px $spacing-large $spacing-large $spacing-large;
   min-height: calc(100vh - 98px);
   color: #5c5c5c;
   font-size: 14px;
@@ -81,6 +81,10 @@
 }
 
 .experimental {
+  .Layout {
+    padding: 112px $spacing-large $spacing-large $spacing-large;
+  }
+
   &.dark {
     .Layout {
       padding-top: 170px;

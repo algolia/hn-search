@@ -4,7 +4,7 @@ import "./Help.scss";
 
 import Layout from "./containers/Layout";
 
-const Help: React.FunctionComponent<RouteComponentProps> = props => {
+const Help: React.FC<RouteComponentProps> = props => {
   return (
     <Layout {...props} title={"Help"}>
       <h3>Advanced search syntax</h3>

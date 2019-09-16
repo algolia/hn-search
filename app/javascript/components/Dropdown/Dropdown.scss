@@ -44,6 +44,7 @@
     white-space: nowrap;
     color: #5c5c5c;
     overflow: hidden;
+    z-index: 500;
 
     &:before {
       content: "";
@@ -55,6 +56,7 @@
       border-width: 0 8px 8px;
       border-style: solid;
       border-color: #c3c3c3 transparent;
+      z-index: 500;
     }
 
     &:after{
@@ -67,6 +69,7 @@
       border-width: 0 6px 6px;
       border-style: solid;
       border-color: #fff transparent;
+      z-index: 500;
     }
 
     &--open {

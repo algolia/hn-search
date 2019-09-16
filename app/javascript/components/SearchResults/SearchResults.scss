@@ -1,13 +1,16 @@
+@import "./../../src/variables.scss";
+
 .SearchResults {
   position: relative;
-  padding: 100px 0 0 0;
   background: #f6f6ef;
+  min-height: calc(100vh - 120px);
 }
 
 .experimental {
   .SearchResults {
     min-height: calc(100vh - 120px);
-    background-color: #fff;
+    background-color: transparent;
+    padding: 100px 0 0 0;
     padding-top: 178px;
     
     @media (min-width: 769px) {
@@ -23,11 +26,4 @@
       border-radius: 4px;
     }
   }
-}
-
-.experimental {
-  .SearchResults {
-    background-color: transparent;
-  }
-  
 }

@@ -90,7 +90,7 @@ interface SocialShareProps {
   hit?: Hit;
 }
 
-const SocialShare: React.FunctionComponent<SocialShareProps> = ({
+const SocialShare: React.FC<SocialShareProps> = ({
   hit,
   query
 }) => {

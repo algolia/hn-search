@@ -2,26 +2,25 @@ require 'rubygems/package'
 require 'zlib'
 
 class Item < ApplicationRecord
-  
   include AlgoliaSearch
 
-  as_enum :item_type, %w{story comment poll pollopt unknown job}
+  as_enum :item_type, %w[story comment poll pollopt unknown job]
 
-  validates_length_of :url, within: 0..32768, allow_nil: true, allow_blank: true
-  validates_length_of :text, within: 0..32768, allow_nil: true, allow_blank: true
+  validates_length_of :url, within: 0..32_768, allow_nil: true, allow_blank: true
+  validates_length_of :text, within: 0..32_768, allow_nil: true, allow_blank: true
   validates_length_of :author, within: 0..255, allow_nil: true, allow_blank: true
 
   after_create :after_create_tasks
 
-  belongs_to :parent, class_name: "Item", foreign_key: "parent_id"
-  has_many :children, class_name: "Item", foreign_key: "parent_id"
+  belongs_to :parent, class_name: 'Item', foreign_key: 'parent_id'
+  has_many :children, class_name: 'Item', foreign_key: 'parent_id'
 
-  belongs_to :story, class_name: "Item", foreign_key: "story_id"
+  belongs_to :story, class_name: 'Item', foreign_key: 'story_id'
   has_many :story_comments, -> { where('item_type_cd = ?', Item.comment) }, class_name: "Item", foreign_key: "story_id"
 
-  SHOW_HN_RX = /^show hn\b/i
-  ASK_HN_RX = /^ask hn\b/i
-  OLDEST_ARTICLE = Time.at(1160418111)
+  SHOW_HN_RX = /^show hn\b/i.freeze
+  ASK_HN_RX = /^ask hn\b/i.freeze
+  OLDEST_ARTICLE = Time.at(1_160_418_111).freeze
 
   algoliasearch per_environment: true, auto_index: false, if: :live? do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
@@ -50,8 +49,8 @@ class Item < ApplicationRecord
       t
     end
     queryType 'prefixLast'
-    customRanking ['desc(points)', 'desc(num_comments)']
-    ranking ['typo', 'proximity', 'attribute', 'custom']
+    customRanking %w[desc(points) desc(num_comments)]
+    ranking %w[typo proximity attribute custom]
     separatorsToIndex '+#$.'
 
     add_slave "Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming

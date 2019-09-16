@@ -2,17 +2,16 @@
 @import "./../../src/variables.scss";
 
 .SearchFilters {
+  color: #000;
   z-index: 10;
-  top: 56px;
   height: 42px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
   padding: 0 $spacing-small;
-  background-color: #fff;
-  color: #000;
-  position: fixed;
+  background-color: #f6f6ef;
+  border-bottom: 1px solid rgba(#000, .05);
 
   @media (max-width: 768px) {
     justify-content: flex-end;
@@ -161,6 +160,8 @@
     top: 90px;
     height: 80px;
     color: #9d9d9d;
+    position: fixed;
+    border-bottom: none;
 
     @media (max-width: 768px) {
       justify-content: space-between;

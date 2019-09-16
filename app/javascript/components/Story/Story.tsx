@@ -1,6 +1,6 @@
 import * as React from "react";
 import classnames from "classnames";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import formatDistanceStrict from "date-fns/formatDistanceStrict";
 
 import "./Story.scss";
 
@@ -16,13 +16,54 @@ import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
 import StoryImage from "./StoryImage";
 
-const StoryLink: React.FunctionComponent<{
-  id: Hit["objectID"];
-}> = ({ id, children }) => {
-  return <a href={`https://news.ycombinator.com/item?id=${id}`}>{children}</a>;
+const reportClickEvent = (
+  queryID: string,
+  objectID: string,
+  position: number,
+  indexName: string
+) => {
+  //@ts-ignore
+  if (typeof window.aa !== "function") return;
+
+  //@ts-ignore
+  window.aa("clickedObjectIDsAfterSearch", {
+    index: indexName,
+    eventName: "Clicked Title",
+    queryID: queryID,
+    objectIDs: [objectID],
+    positions: [position]
+  });
 };
 
-const AuthorLink: React.FunctionComponent<{
+const reportConversion = (
+  queryID: string,
+  objectID: string,
+  indexName: string
+) => {
+  //@ts-ignore
+  if (typeof window.aa !== "function") return;
+
+  //@ts-ignore
+  window.aa("convertedObjectIDsAfterSearch", {
+    index: indexName,
+    eventName: "Conversion",
+    queryID: queryID,
+    objectIDs: [objectID]
+  });
+};
+
+const StoryLink: React.FC<{
+  id: Hit["objectID"];
+  onClick?: React.MouseEventHandler<HTMLElement>;
+}> = ({ id, children, onClick }) => {
+  return (
+    <a href={`https://news.ycombinator.com/item?id=${id}`} onClick={onClick}>
+      {children}
+    </a>
+  );
+};
+
+const AuthorLink: React.FC<{
   username: string;
 }> = ({ username, children }) => {
   return (
@@ -33,6 +74,8 @@ const AuthorLink: React.FunctionComponent<{
 export const stripHighlight = (text: string) => {
   return <span dangerouslySetInnerHTML={{ __html: text }} />;
 };
+
+const isStory = (hit: Hit): boolean => hit._tags[0] === "story";
 
 const getTitle = (hit: Hit) => {
   const {
@@ -46,7 +89,7 @@ const getTitle = (hit: Hit) => {
   return hit.title || hit.story_title || hit.story_text;
 };
 
-const StoryComment: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
+const StoryComment: React.FC<{ hit: Hit }> = ({ hit }) => {
   const { _highlightResult } = hit;
   const type = hit._tags[0];
 
@@ -60,13 +103,34 @@ const StoryComment: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
   return <div className="Story_comment">{stripHighlight(text)}</div>;
 };
 
+const HighlightURL: React.FC<{
+  hit: Hit;
+  queryID: string;
+  indexName: string;
+}> = ({ hit: { url, _highlightResult, objectID }, queryID, indexName }) => {
+  const highlighted = `(${_highlightResult.url.value})`;
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      className="Story_link"
+      onClick={() => reportConversion(queryID, objectID, indexName)}
+      dangerouslySetInnerHTML={{ __html: highlighted }}
+    />
+  );
+};
+
 const extractDomain = (url: string): string => {
   const link = document.createElement("a");
   link.href = url;
   return link.hostname;
 };
 
-const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
+const Story: React.FC<{
+  hit: Hit;
+  position: number;
+}> = ({ hit, position }) => {
   const {
     points,
     objectID,
@@ -79,16 +143,15 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
   } = hit;
 
   const {
+    results,
     fetchCommentsForStory,
     starred: { toggle, data: starredItems },
     settings: { showThumbnails, style, query }
   } = React.useContext(SearchContext);
-  const [loadingComments, setLoadingComments] = React.useState(false);
 
+  const [loadingComments, setLoadingComments] = React.useState(false);
   const isExperimental = style === "experimental";
-  const showThumbnailImage =
-    showThumbnails && isExperimental && hit._tags[0] === "story";
-  const domain = isExperimental ? extractDomain(hit.url) : hit.url;
+  const showThumbnailImage = showThumbnails && isExperimental && isStory(hit);
 
   const [starred, setStarred] = React.useState(
     starredItems.has(parseInt(objectID))
@@ -114,7 +177,26 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
         {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
           <div className="Story_title">
-            <StoryLink id={objectID}>{stripHighlight(getTitle(hit))}</StoryLink>
+            <StoryLink
+              id={objectID}
+              onClick={() =>
+                reportClickEvent(
+                  results.queryID,
+                  objectID,
+                  position,
+                  results.indexUsed
+                )
+              }
+            >
+              {stripHighlight(getTitle(hit))}
+            </StoryLink>
+            {!isExperimental && url && (
+              <HighlightURL
+                hit={hit}
+                indexName={results.indexUsed}
+                queryID={results.queryID}
+              />
+            )}
           </div>
           <div className="Story_meta">
             <span>
@@ -134,7 +216,7 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
             <span>
               <StoryLink id={objectID}>
                 {isExperimental && <Clock />}
-                {formatDistanceToNow(created_at_i * 1000)} ago
+                {formatDistanceStrict(created_at_i * 1000, Date.now())} ago
               </StoryLink>
             </span>
             {!isExperimental && !disableComments && (
@@ -151,13 +233,13 @@ const Story: React.FunctionComponent<{ hit: Hit }> = ({ hit }) => {
                 </span>
               </>
             )}
-            <span className="Story_separator">|</span>
-            {url && (
-              <span className="Story_LinkContainer">
+            {isExperimental && url && (
+              <>
+                <span className="Story_separator">|</span>
                 <a href={url} target="_blank" className="Story_link">
-                  ({domain})
+                  ({extractDomain(hit.url)})
                 </a>
-              </span>
+              </>
             )}
             <StoryComment hit={hit} />
           </div>

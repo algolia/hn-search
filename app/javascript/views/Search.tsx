@@ -15,7 +15,7 @@ import { SearchContext } from "../providers/SearchProvider";
 
 interface SearchProps extends RouteComponentProps<{ story_id: string }> {}
 
-const Search: React.FunctionComponent<SearchProps> = props => {
+const Search: React.FC<SearchProps> = props => {
   const {
     settings: { style, login }
   } = React.useContext(SearchContext);

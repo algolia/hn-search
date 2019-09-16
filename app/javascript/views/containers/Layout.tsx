@@ -12,7 +12,7 @@ interface LayoutProps extends RouteComponentProps {
   title: string;
 }
 
-const Layout: React.FunctionComponent<LayoutProps> = props => {
+const Layout: React.FC<LayoutProps> = props => {
   return (
     <Tracker {...props}>
       <div className="container">

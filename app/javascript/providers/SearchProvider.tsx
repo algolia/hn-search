@@ -14,10 +14,19 @@ import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
 import getPreferredTheme from "../utils/detectColorThemePreference";
 import debouncedUrlSync from "../utils/debouncedUrlSync";
+import { reportTelemetry } from "../utils/telemetry";
+
+enum ENV {
+  production = "https://hn.algolia.com",
+  development = "http://localhost:3000"
+}
+const HN_API = ((): string =>
+  process.env.NODE_ENV === "production" ? ENV.production : ENV.development)();
 
 const CSRFMeta: HTMLMetaElement = document.querySelector(
   'meta[name="csrf-token"]'
 );
+
 const REQUEST_HEADERS = {
   "X-CSRF-TOKEN": CSRFMeta.content
 };
@@ -57,13 +66,22 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
   prefix: false
 };
 
+enum ALGOLIA_INDEXES {
+  User = "User_production",
+  Popularity = "Item_production",
+  ByDate = "Item_production_sort_date",
+  PopularityOrdered = "Item_production_ordered"
+}
+
 const DEFAULT_SEARCH_STATE = {
   results: {
-    hits: [],
+    hits: null,
     query: "",
     nbHits: 0,
     processingTimeMS: 0,
-    nbPages: 0
+    nbPages: 0,
+    queryID: null,
+    indexUsed: null
   },
   loading: true,
   popularStories: [],
@@ -74,13 +92,13 @@ const DEFAULT_SEARCH_STATE = {
 class SearchProvider extends React.Component {
   client = algoliasearch("UJ5WYC0L7X", "8ece23f8eb07cd25d40262a1764599b1");
 
-  indexUser = (this.client as any).initIndex("User_production");
-  indexSortedByPopularity = (this.client as any).initIndex("Item_production");
-  indexSortedByDate = (this.client as any).initIndex(
-    "Item_production_sort_date"
+  indexUser = (this.client as any).initIndex(ALGOLIA_INDEXES.User);
+  indexSortedByPopularity = (this.client as any).initIndex(
+    ALGOLIA_INDEXES.Popularity
   );
+  indexSortedByDate = (this.client as any).initIndex(ALGOLIA_INDEXES.ByDate);
   indexSortedByPopularityOrdered = (this.client as any).initIndex(
-    "Item_production_ordered"
+    ALGOLIA_INDEXES.PopularityOrdered
   );
 
   starred = new Starred();
@@ -122,22 +140,25 @@ class SearchProvider extends React.Component {
   ): Promise<AlgoliaResults> => {
     this.setState({ loading: true });
     const params = getSearchSettings(query, settings, storyIDs);
+    const index = this.getIndex(params.query);
 
-    return this.getIndex(params.query)
-      .search(params)
-      .then((results: AlgoliaResults) => {
-        if (results.query !== params.query) return;
-        if (!results.hits.length) {
-          this.fetchPopularSearches().then(searches => {
-            this.setState({ popularSearches: searches });
-          });
-        }
+    return index.search(params).then((results: AlgoliaResults) => {
+      reportTelemetry(results);
 
-        this.setState({
-          results,
-          loading: false
+      if (results.query !== params.query) return;
+      if (!results.hits.length) {
+        this.fetchPopularSearches().then(searches => {
+          this.setState({ popularSearches: searches });
         });
+      }
+
+      results.indexUsed = index.indexName;
+
+      this.setState({
+        results,
+        loading: false
       });
+    });
   };
 
   fetchPopularStories = (): Promise<AlgoliaResults> => {
@@ -158,14 +179,14 @@ class SearchProvider extends React.Component {
   };
 
   fetchPopularSearches = (): Promise<PopularSearches> => {
-    return fetch("/popular.json", {
+    return fetch(`${HN_API}/popular.json`, {
       headers: REQUEST_HEADERS
     }).then(resp => resp.json());
   };
 
   fetchCommentsForStory = (objectID: Hit["objectID"]): Promise<Comment> => {
-    return fetch(`https://hn.algolia.com/api/v1/items/${objectID}`, {
-      // headers: REQUEST_HEADERS
+    return fetch(`${HN_API}/api/v1/items/${objectID}`, {
+      headers: REQUEST_HEADERS
     })
       .then(resp => resp.json())
       .then(comments => {
@@ -209,11 +230,13 @@ class SearchProvider extends React.Component {
 
 export const SearchContext = React.createContext<ISearchContext>({
   results: {
-    hits: [],
+    hits: null,
     query: "",
     nbHits: 0,
     processingTimeMS: 0,
-    nbPages: 0
+    nbPages: 0,
+    queryID: null,
+    indexUsed: null
   },
   loading: true,
   popularStories: [],

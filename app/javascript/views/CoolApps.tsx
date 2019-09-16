@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router";
 
 import Layout from "./containers/Layout";
 
-const CoolApps: React.FunctionComponent<RouteComponentProps> = props => {
+const CoolApps: React.FC<RouteComponentProps> = props => {
   return (
     <Layout title="Cool Apps" {...props}>
       <p>

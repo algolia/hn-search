@@ -16,7 +16,7 @@ const getItemsLabel = (type: HNSettings["type"]): string => {
   }
 };
 
-const PopularSearches: React.FunctionComponent<{
+const PopularSearches: React.FC<{
   searches: PopularSearches;
   onSearchClick: (query: string) => any;
 }> = ({ searches, onSearchClick }) => {
@@ -41,7 +41,7 @@ const PopularSearches: React.FunctionComponent<{
   );
 };
 
-const SettingsLink: React.FunctionComponent<{
+const SettingsLink: React.FC<{
   onClick: () => any;
 }> = ({ onClick, children }) => {
   return (
@@ -60,7 +60,7 @@ const SettingsLink: React.FunctionComponent<{
   );
 };
 
-const NoResults: React.FunctionComponent = () => {
+const NoResults: React.FC = () => {
   const { settings, setSettings, popularSearches, starred } = React.useContext(
     SearchContext
   );

@@ -21,7 +21,6 @@ body .experimental {
 
 html, body {
   color: #000;
-  -webkit-font-smoothing: antialiased;
   font-family: Verdana,Geneva,sans-serif
 }
 
@@ -47,7 +46,7 @@ ul {
 
 .container{
   @media screen and (min-width: 1200px) {
-    width: 80%;
+    width: calc(85% - 10px);
     margin: 0 auto;
   }
   @media screen and (max-width: 1200px) {
@@ -56,6 +55,11 @@ ul {
   @media screen and (max-width: 480px) {
     width: 100%;
   }
+}
+
+.default .SearchHeader.container,
+.default .SearchFilters.container {
+  width: 100% !important;
 }
 
 input[type=search], input[type=text] {
