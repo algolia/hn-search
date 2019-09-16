@@ -25,15 +25,11 @@ class Item < ApplicationRecord
   algoliasearch per_environment: true, auto_index: false, if: :live? do
     attribute :created_at, :title, :url, :author, :points, :story_text, :comment_text, :author, :num_comments, :story_id, :story_title, :story_url, :parent_id
     attribute :created_at_i do
-      self.created_at.to_i
+      created_at.to_i
     end
 
-    attribute :relevancy_score do
-      self.relevant_score
-    end
-
-    attributesToIndex ['unordered(title)', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
-    attributesToHighlight ['title', 'story_text', 'comment_text', 'url', 'story_url', 'author', 'story_title']
+    attributesToIndex %w[unordered(title) unordered(story_text) unordered(comment_text) unordered(url) author created_at_i]
+    attributesToHighlight %w[title story_text comment_text url story_url author story_title]
 
     tags do
       t = [item_type, "author_#{author}", "story_#{story_id || id}"]
@@ -53,24 +49,11 @@ class Item < ApplicationRecord
     ranking %w[typo proximity attribute custom]
     separatorsToIndex '+#$.'
 
-    add_slave "Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming
-      attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
+    add_replica "Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming
+      attributesToIndex %w[title unordered(story_text) unordered(comment_text) unordered(url) author created_at_i]
     end
 
-    add_slave "Item_#{Rails.env}_sort_date", inherit: true do # backward compatibility naming
-      customRanking ['desc(created_at_i)']
-      ranking ['custom']
-    end
-
-    add_slave "telemetry_Item_#{Rails.env}", inherit: true do
-      # just copy from primary
-    end
-
-    add_slave "telemetry_Item_#{Rails.env}_ordered", inherit: true do # backward compatibility naming
-      attributesToIndex ['title', 'unordered(story_text)', 'unordered(comment_text)', 'unordered(url)', 'author', 'created_at_i']
-    end
-
-    add_slave "telemetry_Item_#{Rails.env}_sort_date", inherit: true do # backward compatibility naming
+    add_replica "Item_#{Rails.env}_sort_date", inherit: true do # backward compatibility naming
       customRanking ['desc(created_at_i)']
       ranking ['custom']
     end
@@ -224,7 +207,7 @@ class Item < ApplicationRecord
     order = 0 if order < 0
 
     seconds = epoch_seconds_difference.to_i - OLDEST_ARTICLE.to_i
-    return (order + seconds / 45000).round
+    (order + seconds / 45_000).round
   end
 
   private
@@ -234,7 +217,7 @@ class Item < ApplicationRecord
     self.delay(priority: 1).crawl_thumbnail! if !url.blank?
   end
 
-  def self.per_hour_since(item_type, ago)
+  def per_hour_since(item_type, ago)
     Item.where(item_type_cd: item_type).where('created_at > ?', ago).group_by_hour(:created_at).count.map { |k,v| [k.is_a?(String) ? DateTime.parse(k) : k, v] }
   end
 
