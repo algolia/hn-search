@@ -60,7 +60,7 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
   typoTolerance: true,
   storyText: true,
   authorText: true,
-  hitsPerPage: 20,
+  hitsPerPage: 30,
   theme: getPreferredTheme(),
   page: 0,
   prefix: false
@@ -143,7 +143,7 @@ class SearchProvider extends React.Component {
     const index = this.getIndex(params.query);
 
     return index.search(params).then((results: AlgoliaResults) => {
-      reportTelemetry(results);
+      reportTelemetry(results, index.indexName);
 
       if (results.query !== params.query) return;
       if (!results.hits.length) {

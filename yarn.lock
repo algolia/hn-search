@@ -1251,9 +1251,9 @@ ajv@^6.1.0, ajv@^6.10.2, ajv@^6.5.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-algoliasearch@JonasBa/algoliasearch-client-javascript#82a6074:
+algoliasearch@JonasBa/algoliasearch-client-javascript#df956bb:
   version "3.32.0"
-  resolved "https://codeload.github.com/JonasBa/algoliasearch-client-javascript/tar.gz/82a60748bc48c2f47feaa2dd5c8c198fcbac985e"
+  resolved "https://codeload.github.com/JonasBa/algoliasearch-client-javascript/tar.gz/df956bbf2422d87d1808bff8af2a84c229c54226"
   dependencies:
     agentkeepalive "^2.2.0"
     debug "^2.6.8"

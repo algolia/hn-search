@@ -77,7 +77,7 @@ namespace :bluepill do
   end
 
   desc 'Load bluepill configuration and start it'
-  task :start, :roles => [:cron] do
+  task :start, roles: [:cron] do
     run "cd #{current_path} && ./bin/bluepill --no-privileged load /var/www/hnsearch/current/config/production.pill"
   end
 
