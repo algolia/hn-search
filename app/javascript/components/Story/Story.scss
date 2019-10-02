@@ -63,7 +63,11 @@
     .Story_link {
       color: #828282;
       font-size: 12px;
-      margin-left: $spacing-base;
+      display: inline;
+      word-break: break-all;
+
+      @media (max-width: 480px){ display: block; }
+      
       &:hover {
         text-decoration: underline;
       }
