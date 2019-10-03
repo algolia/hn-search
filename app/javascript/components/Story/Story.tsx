@@ -108,7 +108,7 @@ const HighlightURL: React.FC<{
   queryID: string;
   indexName: string;
 }> = ({ hit: { url, _highlightResult, objectID }, queryID, indexName }) => {
-  const highlighted = _highlightResult.url.value;
+  const highlighted = `(${_highlightResult.url.value})`;
 
   return (
     <a
