@@ -249,6 +249,12 @@ const Story: React.FC<{
                 </a>
               ]}
             {isComment && [
+              hit.parent_id && [
+                <span className="Story_separator">|</span>,
+                <span className="Story_link">
+                  <StoryLink id={String(hit.parent_id)}>parent</StoryLink>
+                </span>
+              ],
               <span className="Story_separator">|</span>,
               <span className="Story_link">
                 on:{" "}
