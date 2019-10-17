@@ -199,13 +199,15 @@ const Story: React.FC<{
             )}
           </div>
           <div className="Story_meta">
-            <span>
-              <StoryLink id={objectID}>
-                {isExperimental && <Heart />}
-                {points || 0} points
-              </StoryLink>
-            </span>
-            <span className="Story_separator">|</span>
+            {points > 0 && [
+              <span>
+                <StoryLink id={objectID}>
+                  {isExperimental && <Heart />}
+                  {points} points
+                </StoryLink>
+              </span>,
+              <span className="Story_separator">|</span>
+            ]}
             <span>
               <AuthorLink username={author}>
                 {isExperimental && <User />}
