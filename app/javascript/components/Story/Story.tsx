@@ -250,9 +250,10 @@ const Story: React.FC<{
               ]}
             {isComment && [
               <span className="Story_separator">|</span>,
-              <StoryLink id={String(hit.story_id)}>
-                on: {getTitle(hit)}
-              </StoryLink>
+              <span className="Story_link">
+                on:{" "}
+                <StoryLink id={String(hit.story_id)}>{getTitle(hit)}</StoryLink>
+              </span>
             ]}
             <StoryComment hit={hit} />
           </div>
