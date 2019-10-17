@@ -96,6 +96,14 @@
     font-size: 12px;
     width: 100%;
 
+    line-height: normal;
+    font-style:normal;
+    font-variant-caps:normal;
+    font-variant-east-asian:normal;
+    font-variant-ligatures:normal;
+    font-variant-numeric:normal;
+    font-weight:400;
+
     p { margin: $spacing-small 0 0 }
 
     * {
