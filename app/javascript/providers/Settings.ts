@@ -70,7 +70,7 @@ const withLocationParamSettings = (defaultSettings: HNSettings): HNSettings => {
     defaultType: defaultSettings.defaultType,
     defaultSort: defaultSettings.defaultSort,
     defaultDateRange: defaultSettings.defaultDateRange,
-    prefix: Boolean(params.prefix) || true,
+    prefix: params.prefix === "true",
     page: parseInt(params.page as string) || 0,
     showThumbnails: defaultSettings.showThumbnails,
     login: defaultSettings.login,
@@ -79,8 +79,8 @@ const withLocationParamSettings = (defaultSettings: HNSettings): HNSettings => {
     dateEnd: params.dateEnd as string,
     dateStart: params.dateStart as string,
     typoTolerance: defaultSettings.typoTolerance,
-    storyText: defaultSettings.storyText || Boolean(params.storyText),
-    authorText: defaultSettings.authorText || Boolean(params.authorText),
+    storyText: defaultSettings.storyText || params.storyText === "true",
+    authorText: defaultSettings.authorText || params.authorText === "true",
     hitsPerPage: defaultSettings.hitsPerPage
   };
 
