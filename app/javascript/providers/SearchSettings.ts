@@ -12,7 +12,7 @@ interface SearchSettings {
   numericFilters: string[];
   tagFilters: string[] | string[][];
   queryType: "prefixLast" | "prefixNone";
-  typoTolerance: boolean;
+  typoTolerance: boolean | "min";
   restrictSearchableAttributes: string[];
   minProximity: number;
   getRankingInfo: boolean;
@@ -281,7 +281,7 @@ const getSearchSettings = (
     tagFilters: (getTagFilters(settings) as string[]).concat([
       extractedTagFilter as string[]
     ] as any),
-    typoTolerance: sort === "byPopularity" && typoTolerance,
+    typoTolerance: sort === "byDate" ? "min" : typoTolerance, // if sort by date, disable (or use `min`) typolerance to avoid noice
     queryType: prefix ? "prefixLast" : "prefixNone",
     restrictSearchableAttributes: getRestrictSearchableAttributes(settings),
     getRankingInfo: true
