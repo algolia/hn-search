@@ -183,6 +183,19 @@ $headerHeight: 60px;
     }
 
     &_logo {
+      flex: 1 0 230px;
+      max-width: 230px;
+
+      @media (max-width:768px) {
+        flex: 1 0 40px;
+        max-width: 40px;
+        
+        .SearchHeader_label {
+          display: none;
+        }
+      }
+  
+
       img {
         width: 60px;
 
@@ -192,10 +205,23 @@ $headerHeight: 60px;
       }
     }
 
+    .PoweredBy {
+      right: 108px;
+
+      @media (max-width: 480px) {
+        display: none;
+      }
+  
+      @media (max-width: 1024px){
+        right: 18px;
+      }
+    }
+
     .SearchInput {
       height: 64px;
       border-radius: 4px;
       padding-left: 58px;
+      width: calc(100%);
 
       @media (max-width: 768px) {
         height: 34px;
