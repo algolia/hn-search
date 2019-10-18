@@ -62,11 +62,11 @@
 
     .Story_link {
       color: #828282;
-      font-size: 12px;
+      font-size: 13px;
       word-break: break-all;
-
-      @media (max-width: 480px){ display: block; }
       
+      @media (max-width: 480px) { display: block;}
+
       &:hover {
         text-decoration: underline;
       }
@@ -74,15 +74,20 @@
   }
 
   &_meta {
-    font-size: 10px;
+    font-size: 10.6667px;
+    color: $text-dimmed;
 
     a {
       color: $text-dimmed;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
   &_separator {
-    margin: 0 4px;
+    margin: 0 5px;
     color: dimgray;
 
     &:last-child {
@@ -95,6 +100,14 @@
     color: #000;
     font-size: 12px;
     width: 100%;
+
+    line-height: normal;
+    font-style:normal;
+    font-variant-caps:normal;
+    font-variant-east-asian:normal;
+    font-variant-ligatures:normal;
+    font-variant-numeric:normal;
+    font-weight:400;
 
     p { margin: $spacing-small 0 0 }
 

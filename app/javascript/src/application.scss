@@ -4,7 +4,6 @@
 @import "./variables.scss";
 
 * {
-  text-rendering: optimizeLegibility;
   box-sizing: border-box;
 }
 
@@ -16,6 +15,7 @@ html .experimental,
 body .experimental {
   color: #000;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 

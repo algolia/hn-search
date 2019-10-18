@@ -16,6 +16,8 @@ import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
 import StoryImage from "./StoryImage";
 
+const isHitComment = (hit: Hit) => hit._tags && hit._tags[0] === "comment";
+
 const reportClickEvent = (
   queryID: string,
   objectID: string,
@@ -171,41 +173,47 @@ const Story: React.FC<{
     setShowComments(!showComments);
   }, [showComments, hit.comments]);
 
+  const isComment = isHitComment(hit);
+
   return (
     <article className="Story">
       <div className="Story_container">
         {showThumbnailImage && <StoryImage objectID={hit.objectID} />}
         <div className="Story_data">
-          <div className="Story_title">
-            <StoryLink
-              id={objectID}
-              onClick={() =>
-                reportClickEvent(
-                  results.queryID,
-                  objectID,
-                  position,
-                  results.indexUsed
-                )
-              }
-            >
-              {stripHighlight(getTitle(hit))}
-            </StoryLink>
-            {!isExperimental && url && (
-              <HighlightURL
-                hit={hit}
-                indexName={results.indexUsed}
-                queryID={results.queryID}
-              />
-            )}
-          </div>
-          <div className="Story_meta">
-            <span>
-              <StoryLink id={objectID}>
-                {isExperimental && <Heart />}
-                {points || 0} points
+          {!isComment && (
+            <div className="Story_title">
+              <StoryLink
+                id={objectID}
+                onClick={() =>
+                  reportClickEvent(
+                    results.queryID,
+                    objectID,
+                    position,
+                    results.indexUsed
+                  )
+                }
+              >
+                {stripHighlight(getTitle(hit))}
               </StoryLink>
-            </span>
-            <span className="Story_separator">|</span>
+              {!isExperimental && url && (
+                <HighlightURL
+                  hit={hit}
+                  indexName={results.indexUsed}
+                  queryID={results.queryID}
+                />
+              )}
+            </div>
+          )}
+          <div className="Story_meta">
+            {points > 0 && [
+              <span>
+                <StoryLink id={objectID}>
+                  {isExperimental && <Heart />}
+                  {points} points
+                </StoryLink>
+              </span>,
+              <span className="Story_separator">|</span>
+            ]}
             <span>
               <AuthorLink username={author}>
                 {isExperimental && <User />}
@@ -233,14 +241,26 @@ const Story: React.FC<{
                 </span>
               </>
             )}
-            {isExperimental && url && (
-              <>
-                <span className="Story_separator">|</span>
+            {isExperimental &&
+              url && [
+                <span className="Story_separator">|</span>,
                 <a href={url} target="_blank" className="Story_link">
                   ({extractDomain(hit.url)})
                 </a>
-              </>
-            )}
+              ]}
+            {isComment && [
+              hit.parent_id && [
+                <span className="Story_separator">|</span>,
+                <span className="Story_link">
+                  <StoryLink id={String(hit.parent_id)}>parent</StoryLink>
+                </span>
+              ],
+              <span className="Story_separator">|</span>,
+              <span className="Story_link">
+                on:{" "}
+                <StoryLink id={String(hit.story_id)}>{getTitle(hit)}</StoryLink>
+              </span>
+            ]}
             <StoryComment hit={hit} />
           </div>
         </div>

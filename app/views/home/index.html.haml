@@ -37,3 +37,6 @@
   %meta{property: "og:image", content: facebook_url }
   %meta{property: "og:image:width", content: '600' }
   %meta{property: "og:image:height", content: '315' }
+
+  - if request.params[:preconnect] && request.params[:preconnect].present?
+    %link{rel: "preconnect", href: "https://uj5wyc0l7x-dsn.algolia.net", crossorigin: ""}
