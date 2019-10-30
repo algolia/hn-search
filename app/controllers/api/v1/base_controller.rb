@@ -12,7 +12,7 @@ module Api
         params.delete :format
         params[:advancedSyntax] = true if params[:advancedSyntax].nil?
         params[:analytics] = false if params[:analytics].nil?
-        params[:analytics_tags] = ['backend']
+        params[:analyticsTags] = ['backend']
 
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
         forwarded_ip = nil if eval(ENV['RATE_LIMIT_WHITE_LIST']).include?(forwarded_ip)
