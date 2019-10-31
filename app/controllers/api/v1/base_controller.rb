@@ -11,7 +11,7 @@ module Api
         params.delete :controller
         params.delete :format
         params[:advancedSyntax] = true if params[:advancedSyntax].nil?
-        params[:analytics] = false if params[:analytics].nil?
+        params[:analytics] = params[:analytics] != 'false'
         params[:analyticsTags] = 'backend'
 
         forwarded_ip = (request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).split(',').first.strip
