@@ -35,7 +35,6 @@ module Api
       def client
         Thread.current[:algolia_client] ||= Client.new(ENV['ALGOLIASEARCH_APPLICATION_ID'], ENV['ALGOLIASEARCH_API_KEY'], ENV['ALGOLIASEARCH_API_KEY_RO'])
       end
-
     end
 
     class Client

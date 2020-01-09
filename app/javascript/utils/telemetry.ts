@@ -106,7 +106,7 @@ export const reportTelemetry = (query, index: string) => {
         array.length === 1 ? query.processingTimeMS : null,
       hits_per_page: array.length === 1 ? query.hitsPerPage : null,
       hits: array.length === 1 ? query.hits.length : null,
-      targeted_server: entry.name.match(/(.*)\:\/\/(.*?)\//)[2]
+      targeted_server: query.serverUsed
     };
 
     reportData(telemetryData, "measure");
