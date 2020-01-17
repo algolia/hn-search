@@ -1,4 +1,5 @@
 import { HNSettings } from "./Search.types";
+import { HIGHLIGHT_TAGS } from "../utils/parseHighlightedAttribute";
 
 interface SearchSettings {
   query: string;
@@ -17,6 +18,8 @@ interface SearchSettings {
   minProximity: number;
   getRankingInfo: boolean;
   analyticsTags: string[];
+  highlightPreTag: string;
+  highlightPostTag: string;
 }
 
 const getDateTimestampSinceDays = (sinceDays: number) => {
@@ -284,7 +287,9 @@ const getSearchSettings = (
     typoTolerance: sort === "byDate" ? "min" : typoTolerance, // if sort by date, disable (or use `min`) typolerance to avoid noice
     queryType: prefix ? "prefixLast" : "prefixNone",
     restrictSearchableAttributes: getRestrictSearchableAttributes(settings),
-    getRankingInfo: true
+    getRankingInfo: true,
+    highlightPreTag: HIGHLIGHT_TAGS.pre,
+    highlightPostTag: HIGHLIGHT_TAGS.post
   };
 
   return searchParams;
