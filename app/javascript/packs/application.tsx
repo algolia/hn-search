@@ -6,6 +6,7 @@ import "core-js/stable/array/fill";
 import "core-js/stable/promise";
 import "core-js/stable/string/starts-with";
 import "core-js/stable/object/assign";
+import "core-js/stable/object/entries";
 
 import "whatwg-fetch";
 import "../utils/telemetry";

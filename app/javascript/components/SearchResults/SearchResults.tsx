@@ -6,7 +6,7 @@ import NoResults from "./NoResults";
 import { SearchContext } from "../../providers/SearchProvider";
 
 const shouldShowNoResults = (hits, isLoading): boolean => {
-  return hits !== null && (!hits.length && !isLoading);
+  return hits !== null && !hits.length && !isLoading;
 };
 
 const computePosition = (

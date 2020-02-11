@@ -1,14 +1,10 @@
 import * as React from "react";
-import algoliasearch from "algoliasearch";
+import { SearchResponse } from "@algolia/client-search";
+import algoliasearch, { SearchClient, SearchIndex } from "algoliasearch/lite";
+import { createBrowserXhrRequester } from "@algolia/requester-browser-xhr";
 
 import Starred from "./Starred";
-import {
-  AlgoliaResults,
-  Comment,
-  HNSettings,
-  Hit,
-  PopularSearches
-} from "./Search.types";
+import { Comment, HNSettings, Hit, PopularSearches } from "./Search.types";
 import { initializeSettings, saveSettings } from "./Settings";
 import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
@@ -32,7 +28,7 @@ const REQUEST_HEADERS = {
 };
 
 interface ISearchContext {
-  results: AlgoliaResults;
+  results: SearchResponse;
   popularSearches: PopularSearches;
   popularStories: number[];
   loading: boolean;
@@ -40,8 +36,8 @@ interface ISearchContext {
     query: string,
     settings?: HNSettings,
     storyIDs?: number[]
-  ) => Promise<AlgoliaResults>;
-  fetchPopularStories: () => Promise<AlgoliaResults>;
+  ) => Promise<SearchResponse>;
+  fetchPopularStories: () => Promise<SearchResponse>;
   fetchCommentsForStory: (objectID: Hit["objectID"]) => Promise<Comment>;
   setSettings: (settings: Partial<HNSettings>) => HNSettings;
   settings: HNSettings;
@@ -79,9 +75,13 @@ const DEFAULT_SEARCH_STATE = {
     query: "",
     nbHits: 0,
     processingTimeMS: 0,
+    page: 0,
+    hitsPerPage: 0,
     nbPages: 0,
     queryID: null,
-    indexUsed: null
+    indexUsed: null,
+    exhaustiveNbHits: false,
+    params: null
   },
   loading: true,
   popularStories: [],
@@ -90,16 +90,49 @@ const DEFAULT_SEARCH_STATE = {
 };
 
 class SearchProvider extends React.Component {
-  client = algoliasearch("UJ5WYC0L7X", "8ece23f8eb07cd25d40262a1764599b1");
+  client: SearchClient;
+  indexUser: SearchIndex;
+  indexSortedByDate: SearchIndex;
+  indexSortedByPopularity: SearchIndex;
+  indexSortedByPopularityOrdered: SearchIndex;
 
-  indexUser = (this.client as any).initIndex(ALGOLIA_INDEXES.User);
-  indexSortedByPopularity = (this.client as any).initIndex(
-    ALGOLIA_INDEXES.Popularity
-  );
-  indexSortedByDate = (this.client as any).initIndex(ALGOLIA_INDEXES.ByDate);
-  indexSortedByPopularityOrdered = (this.client as any).initIndex(
-    ALGOLIA_INDEXES.PopularityOrdered
-  );
+  constructor(props) {
+    super(props);
+    const requester = createBrowserXhrRequester();
+
+    this.client = algoliasearch(
+      "UJ5WYC0L7X",
+      "8ece23f8eb07cd25d40262a1764599b1",
+      {
+        requester: {
+          send: request =>
+            requester.send(request).then(response => {
+              if (response.status === 200) {
+                const results = JSON.parse(response.content);
+
+                reportTelemetry(
+                  results,
+                  request.url.match(/indexes\/(\w+)\//)[1]
+                );
+              }
+
+              return response;
+            })
+        }
+      }
+    );
+
+    this.indexUser = (this.client as any).initIndex(ALGOLIA_INDEXES.User);
+    this.indexSortedByPopularity = (this.client as any).initIndex(
+      ALGOLIA_INDEXES.Popularity
+    );
+    this.indexSortedByDate = (this.client as any).initIndex(
+      ALGOLIA_INDEXES.ByDate
+    );
+    this.indexSortedByPopularityOrdered = (this.client as any).initIndex(
+      ALGOLIA_INDEXES.PopularityOrdered
+    );
+  }
 
   starred = new Starred();
   state = DEFAULT_SEARCH_STATE;
@@ -137,14 +170,12 @@ class SearchProvider extends React.Component {
     query: string = "",
     settings: HNSettings = this.state.settings,
     storyIDs?: number[]
-  ): Promise<AlgoliaResults> => {
+  ): Promise<SearchResponse> => {
     this.setState({ loading: true });
     const params = getSearchSettings(query, settings, storyIDs);
     const index = this.getIndex(params.query);
 
-    return index.search(params).then((results: AlgoliaResults) => {
-      reportTelemetry(results, index.indexName);
-
+    return index.search("", params).then(results => {
       if (results.query !== params.query) return;
       if (!results.hits.length) {
         this.fetchPopularSearches().then(searches => {
@@ -152,16 +183,19 @@ class SearchProvider extends React.Component {
         });
       }
 
+      // @ts-ignore
       results.indexUsed = index.indexName;
 
       this.setState({
         results,
         loading: false
       });
+
+      return results;
     });
   };
 
-  fetchPopularStories = (): Promise<AlgoliaResults> => {
+  fetchPopularStories = (): Promise<SearchResponse> => {
     const { settings } = this.state;
 
     if (this.state.popularStories.length) {
@@ -190,7 +224,7 @@ class SearchProvider extends React.Component {
     })
       .then(resp => resp.json())
       .then(comments => {
-        const hitsWithComments: AlgoliaResults["hits"] = this.state.results.hits.map(
+        const hitsWithComments: SearchResponse["hits"] = this.state.results.hits.map(
           hit => {
             if (hit.objectID !== objectID) return hit;
             return {
@@ -234,9 +268,13 @@ export const SearchContext = React.createContext<ISearchContext>({
     query: "",
     nbHits: 0,
     processingTimeMS: 0,
+    page: 0,
+    hitsPerPage: 0,
     nbPages: 0,
     queryID: null,
-    indexUsed: null
+    indexUsed: null,
+    exhaustiveNbHits: false,
+    params: null
   },
   loading: true,
   popularStories: [],
@@ -244,8 +282,8 @@ export const SearchContext = React.createContext<ISearchContext>({
   starred: new Starred(),
   settings: DEFAULT_HN_SETTINGS,
   setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
-  search: (query: string) => new Promise<AlgoliaResults>(resolve => resolve()),
-  fetchPopularStories: () => new Promise<AlgoliaResults>(resolve => resolve()),
+  search: (query: string) => new Promise<SearchResponse>(resolve => resolve()),
+  fetchPopularStories: () => new Promise<SearchResponse>(resolve => resolve()),
   fetchCommentsForStory: (objectID: Hit["objectID"]) =>
     new Promise<Comment>(resolve => resolve())
 });

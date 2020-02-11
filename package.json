@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "algoliasearch": "JonasBa/algoliasearch-client-javascript#0a90690",
+    "algoliasearch": "^4.0.2",
     "classnames": "^2.2.6",
     "core-js": "3",
     "date-fns": "^2.0.1",
