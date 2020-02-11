@@ -4,6 +4,7 @@ import "./SearchResults.scss";
 import Story from "../Story/Story";
 import NoResults from "./NoResults";
 import { SearchContext } from "../../providers/SearchProvider";
+import { AlgoliaResults } from "../../providers/Search.types";
 
 const shouldShowNoResults = (hits, isLoading): boolean => {
   return hits !== null && !hits.length && !isLoading;
@@ -35,7 +36,7 @@ const SearchResults: React.FC = () => {
       {shouldShowNoResults(results.hits, loading) && <NoResults />}
       <div className="SearchResults_container">
         {results.hits &&
-          results.hits.map((hit, i) => (
+          (results.hits as AlgoliaResults["hits"]).map((hit, i) => (
             <Story
               hit={hit}
               key={hit.objectID}
