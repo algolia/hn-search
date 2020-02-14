@@ -15,7 +15,6 @@ import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
 import StoryImage from "./StoryImage";
-import parseHighlightedAttribute from "../../utils/parseHighlightedAttribute";
 
 const isHitComment = (hit: Hit) => hit._tags && hit._tags[0] === "comment";
 
@@ -75,9 +74,7 @@ const AuthorLink: React.FC<{
 };
 
 export const stripHighlight = (text: string) => {
-  return parseHighlightedAttribute(text).map(p =>
-    p.isHighlighted ? <em>{p.value}</em> : p.value
-  );
+  return <span dangerouslySetInnerHTML={{ __html: text }} />;
 };
 
 const isStory = (hit: Hit): boolean => hit._tags[0] === "story";
@@ -121,9 +118,8 @@ const HighlightURL: React.FC<{
       target="_blank"
       className="Story_link"
       onClick={() => reportConversion(queryID, objectID, indexName)}
-    >
-      {stripHighlight(highlighted)}
-    </a>
+      dangerouslySetInnerHTML={{ __html: highlighted }}
+    />
   );
 };
 
