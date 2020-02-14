@@ -29,5 +29,7 @@ const cleanup = (input?: string) => {
   //   '<a href="$1" rel="nofollow">$2</a>'
   // );
 
-  return "<p>" + string.replace(/<p>/g, "</p><p>") + "</p>";
+  return string;
 };
+
+export default cleanup;

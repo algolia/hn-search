@@ -58,7 +58,13 @@
     em {
       font-weight: bold;
     }
-    a { color: black }
+    a { 
+      color: black;
+      
+      &:first-child{
+        margin-right: $spacing-base;
+      }
+    }
 
     .Story_link {
       color: #828282;

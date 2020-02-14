@@ -15,6 +15,7 @@ import { SearchContext } from "../../providers/SearchProvider";
 import SocialShare from "../SocialShare/SocialShare";
 import Loader from "../Loader/Loader";
 import StoryImage from "./StoryImage";
+import cleanup from "../../utils/cleanup";
 
 const isHitComment = (hit: Hit) => hit._tags && hit._tags[0] === "comment";
 
@@ -74,7 +75,7 @@ const AuthorLink: React.FC<{
 };
 
 export const stripHighlight = (text: string) => {
-  return <span dangerouslySetInnerHTML={{ __html: text }} />;
+  return <span dangerouslySetInnerHTML={{ __html: cleanup(text) }} />;
 };
 
 const isStory = (hit: Hit): boolean => hit._tags[0] === "story";
