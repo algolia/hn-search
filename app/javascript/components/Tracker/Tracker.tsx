@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 ReactGA.initialize("UA-32446386-3");
 
+// @ts-ignore
 const Tracker: React.FC<RouteComponentProps> = props => {
   const trackPage = (page: string) => {
     ReactGA.set({ page });
