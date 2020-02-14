@@ -173,9 +173,14 @@ class SearchProvider extends React.Component {
   ): Promise<SearchResponse> => {
     this.setState({ loading: true });
     const params = getSearchSettings(query, settings, storyIDs);
+    // Override hitsPerPage to lower nb to see how it impacts mobile perf;
+    const perfParams = {
+      ...params,
+      hitsPerPage: window.innerWidth > 768 ? params.hitsPerPage : 10
+    };
     const index = this.getIndex(params.query);
 
-    return index.search("", params).then(results => {
+    return index.search("", perfParams).then(results => {
       if (results.query !== params.query) return;
       if (!results.hits.length) {
         this.fetchPopularSearches().then(searches => {
