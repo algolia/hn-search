@@ -92,18 +92,30 @@ const getTitle = (hit: Hit) => {
   return hit.title || hit.story_title || hit.story_text;
 };
 
-const StoryComment: React.FC<{ hit: Hit }> = ({ hit }) => {
+const StoryComment: React.FC<{ hit: Hit; highlight?: boolean }> = ({
+  hit,
+  highlight
+}) => {
   const { _highlightResult } = hit;
   const type = hit._tags[0];
 
   if (type !== "comment" && type !== "story") return null;
-  const text = _highlightResult.comment_text
-    ? _highlightResult.comment_text.value
-    : _highlightResult.story_text && _highlightResult.story_text.value;
+  if (highlight) {
+    const text = _highlightResult.comment_text
+      ? _highlightResult.comment_text.value
+      : _highlightResult.story_text && _highlightResult.story_text.value;
 
-  if (!text) return null;
+    if (!text) return null;
 
-  return <div className="Story_comment">{stripHighlight(text)}</div>;
+    return <div className="Story_comment">{stripHighlight(text)}</div>;
+  }
+
+  if (!highlight) {
+    const text = hit.comment_text || hit.story_text;
+    if (!text) return null;
+
+    return <div className="Story_comment">{stripHighlight(text)}</div>;
+  }
 };
 
 const HighlightURL: React.FC<{
@@ -133,7 +145,9 @@ const extractDomain = (url: string): string => {
 const Story: React.FC<{
   hit: Hit;
   position: number;
-}> = ({ hit, position }) => {
+  hideStoryText: boolean;
+  highlightStoryText: boolean;
+}> = ({ hit, position, hideStoryText, highlightStoryText }) => {
   const {
     points,
     objectID,
@@ -262,7 +276,9 @@ const Story: React.FC<{
                 <StoryLink id={String(hit.story_id)}>{getTitle(hit)}</StoryLink>
               </span>
             ]}
-            <StoryComment hit={hit} />
+            {!hideStoryText && (
+              <StoryComment hit={hit} highlight={highlightStoryText} />
+            )}
           </div>
         </div>
         {isExperimental && (

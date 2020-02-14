@@ -1,4 +1,5 @@
 import { HNSettings } from "./Search.types";
+import { parse } from "query-string";
 
 interface SearchSettings {
   query: string;
@@ -232,14 +233,23 @@ const getTagFilters = (settings: HNSettings): SearchSettings["tagFilters"] => {
 const getRestrictSearchableAttributes = (
   settings: HNSettings
 ): SearchSettings["restrictSearchableAttributes"] => {
-  if (!settings.storyText && !settings.authorText) {
-    return ["title", "comment_text", "url"];
-  } else if (settings.storyText && !settings.authorText) {
-    return ["title", "comment_text", "url", "story_text"];
-  } else if (!settings.storyText && settings.authorText) {
-    return ["title", "comment_text", "url", "author"];
+  const attributes = new Set(["title", "comment_text", "url"]);
+
+  if (settings.storyText) {
+    attributes.add("story_text");
   }
-  return [];
+  if (settings.authorText) {
+    attributes.add("author");
+  }
+
+  const params = parse(window.location.search);
+
+  if (params.storyText === "none" || params.storyText === "show") {
+    attributes.delete("story_text");
+    attributes.delete("comment_text");
+  }
+
+  return Array.from(attributes);
 };
 
 const getMinProximity = (

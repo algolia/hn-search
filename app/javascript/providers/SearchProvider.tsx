@@ -1,4 +1,5 @@
 import * as React from "react";
+import { parse } from "query-string";
 import { SearchResponse } from "@algolia/client-search";
 import algoliasearch, { SearchClient, SearchIndex } from "algoliasearch/lite";
 import { createBrowserXhrRequester } from "@algolia/requester-browser-xhr";

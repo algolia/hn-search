@@ -5,6 +5,7 @@ import Story from "../Story/Story";
 import NoResults from "./NoResults";
 import { SearchContext } from "../../providers/SearchProvider";
 import { AlgoliaResults } from "../../providers/Search.types";
+import { parse } from "query-string";
 
 const shouldShowNoResults = (hits, isLoading): boolean => {
   return hits !== null && !hits.length && !isLoading;
@@ -31,6 +32,8 @@ const SearchResults: React.FC = () => {
     }
   }, [results]);
 
+  const params = parse(window.location.search);
+
   return (
     <section className="SearchResults">
       {shouldShowNoResults(results.hits, loading) && <NoResults />}
@@ -41,6 +44,8 @@ const SearchResults: React.FC = () => {
               hit={hit}
               key={hit.objectID}
               position={computePosition(i, hitsPerPage, page)}
+              hideStoryText={params.storyText === "none"}
+              highlightStoryText={params.storyText !== "show"}
             />
           ))}
       </div>
