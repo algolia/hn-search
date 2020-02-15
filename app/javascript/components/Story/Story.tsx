@@ -273,7 +273,9 @@ const Story: React.FC<{
               <span className="Story_separator">|</span>,
               <span className="Story_link">
                 on:{" "}
-                <StoryLink id={String(hit.story_id)}>{getTitle(hit)}</StoryLink>
+                <StoryLink id={String(hit.story_id)}>
+                  {stripHighlight(getTitle(hit))}
+                </StoryLink>
               </span>
             ]}
             {!hideStoryText && (
