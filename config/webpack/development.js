@@ -22,4 +22,6 @@ environment.plugins.prepend(
   })
 );
 
+environment.config.set("output.filename", "[name]-[chunkhash].js");
+
 module.exports = environment.toWebpackConfig();
