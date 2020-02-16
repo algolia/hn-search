@@ -18,8 +18,7 @@ environment.plugins.prepend(
   "DefinePlugin",
   new webpack.DefinePlugin({
     DEVELOPMENT: JSON.stringify(true),
-    PRODUCTION: JSON.stringify(false),
-    s
+    PRODUCTION: JSON.stringify(false)
   })
 );
 
