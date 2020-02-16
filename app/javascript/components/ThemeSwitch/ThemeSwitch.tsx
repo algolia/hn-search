@@ -4,8 +4,6 @@ import { SearchContext } from "../../providers/SearchProvider";
 import Light from "./light.svg";
 import Dark from "./dark.svg";
 
-import "./ThemeSwitch.scss";
-
 const ThemeSwitch: React.FC = () => {
   const { settings, setSettings } = React.useContext(SearchContext);
 

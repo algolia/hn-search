@@ -1,6 +1,5 @@
 import * as React from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import "./Comments.scss";
 
 import XCircle from "react-feather/dist/icons/x-circle";
 import { stripHighlight } from "./Story";

@@ -2,8 +2,6 @@ import * as React from "react";
 import classnames from "classnames";
 import formatDistanceStrict from "date-fns/formatDistanceStrict";
 
-import "./Story.scss";
-
 import Clock from "react-feather/dist/icons/clock";
 import Heart from "react-feather/dist/icons/heart";
 import User from "react-feather/dist/icons/user";

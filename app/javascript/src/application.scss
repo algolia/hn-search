@@ -3,6 +3,14 @@
 @import "./colors.scss";
 @import "./variables.scss";
 
+@import "./Comments.scss";
+@import "./Datepicker.scss";
+@import "./Layout.scss";
+@import "./Story.scss";
+@import "./ThemeSwitch.scss";
+
+@import "react-day-picker/lib/style.css";
+
 * {
   box-sizing: border-box;
 }
