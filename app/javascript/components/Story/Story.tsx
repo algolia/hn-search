@@ -218,15 +218,17 @@ const Story: React.FC<{
             </div>
           )}
           <div className="Story_meta">
-            {points > 0 && [
-              <span>
-                <StoryLink id={objectID}>
-                  {isExperimental && <Heart />}
-                  {points} points
-                </StoryLink>
-              </span>,
-              <span className="Story_separator">|</span>
-            ]}
+            {points > 0 && (
+              <>
+                <span>
+                  <StoryLink id={objectID}>
+                    {isExperimental && <Heart />}
+                    {points} points
+                  </StoryLink>
+                </span>
+                ,<span className="Story_separator">|</span>
+              </>
+            )}
             <span>
               <AuthorLink username={author}>
                 {isExperimental && <User />}
@@ -254,13 +256,14 @@ const Story: React.FC<{
                 </span>
               </>
             )}
-            {isExperimental &&
-              url && [
+            {isExperimental && url && (
+              <>
                 <span className="Story_separator">|</span>,
                 <a href={url} target="_blank" className="Story_link">
                   ({extractDomain(hit.url)})
                 </a>
-              ]}
+              </>
+            )}
             {isComment && [
               hit.parent_id && [
                 <span className="Story_separator">|</span>,

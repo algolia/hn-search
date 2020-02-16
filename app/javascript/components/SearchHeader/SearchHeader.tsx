@@ -6,9 +6,10 @@ import Search from "react-feather/dist/icons/search";
 import Settings from "react-feather/dist/icons/settings";
 
 import { SearchContext } from "../../providers/SearchProvider";
+import trackCMDK from "../../utils/trackCMDK";
+
 import AlgoliaLogoWhite from "images/logo-algolia-white.svg";
 import AlgoliaLogoBlue from "images/logo-algolia-blue.svg";
-import trackCMDK from "../../utils/trackCMDK";
 
 const POWERED_BY_LINK =
   "https://www.algolia.com/?utm_source=hn_search&amp;utm_medium=link&amp;utm_term=logo&amp;utm_campaign=hn_algolia";
@@ -18,10 +19,9 @@ const AlgoliaLogo: React.FC = () => {
     settings: { style, theme }
   } = React.useContext(SearchContext);
 
-  if (style === "default") {
-    return <img src={AlgoliaLogoBlue} alt="Algolia Logo" />;
-  }
-  return (
+  return style === "default" ? (
+    <img src={AlgoliaLogoBlue} alt="Algolia Logo" />
+  ) : (
     <img
       src={theme === "dark" ? AlgoliaLogoWhite : AlgoliaLogoBlue}
       alt="Algolia Logo"
@@ -39,9 +39,7 @@ interface SearchHeaderProps {
   storyID?: string;
 }
 
-const SearchHeader: React.FC<SearchHeaderProps> = ({
-  storyID
-}) => {
+const SearchHeader: React.FC<SearchHeaderProps> = ({ storyID }) => {
   const {
     settings,
     search,
