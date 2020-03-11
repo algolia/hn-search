@@ -3,8 +3,6 @@ import { CSSTransition } from "react-transition-group";
 import fromUnixTime from "date-fns/fromUnixTime";
 import format from "date-fns/format";
 
-import "./SearchFilters.scss";
-
 import ChevronsRight from "react-feather/dist/icons/chevron-right";
 import Menu from "react-feather/dist/icons/menu";
 

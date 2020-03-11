@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import "./SearchHeader.scss";
 
 import Search from "react-feather/dist/icons/search";
 import Settings from "react-feather/dist/icons/settings";

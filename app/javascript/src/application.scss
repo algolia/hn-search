@@ -9,6 +9,24 @@
 @import "./Story.scss";
 @import "./ThemeSwitch.scss";
 
+// Components
+@import "./../components/Dropdown/Dropdown.scss";
+@import "./../components/ErrorBoundary/ErrorBoundary.scss";
+@import "./../components/Footer/Footer.scss";
+@import "./../components/Loader/Loader.scss";
+@import "./../components/Pagination/Pagination.scss";
+@import "./../components/SearchFilters/SearchFilters.scss";
+@import "./../components/SearchHeader/SearchHeader.scss";
+@import "./../components/SearchResults/NoResults.scss";
+@import "./../components/SearchResults/SearchResults.scss";
+@import "./../components/Sidebar/Sidebar.scss";
+@import "./../components/SocialShare/SocialShare.scss";
+
+// Views
+@import "./../views/Api.scss";
+@import "./../views/Help.scss";
+@import "./../views/Settings.scss";
+
 @import "react-day-picker/lib/style.css";
 
 * {

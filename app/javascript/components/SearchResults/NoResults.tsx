@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./NoResults.scss";
 
 import { SearchContext } from "../../providers/SearchProvider";
 import { HNSettings, PopularSearches } from "../../providers/Search.types";

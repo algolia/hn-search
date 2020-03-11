@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Link, Route } from "react-router-dom";
-import "./Sidebar.scss";
 
 import Eye from "react-feather/dist/icons/eye";
 import Home from "react-feather/dist/icons/home";

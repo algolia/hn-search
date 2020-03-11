@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./SearchResults.scss";
 
 import Story from "../Story/Story";
 import NoResults from "./NoResults";

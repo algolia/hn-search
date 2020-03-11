@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./Pagination.scss";
 
 import { SearchContext } from "../../providers/SearchProvider";
 
