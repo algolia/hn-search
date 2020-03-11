@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
 import { RouteComponentProps, Link } from "react-router-dom";
-import "./Settings.scss";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";

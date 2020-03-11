@@ -2,11 +2,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 const webpack = require("webpack");
 const environment = require("./environment");
-
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
 const supportedLocales = ["en"];
-environment.plugins.prepend("BundleAnalyzer", new BundleAnalyzerPlugin());
+
 environment.plugins.prepend(
   "DateFNSLocales",
   new webpack.ContextReplacementPlugin(
@@ -21,5 +18,7 @@ environment.plugins.prepend(
     PRODUCTION: JSON.stringify(false)
   })
 );
+
+environment.config.set("output.filename", "[name]-[contenthash].js");
 
 module.exports = environment.toWebpackConfig();

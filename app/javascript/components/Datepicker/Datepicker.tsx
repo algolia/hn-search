@@ -5,9 +5,6 @@ import fromUnixTime from "date-fns/fromUnixTime";
 import subDays from "date-fns/subDays";
 import { CSSTransition } from "react-transition-group";
 
-import "./Datepicker.scss";
-import "react-day-picker/lib/style.css";
-
 import XCircle from "react-feather/dist/icons/x-circle";
 import Calendar from "react-feather/dist/icons/calendar";
 

@@ -3,7 +3,6 @@ import Share2 from "react-feather/dist/icons/share-2";
 import Mail from "react-feather/dist/icons/mail";
 import Twitter from "react-feather/dist/icons/twitter";
 import Facebook from "react-feather/dist/icons/facebook";
-import "./SocialShare.scss";
 
 import { Hit } from "../../providers/Search.types";
 import Dropdown from "../Dropdown/Dropdown";
@@ -90,10 +89,7 @@ interface SocialShareProps {
   hit?: Hit;
 }
 
-const SocialShare: React.FC<SocialShareProps> = ({
-  hit,
-  query
-}) => {
+const SocialShare: React.FC<SocialShareProps> = ({ hit, query }) => {
   return (
     <div className="SocialShare">
       <Dropdown

@@ -2,8 +2,6 @@ import * as React from "react";
 import Downshift from "downshift";
 import classnames from "classnames";
 
-import "./Dropdown.scss";
-
 import ChevronUp from "react-feather/dist/icons/chevron-up";
 import ChevronDown from "react-feather/dist/icons/chevron-down";
 import { CSSTransition } from "react-transition-group";

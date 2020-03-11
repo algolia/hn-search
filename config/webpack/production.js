@@ -19,4 +19,6 @@ environment.plugins.prepend(
   })
 );
 
+environment.config.set("output.filename", "[name]-[contenthash].js");
+
 module.exports = environment.toWebpackConfig();

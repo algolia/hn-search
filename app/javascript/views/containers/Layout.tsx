@@ -2,8 +2,6 @@ import * as React from "react";
 import { Helmet } from "react-helmet";
 import { RouteComponentProps } from "react-router";
 
-import "./Layout.scss";
-
 import Tracker from "../../components/Tracker/Tracker";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
