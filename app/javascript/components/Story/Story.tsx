@@ -226,7 +226,7 @@ const Story: React.FC<{
                     {points} points
                   </StoryLink>
                 </span>
-                ,<span className="Story_separator">|</span>
+                <span className="Story_separator">|</span>
               </>
             )}
             <span>
@@ -258,7 +258,7 @@ const Story: React.FC<{
             )}
             {isExperimental && url && (
               <>
-                <span className="Story_separator">|</span>,
+                <span className="Story_separator">|</span>
                 <a href={url} target="_blank" className="Story_link">
                   ({extractDomain(hit.url)})
                 </a>
