@@ -1,8 +1,8 @@
 import * as React from "react";
-import { parse } from "query-string";
 import { SearchResponse } from "@algolia/client-search";
 import algoliasearch, { SearchClient, SearchIndex } from "algoliasearch/lite";
 import { createBrowserXhrRequester } from "@algolia/requester-browser-xhr";
+import createTelemetryClient from "@algolia/algolia-browser-telemetry";
 
 import Starred from "./Starred";
 import { Comment, HNSettings, Hit, PopularSearches } from "./Search.types";
@@ -15,7 +15,7 @@ import { reportTelemetry } from "../utils/telemetry";
 
 enum ENV {
   production = "https://hn.algolia.com",
-  development = "http://localhost:3000"
+  development = "http://localhost:3000",
 }
 const HN_API = ((): string =>
   process.env.NODE_ENV === "production" ? ENV.production : ENV.development)();
@@ -25,7 +25,7 @@ const CSRFMeta: HTMLMetaElement = document.querySelector(
 );
 
 const REQUEST_HEADERS = {
-  "X-CSRF-TOKEN": CSRFMeta.content
+  "X-CSRF-TOKEN": CSRFMeta.content,
 };
 
 interface ISearchContext {
@@ -60,14 +60,14 @@ export const DEFAULT_HN_SETTINGS: HNSettings = {
   hitsPerPage: 30,
   theme: getPreferredTheme(),
   page: 0,
-  prefix: false
+  prefix: false,
 };
 
 enum ALGOLIA_INDEXES {
   User = "User_production",
   Popularity = "Item_production",
   ByDate = "Item_production_sort_date",
-  PopularityOrdered = "Item_production_ordered"
+  PopularityOrdered = "Item_production_ordered",
 }
 
 const DEFAULT_SEARCH_STATE = {
@@ -82,12 +82,12 @@ const DEFAULT_SEARCH_STATE = {
     queryID: null,
     indexUsed: null,
     exhaustiveNbHits: false,
-    params: null
+    params: null,
   },
   loading: true,
   popularStories: [],
   popularSearches: [],
-  settings: initializeSettings()
+  settings: initializeSettings(),
 };
 
 class SearchProvider extends React.Component {
@@ -99,27 +99,13 @@ class SearchProvider extends React.Component {
 
   constructor(props) {
     super(props);
-    const requester = createBrowserXhrRequester();
+    const telemetry = createTelemetryClient();
 
     this.client = algoliasearch(
       "UJ5WYC0L7X",
       "8ece23f8eb07cd25d40262a1764599b1",
       {
-        requester: {
-          send: request =>
-            requester.send(request).then(response => {
-              if (response.status === 200) {
-                const results = JSON.parse(response.content);
-
-                reportTelemetry(
-                  results,
-                  request.url.match(/indexes\/(\w+)\//)[1]
-                );
-              }
-
-              return response;
-            })
-        }
+        requester: telemetry,
       }
     );
 
@@ -143,7 +129,7 @@ class SearchProvider extends React.Component {
       page: 0,
       sort: DEFAULT_HN_SETTINGS.defaultSort,
       type: DEFAULT_HN_SETTINGS.defaultType,
-      dateRange: DEFAULT_HN_SETTINGS.defaultDateRange
+      dateRange: DEFAULT_HN_SETTINGS.defaultDateRange,
     });
   };
 
@@ -177,14 +163,14 @@ class SearchProvider extends React.Component {
     // Override hitsPerPage to lower nb to see how it impacts mobile perf;
     const perfParams = {
       ...params,
-      hitsPerPage: window.innerWidth > 768 ? params.hitsPerPage : 10
+      hitsPerPage: window.innerWidth > 768 ? params.hitsPerPage : 10,
     };
     const index = this.getIndex(params.query);
 
-    return index.search("", perfParams).then(results => {
+    return index.search("", perfParams).then((results) => {
       if (results.query !== params.query) return;
       if (!results.hits.length) {
-        this.fetchPopularSearches().then(searches => {
+        this.fetchPopularSearches().then((searches) => {
           this.setState({ popularSearches: searches });
         });
       }
@@ -194,7 +180,7 @@ class SearchProvider extends React.Component {
 
       this.setState({
         results,
-        loading: false
+        loading: false,
       });
 
       return results;
@@ -209,10 +195,10 @@ class SearchProvider extends React.Component {
     }
 
     return fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
-      .then(resp => resp.json())
+      .then((resp) => resp.json())
       .then((storyIDs: number[]) => {
         this.setState({
-          popularStories: storyIDs
+          popularStories: storyIDs,
         });
         return this.search(settings.query, settings, storyIDs);
       });
@@ -220,22 +206,22 @@ class SearchProvider extends React.Component {
 
   fetchPopularSearches = (): Promise<PopularSearches> => {
     return fetch(`${HN_API}/popular.json`, {
-      headers: REQUEST_HEADERS
-    }).then(resp => resp.json());
+      headers: REQUEST_HEADERS,
+    }).then((resp) => resp.json());
   };
 
   fetchCommentsForStory = (objectID: Hit["objectID"]): Promise<Comment> => {
     return fetch(`${HN_API}/api/v1/items/${objectID}`, {
-      headers: REQUEST_HEADERS
+      headers: REQUEST_HEADERS,
     })
-      .then(resp => resp.json())
-      .then(comments => {
+      .then((resp) => resp.json())
+      .then((comments) => {
         const hitsWithComments: SearchResponse["hits"] = this.state.results.hits.map(
-          hit => {
+          (hit) => {
             if (hit.objectID !== objectID) return hit;
             return {
               ...hit,
-              comments: comments
+              comments: comments,
             };
           }
         );
@@ -243,8 +229,8 @@ class SearchProvider extends React.Component {
         this.setState({
           results: {
             ...this.state.results,
-            hits: hitsWithComments
-          }
+            hits: hitsWithComments,
+          },
         });
         return comments;
       });
@@ -259,7 +245,7 @@ class SearchProvider extends React.Component {
           fetchPopularStories: this.fetchPopularStories,
           fetchCommentsForStory: this.fetchCommentsForStory,
           setSettings: this.setSettings,
-          starred: this.starred
+          starred: this.starred,
         }}
       >
         {this.props.children}
@@ -280,7 +266,7 @@ export const SearchContext = React.createContext<ISearchContext>({
     queryID: null,
     indexUsed: null,
     exhaustiveNbHits: false,
-    params: null
+    params: null,
   },
   loading: true,
   popularStories: [],
@@ -288,10 +274,12 @@ export const SearchContext = React.createContext<ISearchContext>({
   starred: new Starred(),
   settings: DEFAULT_HN_SETTINGS,
   setSettings: (settings: Partial<HNSettings>) => DEFAULT_HN_SETTINGS,
-  search: (query: string) => new Promise<SearchResponse>(resolve => resolve()),
-  fetchPopularStories: () => new Promise<SearchResponse>(resolve => resolve()),
+  search: (query: string) =>
+    new Promise<SearchResponse>((resolve) => resolve()),
+  fetchPopularStories: () =>
+    new Promise<SearchResponse>((resolve) => resolve()),
   fetchCommentsForStory: (objectID: Hit["objectID"]) =>
-    new Promise<Comment>(resolve => resolve())
+    new Promise<Comment>((resolve) => resolve()),
 });
 
 export default SearchProvider;
