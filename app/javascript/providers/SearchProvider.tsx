@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SearchResponse } from "@algolia/client-search";
 import algoliasearch, { SearchClient, SearchIndex } from "algoliasearch/lite";
-import { createBrowserXhrRequester } from "@algolia/requester-browser-xhr";
 import createTelemetryClient from "@algolia/algolia-browser-telemetry";
 
 import Starred from "./Starred";
@@ -11,7 +10,6 @@ import getSearchSettings from "./SearchSettings";
 import { trackSettingsChanges } from "./Analytics";
 import getPreferredTheme from "../utils/detectColorThemePreference";
 import debouncedUrlSync from "../utils/debouncedUrlSync";
-import { reportTelemetry } from "../utils/telemetry";
 
 enum ENV {
   production = "https://hn.algolia.com",
@@ -91,6 +89,7 @@ const DEFAULT_SEARCH_STATE = {
 };
 
 class SearchProvider extends React.Component {
+  telemetry: any;
   client: SearchClient;
   indexUser: SearchIndex;
   indexSortedByDate: SearchIndex;
@@ -99,13 +98,13 @@ class SearchProvider extends React.Component {
 
   constructor(props) {
     super(props);
-    const telemetry = createTelemetryClient();
+    this.telemetry = createTelemetryClient();
 
     this.client = algoliasearch(
       "UJ5WYC0L7X",
       "8ece23f8eb07cd25d40262a1764599b1",
       {
-        requester: telemetry,
+        requester: this.telemetry,
       }
     );
 
@@ -119,6 +118,10 @@ class SearchProvider extends React.Component {
     this.indexSortedByPopularityOrdered = (this.client as any).initIndex(
       ALGOLIA_INDEXES.PopularityOrdered
     );
+  }
+
+  componentWillUnmount() {
+    this.telemetry.destroy();
   }
 
   starred = new Starred();
