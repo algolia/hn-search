@@ -15,10 +15,10 @@ const StoryImage: React.FC<StoryImageProps> = ({ objectID }) => {
   const imageRef = React.useRef<HTMLImageElement>(null);
   const [imageSource, setImageSource] = React.useState<string>(null);
 
-  const DEFAULT_PROPS: React.ImgHTMLAttributes<HTMLImageElement> = {
+  const DEFAULT_PROPS = {
     loading: "lazy",
     alt: `Image thumbnail for result - ${objectID}`,
-    src: `https://drcs9k8uelb9s.cloudfront.net/${objectID}.png`,
+    src: `https://drcs9k8uelb9s.cloudfront.net/${objectID}.png`
   };
 
   if (supportsLazyLoading) {
@@ -31,7 +31,7 @@ const StoryImage: React.FC<StoryImageProps> = ({ objectID }) => {
 
   const isIntersecting = useIntersectionObserver(imageRef, {
     rootMargin: "60px",
-    threshold: [0, 1],
+    threshold: [0, 1]
   });
 
   React.useEffect(() => {
