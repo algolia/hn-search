@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@algolia/algolia-browser-telemetry@0.0.0-beta.4":
+  version "0.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@algolia/algolia-browser-telemetry/-/algolia-browser-telemetry-0.0.0-beta.4.tgz#d631d9ee1c86e03a617d9c381d75444a4b61d01d"
+  integrity sha512-D7iiDsrpRaV99HmfNj3FTT9Nz5DpUb8So1D2Q0ptBgqx01rfCHwtW0wXdrJ1Chyo4J+BZL6rrOpFS8NSbPoSuQ==
+  dependencies:
+    "@algolia/requester-browser-xhr" "^4.2.0"
+
 "@algolia/cache-browser-local-storage@4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@algolia/cache-browser-local-storage/-/cache-browser-local-storage-4.0.2.tgz#e502bdc55e18d0f4164f57a338cd49915d6cf285"
@@ -85,10 +92,22 @@
   dependencies:
     "@algolia/requester-common" "4.0.2"
 
+"@algolia/requester-browser-xhr@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@algolia/requester-browser-xhr/-/requester-browser-xhr-4.2.0.tgz#c2a7982bef940e1749f2ba2aa04e3f8a971b6a78"
+  integrity sha512-+PZKOe+UBdZYQg/h/8AbKQ2Ha4uDeoLnpZFv00IMr/elym0m2hl76xAeIBiIqGYsLCmGybGBFUF9n1imsKJUJQ==
+  dependencies:
+    "@algolia/requester-common" "4.2.0"
+
 "@algolia/requester-common@4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@algolia/requester-common/-/requester-common-4.0.2.tgz#739cf210ab44778b05b63f7b8ca3f6299e84de17"
   integrity sha512-0r8AJfgABLQjYeO3BLjUxhmTvUw1p/xVitK3Vhgcnx3tDHPaNVcFyjrmQpKKJuztVxj2tM9DVvsGfrz07Jn8Tg==
+
+"@algolia/requester-common@4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@algolia/requester-common/-/requester-common-4.2.0.tgz#df67a940516d5a313bbf79bcbceddadfff9f8ce2"
+  integrity sha512-SSKPRM/7UP54/dxyK6EYt4p6nTeJxYb1P6xVh/Ic6noBTCfqg5vBEKDa1DZD5MBtCvABoODd97UOfAo3ECG/jg==
 
 "@algolia/requester-node-http@4.0.2":
   version "4.0.2"
