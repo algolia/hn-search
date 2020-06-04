@@ -16,6 +16,7 @@ const StoryImage: React.FC<StoryImageProps> = ({ objectID }) => {
   const [imageSource, setImageSource] = React.useState<string>(null);
 
   const DEFAULT_PROPS: React.ImgHTMLAttributes<HTMLImageElement> = {
+    // @ts-ignore
     loading: "lazy",
     alt: `Image thumbnail for result - ${objectID}`,
     src: `https://drcs9k8uelb9s.cloudfront.net/${objectID}.png`,
