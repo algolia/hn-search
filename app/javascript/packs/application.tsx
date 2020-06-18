@@ -9,7 +9,6 @@ import "core-js/stable/object/assign";
 import "core-js/stable/object/entries";
 
 import "whatwg-fetch";
-import "../utils/telemetry";
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -31,7 +30,7 @@ const Settings = React.lazy(() => import("../views/Settings"));
 
 const ThemeClass: React.FC = ({ children }) => {
   const {
-    settings: { style, theme }
+    settings: { style, theme },
   } = React.useContext(SearchContext);
 
   return <div className={classnames(style, theme)}>{children}</div>;
