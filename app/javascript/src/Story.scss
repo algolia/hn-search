@@ -189,7 +189,12 @@
       justify-content: flex-end;
 
       @media (max-width: 480px) {
-        display: none;
+        min-width: 36px;
+
+        .Story_commentsButton,
+        .SocialShare {
+          display: none;
+        }
       }
 
       svg {
