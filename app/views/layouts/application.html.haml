@@ -6,6 +6,8 @@
     %meta{:content => "Hacker News Search, millions articles and comments at your fingertips.", :name => "description"}
     %base{:href=> root_url}
     %link{:rel => "shortcut icon", :href=> asset_path('favicon.ico')}
+    %link{:rel => "icon", :type => "image/png", :href=> asset_path('favicon-32x32.png')}
+    %link{:rel => "icon", :type => "image/png", :href=> asset_path('favicon-16x16.png')}
     %link{:href => '/opensearch.xml', :rel => 'search', :title => 'HN Search', :type => 'application/opensearchdescription+xml'}
     = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: "home", action: "front_page"}, { title: 'HN Front page'})
