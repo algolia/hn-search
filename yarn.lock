@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@algolia/algolia-browser-telemetry@0.0.0-beta.7":
-  version "0.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@algolia/algolia-browser-telemetry/-/algolia-browser-telemetry-0.0.0-beta.7.tgz#fc6135473b62313af5b6a64447ceb82ce7c17da7"
-  integrity sha512-+LML1GLGV6xfr5XbeBdsg7fQYoIOc2t75QH4poHQQ4N8UeMnqP4gG41JzaPHoSuF7mXXTYGmxDq8aKGTu69JKA==
+"@algolia/algolia-browser-telemetry@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@algolia/algolia-browser-telemetry/-/algolia-browser-telemetry-0.1.4.tgz#4189012786519731818cae1419a3c73998dcbd48"
+  integrity sha512-vCrUokQdzm93BmTlHWCR/m3Pa8W2QCAhi1j4Zn2fbegr2Hm1VuEOKbgCfcLZIWCRnyP3hbUHrNipnOkUY78PfQ==
   dependencies:
     "@algolia/requester-browser-xhr" "^4.2.0"
 

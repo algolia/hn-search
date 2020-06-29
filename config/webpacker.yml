@@ -56,7 +56,7 @@ development:
   cache_manifest: false
 
   # Verifies that versions and hashed value of the package contents in the project's package.json
-  check_yarn_integrity: true
+  check_yarn_integrity: false
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:

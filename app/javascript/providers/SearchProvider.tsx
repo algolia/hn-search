@@ -98,7 +98,7 @@ class SearchProvider extends React.Component {
 
   constructor(props) {
     super(props);
-    this.telemetry = createTelemetryClient();
+    this.telemetry = createTelemetryClient({ applications: ["UJ5WYC0L7X"] });
 
     this.client = algoliasearch(
       "UJ5WYC0L7X",
