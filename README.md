@@ -50,6 +50,13 @@ There is currently (December 2018) a bug with `bluepill` stopping the deployment
 bundle exec cap deploy:restart
 ```
 
+There seems to as well be an issue with thin server, where after deployment orphaned thin processes are not killed. This means that the server tries serving previous version of the app and causes `ChunkLoadErrors` as the manifest points to no longer existing files. To fix the intermittent errors, you need to ssh to both servers, check for any orphaned thin processes and kill them manually.
+
+```shell
+ps aux | grep thin
+kill <insert old thin process pid's>
+```
+
 
 Indexing Configuration
 --------------
