@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/algolia/algoliasearch-rails
+  revision: 97c9534e89b9effd293f11d5449c0d4a8671ebdb
+  branch: virtual-replicas
+  specs:
+    algoliasearch-rails (1.24.1)
+      algoliasearch (>= 1.26.0, < 2.0.0)
+      json (>= 1.5.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,11 +56,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    algoliasearch (1.26.0)
+    algoliasearch (1.27.4)
       httpclient (~> 2.8, >= 2.8.3)
-      json (>= 1.5.1)
-    algoliasearch-rails (1.20.6)
-      algoliasearch (>= 1.17.0, < 2.0.0)
       json (>= 1.5.1)
     arel (8.0.0)
     aws-eventstream (1.0.3)
@@ -1087,7 +1093,7 @@ DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (~> 0.10.9)
   activesupport (~> 5.1.0)
-  algoliasearch-rails (~> 1.20.6)
+  algoliasearch-rails!
   aws-sdk (~> 3.0)
   bcrypt_pbkdf (>= 1.0, < 2.0)
   better_errors
