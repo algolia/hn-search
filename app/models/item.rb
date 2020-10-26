@@ -59,12 +59,7 @@ class Item < ApplicationRecord
     end
 
     # BEG: virtual replica experiment
-    add_replica "vr_Item_#{Rails.env}_ordered", virtual: true do
-      attributesToIndex %w[title unordered(story_text) unordered(comment_text) unordered(url) author created_at_i]
-    end
-
     add_replica "vr_Item_#{Rails.env}_sort_date", virtual: true do
-      attributesToIndex %w[unordered(title) unordered(story_text) unordered(comment_text) unordered(url) author created_at_i]
       customRanking ['desc(created_at_i)']
       ranking ['custom']
     end
