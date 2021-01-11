@@ -14,20 +14,20 @@ const cleanup = (input?: string) => {
   string = string.replace(/=\\"/g, '="');
 
   // XSS (seems HN is not stripping all of them)
-  // string = $("<div />")
-  //   .text(string)
-  //   .html()
-  // keep some tags like <p>, <pre>, <em>, <strong>, <code> & <i>
-  // .replace(/&lt;(\/?)(p|pre|code|em|strong|i)&gt;/g, "<$1$2>")
-  // // restore predefined XML entities (quotes, apos & amps)
-  // .replace(/&quot;/g, '"')
-  // .replace(/&apos;/g, "'")
-  // .replace(/&amp;/g, "&")
-  // // restore links as well
-  // .replace(
-  //   /&lt;a href="([^"]+?)" rel="nofollow"&gt;(.+?)&lt;\/a&gt;/g,
-  //   '<a href="$1" rel="nofollow">$2</a>'
-  // );
+  const div = document.createElement('div');
+  div.innerText = string;
+  string = div.innerHTML
+    // keep some tags like <p>, <pre>, <em>, <strong>, <code> & <i>
+    .replace(/&lt;(\/?)(p|pre|code|em|strong|i)&gt;/g, "<$1$2>")
+    // restore predefined XML entities (quotes, apos & amps)
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&")
+    // restore links as well
+    .replace(
+      /&lt;a href="([^"]+?)" rel="nofollow"&gt;(.+?)&lt;\/a&gt;/g,
+      '<a href="$1" rel="nofollow">$2</a>'
+    );
 
   return string;
 };
