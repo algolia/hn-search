@@ -66,6 +66,13 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
       <h3>Firefox Extensions</h3>
       <ul>
         <li>
+          <a href="https://github.com/jstrieb/hackernews-button">
+            Hacker News Discussion Button
+          </a>
+          , a privacy-preserving Firefox extension that uses Bloom filters to
+          link to the Hacker News discussion for the current page.
+        </li>
+        <li>
           <a href="https://addons.mozilla.org/en-US/firefox/addon/hacker-news-reader/">
             Hacker News Reader
           </a>
