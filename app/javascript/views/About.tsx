@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
 import Layout from "./containers/Layout";
@@ -48,7 +47,7 @@ const About: React.FC<RouteComponentProps> = props => {
         {ABOUT_LINKS.map(link => {
           return (
             <li>
-              <Link to={link.to}>{link.label}</Link>
+              <a href={link.to}>{link.label}</a>
             </li>
           );
         })}
