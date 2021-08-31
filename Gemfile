@@ -5,7 +5,7 @@ ruby '2.6.2'
 gem 'actionpack-action_caching'
 gem 'active_model_serializers', '~> 0.10.9'
 gem 'activesupport', '~> 5.1.0'
-gem 'algoliasearch-rails', git: 'https://github.com/algolia/algoliasearch-rails', branch: 'virtual-replicas'
+gem 'algoliasearch-rails'
 gem 'aws-sdk', '~> 3.0'
 gem 'bitters'
 gem 'bluepill'
@@ -32,6 +32,7 @@ gem 'webpacker', '~> 4.x'
 gem 'whenever'
 
 group :development do
+  gem 'ed25519'
   gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
   gem 'better_errors'
   gem 'binding_of_caller', platforms: %i[mri_19 mri_20 mri_21 rbx]
