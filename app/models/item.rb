@@ -92,7 +92,7 @@ class Item < ApplicationRecord
 
   def crawl_thumbnail!
     s3 = Aws::S3::Resource.new
-    bucket = s3.bucket('hnsearch')
+    bucket = s3.bucket('algolia-hnsearch')
     obj = bucket.object("#{id}.png")
     return true if url.blank? || obj.exists?
     begin
