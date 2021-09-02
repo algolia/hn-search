@@ -19,7 +19,7 @@ const StoryImage: React.FC<StoryImageProps> = ({ objectID }) => {
     // @ts-ignore
     loading: "lazy",
     alt: `Image thumbnail for result - ${objectID}`,
-    src: `https://drcs9k8uelb9s.cloudfront.net/${objectID}.png`,
+    src: `https://d3cy0a008d28vf.cloudfront.net/${objectID}.png`,
   };
 
   if (supportsLazyLoading) {
@@ -37,7 +37,7 @@ const StoryImage: React.FC<StoryImageProps> = ({ objectID }) => {
 
   React.useEffect(() => {
     if (!isIntersecting) return;
-    setImageSource(`https://drcs9k8uelb9s.cloudfront.net/${objectID}.png`);
+    setImageSource(`https://d3cy0a008d28vf.cloudfront.net/${objectID}.png`);
   }, [isIntersecting]);
 
   return (

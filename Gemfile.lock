@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/algolia/algoliasearch-rails
-  revision: 97c9534e89b9effd293f11d5449c0d4a8671ebdb
-  branch: virtual-replicas
-  specs:
-    algoliasearch-rails (1.24.1)
-      algoliasearch (>= 1.26.0, < 2.0.0)
-      json (>= 1.5.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -56,8 +47,11 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    algoliasearch (1.27.4)
+    algoliasearch (1.27.5)
       httpclient (~> 2.8, >= 2.8.3)
+      json (>= 1.5.1)
+    algoliasearch-rails (1.25.0)
+      algoliasearch (>= 1.26.0, < 2.0.0)
       json (>= 1.5.1)
     arel (8.0.0)
     aws-eventstream (1.0.3)
@@ -813,6 +807,7 @@ GEM
     diff-lcs (1.3)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    ed25519 (1.2.4)
     em-http-request (1.1.5)
       addressable (>= 2.3.4)
       cookiejar (!= 0.3.1)
@@ -835,7 +830,7 @@ GEM
     factory_bot_rails (5.0.2)
       factory_bot (~> 5.0.2)
       railties (>= 4.2.0)
-    faraday (0.15.4)
+    faraday (0.17.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
     figaro (1.1.1)
@@ -904,7 +899,7 @@ GEM
     jbuilder (2.9.0)
       activesupport (>= 4.2.0)
     jmespath (1.4.0)
-    json (2.2.0)
+    json (2.5.1)
     jsonapi-renderer (0.2.0)
     libv8 (3.16.14.19)
     listen (3.1.5)
@@ -932,7 +927,7 @@ GEM
     minitest-spec-rails (5.5.0)
       minitest (~> 5.0)
       rails (>= 4.1)
-    multi_json (1.13.1)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     mysql2 (0.4.10)
@@ -1093,7 +1088,7 @@ DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (~> 0.10.9)
   activesupport (~> 5.1.0)
-  algoliasearch-rails!
+  algoliasearch-rails (< 2)
   aws-sdk (~> 3.0)
   bcrypt_pbkdf (>= 1.0, < 2.0)
   better_errors
@@ -1102,6 +1097,7 @@ DEPENDENCIES
   bluepill
   capistrano (< 3.0.0)
   delayed_job_active_record
+  ed25519
   em-http-request
   eventmachine
   factory_bot_rails
@@ -1150,4 +1146,4 @@ RUBY VERSION
    ruby 2.6.2p47
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
