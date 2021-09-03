@@ -50,7 +50,7 @@ GEM
     algoliasearch (1.27.5)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
-    algoliasearch-rails (1.25.0)
+    algoliasearch-rails (1.26.0)
       algoliasearch (>= 1.26.0, < 2.0.0)
       json (>= 1.5.1)
     arel (8.0.0)
@@ -1088,7 +1088,7 @@ DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (~> 0.10.9)
   activesupport (~> 5.1.0)
-  algoliasearch-rails (< 2)
+  algoliasearch-rails (~> 1.26)
   aws-sdk (~> 3.0)
   bcrypt_pbkdf (>= 1.0, < 2.0)
   better_errors
