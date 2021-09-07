@@ -61,7 +61,6 @@ class Item < ApplicationRecord
     # BEG: virtual replica experiment
     add_replica "vr_Item_#{Rails.env}_sort_date", virtual: true do
       customRanking ['desc(created_at_i)']
-      ranking ['custom']
     end
     # END: virtual replica experiment
   end
