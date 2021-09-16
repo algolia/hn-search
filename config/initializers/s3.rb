@@ -1,3 +1,3 @@
 require 'aws-sdk'
 
-Aws.config.update({ region: 'us-east-1' })
+Aws.config.update({ region: 'us-east-2' })
