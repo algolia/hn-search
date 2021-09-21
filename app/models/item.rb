@@ -66,7 +66,7 @@ class Item < ApplicationRecord
   end
 
   def story_text
-    item_type_cd != Item.comment ? text : nil
+    item_type_cd != Item.comment ? processed_text : nil
   end
 
   def story_title
@@ -78,7 +78,7 @@ class Item < ApplicationRecord
   end
 
   def comment_text
-    comment? ? text : nil
+    comment? ? processed_text : nil
   end
 
   def comment?
@@ -229,6 +229,11 @@ class Item < ApplicationRecord
 
   def live?
     !deleted && !dead && !author.blank?
+  end
+
+  def processed_text
+    # extract the URLs from links's `href=` instead of the truncated version within the tag
+    text&.gsub(/<a href="(?<url_start>.+?)(?<url_end>.+?)" rel="nofollow">\k<url_start>...<\/a>/, '\k<url_start>\k<url_end>')
   end
 
 end
