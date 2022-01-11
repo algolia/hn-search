@@ -255,7 +255,7 @@ const getRestrictSearchableAttributes = (
 const getMinProximity = (
   type: HNSettings["type"]
 ): SearchSettings["minProximity"] => {
-  return type === "story" ? 8 : 1;
+  return type === "story" ? 7 : 1;
 };
 
 const getSearchSettings = (
