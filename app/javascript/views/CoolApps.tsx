@@ -96,6 +96,11 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
             HACK for Hacker News Develope‪r‬
           </a>
         </li>
+        <li>
+          <a href="https://apps.apple.com/us/app/hacki/id1602043763">
+            Hacki‬
+          </a>
+        </li>
       </ul>
       <h3>Android Apps</h3>
       <ul>
