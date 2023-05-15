@@ -25,7 +25,7 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
           <a href="http://hn.premii.com">hn.premii.com</a> - Mobile web app
         </li>
         <li>
-          <a href="http://hnpaper.forge.partlab.io">HNPaper</a> - Yet another
+          <a href="https://hnpaper-labs.gaidot.net">HNPaper</a> - Yet another
           Hacker News Search
         </li>
         <li>
