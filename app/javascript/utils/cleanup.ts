@@ -27,6 +27,14 @@ const cleanup = (input?: string) => {
     .replace(
       /&lt;a href="([^"]+?)" rel="nofollow"&gt;(.+?)&lt;\/a&gt;/g,
       '<a href="$1" rel="nofollow">$2</a>'
+    )
+    .replace(
+      /&lt;a href="([^"]+?)" rel="nofollow noreferrer"&gt;(.+?)&lt;\/a&gt;/g,
+      '<a href="$1" rel="nofollow noreferrer">$2</a>'
+    )
+    .replace(
+      /&lt;a href="([^"]+?)"&gt;(.+?)&lt;\/a&gt;/g,
+      '<a href="$1">$2</a>'
     );
 
   return string;
