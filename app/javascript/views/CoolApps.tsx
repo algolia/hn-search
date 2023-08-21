@@ -36,6 +36,10 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
           <a href="https://hnbadges.netlify.app/">HN Badges</a> - Game-like
           badges for your HN profile
         </li>
+        <li>
+          <a href="https://jacksonkearl.github.io/HackerTrends/">HackerTrends</a> - View 
+          historical HackerNews comment topic trends
+        </li>
       </ul>
       <h3>Chrome Extensions</h3>
       <ul>
