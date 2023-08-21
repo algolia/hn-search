@@ -14,7 +14,7 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
       <h3>Web</h3>
       <ul>
         <li>
-          <a href="http://www.ryan-williams.net/hacker-news-hiring-trends/">
+          <a href="https://www.ryan-williams.net/hacker-news-hiring-trends/">
             Hacker News Tech Hiring Trends{" "}
           </a>{" "}
           - Monthly update of what's popular in programming languages,
@@ -22,14 +22,14 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
           threads.
         </li>
         <li>
-          <a href="http://hn.premii.com">hn.premii.com</a> - Mobile web app
+          <a href="https://hn.premii.com">hn.premii.com</a> - Mobile web app
         </li>
         <li>
           <a href="https://hnpaper-labs.gaidot.net">HNPaper</a> - Yet another
           Hacker News Search
         </li>
         <li>
-          <a href="http://hnrss.org">hnrss.org</a> - Custom, realtime Hacker
+          <a href="https://hnrss.org">hnrss.org</a> - Custom, realtime Hacker
           News RSS feeds
         </li>
         <li>

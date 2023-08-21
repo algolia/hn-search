@@ -1,7 +1,7 @@
 HN Search powered by Algolia
 ==================
 
-This is the Rails 5 application providing [HN Search](http://hn.algolia.com). It's leveraging [react](https://reactjs.org) on the frontend, [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) for the search and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl+render thumbnails.
+This is the Rails 5 application providing [HN Search](https://hn.algolia.com). It's leveraging [react](https://reactjs.org) on the frontend, [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) for the search and uses [wkhtmltoimage](https://code.google.com/p/wkhtmltopdf/) to crawl+render thumbnails.
 
 Development/Contributions
 -------------

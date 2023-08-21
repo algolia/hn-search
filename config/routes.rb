@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   get '/beta' => redirect('/')
   get '/legacy' => redirect('/')
-  get '/status' => redirect('http://status.algolia.com/hn')
+  get '/status' => redirect('https://status.algolia.com/hn')
 
   %w[about settings help api cool_apps hot show-hn ask-hn polls jobs starred user].each do |path|
     get "/#{path}", controller: 'home', action: 'index'

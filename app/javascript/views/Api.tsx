@@ -27,7 +27,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
           <h2>Items</h2>
           <p>
             <span className="Layout_label">GET</span>
-            <code>http://hn.algolia.com/api/v1/items/:id</code>
+            <code>https://hn.algolia.com/api/v1/items/:id</code>
           </p>
           <pre>
             <div>
@@ -66,7 +66,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
                   <div className="Layout_hoverable">
                     <span className="Layout_property">url</span>:{" "}
                     <span className="type-string">"</span>
-                    <a href="http://ycombinator.com">http://ycombinator.com</a>
+                    <a href="https://ycombinator.com">https://ycombinator.com</a>
                     <span className="type-string">"</span>,
                   </div>
                 </li>
@@ -269,7 +269,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
           <h2>Users</h2>
           <p>
             <span className="Layout_label">GET</span>
-            <code>http://hn.algolia.com/api/v1/users/:username</code>
+            <code>https://hn.algolia.com/api/v1/users/:username</code>
           </p>
           <pre>
             <div>
@@ -304,12 +304,12 @@ const Api: React.FC<RouteComponentProps> = (props) => {
           <h3>Sorted by relevance, then points, then number of comments</h3>
           <p>
             <span className="Layout_label">GET</span>
-            <code>http://hn.algolia.com/api/v1/search?query=...</code>
+            <code>https://hn.algolia.com/api/v1/search?query=...</code>
           </p>
           <h3>Sorted by date, more recent first</h3>
           <p>
             <span className="Layout_label">GET</span>
-            <code>http://hn.algolia.com/api/v1/search_by_date?query=...</code>
+            <code>https://hn.algolia.com/api/v1/search_by_date?query=...</code>
           </p>
           <p>Common query parameters:</p>
           <table>
@@ -426,7 +426,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search?query=foo&amp;tags=story
+                https://hn.algolia.com/api/v1/search?query=foo&amp;tags=story
               </code>
             </dd>
             <dt>
@@ -434,7 +434,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search?query=bar&amp;tags=comment
+                https://hn.algolia.com/api/v1/search?query=bar&amp;tags=comment
               </code>
             </dd>
             <dt>
@@ -442,23 +442,23 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search?query=bar&amp;restrictSearchableAttributes=url
+                https://hn.algolia.com/api/v1/search?query=bar&amp;restrictSearchableAttributes=url
               </code>
             </dd>
             <dt>All stories that are on the front/home page right now</dt>
             <dd>
-              <code>http://hn.algolia.com/api/v1/search?tags=front_page</code>
+              <code>https://hn.algolia.com/api/v1/search?tags=front_page</code>
             </dd>
             <dt>Last stories</dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search_by_date?tags=story
+                https://hn.algolia.com/api/v1/search_by_date?tags=story
               </code>
             </dd>
             <dt>Last stories OR polls</dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search_by_date?tags=(story,poll)
+                https://hn.algolia.com/api/v1/search_by_date?tags=(story,poll)
               </code>
             </dd>
             <dt>
@@ -466,7 +466,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search_by_date?tags=comment&amp;numericFilters=created_at_i&gt;X
+                https://hn.algolia.com/api/v1/search_by_date?tags=comment&amp;numericFilters=created_at_i&gt;X
               </code>
             </dd>
             <dt>
@@ -475,7 +475,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search_by_date?tags=story&amp;numericFilters=created_at_i&gt;X,created_at_i&lt;Y
+                https://hn.algolia.com/api/v1/search_by_date?tags=story&amp;numericFilters=created_at_i&gt;X,created_at_i&lt;Y
               </code>
             </dd>
             <dt>
@@ -483,7 +483,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search?tags=story,author_pg
+                https://hn.algolia.com/api/v1/search?tags=story,author_pg
               </code>
             </dd>
             <dt>
@@ -491,7 +491,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             </dt>
             <dd>
               <code>
-                http://hn.algolia.com/api/v1/search?tags=comment,story_X
+                https://hn.algolia.com/api/v1/search?tags=comment,story_X
               </code>
             </dd>
           </dl>
@@ -526,8 +526,8 @@ const Api: React.FC<RouteComponentProps> = (props) => {
                               <div className="Layout_hoverable">
                                 <span className="Layout_property">url</span>:{" "}
                                 <span className="type-string">"</span>
-                                <a href="http://ycombinator.com">
-                                  http://ycombinator.com
+                                <a href="https://ycombinator.com">
+                                  https://ycombinator.com
                                 </a>
                                 <span className="type-string">"</span>,
                               </div>
@@ -665,8 +665,8 @@ const Api: React.FC<RouteComponentProps> = (props) => {
                                             <span className="type-string">
                                               "
                                             </span>
-                                            <a href="http://ycombinator.com">
-                                              http://ycombinator.com
+                                            <a href="https://ycombinator.com">
+                                              https://ycombinator.com
                                             </a>
                                             <span className="type-string">
                                               "

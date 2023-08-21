@@ -7,11 +7,11 @@ const ABOUT_LINKS = [
   {
     label: "Algolia",
     to:
-      "http://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=about&utm_campaign=hn_algolia"
+      "https://www.algolia.com/?utm_source=hn_search&utm_medium=link&utm_term=about&utm_campaign=hn_algolia"
   },
   { label: "Firebase", to: "https://www.firebase.com/" },
-  { label: "Octopart", to: "http://octopart.com" },
-  { label: "Algolia REST API", to: "http://www.algolia.com/doc/rest_api" },
+  { label: "Octopart", to: "https://octopart.com" },
+  { label: "Algolia REST API", to: "https://www.algolia.com/doc/rest_api" },
   {
     label: "AlgoliaSearch Rails",
     to: "https://github.com/algolia/algoliasearch-rails"
@@ -23,11 +23,11 @@ const About: React.FC<RouteComponentProps> = props => {
     <Layout {...props} title="About">
       <p>
         HN Search provides real-time full-text search for the{" "}
-        <a href="http://news.ycombinator.com">HackerNews</a> community site.
+        <a href="https://news.ycombinator.com">HackerNews</a> community site.
         Source code is available on{" "}
         <a href="https://github.com/algolia/hn-search">GitHub</a>. The search
         backend is implemented using{" "}
-        <a href="http://www.algolia.com">Algolia</a> instant search engine.
+        <a href="https://www.algolia.com">Algolia</a> instant search engine.
       </p>
       <h3>How it works</h3>
       <p>
@@ -39,7 +39,7 @@ const About: React.FC<RouteComponentProps> = props => {
       <h3>Credits</h3>
       <p>
         Special thanks to <a href="https://www.firebase.com/">Firebase</a>,{" "}
-        <a href="http://octopart.com/">Octopart</a> and{" "}
+        <a href="https://octopart.com/">Octopart</a> and{" "}
         <a href="https://news.ycombinator.com">YC</a> teams for providing us the
         data.
       </p>
