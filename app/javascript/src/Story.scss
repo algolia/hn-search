@@ -45,6 +45,8 @@
 
   &_data {
     margin: 4px 0;
+    flex: auto;
+    max-width: 50%;
   }
 
   &_title {
@@ -181,7 +183,7 @@
     }
 
     &_share {
-      flex: 1;
+      flex: 140px; // follow min-width
       text-align: right;
       min-width: 140px;
       display: flex;
@@ -272,6 +274,9 @@
       em {
         color: #000 !important;
         font-weight: bold;
+      }
+      code, pre {
+        overflow: scroll;
       }
     }
 
