@@ -819,7 +819,7 @@ const Api: React.FC<RouteComponentProps> = (props) => {
             We are limiting the number of API requests from a single IP to
             10,000 per hour. If you or your application has been blacklisted and
             you think there has been an error, please{" "}
-            <a href="mailto:support@algolia.com?subject=HN%20Search%3A%20rate%20limit">
+            <a href="https://support.algolia.com/hc/en-us/requests/new">
               contact us
             </a>
             .
