@@ -14,14 +14,6 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
       <h3>Web</h3>
       <ul>
         <li>
-          <a href="https://www.ryan-williams.net/hacker-news-hiring-trends/">
-            Hacker News Tech Hiring Trends{" "}
-          </a>{" "}
-          - Monthly update of what's popular in programming languages,
-          development frameworks and technologies as posted in "whoishiring"
-          threads.
-        </li>
-        <li>
           <a href="https://hn.premii.com">hn.premii.com</a> - Mobile web app
         </li>
         <li>
@@ -53,13 +45,6 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
           , a Chrome extension linking to duplicate Hacker News posts.
         </li>
         <li>
-          <a href="https://chrome.google.com/webstore/detail/hacker-news-sidebar/ngljhffenbmdjobakjplnlbfkeabbpma">
-            Hacker News sidebar
-          </a>
-          , a Chrome extension that displays comments for the current page in a
-          pullout sidebar.
-        </li>
-        <li>
           <a href="https://chrome.google.com/webstore/detail/social-meter/eelhfeamoijglbkgkkfddgkngokfabde">
             Social Meter
           </a>
@@ -76,21 +61,9 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
           , a privacy-preserving Firefox extension that uses Bloom filters to
           link to the Hacker News discussion for the current page.
         </li>
-        <li>
-          <a href="https://addons.mozilla.org/en-US/firefox/addon/hacker-news-reader/">
-            Hacker News Reader
-          </a>
-          , a Mozilla Firefox browser add-on that has a radically new interface
-          which combines visual density with a clean design.
-        </li>
       </ul>
       <h3>iOS Apps</h3>
       <ul>
-        <li>
-          <a href="https://itunes.apple.com/app/hacker-news-yc/id713733435?mt=8">
-            Hacker News (YC) for Mobile/Tablet
-          </a>
-        </li>
         <li>
           <a href="https://apps.apple.com/ca/app/hack-for-hacker-news-developer/id1464477788">
             HACK for Hacker News Develope‪r‬
@@ -100,19 +73,9 @@ const CoolApps: React.FC<RouteComponentProps> = props => {
       <h3>Android Apps</h3>
       <ul>
         <li>
-          <a href="https://play.google.com/store/apps/details?id=com.premii.hn">
-            Hacker News (YC) for Mobile/Tablet
-          </a>
-        </li>
-        <li>
           <a href="https://play.google.com/store/apps/details?id=com.leavjenn.hews">
             {" "}
             Hews for Hacker News
-          </a>
-        </li>
-        <li>
-          <a href="https://play.google.com/store/apps/details?id=io.github.hidroh.materialistic">
-            Materialistic - Hacker News
           </a>
         </li>
       </ul>
